@@ -12,9 +12,7 @@ const GameCard = ({ id, name, flipped, clicked }: CardType) => {
       className={'card' + (flipped ? ' flipped' : '')}
     >
       <div className="back">?</div>
-      <div className="front">
-        <img alt={name} src={'images/' + name + '.png'} />
-      </div>
+      <div className="front">{name}</div>
     </div>
   );
 };
