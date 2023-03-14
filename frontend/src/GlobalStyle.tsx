@@ -14,6 +14,13 @@ const GlobalStyle = createGlobalStyle`
      font-weight: normal;
      font-style: normal;
 };
+
+
+a {
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: inherit; /* 링크의 색상 제거 */
+};
+
 `;
 
 export default GlobalStyle;

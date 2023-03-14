@@ -7,7 +7,7 @@ const Box = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 3.333vw;
   color: ${props => props.theme.pointLigntGrdColor1};
 `;
 
