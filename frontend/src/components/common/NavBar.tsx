@@ -186,7 +186,7 @@ const NavBar2 = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
-        <Link to="/">
+        <Link to="/level">
           <ListBox>
             <IconDiv open={props.open}>
               <StyledCollection />

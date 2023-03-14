@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
 import LandingPage from 'pages/LandingPage';
 import GamePage from 'pages/GamePage';
-import PuzzlePage from 'pages/PuzzlePage';
+import LevelPage from 'pages/LevelPage';
 import ProfilePage from 'pages/ProfilePage';
 import LayoutPage from 'pages/LayoutPage';
 import SeungPage from 'pages/SeungPage';
@@ -22,7 +22,7 @@ function App() {
             <Route element={<LayoutPage />}>
               <Route path="/home" element={<HomePage />} />
               <Route path="/game" element={<GamePage />} />
-              <Route path="/puzzle" element={<PuzzlePage />} />
+              <Route path="/level" element={<LevelPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
 

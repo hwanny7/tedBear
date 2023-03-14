@@ -17,7 +17,7 @@ const Game = styled.div`
     .card {
       width: 14%;
       user-select: none;
-      height: 300px;
+      height: 280px;
       padding: 10px;
       box-sizing: border-box;
       text-align: center;
@@ -261,7 +261,7 @@ const GameBoard = () => {
     <Game>
       <Question
         style={{
-          padding: 50,
+          padding: 40,
           margin: '30px 30px 30px 30px',
           position: 'absolute',
           left: '50%',
@@ -272,7 +272,7 @@ const GameBoard = () => {
       <Paper
         elevation={3} // shadow
         style={{
-          padding: 50,
+          padding: 100,
           margin: '75px 30px 30px 30px',
           // border: '1px solid black',
         }}
@@ -309,7 +309,7 @@ const GameBoard = () => {
           margin: '30px 30px 30px 30px',
           position: 'absolute',
           left: '96.5%',
-          top: '52.5%',
+          top: '51%',
           transform: 'translate(-50%, -50%)',
           border: '1px solid #FFFFFF',
           background: '#FFFFFF',
