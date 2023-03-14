@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import Card from 'components/game/Card';
+import GameCard from 'components/game/GameCard';
 import styled from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, Paper } from '@mui/material';
 
 // <Game>
 const Game = styled.div`
@@ -21,6 +24,15 @@ const Game = styled.div`
       transition: 0.6s;
       transform-style: preserve-3d;
       position: relative;
+      // custom
+      /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); */
+      transition: 0.4s;
+      &:hover {
+        scale: 1.04;
+        /* box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2); */
+        transition: 0.4s;
+      }
+      // card
       div {
         backface-visibility: hidden;
         position: absolute;
@@ -108,6 +120,7 @@ const Game = styled.div`
 // Function
 
 const GameBoard = () => {
+  // 12개
   const cards = [
     'TV',
     'TV',
@@ -170,35 +183,37 @@ const GameBoard = () => {
       }
       return card;
     });
+
     let updateFlipped = flippedCards;
     updateFlipped.push(currentCard);
-    setFlippedCards(updateFlipped);
+    setFlippedCards(updateFlipped); // 뒤집힌 카드들
     setCardList(updateCards);
 
     //if 2 cards are flipped, check if they are a match
-    if (flippedCards.length === 2) {
-      setTimeout(() => {
-        check();
-      }, 750);
-    }
+    //   if (flippedCards.length === 2) {
+    //     setTimeout(() => {
+    //       check();
+    //     }, 750);
+    //   }
   };
 
-  const check = () => {
-    let updateCards = cardList;
-    if (
-      flippedCards[0].name === flippedCards[1].name &&
-      flippedCards[0].index !== flippedCards[1].index
-    ) {
-      // updateCards[flippedCards[0].index].matched = true;
-      // updateCards[flippedCards[1].index].matched = true;
-      // isGameOver();
-    } else {
-      updateCards[flippedCards[0].index].flipped = false;
-      updateCards[flippedCards[1].index].flipped = false;
-    }
-    setCardList(updateCards);
-    setFlippedCards([]);
-  };
+  // 뒤집은 두 장의 카드가 매치되는지 체크하는 함수
+  // const check = () => {
+  //   let updateCards = cardList;
+  //   if (
+  //     flippedCards[0].name === flippedCards[1].name &&
+  //     flippedCards[0].index !== flippedCards[1].index
+  //   ) {
+  //     // updateCards[flippedCards[0].index].matched = true;
+  //     // updateCards[flippedCards[1].index].matched = true;
+  //     // isGameOver();
+  //   } else {
+  //     updateCards[flippedCards[0].index].flipped = false;
+  //     updateCards[flippedCards[1].index].flipped = false;
+  //   }
+  //   setCardList(updateCards);
+  //   setFlippedCards([]);
+  // };
 
   // const isGameOver = () => {
   //   let done = true;
@@ -208,41 +223,72 @@ const GameBoard = () => {
   //   setGameOver(done);
   // };
 
+  // 다음 버튼을 클릭하면, 지금까지 뒤집은 카드의 정보를 back에 전송(post)하고 다음 페이지로 navigate 한다.
+
+  const handleNext = () => {
+    console.log(flippedCards);
+  };
+
   ///////////// RESTART - REDO SETUP /////////////
 
-  const restartGame = () => {
-    setCardList(
-      shuffle(cards).map((name, index) => {
-        return {
-          id: index,
-          name: name,
-          flipped: false,
-          // matched: false,
-        };
-      }),
-    );
+  // 레벨 테스트는 재시작이 없음
+  // const restartGame = () => {
+  //   setCardList(
+  //     shuffle(cards).map((name, index) => {
+  //       return {
+  //         id: index,
+  //         name: name,
+  //         flipped: false,
+  //         // matched: false,
+  //       };
+  //     }),
+  //   );
 
-    setFlippedCards([]);
-    // setGameOver(false);
-  };
+  //   setFlippedCards([]);
+  //   // setGameOver(false);
+  // };
 
   ///////////// DISPLAY /////////////
 
+  // RETURN
+
   return (
     <Game>
-      <div className="game-board">
-        {cardList.map((card, index) => (
-          <Card
-            key={index}
-            id={index}
-            name={card.name}
-            flipped={card.flipped}
-            // matched={card.matched}
-            clicked={flippedCards.length === 2 ? {} : handleClick}
-          />
-        ))}
-        {/* {gameOver && <GameOver restartGame={restartGame} />} */}
-      </div>
+      <Paper
+        elevation={3} // shadow
+        style={{
+          padding: 30,
+          margin: '30px 30px 30px 30px',
+          // border: '1px solid black',
+        }}
+      >
+        <div className="game-board">
+          {cardList.map((card, index) => (
+            <GameCard
+              key={index}
+              id={index}
+              name={card.name}
+              flipped={card.flipped}
+              // matched={card.matched}
+              // 최대 12장까지 뒤집을 수 있음
+              clicked={flippedCards.length === 12 ? {} : handleClick}
+            />
+          ))}
+          {/* {gameOver && <GameOver restartGame={restartGame} />} */}
+        </div>
+      </Paper>
+      <Box
+        m={1}
+        //margin
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="flex-end"
+      >
+        {/* 동그란 화살표 버튼 */}
+        <IconButton variant="next" onClick={handleNext}>
+          <ArrowForwardIosIcon></ArrowForwardIosIcon>
+        </IconButton>
+      </Box>
     </Game>
   );
 };

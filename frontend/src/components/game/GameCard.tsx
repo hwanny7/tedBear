@@ -5,7 +5,7 @@ interface CardType {
   clicked?: any;
 }
 
-const Card = ({ id, name, flipped, clicked }: CardType) => {
+const GameCard = ({ id, name, flipped, clicked }: CardType) => {
   return (
     <div
       onClick={() => (flipped ? undefined : clicked(name, id))}
@@ -19,4 +19,4 @@ const Card = ({ id, name, flipped, clicked }: CardType) => {
   );
 };
 
-export default Card;
+export default GameCard;
