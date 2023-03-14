@@ -272,7 +272,7 @@ const GameBoard = () => {
       <Paper
         elevation={3} // shadow
         style={{
-          padding: 70,
+          padding: 50,
           margin: '75px 30px 30px 30px',
           // border: '1px solid black',
         }}
@@ -309,7 +309,7 @@ const GameBoard = () => {
           margin: '30px 30px 30px 30px',
           position: 'absolute',
           left: '96.5%',
-          top: '55%',
+          top: '52.5%',
           transform: 'translate(-50%, -50%)',
           border: '1px solid #FFFFFF',
           background: '#FFFFFF',
