@@ -2,6 +2,7 @@ package com.ssafy.tedbear.domain.sentence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,14 +15,18 @@ import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Table(name = "sentence_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@ToString
 public class Sentence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +50,23 @@ public class Sentence {
 	@Column(name = "end_time")
 	private int endTime;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "video_no")
 	private Video video;
 
+	@Column(name = "gunning_fog")
+	private Double gunningFog;
+
+	@Column(name = "flesch_reading_ease")
+	private Double fleschReadingEase;
+
+	@Column(name = "flesch_kincaid_grade_level")
+	private Double fleshKincaidGradeLevel;
+
+	public void setScores(double gf, double fr, double fk,int score) {
+		this.gunningFog = gf;
+		this.fleschReadingEase = fr;
+		this.fleshKincaidGradeLevel = fk;
+		this.score = score;
+	}
 }

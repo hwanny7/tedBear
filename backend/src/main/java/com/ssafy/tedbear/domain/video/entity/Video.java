@@ -19,18 +19,26 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Table(name = "video_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@ToString
 public class Video {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
+
+	@Column(unique = true)
+	@NotNull
+	private String watchId;
 
 	@NotNull
 	private int score;
