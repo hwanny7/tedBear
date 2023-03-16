@@ -7,12 +7,14 @@ import Leaf3 from 'assets/img/landingLeaf3.svg';
 import LandingBear from 'assets/img/landingBear.svg';
 import GreenBall from 'assets/img/greenBall.svg';
 import PinkBall from 'assets/img/pinkBall.svg';
+import { useEffect } from 'react';
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.bgColor};
 `;
 
 const Content1 = styled.div`
+  background-color: ${props => props.theme.mainColor};
   width: 100%;
   min-height: 100vh;
   max-height: 100vh;
@@ -34,27 +36,6 @@ const HomeImgBox = styled.div`
   height: 100vh;
   /* border: 1px solid red; */
   position: relative;
-`;
-
-const wave = keyframes` from {
-  transform: rotate(0deg);
-}
-from {
-  transform: rotate(360deg);
-}`;
-
-const BigWave1 = styled.div`
-  background-color: ${props => props.theme.mainColor};
-  width: 2000px;
-  height: 1600px;
-  position: absolute;
-  z-index: 0;
-  top: -100%;
-  left: -10%;
-  border-radius: 35%;
-  margin-left: -100px;
-  /* margin-top: -500px; */
-  animation: ${wave} 15s infinite linear;
 `;
 
 const Title = styled.div`
@@ -186,7 +167,6 @@ const LandingPage = () => {
   return (
     <Wrapper>
       <Content1>
-        <BigWave1></BigWave1>
         <HomeTextBox>
           <Title>
             Let&apos;s Learn with <span>TedBear</span>

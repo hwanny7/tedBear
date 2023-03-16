@@ -3,6 +3,7 @@ import { DefaultTheme } from 'styled-components';
 export const lightTheme: DefaultTheme = {
   mainColor: '#6255A4',
   mainLightColor: '#8F84CE',
+  mainDarkColor: '#4D437E',
   pointColor: '#E67F51',
   pointLightColor: '#FEAD55',
   // pointLigntColor 그라데이션

@@ -95,7 +95,7 @@ const ListBox = styled.li`
 `;
 
 const ListBoxBottom = styled(ListBox)<OpenStyledProps>`
-  background-color: ${props => props.theme.mainLightColor};
+  background-color: ${props => props.theme.mainDarkColor};
   position: fixed;
   width: ${OpenStyledProps => (!OpenStyledProps.open ? '78px' : '200px')};
   left: 0px;
@@ -206,7 +206,7 @@ const NavBar2 = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
-        <Link to="/yuha">
+        {/* <Link to="/yuha">
           <ListBox>
             <IconDiv open={props.open}>
               <StyledMypage />
@@ -215,7 +215,7 @@ const NavBar2 = (props: Props) => {
               <span>YUHA</span>
             </IconName>
           </ListBox>
-        </Link>
+        </Link> */}
         <Link to="/">
           <ListBoxBottom open={props.open}>
             <IconDiv open={props.open}>

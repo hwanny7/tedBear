@@ -4,6 +4,7 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     mainColor: string;
     mainLightColor: string;
+    mainDarkColor: string;
     pointColor: string;
     pointLightColor: string;
     // pointLigntColor 그라데이션
