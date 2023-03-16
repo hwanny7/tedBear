@@ -23,7 +23,7 @@ declare module 'styled-components' {
     shadowColor: string;
     kakaoColor: string;
     naverColor: string;
-    landingWavseGrdColor: string;
+    landingWaveGrdColor: string;
     landingWaveColor: string;
     landingWaveLigntColor: string;
     landingCircleColor: string;
@@ -32,5 +32,7 @@ declare module 'styled-components' {
     learningBoxCorrect: string;
     blackColorLight1: string;
     blackColorLight2: string;
+    textColor1: string;
+    textColor2: string;
   }
 }
