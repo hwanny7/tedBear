@@ -10,6 +10,9 @@ import PinkBall from 'assets/img/pinkBall.svg';
 import BigWave1 from 'assets/img/bigWave1.svg';
 import BigWave2 from 'assets/img/bigWave2.svg';
 import BigWave3 from 'assets/img/bigWave3.svg';
+import SmallWave1 from 'assets/img/smallWave1.svg';
+import SmallWave2 from 'assets/img/smallWave2.svg';
+import SmallWave3 from 'assets/img/smallWave3.svg';
 import LandingImgTemp1 from 'assets/img/landingImgTemp1.svg';
 import LandingImgTemp2 from 'assets/img/landingImgTemp2.svg';
 import LandingImgTemp3 from 'assets/img/landingImgTemp3.svg';
@@ -119,6 +122,37 @@ const BigWaveImg2 = styled(BigWaveImg1)<ToggleStyledProps>`
 const BigWaveImg3 = styled(BigWaveImg1)<ToggleStyledProps>`
   z-index: -3;
   top: -2.778vw;
+  filter: ${ToggleStyledProps =>
+    !ToggleStyledProps.toggle
+      ? 'invert(79%) sepia(24%) saturate(187%) hue-rotate(211deg) brightness(101%) contrast(85%)'
+      : 'invert(89%) sepia(5%) saturate(462%) hue-rotate(209deg) brightness(87%) contrast(83%)'};
+`;
+
+const SmallWaveImg1 = styled.img<ToggleStyledProps>`
+  bottom: 0;
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  bottom: -3.472vw;
+  left: 0;
+  filter: ${ToggleStyledProps =>
+    !ToggleStyledProps.toggle
+      ? 'invert(39%) sepia(7%) saturate(4698%) hue-rotate(210deg) brightness(85%) contrast(84%)'
+      : 'invert(18%) sepia(6%) saturate(4883%) hue-rotate(210deg) brightness(92%) contrast(92%)'};
+`;
+
+const SmallWaveImg2 = styled(SmallWaveImg1)<ToggleStyledProps>`
+  z-index: -2;
+  bottom: -2.778vw;
+  filter: ${ToggleStyledProps =>
+    !ToggleStyledProps.toggle
+      ? 'invert(68%) sepia(27%) saturate(458%) hue-rotate(209deg) brightness(82%) contrast(85%)'
+      : 'invert(48%) sepia(38%) saturate(223%) hue-rotate(210deg) brightness(88%) contrast(87%)'};
+`;
+
+const SmallWaveImg3 = styled(SmallWaveImg1)<ToggleStyledProps>`
+  z-index: -3;
+  bottom: -2.083vw;
   filter: ${ToggleStyledProps =>
     !ToggleStyledProps.toggle
       ? 'invert(79%) sepia(24%) saturate(187%) hue-rotate(211deg) brightness(101%) contrast(85%)'
@@ -308,6 +342,7 @@ const ToggleBtnBox = styled.div`
   right: 20px;
   /* border: 5px solid red; */
 `;
+
 const ToggleBtn = styled.button<ToggleStyledProps>`
   width: 3.472vw;
   height: 2.083vw;
@@ -322,6 +357,7 @@ const ToggleBtn = styled.button<ToggleStyledProps>`
   align-items: center;
   transition: all 0.5s ease-in-out;
 `;
+
 const Circle = styled.div<ToggleStyledProps>`
   background-color: ${ToggleStyledProps =>
     !ToggleStyledProps.toggle ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)'};
@@ -345,9 +381,16 @@ const LandingPage = (props: Props) => {
     props.setToggle(!props.toggle);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <Wrapper>
-      <TopBtn>
+      <TopBtn onClick={scrollToTop}>
         <TopImg src={Top} />
       </TopBtn>
       <Content1>
@@ -469,6 +512,9 @@ const LandingPage = (props: Props) => {
             </div>
           </TextConRight>
         </TextBox>
+        <SmallWaveImg1 src={SmallWave1} toggle={props.toggle} />
+        <SmallWaveImg2 src={SmallWave2} toggle={props.toggle} />
+        <SmallWaveImg3 src={SmallWave3} toggle={props.toggle} />
       </Content5>
     </Wrapper>
   );
