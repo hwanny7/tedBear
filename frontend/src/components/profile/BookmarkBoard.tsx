@@ -37,16 +37,16 @@ const BookmarkBoard = () => {
               style={{
                 margin: '0px 0px 0px 50px',
                 borderRadius: '30px 0px 0px 30px',
-                width: '4em',
-                height: '9em',
+                width: '1em',
+                height: '8em',
                 // position: 'absolute',
                 left: '5%',
                 // top: '60%',
-                transform: 'translate(-95%, 330%)',
+                transform: 'translate(-95%, 280%)',
               }}
             >
               {' '}
-              <Typography align="center" color="white" fontSize={'30px'}>
+              <Typography align="center" color="white" fontSize={'20px'}>
                 영상
               </Typography>
             </Button>
@@ -58,15 +58,15 @@ const BookmarkBoard = () => {
               style={{
                 margin: '0px 0px 0px 50px',
                 borderRadius: '30px 0px 0px 30px',
-                width: '4em',
-                height: '9em',
+                width: '1em',
+                height: '8em',
                 // position: 'absolute',
                 left: '5%',
                 // top: '73.5%',
-                transform: 'translate(-95%, 330%)',
+                transform: 'translate(-95%, 280%)',
               }}
             >
-              <Typography align="center" color="white" fontSize={'30px'}>
+              <Typography align="center" color="white" fontSize={'20px'}>
                 문장
               </Typography>
             </Button>
@@ -78,16 +78,16 @@ const BookmarkBoard = () => {
               style={{
                 margin: '0px 0px 0px 50px',
                 borderRadius: '30px 0px 0px 30px',
-                width: '4em',
-                height: '9em',
+                width: '1em',
+                height: '8em',
                 // position: 'absolute',
                 left: '5%',
                 // top: '87%',
-                transform: 'translate(-95%, 330%)',
+                transform: 'translate(-95%, 280%)',
               }}
             >
               {' '}
-              <Typography align="center" color="white" fontSize={'30px'}>
+              <Typography align="center" color="white" fontSize={'20px'}>
                 단어
               </Typography>
             </Button>
@@ -95,16 +95,28 @@ const BookmarkBoard = () => {
           <Paper
             elevation={3}
             style={{
-              width: '1500px',
-              height: '416px',
-              padding: 100,
+              width: '1300px',
+              height: '360px',
+              padding: 10,
               margin: '0px 0px 0px 0px',
               // position: 'absolute',
-              left: '42%',
-              top: '80%',
-              transform: 'translate(9, 9%)',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(9.7%, -6.5%)',
             }}
-          ></Paper>
+          >
+            <Typography
+              align="left"
+              color="black"
+              fontSize={'30px'}
+              style={{
+                // padding: 10,
+                margin: '10px 0px 0px 20px',
+              }}
+            >
+              Bookmarked Sentences
+            </Typography>
+          </Paper>
         </Box>
       </Bookmark>
     </div>

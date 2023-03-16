@@ -15,13 +15,13 @@ const Game = styled.div`
     perspective: 1000px;
     margin-bottom: -15px;
     .card {
-      width: 14%;
+      width: 15%;
       user-select: none;
-      height: 280px;
-      padding: 10px;
+      height: 200px;
+      padding: 5px;
       box-sizing: border-box;
       text-align: center;
-      margin: 16px;
+      margin: 9px;
       transition: 0.6s;
       transform-style: preserve-3d;
       position: relative;
@@ -182,8 +182,8 @@ const GameBoard = () => {
     <Game>
       <Question
         style={{
-          padding: 40,
-          margin: '30px 30px 30px 30px',
+          padding: 50,
+          margin: '35px 30px 30px 30px',
           position: 'absolute',
           left: '50%',
           top: '7%',
@@ -224,7 +224,7 @@ const GameBoard = () => {
         }}
         style={{
           padding: 20,
-          margin: '30px 30px 30px 30px',
+          margin: '25px 0px 0px 20px',
           position: 'absolute',
           left: '96.5%',
           top: '51%',

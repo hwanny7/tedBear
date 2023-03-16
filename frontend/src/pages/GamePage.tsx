@@ -40,7 +40,7 @@ const GamePage = () => {
               // display="inline"
               align="center"
               color="white"
-              fontSize={'150px'}
+              fontSize={'100px'}
               // gutterBottom
             >
               PUZZLE
@@ -49,7 +49,7 @@ const GamePage = () => {
               // display="inline"
               align="center"
               color="white"
-              fontSize={'45px'}
+              fontSize={'35px'}
               gutterBottom
             >
               문장의 빈칸을 채워
@@ -62,12 +62,12 @@ const GamePage = () => {
               size="large"
               onClick={handleStart}
               style={{
-                margin: '50px',
-                width: '16em',
-                height: '8em',
+                margin: '30px',
+                width: '13em',
+                height: '6em',
               }}
             >
-              <Typography color="white" variant="h2" gutterBottom>
+              <Typography color="white" variant="h3" gutterBottom>
                 START
               </Typography>
             </Button>

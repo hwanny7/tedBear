@@ -1,7 +1,7 @@
-import { ReactComponent as Puzzle } from 'assets/img/puzzle.svg';
+import puzzle from 'assets/img/puzzle.svg';
 
 const PuzzleCover = () => {
-  return <Puzzle></Puzzle>;
+  return <img src={puzzle} alt="" style={{ width: '50vw' }} />;
 };
 
 export default PuzzleCover;
