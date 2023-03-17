@@ -3,6 +3,7 @@ import ModalBg from 'assets/img/ModalBg.svg';
 import { ReactComponent as KakaoImg } from 'assets/img/KakaoImg.svg';
 import { ReactComponent as NaverIcon } from 'assets/img/NaverIcon.svg';
 import { ReactComponent as GoogleIcon } from 'assets/img/GoogleIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface Color {
   BgColor: string;
@@ -17,6 +18,7 @@ const DarkBackground = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+  z-index: 9998;
 `;
 
 const Modal = styled.div`
@@ -27,7 +29,7 @@ const Modal = styled.div`
   background-image: url(${ModalBg});
   width: 350px;
   height: 500px;
-  z-index: 1;
+  z-index: 9999;
   border-radius: 10px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
   display: flex;
@@ -78,12 +80,19 @@ interface Props {
 }
 
 const LoginModal = ({ setOpenModal }: Props) => {
+  const navigate = useNavigate();
+  const KakaoLogin = () => {
+    navigate('/level');
+    // window.location.href =
+    //   'https://kauth.kakao.com/oauth/authorize?client_id=e7c1204fb5b00edcc9f6a3cf3e92e736&redirect_uri=http:localhost:3000&response_type=code';
+  };
+
   return (
     <div>
       <DarkBackground onClick={() => setOpenModal(false)} />
       <Modal>
         <div style={{ marginBottom: '20px' }}>
-          <KakaoButton BgColor={'#FEE500'}>
+          <KakaoButton BgColor={'#FEE500'} onClick={KakaoLogin}>
             <StyledKakaoImg></StyledKakaoImg>
             카카오로 시작하기
           </KakaoButton>

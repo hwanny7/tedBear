@@ -7,6 +7,7 @@ import Leaf3 from 'assets/img/landingLeaf3.svg';
 import LandingBear from 'assets/img/landingBear.svg';
 import GreenBall from 'assets/img/greenBall.svg';
 import PinkBall from 'assets/img/pinkBall.svg';
+import LoginModal from 'components/profile/LoginModal';
 import BigWave1 from 'assets/img/bigWave1.svg';
 import BigWave2 from 'assets/img/bigWave2.svg';
 import BigWave3 from 'assets/img/bigWave3.svg';
@@ -18,7 +19,7 @@ import LandingImgTemp2 from 'assets/img/landingImgTemp2.svg';
 import LandingImgTemp3 from 'assets/img/landingImgTemp3.svg';
 import LandingImgTemp4 from 'assets/img/landingImgTemp4.svg';
 import Top from 'assets/img/top.svg';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useState, useEffect } from 'react';
 
 // 인터페이스
 interface Props {
@@ -377,6 +378,7 @@ const Circle = styled.div<ToggleStyledProps>`
 `;
 
 const LandingPage = (props: Props) => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const clickedToggle = () => {
     props.setToggle(!props.toggle);
   };
@@ -390,6 +392,7 @@ const LandingPage = (props: Props) => {
 
   return (
     <Wrapper>
+      {modalOpen && <LoginModal setOpenModal={setModalOpen} />}
       <TopBtn onClick={scrollToTop}>
         <TopImg src={Top} />
       </TopBtn>
@@ -407,7 +410,7 @@ const LandingPage = (props: Props) => {
             Let&apos;s Learn with <span>TedBear</span>
           </Title>
           <SubTitle>TedBear로 영어 스피킹 연습을 해보세요!</SubTitle>
-          <StartBtn>Get Started</StartBtn>
+          <StartBtn onClick={() => setModalOpen(true)}>Get Started</StartBtn>
         </HomeTextBox>
         <HomeImgBox>
           <SmogImg src={Smog} />
