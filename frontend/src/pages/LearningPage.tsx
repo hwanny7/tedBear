@@ -32,7 +32,7 @@ const LearningPage = () => {
             width: '853',
             backgroundColor: '#FFF6EC',
             boxShadow: '0 5px 20px 0 rgba(0, 0, 0, 0.04)',
-            border: '1px solid green',
+            border: '1px solid gray',
           }}
         >
           In the development space, where I spend the bulk of my time these
@@ -45,7 +45,7 @@ const LearningPage = () => {
           height: '507px',
           backgroundColor: '#FFF6EC',
           boxShadow: '0 5px 20px 0 rgba(0, 0, 0, 0.04)',
-          border: '1px solid green',
+          border: '1px solid gray',
         }}
       >
         {scripts.map((sentence, index) => (

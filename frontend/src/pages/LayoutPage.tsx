@@ -23,6 +23,7 @@ const OutletWrapper = styled.div<OpenProps>`
   left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
   height: 100vh;
   transition: all 0.5s ease;
+  background-color: #eaeaea;
 `;
 
 const LayoutPage = () => {
