@@ -1,18 +1,15 @@
 import Carousel from 'components/common/Carousel';
 import styled from 'styled-components';
 
-const Main = styled.div`
-  display: flex;
-  justify-content: center;
-  .slick-prev:before,
-  .slick-next:before {
-    color: blue;
-    display: block;
-  }
-`;
+const Main = styled.div``;
+
+interface Props {
+  url: string;
+  id: string;
+}
 
 const HomePage = () => {
-  const data: Array<{ url: string; id: string }> = [
+  const data: Props[] = [
     {
       url: 'https://img.youtube.com/vi/6Af6b_wyiwI/0.jpg',
       id: '6Af6b_wyiwI',
@@ -43,11 +40,8 @@ const HomePage = () => {
     },
   ];
   return (
-    <Main>
-      <div>
-        <h1>Your Recommended Videos</h1>
-        <Carousel data={data}></Carousel>
-      </div>
+    <Main style={{ width: '80%', marginLeft: '10%' }}>
+      <Carousel data={data}></Carousel>
     </Main>
   );
 };
