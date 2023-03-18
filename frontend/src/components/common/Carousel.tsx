@@ -10,17 +10,18 @@ interface Props {
 const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
+  width: 80%;
 `;
 
 const ContentBox = styled.div`
   display: flex;
   transition: all 0.3s ease-out;
   > * {
-    width: 31.3%;
+    width: 31%;
+    margin-left: 2%;
     flex-shrink: 0;
     flex-grow: 1;
-    border-radius: 5%;
-    margin-left: 2%;
+    border-radius: 10%;
   }
 `;
 
@@ -102,7 +103,7 @@ const Carousel = ({ data }: { data: Props[] }) => {
           )
         </div>
       </TitleWithButton>
-      <ContentBox style={{ transform: `translateX(-${currentIndex * 33.3}%)` }}>
+      <ContentBox style={{ transform: `translateX(-${currentIndex * 33}%)` }}>
         {data.map((Thumnail, idx) => {
           return <img key={idx} src={Thumnail.url} alt="" />;
         })}
