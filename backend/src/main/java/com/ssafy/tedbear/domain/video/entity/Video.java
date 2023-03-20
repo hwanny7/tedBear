@@ -32,7 +32,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@ToString
 public class Video {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
-import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.Getter;
 
@@ -24,7 +23,6 @@ public class SentenceDto {
 	@Getter
 	public static class InfoResponse {
 		Info data;
-
 		public InfoResponse(Sentence sentence) {
 			this.data = new Info(sentence);
 		}
