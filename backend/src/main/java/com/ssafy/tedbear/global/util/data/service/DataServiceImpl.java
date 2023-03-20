@@ -210,4 +210,23 @@ public class DataServiceImpl implements DataService {
 		wordSentenceRepository.saveAll(wordSentenceList);
 		System.out.println("저장 완료!!!!!!");
 	}
+
+	@Override
+	@Transactional
+	public void initVideoScore() {
+		List<Video> videoList = videoRepository.findAll();
+		for (Video video : videoList) {
+			List<Sentence> sentenceList = video.getSentenceList();
+			int cnt = 0;
+			int sumScore = 0;
+			for (Sentence sentence : sentenceList) {
+				int score = sentence.getScore();
+				if (score != 0) {
+					sumScore += score;
+					cnt += 1;
+				}
+			}
+			video.setScore(sumScore / Math.max(1,cnt));
+		}
+	}
 }

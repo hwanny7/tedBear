@@ -26,5 +26,5 @@ public class MemberScore extends BaseEntity {
 
 	@NotNull
 	private int score;
-	
+
 }

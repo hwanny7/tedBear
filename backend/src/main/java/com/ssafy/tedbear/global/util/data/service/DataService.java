@@ -10,4 +10,6 @@ public interface DataService {
 	void initSentenceScore();
 
 	void initSentenceWord();
+
+	void initVideoScore();
 }

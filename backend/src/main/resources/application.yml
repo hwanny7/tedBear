@@ -10,11 +10,11 @@ spring:
       matching-strategy: ant_path_matcher
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
-    show-sql: false
+    open-in-view: true
+    show-sql: true
     hibernate:
-      ddl-auto: update
-      use-new-id-generator-mappings: false
+      ddl-auto: none
+      use-new-id-generator-mappings: true
     properties:
       hibernate:
 
@@ -23,8 +23,8 @@ logging:
   level:
     org:
       hibernate:
-        SQL: off
+        SQL: trace
         type:
           descriptor:
             sql:
-              BasicBinder: off
+              BasicBinder: trace

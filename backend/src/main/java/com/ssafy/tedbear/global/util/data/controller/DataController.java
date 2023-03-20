@@ -44,4 +44,10 @@ public class DataController {
 		dataService.initSentenceScore();
 	}
 
+	// 영상에 점수 넣기
+	@GetMapping("/init-video-score")
+	public void initVideoScore() {
+		dataService.initVideoScore();
+	}
+
 }
