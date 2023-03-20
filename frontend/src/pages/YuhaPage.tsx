@@ -1,8 +1,16 @@
+import PieChart from 'components/profile/PieChart';
+import Exp from 'components/profile/Exp';
+import HeatMap from 'components/profile/Heatmap';
+import Level from 'components/profile/Level';
+
 const YuhaPage = () => {
   return (
     <div>
       <h1>YuhaPage</h1>
-      <h3>에스코어드림 샐러드를 먹으면 빨리 배고파져</h3>
+      <Level></Level>
+      <Exp></Exp>
+      <PieChart></PieChart>
+      <HeatMap></HeatMap>
     </div>
   );
 };
