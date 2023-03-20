@@ -8,4 +8,6 @@ public interface DataService {
 	void initCategory();
 
 	void initSentenceScore();
+
+	void initSentenceWord();
 }

@@ -30,6 +30,7 @@ public class Word {
 	private Long no;
 
 	@NotNull
+	@Column(unique = true)
 	private String content;
 
 	@Column(columnDefinition = "TEXT")

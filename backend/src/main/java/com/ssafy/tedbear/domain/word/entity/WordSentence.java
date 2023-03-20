@@ -12,6 +12,7 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "word_sentence_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class WordSentence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
