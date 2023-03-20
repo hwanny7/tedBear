@@ -74,7 +74,7 @@ public class Video {
 		this.score = score;
 	}
 
-	public void setBookmarked(boolean bookmarked) {
-		isBookmarked = bookmarked;
+	public void setBookmarked(boolean isBookmarked) {
+		this.isBookmarked = isBookmarked;
 	}
 }

@@ -18,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,7 +25,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@ToString
 public class Sentence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +61,7 @@ public class Sentence {
 	@Column(name = "flesch_kincaid_grade_level")
 	private Double fleshKincaidGradeLevel;
 
-	public void setScores(double gf, double fr, double fk,int score) {
+	public void setScores(double gf, double fr, double fk, int score) {
 		this.gunningFog = gf;
 		this.fleschReadingEase = fr;
 		this.fleshKincaidGradeLevel = fk;

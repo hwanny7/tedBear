@@ -6,4 +6,6 @@ import com.ssafy.tedbear.domain.video.dto.VideoDto;
 public interface VideoService {
 
 	VideoDto.InfoListResponse getRecommendList(Member member);
+
+	VideoDto.DetailResponse getDetail(Member member, String watchId);
 }

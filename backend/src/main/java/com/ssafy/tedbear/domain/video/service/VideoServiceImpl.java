@@ -1,7 +1,6 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,11 +39,20 @@ public class VideoServiceImpl implements VideoService {
 
 		return new VideoDto.InfoListResponse(
 			recommendVideoList
-			.stream()
-			.sorted((a, b) -> Math.abs(a.getScore() - myScore) - Math.abs(b.getScore() - myScore))
-			.limit(resultMaxCnt)
-			.peek(x -> x.setBookmarked(videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member,x).isPresent()))
-			.collect(Collectors.toList())
+				.stream()
+				.sorted((a, b) -> Math.abs(a.getScore() - myScore) - Math.abs(b.getScore() - myScore))
+				.limit(resultMaxCnt)
+				.peek(x -> x.setBookmarked(
+					videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, x).isPresent()))
+				.collect(Collectors.toList())
 		);
+	}
+
+	@Override
+	public VideoDto.DetailResponse getDetail(Member member, String watchId) {
+		Video video = videoRepository.findByWatchId(watchId);
+		video.setBookmarked(videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, video).isPresent());
+		System.out.println(video);
+		return new VideoDto.DetailResponse(video);
 	}
 }
