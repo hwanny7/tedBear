@@ -227,10 +227,10 @@ const PinkBallImg = styled(GreenBallImg)`
 
 // 카드 영역 ====================================================
 const Content1 = styled.div`
-  /* background-color: yellow; */
+  background-color: yellow;
   width: 100%;
-  min-height: 100vh;
-  max-height: 100vh;
+  /* min-height: 100vh; */
+  max-height: 800px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -239,7 +239,7 @@ const Content1 = styled.div`
 `;
 
 const Content2 = styled(Content1)`
-  /* background-color: purple; */
+  background-color: purple;
 `;
 
 const Content3 = styled(Content1)`

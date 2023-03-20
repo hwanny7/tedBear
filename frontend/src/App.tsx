@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
-import LandingPage from 'pages/LandingPage';
+// import LandingPage from 'pages/LandingPage';
+import LandingPage from 'pages/LandingPageTest';
 import GamePage from 'pages/GamePage';
 import LevelPage from 'pages/LevelPage';
 import ProfilePage from 'pages/ProfilePage';
@@ -39,6 +40,7 @@ function App() {
             <Route path="/ju" element={<JuPage />} />
             <Route
               path="/"
+              // element={<LandingPage toggle={toggle} setToggle={setToggle} />}
               element={<LandingPage toggle={toggle} setToggle={setToggle} />}
             />
           </Routes>
