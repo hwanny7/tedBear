@@ -36,7 +36,7 @@ export const lightTheme: DefaultTheme = {
 };
 
 export const darkTheme: DefaultTheme = {
-  mainColor: '#6255A4',
+  mainColor: '#332C55',
   mainLightColor: '#8F84CE',
   mainDarkColor: '#4D437E',
   pointColor: '#E67F51',
