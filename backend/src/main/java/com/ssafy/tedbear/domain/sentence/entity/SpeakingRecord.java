@@ -17,9 +17,11 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
+@SuperBuilder
 @Table(name = "speaking_record_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,4 +41,5 @@ public class SpeakingRecord extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "member_no")
 	private Member member;
+
 }
