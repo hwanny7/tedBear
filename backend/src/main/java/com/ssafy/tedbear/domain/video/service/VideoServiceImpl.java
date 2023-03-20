@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tedbear.domain.bookmark.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
@@ -49,10 +50,10 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	@Transactional
 	public VideoDto.DetailResponse getDetail(Member member, String watchId) {
 		Video video = videoRepository.findByWatchId(watchId);
 		video.setBookmarked(videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, video).isPresent());
-		System.out.println(video);
 		return new VideoDto.DetailResponse(video);
 	}
 }
