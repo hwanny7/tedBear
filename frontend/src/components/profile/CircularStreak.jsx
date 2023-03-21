@@ -27,7 +27,7 @@ const CircularStreak = () => {
   return (
     <div>
       {/* 원 ~ 사각형  */}
-      {/* <input
+      <input
         type="range"
         min="0"
         max="5"
@@ -35,7 +35,8 @@ const CircularStreak = () => {
         value={range}
         onChange={e => setRange(e.target.value)}
       />{' '}
-      {range} */}
+      {/* {range} */}
+      Custom the roundness!
       {/* 색상 그라데이션 */}
       {/* <label style={{ userSelect: 'none' }}>
         <input
@@ -70,7 +71,7 @@ const CircularStreak = () => {
             <Tooltip
               key={data.index}
               placement="top"
-              content={`count: ${data.count || 0}`}
+              content={`${data.count || 0} on ${data.date}`}
             >
               <rect {...props} />
             </Tooltip>
