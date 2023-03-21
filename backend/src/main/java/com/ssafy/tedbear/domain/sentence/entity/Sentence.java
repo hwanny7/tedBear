@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.ssafy.tedbear.domain.video.entity.Video;
@@ -61,10 +62,18 @@ public class Sentence {
 	@Column(name = "flesch_kincaid_grade_level")
 	private Double fleshKincaidGradeLevel;
 
+	@Transient
+	private boolean isBookmarked;
+
+	//========//
 	public void setScores(double gf, double fr, double fk, int score) {
 		this.gunningFog = gf;
 		this.fleschReadingEase = fr;
 		this.fleshKincaidGradeLevel = fk;
 		this.score = score;
+	}
+
+	public void setBookmarked(boolean isBookmarked) {
+		this.isBookmarked = isBookmarked;
 	}
 }

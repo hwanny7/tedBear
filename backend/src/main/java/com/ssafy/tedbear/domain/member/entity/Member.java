@@ -29,7 +29,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -77,4 +76,9 @@ public class Member extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "member_no")
 	private MemberLevel memberLevel;
+
+	//--//
+	public int getScore() {
+		return memberScore.getScore();
+	}
 }
