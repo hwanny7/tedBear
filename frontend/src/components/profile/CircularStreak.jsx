@@ -91,6 +91,7 @@ const CircularStreak = () => {
           value={value}
           legendCellSize={size} // legend 크기 ( show여부 )
           startDate={new Date('2023/01/01')}
+          endDate={new Date('2023/12/31')}
           // legendRender={props => <rect {...props} rx={!enableCircle ? 0 : 5} />}
           rectProps={{
             rx: range,
