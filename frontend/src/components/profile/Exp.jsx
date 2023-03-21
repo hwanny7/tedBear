@@ -94,7 +94,7 @@ export default function Exp() {
         options={options}
         series={series}
         type="bar"
-        height={100}
+        height={70}
         width={300}
       />
     </div>

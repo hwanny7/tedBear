@@ -1,9 +1,13 @@
-import BookmarkBoard from 'components/profile/BookmarkBoard';
+import CircularStreak from 'components/profile/CircularStreak';
+import Exp from 'components/profile/Exp';
+import PieChart from 'components/profile/PieChart';
 
 const ProfilePage = () => {
   return (
     <div>
-      <BookmarkBoard></BookmarkBoard>
+      <CircularStreak></CircularStreak>
+      <Exp></Exp>
+      <PieChart></PieChart>
     </div>
   );
 };

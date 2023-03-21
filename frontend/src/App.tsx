@@ -6,6 +6,7 @@ import GamePage from 'pages/GamePage';
 import LevelPage from 'pages/LevelPage';
 import ProfilePage from 'pages/ProfilePage';
 import LayoutPage from 'pages/LayoutPage';
+import BookPage from 'pages/BookPage';
 import SeungPage from 'pages/SeungPage';
 import YuhaPage from 'pages/YuhaPage';
 import JuPage from 'pages/JuPage';
@@ -33,6 +34,7 @@ function App() {
               <Route path="/level" element={<LevelPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/learning" element={<LearningPage />} />
+              <Route path="/bookmark" element={<BookPage />} />
             </Route>
 
             <Route path="/seung" element={<SeungPage />} />
