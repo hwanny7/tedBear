@@ -1,11 +1,12 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
-import com.ssafy.tedbear.domain.video.dto.VideoDto;
+import com.ssafy.tedbear.domain.video.dto.VideoDetail;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 
 public interface VideoService {
 
-	VideoDto.InfoListResponse getRecommendList(Member member);
+	VideoInfoList getRecommendList(Member member);
 
-	VideoDto.DetailResponse getDetail(Member member, String watchId);
+	VideoDetail getDetail(Member member, String watchId);
 }

@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tedbear.domain.bookmark.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
-import com.ssafy.tedbear.domain.video.dto.VideoDto;
+import com.ssafy.tedbear.domain.video.dto.VideoDetail;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 import com.ssafy.tedbear.domain.video.entity.Video;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.global.util.RecommendUtil;
@@ -24,7 +26,7 @@ public class VideoServiceImpl implements VideoService {
 	final int resultMaxCnt = 12;
 
 	@Override
-	public VideoDto.InfoListResponse getRecommendList(Member member) {
+	public VideoInfoList getRecommendList(Member member) {
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore);
 		int deltaScore = 1500;
@@ -38,10 +40,10 @@ public class VideoServiceImpl implements VideoService {
 			System.out.println(recommendVideoList.size());
 		} while (recommendVideoList.size() < resultMaxCnt);
 
-		return new VideoDto.InfoListResponse(
+		return new VideoInfoList(
 			recommendVideoList
 				.stream()
-				.sorted((a, b) -> Math.abs(a.getScore() - myScore) - Math.abs(b.getScore() - myScore))
+				.sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
 				.limit(resultMaxCnt)
 				.peek(x -> x.setBookmarked(
 					videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, x).isPresent()))
@@ -51,9 +53,9 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoDto.DetailResponse getDetail(Member member, String watchId) {
+	public VideoDetail getDetail(Member member, String watchId) {
 		Video video = videoRepository.findByWatchId(watchId);
 		video.setBookmarked(videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, video).isPresent());
-		return new VideoDto.DetailResponse(video);
+		return new VideoDetail(video);
 	}
 }

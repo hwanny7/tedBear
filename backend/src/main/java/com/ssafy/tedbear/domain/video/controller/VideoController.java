@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
-import com.ssafy.tedbear.domain.video.dto.VideoDto;
+import com.ssafy.tedbear.domain.video.dto.VideoDetail;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 import com.ssafy.tedbear.domain.video.service.VideoService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ public class VideoController {
 
 	// 추천 영상 12개 뿌리기
 	@GetMapping("/recommend/list")
-	public ResponseEntity<VideoDto.InfoListResponse> getRecommendList() {
+	public ResponseEntity<VideoInfoList> getRecommendList() {
 		Member member = memberRepository.findById(1L).get();
 		return ResponseEntity.ok(videoService.getRecommendList(member));
 	}
 
 	@GetMapping("/detail/{watchId}")
-	public ResponseEntity<VideoDto.DetailResponse> getDetail(@PathVariable("watchId") String watchId) {
+	public ResponseEntity<VideoDetail> getDetail(@PathVariable("watchId") String watchId) {
 		Member member = memberRepository.findById(1L).get();
 		return ResponseEntity.ok(videoService.getDetail(member, watchId));
 	}
