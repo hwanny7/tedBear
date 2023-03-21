@@ -54,14 +54,14 @@ public class SentenceService {
 	public SentenceDetailDto.ListResponse getRecommendList(Member member) {
 		int memberScore = member.getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(memberScore);
-		int deltaScore = 1500;
+		int deltaScore = 10;
 
 		List<Sentence> recommendList = new ArrayList<>();
 		do {
 			recommendList.addAll(sentenceRepository.findByScoreBetween(Math.max(1, recommendScoreFlag - deltaScore),
 				recommendScoreFlag + deltaScore));
-			deltaScore += 1000;
-			System.out.println(recommendList.size());
+			deltaScore += 3;
+			log.debug(String.valueOf(recommendList.size()));
 		} while (recommendList.size() < resultMaxCnt);
 
 		return new SentenceDetailDto.ListResponse(recommendList.stream()
