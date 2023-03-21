@@ -21,6 +21,10 @@ a {
   color: inherit; /* 링크의 색상 제거 */
 };
 
+li{
+  list-style: none;
+}
+
 `;
 
 export default GlobalStyle;
