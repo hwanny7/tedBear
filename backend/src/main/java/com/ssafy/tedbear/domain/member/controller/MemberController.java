@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssafy.tedbear.domain.member.dto.ProblemList;
 import com.ssafy.tedbear.domain.member.dto.StreakList;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
@@ -32,6 +33,11 @@ public class MemberController {
 		Member member = memberRepository.findById(2L)
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 		return ResponseEntity.ok(memberService.getStreak(member));
+	}
+
+	@GetMapping("/test/problem")
+	public ResponseEntity<ProblemList> getProblemList() {
+		return ResponseEntity.ok(memberService.getProblemList());
 	}
 
 }

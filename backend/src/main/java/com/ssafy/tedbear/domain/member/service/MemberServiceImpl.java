@@ -5,20 +5,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.tedbear.domain.member.dto.ProblemList;
 import com.ssafy.tedbear.domain.member.dto.Streak;
 import com.ssafy.tedbear.domain.member.dto.StreakList;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
+import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
+import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
+import com.ssafy.tedbear.domain.word.entity.Word;
+import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 	final MemberRepository memberRepository;
 	final SpeakingRecordRepository speakingRecordRepository;
+	final SentenceRepository sentenceRepository;
+	final WordRepository wordRepository;
 
 	@Override
 	public StreakList getStreak(Member member) {
@@ -43,5 +52,44 @@ public class MemberServiceImpl implements MemberService {
 			streakMap.get(date).increaseCount();
 		}
 		return new StreakList(streakMap);
+	}
+
+	@Override
+	public ProblemList getProblemList() {
+
+		Random random = new Random();
+
+		// 단어는 CEFR 다 가져와서, 난이도별로 3개씩 총 18개
+		List<Word> problemWordList =
+			wordRepository.findByScoreIsNot(0)
+				.stream()
+				.collect(Collectors.groupingBy(Word::getScore))
+				.values()
+				.stream()
+				.map(x -> x.stream()
+					.skip(random.nextInt(x.size() - 3))
+					.limit(3)
+					.collect(Collectors.toList()))
+				.flatMap(innerStream -> innerStream.stream())
+				.collect(Collectors.toList());
+
+		// 문장은 랜덤인덱스부터 만개 가져와서 문장 2,3,4,5,6,7만번대 각 1개씩 총 6개
+		long randomNo = Math.abs(random.nextLong()) % 300000;
+		List<Sentence> problemSentenceList =
+			sentenceRepository
+				.findByNoBetweenAndScoreBetween(randomNo, randomNo + 10000, 20000, 79999)
+				.stream()
+				.collect(Collectors.groupingBy(x -> x.getScore() / 10000))
+				.values()
+				.stream()
+				.map(x -> x.stream()
+					.skip(random.nextInt(x.size() - 1))
+					.limit(1)
+					.collect(Collectors.toList()))
+				.flatMap(innerStream -> innerStream.stream())
+				.collect(Collectors.toList());
+
+		return new ProblemList(problemSentenceList, problemWordList);
+
 	}
 }

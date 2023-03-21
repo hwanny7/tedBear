@@ -9,7 +9,8 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 @Repository
 public interface SentenceRepository extends JpaRepository<Sentence, Long> {
-	List<Sentence> findTop1000ByOrderByNo();
+	List<Sentence> findByNoBetweenAndScoreBetween(long startNo, long endNo, int startScore, int endScore);
 
 	List<Sentence> findByScoreBetween(int startScore, int endScore);
+
 }

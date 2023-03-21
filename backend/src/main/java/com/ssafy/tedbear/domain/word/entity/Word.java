@@ -41,4 +41,13 @@ public class Word {
 	@OneToMany(mappedBy = "word")
 	private List<WordSentence> wordSentenceList = new ArrayList<>();
 
+	@Override
+	public String toString() {
+		return "Word{" +
+			"no=" + no +
+			", content='" + content + '\'' +
+			", mean='" + mean + '\'' +
+			", score=" + score +
+			'}';
+	}
 }
