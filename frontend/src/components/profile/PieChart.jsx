@@ -1,4 +1,18 @@
 import Chart from 'react-apexcharts';
+import styled from 'styled-components';
+
+const ChartStyle = styled.div`
+  .chart-paper {
+    width: 30vw;
+    height: 60vh;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .chart-name {
+    padding: 10px 0px 0px 20px;
+  }
+`;
 
 // 비율
 const series = [15, 5, 10, 10, 10, 10, 10, 10, 10, 10];
@@ -60,7 +74,7 @@ const options = {
   },
   // 라벨 위치
   legend: {
-    position: 'right',
+    position: 'bottom',
   },
   // responsive custom
   responsive: [
@@ -68,6 +82,7 @@ const options = {
       breakpoint: 480,
       options: {
         chart: {
+          position: 'left',
           width: 200,
         },
         legend: {
@@ -80,8 +95,16 @@ const options = {
 
 export default function PieChart() {
   return (
-    <div>
-      <Chart options={options} series={series} type="polarArea" height={300} />
-    </div>
+    <ChartStyle>
+      <div className="chart-paper">
+        <h2 className="chart-name">Statistics</h2>
+        <Chart
+          options={options}
+          series={series}
+          type="polarArea"
+          height={400}
+        />
+      </div>
+    </ChartStyle>
   );
 }

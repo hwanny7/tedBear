@@ -1,6 +1,30 @@
 import { useState } from 'react';
 import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
+import styled from 'styled-components';
+
+const StreakStyle = styled.div`
+  .streak-paper {
+    width: 79vw;
+    height: 36vh;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .streak-name {
+    padding: 10px 0px 0px 20px;
+  }
+  .gauge {
+    padding: 0px 0px 0px 1050px;
+  }
+  .gauge-text {
+    -webkit-appearance: none;
+    border-radius: 20px;
+    background-color: #d6ebff;
+  }
+  .gradation {
+  }
+`;
 
 const value = [
   { date: '2023/01/11', count: 1 },
@@ -27,64 +51,78 @@ const CircularStreak = () => {
   const [size, setSize] = useState(0);
 
   return (
-    <div>
-      {/* 원 ~ 사각형  */}
-      <input
-        type="range"
-        min="0"
-        max="5"
-        step="0.1"
-        value={range}
-        onChange={e => setRange(e.target.value)}
-      />{' '}
-      {/* {range} */}
-      Custom the roundness!
-      {/* 색상 그라데이션 */}
-      <label style={{ userSelect: 'none' }}>
-        <input
-          type="checkbox"
-          checked={size === 0}
-          onChange={e => setSize(e.target.checked ? 0 : 12)}
+    <StreakStyle>
+      <div className="streak-paper">
+        <h2 className="streak-name">Streak</h2>
+        {/* 원 ~ 사각형  */}
+        <div className="gauge">
+          {/* roundness gauge */}
+          <h5>Custom the roundness!</h5>
+          <input
+            className="gauge-text"
+            type="range"
+            // 굴곡
+            min="0"
+            max="20"
+            step="0.1"
+            value={range}
+            onChange={e => setRange(e.target.value)}
+          />{' '}
+          {/* {range} */}
+        </div>
+        {/* 색상 그라데이션 */}
+        {/* <div className="gradation">
+          <label style={{ userSelect: 'none' }}>
+            <input
+              type="checkbox"
+              checked={size === 0}
+              onChange={e => setSize(e.target.checked ? 0 : 12)}
+            />
+            {size === 0 ? 'Gradation Hide' : 'Gradation Show'}
+          </label>
+        </div> */}
+        <HeatMap
+          // 히트맵 크기
+          width={1200}
+          height={180}
+          // 조각 크기
+          rectSize={20}
+          value={value}
+          legendCellSize={size} // legend 크기 ( show여부 )
+          startDate={new Date('2023/01/01')}
+          // legendRender={props => <rect {...props} rx={!enableCircle ? 0 : 5} />}
+          rectProps={{
+            rx: range,
+          }}
+          panelColors={{
+            0: '#FFF6EC',
+            1: '#FFEDD9',
+            2: '#FFE4C6',
+            3: '#FFDBB3',
+            4: '#FED1A1',
+            5: '#FEC88E',
+            6: '#FEBF7B',
+            7: '#FEB668',
+            8: '#FEBF7B',
+            9: '#FEAD55',
+          }}
+          // // tooltip
+          rectRender={(props, data) => {
+            // if (!data.count) return <rect {...props} />;
+            // console.log(props, data);
+            return (
+              <Tooltip
+                key={data.index}
+                placement="top"
+                content={`${data.count || 0} on ${data.date}`}
+              >
+                <rect {...props} />
+              </Tooltip>
+            );
+          }}
         />
-        {size === 0 ? 'Gradation Hide' : 'Gradation Show'}
-      </label>
-      <HeatMap
-        width={600}
-        value={value}
-        legendCellSize={size}
-        startDate={new Date('2023/01/01')}
-        // legendRender={props => <rect {...props} rx={!enableCircle ? 0 : 5} />}
-        rectProps={{
-          rx: range,
-        }}
-        panelColors={{
-          0: '#FFF6EC',
-          1: '#FFEDD9',
-          2: '#FFE4C6',
-          3: '#FFDBB3',
-          4: '#FED1A1',
-          5: '#FEC88E',
-          6: '#FEBF7B',
-          7: '#FEB668',
-          8: '#FEBF7B',
-          9: '#FEAD55',
-        }}
-        // // tooltip
-        rectRender={(props, data) => {
-          // if (!data.count) return <rect {...props} />;
-          // console.log(props, data);
-          return (
-            <Tooltip
-              key={data.index}
-              placement="top"
-              content={`${data.count || 0} on ${data.date}`}
-            >
-              <rect {...props} />
-            </Tooltip>
-          );
-        }}
-      />
-    </div>
+      </div>
+    </StreakStyle>
   );
 };
 export default CircularStreak;
