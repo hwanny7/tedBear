@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssafy.tedbear.domain.log.service.MemberShortsLogService;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
+import com.ssafy.tedbear.domain.sentence.dto.MemberShortsLogDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.service.SentenceService;
@@ -28,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/sentence")
 public class SentenceController {
 	private final MemberRepository memberRepository;
+	private final MemberShortsLogService memberShortsLogService;
 	private final SentenceService sentenceService;
 
 	@PostMapping("/speaking/{memberNo}")
@@ -42,11 +45,18 @@ public class SentenceController {
 
 	@GetMapping("/recommend/list")
 	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendList() {
-		Member member = memberRepository.findById(2L)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
+		Member member = memberRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 
 		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendList(member);
 		return new ResponseEntity<>(recommendList, HttpStatus.OK);
+	}
+
+	@PostMapping("/shorts")
+	public ResponseEntity<?> saveShortsLog(@RequestBody MemberShortsLogDto.Request shorLogRequest) {
+		Member member = memberRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
+
+		memberShortsLogService.saveMemberShortsLog(member, shorLogRequest.getSentenceNo());
+		return null;
 	}
 
 }

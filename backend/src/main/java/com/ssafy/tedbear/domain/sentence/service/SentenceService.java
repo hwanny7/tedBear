@@ -33,7 +33,7 @@ public class SentenceService {
 	private final SentenceBookmarkRepository sentenceBookmarkRepository;
 	final int resultMaxCnt = 12;
 
-	private Sentence getSentence(Long sentenceNo) {
+	public Sentence getSentence(Long sentenceNo) {
 		return sentenceRepository.findById(sentenceNo)
 			.orElseThrow(() -> new NoSuchElementException("해당 문장을 찾을 수 없습니다"));
 	}

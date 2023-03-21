@@ -13,11 +13,13 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
 @Table(name = "member_shorts_log_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
