@@ -69,11 +69,16 @@ const RightButton = styled.button`
   border: 1px solid black;
 `;
 
-const Carousel = ({ data }: { data: HomeRecomm[] }) => {
-  if (data.length !== 0) {
-    // 빈배열에도 slice 적용되는지 확인
-    data = [...data.slice(4, 7), ...data, ...data.slice(0, 3)];
-  }
+const Carousel = ({
+  data,
+  setOpenModal,
+  setShortsId,
+}: {
+  data: HomeRecomm[];
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShortsId: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(3);
@@ -84,12 +89,12 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
     navigate('/learning', { state: e });
   };
 
-  // useEffect(() => {
-  //   console.log('렌더링');
-  //   setLength(data.length);
-  // }, [data]); >> data가 바뀌지 않는다면 없어도 됨
+  useEffect(() => {
+    setLength(data.length);
+  }, [data]);
 
   const next = () => {
+    console.log(currentIndex);
     if (currentIndex < length - 3) {
       setCurrentIndex(prevState => prevState + 1);
     }
@@ -130,7 +135,17 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.thumbnailUrl} alt="" />;
+          return (
+            <img
+              key={idx}
+              src={Thumnail.thumbnailUrl}
+              alt=""
+              onClick={() => {
+                setOpenModal(true);
+                setShortsId(Thumnail.watchId);
+              }}
+            />
+          );
         })}
       </ContentBox>
     </Wrapper>

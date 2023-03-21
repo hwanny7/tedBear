@@ -3,6 +3,7 @@ import ShortsCarousel from 'components/common/ShortsCarousel';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { getVideoRecomm } from 'utils/api/recommApi';
+import ShortsModal from 'components/common/ShortsModal';
 
 // interface Props {
 //   url: string;
@@ -19,6 +20,8 @@ interface HomeRecomm {
 
 const HomePage = () => {
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [shorts, setShorts] = useState<string>('6Af6b_wyiwI');
 
   // const data: Props[] = [
   //   {
@@ -57,11 +60,16 @@ const HomePage = () => {
       setVideoData(data);
     };
     fetchData();
-  });
+  }, []);
 
   return (
     <div>
-      <Carousel data={videoData}></Carousel>
+      {modalOpen && <ShortsModal setOpenModal={setModalOpen} shorts={shorts} />}
+      <Carousel
+        data={videoData}
+        setOpenModal={setModalOpen}
+        setShortsId={setShorts}
+      ></Carousel>
       {/* <ShortsCarousel data={data}></ShortsCarousel> */}
     </div>
   );
