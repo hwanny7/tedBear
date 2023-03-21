@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const StreakStyle = styled.div`
   .streak-paper {
     width: 79vw;
-    height: 36vh;
+    height: 38vh;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -15,7 +15,8 @@ const StreakStyle = styled.div`
     padding: 10px 0px 0px 20px;
   }
   .gauge {
-    padding: 0px 0px 0px 1050px;
+    padding: 0px 30px 0px 0px;
+    text-align: right;
   }
   .gauge-text {
     -webkit-appearance: none;
