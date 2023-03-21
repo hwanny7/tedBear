@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import NavBar from 'components/common/NavBar';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
 interface OpenProps {
   open: boolean;
+  center: string;
 }
 
 const Wrapper = styled.div`
@@ -18,12 +19,17 @@ const Wrapper = styled.div`
 const OutletWrapper = styled.div<OpenProps>`
   width: ${OpenProps =>
     !OpenProps.open ? 'calc(100% - 78px)' : 'calc(100% - 200px)'};
-  height: 100vh;
   position: relative;
   left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
-  height: 100vh;
   transition: all 0.5s ease;
   background-color: #eaeaea;
+  ${props =>
+    props.center === '/home' &&
+    css`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
 `;
 
 const LayoutPage = () => {
@@ -36,7 +42,7 @@ const LayoutPage = () => {
   return (
     <Wrapper>
       {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
-      <OutletWrapper open={open}>
+      <OutletWrapper open={open} center={pathname}>
         <Outlet />
       </OutletWrapper>
     </Wrapper>
