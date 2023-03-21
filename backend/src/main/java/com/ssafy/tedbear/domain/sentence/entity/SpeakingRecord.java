@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -42,4 +43,13 @@ public class SpeakingRecord extends BaseEntity {
 	@JoinColumn(name = "member_no")
 	private Member member;
 
+	@Override
+	public String toString() {
+		return "SpeakingRecord{" +
+			"no=" + no +
+			", matchStatus=" + matchStatus +
+			", sentence=" + sentence.getContent() +
+			", member=" + member.getNickname() +
+			'}';
+	}
 }

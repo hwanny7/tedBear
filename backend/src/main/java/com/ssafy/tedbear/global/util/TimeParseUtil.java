@@ -16,4 +16,24 @@ public class TimeParseUtil {
 		return LocalDateTime.parse(stringTime, DateTimeFormatter.ofPattern(format));
 	}
 
+	// 기본 포맷 ( LocalDate -> String)
+	public static String time2String(LocalDate time) {
+		return time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
+
+	//  포맷을 입력 받음 ( LocalDate -> String)
+	public static String time2String(LocalDate time, String format) {
+		return time.format(DateTimeFormatter.ofPattern(format));
+	}
+
+	// 기본 포맷 ( LocalDateTime -> String)
+	public static String time2String(LocalDateTime time) {
+		return time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
+
+	//  포맷을 입력 받음 ( LocalDateTime -> String)
+	public static String time2String(LocalDateTime time, String format) {
+		return time.format(DateTimeFormatter.ofPattern(format));
+	}
+
 }
