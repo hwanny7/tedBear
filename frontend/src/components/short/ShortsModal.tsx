@@ -87,7 +87,7 @@ const ShortsModal = ({ setOpenModal, shorts }: Props) => {
       <YoutubeBox>
         <Wrapper>
           <CustomYoutube
-            videoId={'7tSP1M052Sg'}
+            videoId={shorts?.watchId}
             opts={opts}
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}

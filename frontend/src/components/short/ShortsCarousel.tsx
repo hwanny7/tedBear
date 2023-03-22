@@ -73,7 +73,7 @@ const ShortsCarousel = ({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShortsId: React.Dispatch<React.SetStateAction<Shorts | null>>;
 }) => {
-  data = [...data.slice(2, 7), ...data, ...data.slice(0, 5)];
+  data = [...data.slice(7, 12), ...data, ...data.slice(0, 5)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(5);
@@ -84,10 +84,9 @@ const ShortsCarousel = ({
     navigate('/learning', { state: e });
   };
 
-  // useEffect(() => {
-  //   console.log('렌더링');
-  //   setLength(data.length);
-  // }, [data]); >> data가 바뀌지 않는다면 없어도 됨
+  useEffect(() => {
+    setLength(data.length);
+  }, [data]);
 
   const next = () => {
     if (currentIndex < length - 5) {
@@ -110,7 +109,6 @@ const ShortsCarousel = ({
       setTimeout(() => {
         setCurrentIndex(length - 10);
         // 맨 뒤 5개, 인덱스 1개, 5개 열에서 4개
-        console.log('도착!');
         setTransStyle('');
       }, 250);
     }
@@ -135,7 +133,7 @@ const ShortsCarousel = ({
           return (
             <img
               key={idx}
-              src="https://i.ytimg.com/vi/7tSP1M052Sg/hq1.jpg"
+              src={'https://i.ytimg.com/vi/' + Thumnail.watchId + '/hq1.jpg'}
               alt=""
               onClick={() => {
                 setOpenModal(true);

@@ -29,6 +29,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
     width: 31%;
     margin-left: 2%;
     height: 200px;
+    cursor: pointer;
     /* height: 27vh; */
     flex-shrink: 0;
     flex-grow: 1;
@@ -78,7 +79,8 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
   const [transStyle, setTransStyle] = useState(transition);
 
   const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
-    navigate('/learning', { state: e });
+    console.log(e);
+    // navigate('/learning', { state: e });
   };
 
   useEffect(() => {
@@ -126,7 +128,16 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.thumbnailUrl} alt="" />;
+          return (
+            <img
+              key={idx}
+              src={Thumnail.thumbnailUrl}
+              onClick={() => {
+                handleClick;
+              }}
+              alt=""
+            />
+          );
         })}
       </ContentBox>
     </Wrapper>

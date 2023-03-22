@@ -112,8 +112,7 @@ const GameBoard = () => {
       await authApi
         .get(`member/test/problem`)
         .then(response => {
-          console.log('kk', response.data.wordMeanList);
-          setCardList(response.data.wordeanList);
+          setCardList(response.data.wordMeanList);
         })
         .catch(error => {
           console.log('에러', error.data);
@@ -145,7 +144,7 @@ const GameBoard = () => {
   //     cards.map((triple, index) => {
   //       return {
   //         id: index,
-  //         name: triple.content,
+  //         content: triple.content,
   //         mean: triple.mean,
   //         flipped: false,
   //       };
@@ -156,9 +155,9 @@ const GameBoard = () => {
 
   ///////////// GAME LOGIC /////////////
   // 카드를 클릭해서 뒤집는 경우
-  const handleClick = (name, index) => {
+  const handleClick = (content, index) => {
     let currentCard = {
-      name,
+      content,
       index,
     };
     let updateCards = cardList.map(card => {
@@ -205,11 +204,11 @@ const GameBoard = () => {
             <GameCard
               key={index}
               id={index}
-              // name={card.content}
-              // mean={card.mean}
-              // score={card.score}
-              // flipped={card.flipped}
-              // clicked={flippedCards.length === 12 ? {} : handleClick}
+              content={card.content}
+              mean={card.mean}
+              score={card.score}
+              flipped={card.flipped}
+              clicked={flippedCards.length === 12 ? {} : handleClick}
             />
           ))}
         </div>

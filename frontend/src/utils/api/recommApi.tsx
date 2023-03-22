@@ -18,10 +18,11 @@ export interface Shorts {
   endTime: number;
   content: string;
   bookmarked: boolean;
+  watchId: string;
 }
 
 interface ShortsRecomm {
-  recommendList: Shorts[];
+  sentenceList: Shorts[];
 }
 
 export const getVideoRecomm = async () => {
@@ -39,5 +40,5 @@ export const getShortsRecomm = async () => {
     url: '/sentence/recommend/list',
   });
 
-  return data.recommendList;
+  return data.sentenceList;
 };
