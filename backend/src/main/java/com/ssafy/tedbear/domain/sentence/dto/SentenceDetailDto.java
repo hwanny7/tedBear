@@ -14,6 +14,7 @@ public class SentenceDetailDto {
 	int endTime;
 	String content;
 	boolean bookmarked;
+	String watchId;
 
 	//원본 비디오 영상 링크
 
@@ -22,6 +23,7 @@ public class SentenceDetailDto {
 		this.startTime = sentence.getStartTime();
 		this.endTime = sentence.getEndTime();
 		this.content = sentence.getContent();
+		this.watchId = sentence.getVideo().getWatchId();
 	}
 
 	@Getter
