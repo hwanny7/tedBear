@@ -16,6 +16,12 @@ import Sun from 'assets/img/sun.svg';
 import Moon from 'assets/img/moon.svg';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
 
+// Box1 svg
+import LandingVideo from 'assets/img/landingVideo.svg';
+import LandingPuzzle from 'assets/img/landingPuzzle.svg';
+import LandingMic from 'assets/img/landingMic.svg';
+import LandingCheck from 'assets/img/landingCheck.svg';
+
 // 인터페이스
 interface Props {
   toggle: boolean;
@@ -101,22 +107,18 @@ const Visual = styled.div<ToggleStyledProps>`
       : 'linear-gradient( 300deg,#4c4669 0%,#322b4e 30%,#231f37 60%,#110f1b 100%)'};
 
   @media ${device.mobile} {
-    /* height: 100vh; */
     height: 500px;
   }
 
   @media ${device.tablet} {
-    /* height: 100vh; */
     height: 600px;
   }
 
   @media ${device.laptop} {
-    /* height: 100vh; */
     height: 700px;
   }
 
   @media ${device.desktop} {
-    /* height: 100vh; */
     height: 700px;
   }
 `;
@@ -726,6 +728,7 @@ const Content = styled.div`
   margin-top: 100px;
 `;
 
+// BOX1
 const Box1 = styled.div`
   /* border: 1px solid black; */
   position: relative;
@@ -737,23 +740,24 @@ const TextTitle1 = styled.div<AnimationStyledProps>`
   animation: ${AnimationStyledProps =>
     AnimationStyledProps.animation
       ? css`
-   1s ease-in-out ${fadeIn2};
+   1s ease-in-out 0s 1 normal none running ${fadeIn2};
         `
       : ``};
+  color: ${props => props.theme.textColor1};
 
   span {
     font-weight: bold;
-    color: ${props => props.theme.mainColor};
+    color: ${props => props.theme.pointColor};
   }
 
   @media ${device.mobile} {
     font-size: 20px;
-    padding-left: 24px;
+    padding-left: 32px;
   }
 
   @media ${device.tablet} {
     font-size: 28px;
-    padding-left: 24px;
+    padding-left: 32px;
   }
 
   @media ${device.laptop} {
@@ -771,19 +775,20 @@ const TextSubTitle1 = styled.div<AnimationStyledProps>`
   animation: ${AnimationStyledProps =>
     AnimationStyledProps.animation
       ? css`
-   1s ease-in-out ${fadeIn2};
+    1s ease-in-out 0s 1 normal none running ${fadeIn2};
         `
       : ``};
+  color: ${props => props.theme.textColor1};
 
   @media ${device.mobile} {
     font-size: 12px;
-    padding-left: 24px;
+    padding-left: 32px;
     margin-top: 8px;
   }
 
   @media ${device.tablet} {
     font-size: 18px;
-    padding-left: 24px;
+    padding-left: 32px;
     margin-top: 8px;
   }
 
@@ -801,27 +806,164 @@ const TextSubTitle1 = styled.div<AnimationStyledProps>`
 `;
 
 const DescList = styled.ul`
-  margin-top: 32px;
+  margin-top: 64px;
   /* border: 1px solid red; */
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 0 48px;
+
+  flex-wrap: wrap;
+
+  @media ${device.mobile} {
+    padding: 0 24px;
+  }
+
+  @media ${device.tablet} {
+    padding: 0 24px;
+  }
+
+  @media ${device.laptop} {
+    padding: 0 32px;
+  }
+
+  @media ${device.desktop} {
+    padding: 0 48px;
+  }
 `;
 
-const DescListEl = styled.li`
+const LandingVideoImg = styled.img`
+  margin-bottom: 32px;
+  @media ${device.mobile} {
+    width: 50px;
+  }
+
+  @media ${device.tablet} {
+    width: 70px;
+  }
+
+  @media ${device.laptop} {
+    width: 100px;
+  }
+
+  @media ${device.desktop} {
+    width: 30%;
+  }
+`;
+const LandingMicImg = styled(LandingVideoImg)``;
+const LandingPuzzleImg = styled(LandingVideoImg)``;
+const LandingCheckImg = styled(LandingVideoImg)``;
+
+const ElTitle = styled.div`
+  font-weight: bold;
+  color: ${props => props.theme.pointColor};
+  margin-bottom: 16px;
+
+  @media ${device.mobile} {
+    font-size: 16px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 20px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 24px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 24px;
+  }
+`;
+
+const ElDesc = styled.div`
+  text-align: center;
+  word-break: normal;
+
+  @media ${device.mobile} {
+    font-size: 8px;
+    line-height: 14px;
+    margin: 0 8px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 8px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 16px;
+    line-height: 26px;
+    margin: 0 8px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 16px;
+    line-height: 26px;
+    margin: 0 8px;
+  }
+`;
+
+const DescListEl1 = styled.li<AnimationStyledProps>`
   width: 20%;
-  min-height: 400px;
   border-top-left-radius: 40px;
   border-bottom-right-radius: 40px;
   box-shadow: 6px 6px 20px #61616142;
-`;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: ${props => props.theme.bgColor};
+  animation: ${AnimationStyledProps =>
+    AnimationStyledProps.animation
+      ? css`
+   1.5s ease-in-out 0s 1 normal none running ${fadeIn2};
+        `
+      : ``};
+  color: ${props => props.theme.textColor2};
+  margin-bottom: 16px;
 
-const Box2 = styled.div`
-  /* border: 1px solid black; */
-  min-height: 800px;
+  &:hover {
+    background: linear-gradient(
+      36deg,
+      #6255a4 0%,
+      #968ec2 20%,
+      #f4c6b2 90%,
+      #ffdbb3 100%
+    );
+
+    color: white;
+
+    ${ElTitle} {
+      color: white;
+    }
+  }
+
+  @media ${device.mobile} {
+    width: 45%;
+    min-height: 200px;
+  }
+
+  @media ${device.tablet} {
+    width: 45%;
+    min-height: 300px;
+  }
+
+  @media ${device.laptop} {
+    width: 40%;
+    min-height: 400px;
+  }
+
+  @media ${device.desktop} {
+    width: 20%;
+    min-height: 400px;
+  }
 `;
+const DescListEl2 = styled(DescListEl1)``;
+const DescListEl3 = styled(DescListEl1)``;
+const DescListEl4 = styled(DescListEl1)``;
 
 const LandingPageTest = (props: Props) => {
   // 다크모드, 라이트모드 설정
@@ -831,6 +973,7 @@ const LandingPageTest = (props: Props) => {
 
   // ref
   const firstBox = useRef<HTMLDivElement>(null);
+  const descList = useRef<HTMLUListElement>(null);
 
   // 애니메이션 적용
   const [animation, setAnimation] = useState<boolean>(false);
@@ -839,13 +982,16 @@ const LandingPageTest = (props: Props) => {
   useEffect(() => {
     window.addEventListener('scroll', e => {
       const temp1 = window.scrollY + window.innerHeight;
-      const temp2 = firstBox.current?.offsetTop;
 
-      if (temp2 && temp1 <= temp2) {
+      if (firstBox.current?.offsetTop && temp1 <= firstBox.current?.offsetTop) {
         // 현재 위치 도달 하면 animaton 추가
-        setAnimation(!animation);
-        // console.log('도달?');
+        setAnimation(true);
       }
+
+      if (descList.current?.offsetTop && temp1 <= descList.current?.offsetTop) {
+        setAnimation(true);
+      }
+      // setAnimation(false);
     });
   }, []);
 
@@ -890,14 +1036,44 @@ const LandingPageTest = (props: Props) => {
           <TextSubTitle1 animation={animation}>
             테드로 영어를 쉽게 배울 수 있는 사이트입니다.
           </TextSubTitle1>
-          <DescList>
-            <DescListEl></DescListEl>
-            <DescListEl></DescListEl>
-            <DescListEl></DescListEl>
-            <DescListEl></DescListEl>
+          <DescList ref={descList}>
+            <DescListEl1 animation={animation}>
+              <LandingVideoImg src={LandingVideo} />
+              <ElTitle>VIDEO</ElTitle>
+              <ElDesc>
+                TEDBEAR는 사용자 맞춤형
+                <br /> 다양한 TED 영상들을
+                <br /> 추천해줍니다.
+              </ElDesc>
+            </DescListEl1>
+            <DescListEl2 animation={animation}>
+              <LandingMicImg src={LandingMic} />
+              <ElTitle>SPEAKING</ElTitle>
+              <ElDesc>
+                Ted 영상과 스크립트로 <br />
+                영어 스피킹 연습을 <br />할 수 있어요.
+              </ElDesc>
+            </DescListEl2>
+            <DescListEl3 animation={animation}>
+              <LandingPuzzleImg src={LandingPuzzle} />
+              <ElTitle>GAME</ElTitle>
+              <ElDesc>
+                재밌는 퍼즐 게임으로 <br />
+                공부한 내용을 <br />
+                복습해보세요.
+              </ElDesc>
+            </DescListEl3>
+            <DescListEl4 animation={animation}>
+              <LandingCheckImg src={LandingCheck} />
+              <ElTitle>CHECK</ElTitle>
+              <ElDesc>
+                통계와 스트릭으로 <br />
+                사용자의 학습 상태를 <br />
+                체크할 수 있어요.
+              </ElDesc>
+            </DescListEl4>
           </DescList>
         </Box1>
-        <Box2></Box2>
       </Content>
     </Wrapper>
   );
