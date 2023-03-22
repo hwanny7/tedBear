@@ -4,13 +4,6 @@ import PieChart from 'components/profile/PieChart';
 import styled from 'styled-components';
 
 const Profile = styled.div`
-  .exp-container {
-    /* background-color: orange; */
-    display: flex;
-    align-content: center;
-    margin-top: 45px;
-    margin-bottom: 20px;
-  }
   .top-container {
     display: flex;
     justify-content: space-evenly;

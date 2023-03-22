@@ -3,17 +3,22 @@ import styled from 'styled-components';
 
 const SemiStyle = styled.div`
   .exp-paper {
-    width: 33vw;
-    height: 44vh;
+    width: 35vw;
+    height: 55vh;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
   .exp-name {
     text-align: center;
-    padding: 20px 0px 0px 0px;
+    padding: 35px 0px 0px 0px;
     font-size: 50px;
     color: #6255a4;
+  }
+  .exp-chart {
+    display: flex;
+    align-content: center;
+    justify-content: center;
   }
 `;
 
@@ -59,7 +64,7 @@ const options = {
   },
   grid: {
     padding: {
-      top: -30,
+      top: -5,
     },
   },
   fill: {
@@ -82,13 +87,15 @@ export default function SemiExp() {
       <div className="exp-paper">
         <p className="exp-name">LV.20</p>
         {/* 여기에 레벨 넣기 */}
-        <Chart
-          options={options}
-          series={series}
-          type="radialBar"
-          height={500}
-          width={500}
-        />
+        <div className="exp-chart">
+          <Chart
+            options={options}
+            series={series}
+            type="radialBar"
+            height={500}
+            width={500}
+          />
+        </div>
       </div>
     </SemiStyle>
   );

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
 import styled from 'styled-components';
+import { authApi } from 'utils/api/customAxios';
 
 const StreakStyle = styled.div`
   .streak-paper {
-    width: 80vw;
+    width: 82vw;
     height: 38vh;
     background-color: white;
     border-radius: 20px;
@@ -27,29 +28,40 @@ const StreakStyle = styled.div`
   }
 `;
 
-const value = [
-  { date: '2023/01/11', count: 1 },
-  ...[...Array(17)].map((_, idx) => ({
-    date: `2023/01/${idx + 10}`,
-    count: idx,
-  })),
-  ...[...Array(17)].map((_, idx) => ({
-    date: `2023/02/${idx + 10}`,
-    count: idx,
-  })),
-  { date: '2023/04/12', count: 2 },
-  { date: '2023/05/01', count: 3 },
-  { date: '2023/05/02', count: 4 },
-  { date: '2023/05/03', count: 5 },
-  { date: '2023/05/04', count: 6 },
-  { date: '2023/05/08', count: 7 },
-  { date: '2023/06/08', count: 8 },
-  { date: '2023/07/08', count: 9 },
-];
-
 const CircularStreak = () => {
   const [range, setRange] = useState(5);
   const [size, setSize] = useState(0);
+  const [values, setValues] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      await authApi
+        .get(`/member/streak`)
+        .then(response => {
+          setValues(response.data.streakList);
+          console.log(response.data.streakList);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
+    setIsLoaded(true);
+    fetchData();
+  }, []);
+
+  // const value = [
+  //   { date: '2023/01/11', count: 1 },
+  //   ...[...Array(17)].map((_, idx) => ({
+  //     date: `2023/01/${idx + 10}`,
+  //     count: idx,
+  //   })),
+  //   ...[...Array(17)].map((_, idx) => ({
+  //     date: `2023/02/${idx + 10}`,
+  //     count: idx,
+  //   })),
+  //   { date: '2023/04/12', count: 2 },
+  // ];
 
   return (
     <StreakStyle>
@@ -76,7 +88,7 @@ const CircularStreak = () => {
           height={180}
           // 조각 크기
           rectSize={20}
-          value={value}
+          value={values}
           legendCellSize={size} // legend 크기 ( show여부 )
           startDate={new Date('2023/01/01')}
           endDate={new Date('2023/12/31')}

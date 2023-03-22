@@ -1,4 +1,4 @@
-import GameBoard from 'components/game/GameBoard';
+import GameBoard from 'components/game/GameBoard.jsx';
 
 const LevelPage = () => {
   return <GameBoard></GameBoard>;
