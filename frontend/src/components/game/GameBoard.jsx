@@ -102,7 +102,6 @@ const Game = styled.div`
 // Function
 const GameBoard = () => {
   const navigate = useNavigate();
-  const [values, setValues] = useState();
   const [Loaded, setLoaded] = useState(false);
   const [flippedCards, setFlippedCards] = useState([]); // 뒤집힌 카드의 리스트 -> score 합산 -> 버튼 click시, post
 
@@ -126,51 +125,24 @@ const GameBoard = () => {
     fetchData();
   }, []);
 
-  // Card 12개
-  const cards = [
-    { content: 'consultant', mean: '컨설턴트' },
-    { content: 'coach', mean: '코치' },
-    { content: 'love', mean: '사랑♥' },
-    { content: 'like', mean: '좋아한다' },
-    { content: 'hate', mean: '싫어한다' },
-    { content: 'disturb', mean: '방해하다' },
-    { content: 'node', mean: '노드' },
-    { content: 'die', mean: '죽다' },
-    { content: 'bottle', mean: '병' },
-    { content: 'card', mean: '카드' },
-    { content: 'soon', mean: '곧' },
-    { content: 'board', mean: '게시판' },
-  ];
-
   const [cardList, setCardList] = useState([]);
 
-  ///////////// GAME LOGIC /////////////
-  // 카드를 클릭해서 뒤집는 경우
-  const handleClick = (content, index) => {
-    let currentCard = {
-      content,
-      index,
-    };
+  const handleClick = index => {
     let updateCards = cardList.map(card => {
       if (card.id === index) {
-        card.flipped = true;
+        card.flipped = !card.flipped;
       }
       return card;
     });
 
-    let updateFlipped = flippedCards;
-    updateFlipped.push(currentCard);
-    setFlippedCards(updateFlipped); // 뒤집힌 카드를 업데이트
     setCardList(updateCards);
   };
 
-  // navigate
   const handleNext = () => {
     console.log(flippedCards);
     navigate('/home');
   };
 
-  // RETURN
   return (
     <Game>
       <Question

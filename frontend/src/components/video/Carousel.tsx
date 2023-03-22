@@ -78,11 +78,6 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
   const [length, setLength] = useState(data.length);
   const [transStyle, setTransStyle] = useState(transition);
 
-  const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
-    console.log(e);
-    // navigate('/learning', { state: e });
-  };
-
   useEffect(() => {
     setLength(data.length);
   }, [data]);
@@ -113,6 +108,9 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
     setTransStyle(transition);
   };
 
+  const handleClick = (watchId: string): void => {
+    navigate('/learning', { state: watchId });
+  };
   return (
     <Wrapper>
       <TitleWithButton>
@@ -132,9 +130,7 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
             <img
               key={idx}
               src={Thumnail.thumbnailUrl}
-              onClick={() => {
-                handleClick;
-              }}
+              onClick={() => handleClick(Thumnail.watchId)}
               alt=""
             />
           );

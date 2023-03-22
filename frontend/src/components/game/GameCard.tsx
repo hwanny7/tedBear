@@ -10,7 +10,7 @@ interface CardType {
 const GameCard = ({ id, content, flipped, clicked, mean }: CardType) => {
   return (
     <div
-      onClick={() => (flipped ? undefined : clicked(content, id))}
+      onClick={() => clicked(id)}
       className={'card' + (flipped ? ' flipped' : '')}
     >
       <div className="back">{content}</div>
