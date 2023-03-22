@@ -57,6 +57,7 @@ const Game = styled.div`
         font-size: 40px;
         line-height: 110px;
         display: flex;
+        cursor: pointer;
         align-items: center;
         justify-content: center;
         text-emphasis: none;
