@@ -112,10 +112,14 @@ const GameBoard = () => {
       await authApi
         .get(`member/test/problem`)
         .then(response => {
-          setCardList(response.data.wordMeanList);
+          const data = response.data.wordMeanList.map((item, index) => {
+            return { ...item, flipped: false, id: index };
+          });
+          console.log(data);
+          setCardList(data);
         })
         .catch(error => {
-          console.log('에러', error.data);
+          console.log(error.data);
         });
     }
     setLoaded(true);
@@ -137,19 +141,6 @@ const GameBoard = () => {
     { content: 'soon', mean: '곧' },
     { content: 'board', mean: '게시판' },
   ];
-
-  ///////////// SETUP /////////////
-  // const [cardList, setCardList] = useState(
-  //   cards &&
-  //     cards.map((triple, index) => {
-  //       return {
-  //         id: index,
-  //         content: triple.content,
-  //         mean: triple.mean,
-  //         flipped: false,
-  //       };
-  //     }),
-  // );
 
   const [cardList, setCardList] = useState([]);
 
@@ -208,7 +199,7 @@ const GameBoard = () => {
               mean={card.mean}
               score={card.score}
               flipped={card.flipped}
-              clicked={flippedCards.length === 12 ? {} : handleClick}
+              clicked={handleClick}
             />
           ))}
         </div>
