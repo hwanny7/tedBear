@@ -103,7 +103,7 @@ const Game = styled.div`
 `;
 
 // Function
-const GameBoard = () => {
+const GameBoardRe = () => {
   const navigate = useNavigate();
   const [Loaded, setLoaded] = useState(false);
   const [flippedCards, setFlippedCards] = useState([]); // 뒤집힌 카드의 리스트 -> score 합산 -> 버튼 click시, post
@@ -209,4 +209,4 @@ const GameBoard = () => {
   );
 };
 
-export default GameBoard;
+export default GameBoardRe;
