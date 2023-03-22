@@ -69,15 +69,7 @@ const RightButton = styled.button`
   border: 1px solid black;
 `;
 
-const Carousel = ({
-  data,
-  setOpenModal,
-  setShortsId,
-}: {
-  data: HomeRecomm[];
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShortsId: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const Carousel = ({ data }: { data: HomeRecomm[] }) => {
   data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
@@ -94,7 +86,6 @@ const Carousel = ({
   }, [data]);
 
   const next = () => {
-    console.log(currentIndex);
     if (currentIndex < length - 3) {
       setCurrentIndex(prevState => prevState + 1);
     }
@@ -135,17 +126,7 @@ const Carousel = ({
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return (
-            <img
-              key={idx}
-              src={Thumnail.thumbnailUrl}
-              alt=""
-              onClick={() => {
-                setOpenModal(true);
-                setShortsId(Thumnail.watchId);
-              }}
-            />
-          );
+          return <img key={idx} src={Thumnail.thumbnailUrl} alt="" />;
         })}
       </ContentBox>
     </Wrapper>

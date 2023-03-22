@@ -12,6 +12,18 @@ interface HomeRecomm {
   ];
 }
 
+export interface Shorts {
+  no: number;
+  startTime: number;
+  endTime: number;
+  content: string;
+  bookmarked: boolean;
+}
+
+interface ShortsRecomm {
+  recommendList: Shorts[];
+}
+
 export const getVideoRecomm = async () => {
   const { data } = await authApi<HomeRecomm>({
     method: 'get',
@@ -19,4 +31,13 @@ export const getVideoRecomm = async () => {
   });
 
   return data.videoInfoList;
+};
+
+export const getShortsRecomm = async () => {
+  const { data } = await authApi<ShortsRecomm>({
+    method: 'get',
+    url: '/sentence/recommend/list',
+  });
+
+  return data.recommendList;
 };

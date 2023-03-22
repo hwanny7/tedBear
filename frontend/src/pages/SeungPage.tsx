@@ -36,7 +36,6 @@ const Wrapper = styled.div`
 `;
 
 const YoutubeBox = styled.div`
-  border: blue 5px solid;
   min-width: 50%;
   min-height: 50%;
   position: absolute;

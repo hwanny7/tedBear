@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import styled from 'styled-components';
+import { Shorts } from 'utils/api/recommApi';
 
 interface Props {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  shorts: string;
+  shorts: Shorts | null;
 }
 
 const DarkBackground = styled.div`
@@ -58,7 +59,7 @@ const ShortsModal = ({ setOpenModal, shorts }: Props) => {
   const onPlayerStateChange: YouTubeProps['onStateChange'] = event => {
     if (!event.data) {
       const player = event.target;
-      player.seekTo(0);
+      player.seekTo(shorts?.startTime);
       player.playVideo();
     }
     // 1 재생 중, 2 일시중지, 0 종료 https://developers.google.com/youtube/iframe_api_reference?hl=ko#onPlaybackRateChange
@@ -70,8 +71,8 @@ const ShortsModal = ({ setOpenModal, shorts }: Props) => {
     width: '100%',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      start: 5,
-      end: 10,
+      start: shorts?.startTime,
+      end: shorts?.endTime,
       controls: 0,
       disablekb: 1,
       // autoplay: 1,
@@ -86,7 +87,7 @@ const ShortsModal = ({ setOpenModal, shorts }: Props) => {
       <YoutubeBox>
         <Wrapper>
           <CustomYoutube
-            videoId={shorts}
+            videoId={'7tSP1M052Sg'}
             opts={opts}
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}

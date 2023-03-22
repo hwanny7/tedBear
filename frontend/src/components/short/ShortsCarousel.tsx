@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
-interface Props {
-  url: string;
-  id: string;
-}
+import { Shorts } from 'utils/api/recommApi';
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -68,7 +64,15 @@ const RightButton = styled.button`
   border: 1px solid black;
 `;
 
-const ShortsCarousel = ({ data }: { data: Props[] }) => {
+const ShortsCarousel = ({
+  data,
+  setOpenModal,
+  setShortsId,
+}: {
+  data: Shorts[];
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShortsId: React.Dispatch<React.SetStateAction<Shorts | null>>;
+}) => {
   data = [...data.slice(2, 7), ...data, ...data.slice(0, 5)];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
@@ -128,7 +132,17 @@ const ShortsCarousel = ({ data }: { data: Props[] }) => {
       </TitleWithButton>
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
-          return <img key={idx} src={Thumnail.url} alt="" />;
+          return (
+            <img
+              key={idx}
+              src="https://i.ytimg.com/vi/7tSP1M052Sg/hq1.jpg"
+              alt=""
+              onClick={() => {
+                setOpenModal(true);
+                setShortsId(Thumnail);
+              }}
+            />
+          );
         })}
       </ContentBox>
     </Wrapper>
