@@ -15,7 +15,7 @@ export const lightTheme: DefaultTheme = {
   pointLigntGrdColor6: '#FFE4C6',
   pointLigntGrdColor7: '#FFEDD9',
   pointLigntGrdColor8: '#FFF6EC',
-  bgColor: '#FFFFFF',
+  bgColor: '#EAEAEA',
   whiteColor: '#FFFFFF',
   blackColor: '#000000',
   redColor: '#FF0000',
