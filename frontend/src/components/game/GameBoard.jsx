@@ -1,13 +1,14 @@
-import { useState } from 'react';
 import GameCard from 'components/game/GameCard';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Paper } from '@mui/material';
 import { ReactComponent as Question } from 'assets/img/question.svg';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authApi } from 'utils/api/customAxios';
 
-// <Game>
+// style
 const Game = styled.div`
   .game-board {
     display: flex;
@@ -99,67 +100,67 @@ const Game = styled.div`
 `;
 
 // Function
-
 const GameBoard = () => {
   const navigate = useNavigate();
-  // 12개
+  const [values, setValues] = useState();
+  const [Loaded, setLoaded] = useState(false);
+  const [flippedCards, setFlippedCards] = useState([]); // 뒤집힌 카드의 리스트 -> score 합산 -> 버튼 click시, post
+
+  useEffect(() => {
+    console.log('hi');
+    async function fetchData() {
+      await authApi
+        .get(`member/test/problem`)
+        .then(response => {
+          console.log('kk', response.data.wordMeanList);
+          setCardList(response.data.wordeanList);
+        })
+        .catch(error => {
+          console.log('에러', error.data);
+        });
+    }
+    setLoaded(true);
+    fetchData();
+  }, []);
+
+  // Card 12개
   const cards = [
-    { word: 'consultant', mean: '컨설턴트' },
-    { word: 'coach', mean: '코치' },
-    { word: 'love', mean: '사랑♥' },
-    { word: 'like', mean: '좋아한다' },
-    { word: 'hate', mean: '싫어한다' },
-    { word: 'disturb', mean: '방해하다' },
-    { word: 'node', mean: '노드' },
-    { word: 'die', mean: '죽다' },
-    { word: 'bottle', mean: '병' },
-    { word: 'card', mean: '카드' },
-    { word: 'soon', mean: '곧' },
-    { word: 'board', mean: '게시판' },
+    { content: 'consultant', mean: '컨설턴트' },
+    { content: 'coach', mean: '코치' },
+    { content: 'love', mean: '사랑♥' },
+    { content: 'like', mean: '좋아한다' },
+    { content: 'hate', mean: '싫어한다' },
+    { content: 'disturb', mean: '방해하다' },
+    { content: 'node', mean: '노드' },
+    { content: 'die', mean: '죽다' },
+    { content: 'bottle', mean: '병' },
+    { content: 'card', mean: '카드' },
+    { content: 'soon', mean: '곧' },
+    { content: 'board', mean: '게시판' },
   ];
 
-  ///////////// HELPER FUNCTION /////////////
-
-  const shuffle = array => {
-    let currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  };
-
   ///////////// SETUP /////////////
+  // const [cardList, setCardList] = useState(
+  //   cards &&
+  //     cards.map((triple, index) => {
+  //       return {
+  //         id: index,
+  //         name: triple.content,
+  //         mean: triple.mean,
+  //         flipped: false,
+  //       };
+  //     }),
+  // );
 
-  const [cardList, setCardList] = useState(
-    cards.map((pair, index) => {
-      return {
-        id: index,
-        name: pair.word,
-        mean: pair.mean,
-        flipped: false,
-        // matched: false,
-      };
-    }),
-  );
-
-  const [flippedCards, setFlippedCards] = useState([]);
-  // const [gameOver, setGameOver] = useState(false);
+  const [cardList, setCardList] = useState([]);
 
   ///////////// GAME LOGIC /////////////
-
+  // 카드를 클릭해서 뒤집는 경우
   const handleClick = (name, index) => {
     let currentCard = {
       name,
       index,
     };
-
-    //update card is flipped
     let updateCards = cardList.map(card => {
       if (card.id === index) {
         card.flipped = true;
@@ -169,19 +170,17 @@ const GameBoard = () => {
 
     let updateFlipped = flippedCards;
     updateFlipped.push(currentCard);
-    setFlippedCards(updateFlipped); // 뒤집힌 카드들
+    setFlippedCards(updateFlipped); // 뒤집힌 카드를 업데이트
     setCardList(updateCards);
   };
 
-  // 다음 버튼을 클릭하면, 지금까지 뒤집은 카드의 정보를 back에 전송(post)하고 다음 페이지로 navigate 한다.
-
+  // navigate
   const handleNext = () => {
     console.log(flippedCards);
     navigate('/home');
   };
 
   // RETURN
-
   return (
     <Game>
       <Question
@@ -206,11 +205,11 @@ const GameBoard = () => {
             <GameCard
               key={index}
               id={index}
-              name={card.name}
-              mean={card.mean}
-              flipped={card.flipped}
-              // 최대 12장까지 뒤집을 수 있음
-              clicked={flippedCards.length === 12 ? {} : handleClick}
+              // name={card.content}
+              // mean={card.mean}
+              // score={card.score}
+              // flipped={card.flipped}
+              // clicked={flippedCards.length === 12 ? {} : handleClick}
             />
           ))}
         </div>

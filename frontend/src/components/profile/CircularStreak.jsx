@@ -32,7 +32,7 @@ const CircularStreak = () => {
   const [range, setRange] = useState(5);
   const [size, setSize] = useState(0);
   const [values, setValues] = useState();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -46,7 +46,7 @@ const CircularStreak = () => {
           console.log(error.data);
         });
     }
-    setIsLoaded(true);
+    setLoaded(true);
     fetchData();
   }, []);
 
