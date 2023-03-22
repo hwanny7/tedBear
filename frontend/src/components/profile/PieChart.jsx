@@ -3,14 +3,14 @@ import styled from 'styled-components';
 
 const ChartStyle = styled.div`
   .chart-paper {
-    width: 30vw;
-    height: 60vh;
+    width: 40vw;
+    height: 55vh;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
   .chart-name {
-    padding: 10px 0px 0px 20px;
+    padding: 0px 0px 0px 20px;
   }
 `;
 
@@ -48,33 +48,10 @@ const options = {
   // 그래프 위 % 라벨
   dataLabels: {
     enabled: true,
-    // style: {
-    //   fontSize: '14px',
-    //   fontFamily: 'Helvetica, Arial, sans-serif',
-    //   fontWeight: 'bold',
-    //   colors: undefined,
-    // },
-    // background: {
-    //   enabled: true,
-    //   foreColor: '#fff',
-    //   padding: 4,
-    //   borderRadius: 2,
-    //   borderWidth: 1,
-    //   borderColor: '#fff',
-    //   opacity: 0.9,
-    //   dropShadow: {
-    //     enabled: false,
-    //     top: 1,
-    //     left: 1,
-    //     blur: 1,
-    //     color: '#000',
-    //     opacity: 0.45,
-    //   },
-    // },
   },
   // 라벨 위치
   legend: {
-    position: 'bottom',
+    position: 'right',
   },
   // responsive custom
   responsive: [
@@ -83,7 +60,7 @@ const options = {
       options: {
         chart: {
           position: 'left',
-          width: 200,
+          width: 250,
         },
         legend: {
           position: 'bottom',
@@ -102,7 +79,7 @@ export default function PieChart() {
           options={options}
           series={series}
           type="polarArea"
-          height={400}
+          height={350}
         />
       </div>
     </ChartStyle>

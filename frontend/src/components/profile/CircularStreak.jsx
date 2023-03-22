@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StreakStyle = styled.div`
   .streak-paper {
-    width: 79vw;
+    width: 80vw;
     height: 38vh;
     background-color: white;
     border-radius: 20px;
@@ -69,19 +69,7 @@ const CircularStreak = () => {
             value={range}
             onChange={e => setRange(e.target.value)}
           />{' '}
-          {/* {range} */}
         </div>
-        {/* 색상 그라데이션 */}
-        {/* <div className="gradation">
-          <label style={{ userSelect: 'none' }}>
-            <input
-              type="checkbox"
-              checked={size === 0}
-              onChange={e => setSize(e.target.checked ? 0 : 12)}
-            />
-            {size === 0 ? 'Gradation Hide' : 'Gradation Show'}
-          </label>
-        </div> */}
         <HeatMap
           // 히트맵 크기
           width={1200}
@@ -92,7 +80,6 @@ const CircularStreak = () => {
           legendCellSize={size} // legend 크기 ( show여부 )
           startDate={new Date('2023/01/01')}
           endDate={new Date('2023/12/31')}
-          // legendRender={props => <rect {...props} rx={!enableCircle ? 0 : 5} />}
           rectProps={{
             rx: range,
           }}
@@ -110,8 +97,6 @@ const CircularStreak = () => {
           }}
           // // tooltip
           rectRender={(props, data) => {
-            // if (!data.count) return <rect {...props} />;
-            // console.log(props, data);
             return (
               <Tooltip
                 key={data.index}
