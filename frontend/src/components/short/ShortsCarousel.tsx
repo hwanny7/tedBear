@@ -19,15 +19,21 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
     transform: translateX(-${props => props.transform * 25}%);
   }
   > * {
+    cursor: pointer;
     width: 18%;
-    margin-left: 2%;
-    /* height: 27vh; */
     height: 300px;
     object-fit: cover;
-    /* background-color: black; */
     flex-shrink: 0;
     flex-grow: 1;
-    border-radius: 10%;
+    border-radius: 16px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
+    &:hover {
+      scale: 1.04;
+      transition: 0.4s;
+    }
     @media (max-width: 768px) {
       width: 23%;
     }

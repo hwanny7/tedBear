@@ -27,13 +27,19 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   }
   > * {
     width: 31%;
-    margin-left: 2%;
     height: 200px;
     cursor: pointer;
-    /* height: 27vh; */
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
     flex-shrink: 0;
     flex-grow: 1;
-    border-radius: 10%;
+    border-radius: 16px;
+    &:hover {
+      scale: 1.04;
+      transition: 0.4s;
+    }
     @media (max-width: 768px) {
       width: 48%;
     }

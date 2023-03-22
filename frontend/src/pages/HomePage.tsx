@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { getVideoRecomm, getShortsRecomm, Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
+import { useOutletContext } from 'react-router-dom';
 
 interface HomeRecomm {
   thumbnailUrl: string;
@@ -13,11 +14,16 @@ interface HomeRecomm {
   bookMarked: boolean;
 }
 
+interface Props {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  modalOpen: boolean;
+}
+
 const HomePage = () => {
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [shorts, setShorts] = useState<Shorts | null>(null);
+  const { modalOpen, setModalOpen } = useOutletContext<Props>();
 
   useEffect(() => {
     const fetchData = async () => {

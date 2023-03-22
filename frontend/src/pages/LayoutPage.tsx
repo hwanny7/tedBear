@@ -32,18 +32,32 @@ const OutletWrapper = styled.div<OpenProps>`
     `}
 `;
 
+const DarkBackground = styled.div`
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+`;
+
 const LayoutPage = () => {
   const location = useLocation();
   const pathname = location.pathname;
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   // 네브바 open state
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <Wrapper>
+      {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
       {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
       <OutletWrapper open={open} center={pathname}>
-        <Outlet />
+        <Outlet context={{ modalOpen, setModalOpen }} />
       </OutletWrapper>
     </Wrapper>
   );

@@ -11,7 +11,7 @@ interface Props {
 const DarkBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 
   position: absolute;
   top: 50%;
@@ -83,7 +83,6 @@ const ShortsModal = ({ setOpenModal, shorts }: Props) => {
 
   return (
     <div>
-      <DarkBackground onClick={() => setOpenModal(false)} />
       <YoutubeBox>
         <Wrapper>
           <CustomYoutube
