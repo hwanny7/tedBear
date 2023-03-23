@@ -1,5 +1,8 @@
 package com.ssafy.tedbear.global.common.oauth2;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -12,9 +15,9 @@ public class CorsFilterConfig {
 	public CorsFilter corsFilter(){
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
+		config.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://j8b103.p.ssafy.io"));
+		config.setAllowedHeaders(List.of("*"));
+		config.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
