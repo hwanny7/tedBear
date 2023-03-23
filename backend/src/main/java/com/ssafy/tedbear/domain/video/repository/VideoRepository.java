@@ -15,4 +15,5 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 
 	List<Video> findAllByScoreGreaterThanEqualAndScoreLessThanEqual(int score1, int score2);
 	List<Video> findByScoreBetween(int startScore, int endScore);
+
 }

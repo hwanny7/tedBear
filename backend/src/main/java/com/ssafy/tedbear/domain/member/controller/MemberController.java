@@ -15,6 +15,8 @@ import com.ssafy.tedbear.domain.member.dto.StreakList;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.member.service.MemberService;
+import com.ssafy.tedbear.domain.video.dto.VideoInfo;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +41,6 @@ public class MemberController {
 	public ResponseEntity<ProblemList> getProblemList() {
 		return ResponseEntity.ok(memberService.getProblemList());
 	}
+
 
 }

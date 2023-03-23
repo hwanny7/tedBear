@@ -8,4 +8,5 @@ public interface MemberService {
 	StreakList getStreak(Member member);
 
 	ProblemList getProblemList();
+
 }

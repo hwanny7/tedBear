@@ -1,12 +1,9 @@
 package com.ssafy.tedbear.domain.member.service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +67,7 @@ public class MemberServiceImpl implements MemberService {
 					.skip(random.nextInt(x.size() - 3))
 					.limit(3)
 					.collect(Collectors.toList()))
-				.flatMap(innerStream -> innerStream.stream())
+				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
 
 		// 문장은 랜덤인덱스부터 만개 가져와서 문장 2,3,4,5,6,7만번대 각 1개씩 총 6개
@@ -92,4 +89,5 @@ public class MemberServiceImpl implements MemberService {
 		return new ProblemList(problemSentenceList, problemWordList);
 
 	}
+
 }

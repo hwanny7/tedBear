@@ -13,12 +13,13 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: update
       use-new-id-generator-mappings: false
     properties:
       hibernate:
+        format_sql: true
 
   profiles:
     include: google, kakao, naver
@@ -73,9 +74,9 @@ logging:
   level:
     org:
       hibernate:
-        SQL: off
+        SQL: trace
         type:
           descriptor:
             sql:
-              BasicBinder: off
+              BasicBinder: trace
     com.ssafy.tedbear: debug
