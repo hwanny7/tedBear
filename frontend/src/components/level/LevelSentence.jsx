@@ -47,7 +47,6 @@ const LevelSentence = () => {
           margin: '75px 30px 30px 30px',
         }}
       >
-        문장
         <div className="game-board">
           {cardList.map((card, index) => (
             <LevelCard
