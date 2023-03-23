@@ -68,8 +68,9 @@ public class SecurityConfig {
 		// http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// jwt 필터 추가
-		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		// http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+		http.addFilterBefore(corsFilterConfig.corsFilter(), UsernamePasswordAuthenticationFilter.class);
 		// jwt 인증 실패 시 exception handler 등록
 		http.exceptionHandling()
 			.accessDeniedHandler(jwtAccessDeniedHandler)
