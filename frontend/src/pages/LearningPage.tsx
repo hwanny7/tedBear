@@ -1,15 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import LearningMic from 'assets/img/learningMic.svg';
 import Dot from 'assets/img/dot.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 import { getVideoDesc, VideoDesc } from 'utils/api/leaningApi';
+import YouTube, { YouTubeProps } from 'react-youtube';
 
 interface ToggleStyledProps {
   toggle: boolean;
+}
+
+interface HighlightStyledProps {
+  highlight: boolean;
+  selected: number;
 }
 
 const Wrapper = styled.div`
@@ -54,7 +60,7 @@ const ContentLeft = styled.div`
   margin-right: 16px;
 `;
 
-const BookmarkEmptyImg = styled.img`
+const BookmarkImg = styled.img`
   width: 20px;
   cursor: pointer;
 `;
@@ -65,7 +71,7 @@ const YoutubeBox = styled.div`
   margin-bottom: 8px;
   position: relative;
 
-  ${BookmarkEmptyImg} {
+  ${BookmarkImg} {
     position: absolute;
     z-index: 9999;
     top: 0px;
@@ -214,6 +220,7 @@ const ContentRightMiddle = styled.ul`
 
   &::-webkit-scrollbar {
     width: 8px;
+    cursor: pointer; // 커서 포인터 왜 안돼..
   }
   &::-webkit-scrollbar-thumb {
     height: 15%;
@@ -222,23 +229,39 @@ const ContentRightMiddle = styled.ul`
   }
 `;
 
-const ScriptEl = styled.li`
-  /* border: 1px solid red; */
-  margin: 8px 32px 24px;
-  /* height: 30%; */
-`;
-
-const English = styled.div`
-  /* border: 1px solid black; */
-  padding-bottom: 14px;
+const English = styled.span`
+  margin-bottom: 14px;
   cursor: pointer;
   font-size: 14px;
   color: ${props => props.theme.textColor1};
 `;
 
-const Korean = styled(English)`
-  cursor: default;
+const Korean = styled.span`
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 14px;
+  border: none;
   color: ${props => props.theme.textColor2};
+`;
+
+const ScriptEl = styled.li<HighlightStyledProps>`
+  margin: 8px 32px 24px;
+
+  ${HighlightStyledProps => {
+    if (HighlightStyledProps.highlight) {
+      return `
+      &:nth-child(${HighlightStyledProps.selected + 1}) > ${English}{
+        background-color: #FFE4C6;
+      }
+      `;
+    } else {
+      return `
+      &:nth-child(1) > ${English}{
+        background-color: #FFE4C6;
+      }
+      `;
+    }
+  }};
 `;
 
 const ContentRightFooter = styled.div`
@@ -267,6 +290,7 @@ const CompleteBtn = styled.button`
 
 const LearningPage = () => {
   const [toggle, setToggle] = useState<boolean>(false);
+  const playerRef = useRef(null);
 
   const clickedToggle = () => {
     setToggle(!toggle);
@@ -286,12 +310,34 @@ const LearningPage = () => {
     fetchData();
   }, []);
 
+  // 유튜브 영상 설정
+  const opts = {
+    height: '560',
+    width: '315',
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
   // 하이라이팅
   const [highlight, setHighlight] = useState<boolean>(false);
+  const [selected, setSelected] = useState(0);
+  const [youtubePlayer, setYoutubePlayer] = useState<any>();
 
   // 문장 클릭
-  const onSentenceClick = () => {
+  const onPlayerReady: YouTubeProps['onReady'] = event => {
+    const player = event.target;
+    setYoutubePlayer(player);
+    // console.log(typeof player);
+  };
+
+  const onSentenceClick = (index: any, startTime: number) => {
     setHighlight(true);
+    setSelected(index);
+
+    // 유튜브 해당 시간으로 이동
+    youtubePlayer?.seekTo(startTime);
+    console.log(youtubePlayer?.getDuration());
   };
 
   //하이라이팅 하다 끝남
@@ -305,20 +351,32 @@ const LearningPage = () => {
       <ContentBox>
         <ContentLeft>
           <YoutubeBox>
-            <iframe
+            <YouTube
+              videoId="mt4o-R9wzrs"
+              opts={opts}
+              ref={playerRef}
+              onReady={onPlayerReady}
+              // onReady={onPlayerReady}
+            />
+            ;
+            {/* <iframe
               width="560"
               height="315"
               src={videoDesc?.videoUrl}
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            ></iframe>
-            <BookmarkEmptyImg src={BookmarkEmpty} />
+            ></iframe> */}
+            {!videoDesc?.bookMarked ? (
+              <BookmarkImg src={BookmarkEmpty} />
+            ) : (
+              <BookmarkImg src={BookmarkFull} />
+            )}
           </YoutubeBox>
           <SpeakBox>
             <div>
               <SentenceBox>
-                <BookmarkEmptyImg src={BookmarkEmpty} />
-                <p>{videoDesc?.sentenceInfoList[0].content}</p>
+                <BookmarkImg src={BookmarkEmpty} />
+                <p>{videoDesc?.sentenceInfoList[selected].content}</p>
               </SentenceBox>
               <MicBox>
                 <LearningMicImg src={LearningMic} />
@@ -340,9 +398,10 @@ const LearningPage = () => {
           <ContentRightMiddle>
             {videoDesc?.sentenceInfoList.map((el, index) => {
               return (
-                <ScriptEl key={index}>
-                  <English onClick={onSentenceClick}>{el.content}</English>
-
+                <ScriptEl key={index} selected={selected} highlight={highlight}>
+                  <English onClick={() => onSentenceClick(index, el.startTime)}>
+                    {el.content}
+                  </English>
                   {toggle && <Korean>{el.translation}</Korean>}
                 </ScriptEl>
               );

@@ -725,17 +725,58 @@ const Content = styled.div`
   /* border: 1px solid black; */
   min-height: 600px;
   /* background-color: red; */
-  margin-top: 100px;
+
+  @media ${device.mobile} {
+    margin-top: 0px;
+  }
+
+  @media ${device.tablet} {
+    margin-top: 0px;
+  }
+
+  @media ${device.laptop} {
+    margin-top: 50px;
+  }
+
+  @media ${device.desktop} {
+    margin-top: 50px;
+  }
 `;
 
 // BOX1
 const Box1 = styled.div`
-  /* border: 1px solid black; */
   position: relative;
+  padding: 80px 0px 64px;
+`;
+
+const BackBox = styled.div<ToggleStyledProps>`
+  background-color: ${ToggleStyledProps =>
+    !ToggleStyledProps.toggle ? ' #fff6ec' : ' #3535357b'};
+  position: absolute;
+
+  width: 100%;
+  top: 0px;
+  z-index: 0;
+
+  @media ${device.mobile} {
+    min-height: 40%;
+  }
+
+  @media ${device.tablet} {
+    min-height: 40%;
+  }
+
+  @media ${device.laptop} {
+    min-height: 40%;
+  }
+
+  @media ${device.desktop} {
+    min-height: 60%;
+  }
 `;
 
 const TextTitle1 = styled.div<AnimationStyledProps>`
-  /* border: 1px solid red; */
+  text-align: center;
   font-weight: bold;
   animation: ${AnimationStyledProps =>
     AnimationStyledProps.animation
@@ -744,6 +785,8 @@ const TextTitle1 = styled.div<AnimationStyledProps>`
         `
       : ``};
   color: ${props => props.theme.textColor1};
+  position: relative;
+  z-index: 1;
 
   span {
     font-weight: bold;
@@ -761,47 +804,62 @@ const TextTitle1 = styled.div<AnimationStyledProps>`
   }
 
   @media ${device.laptop} {
-    font-size: 36px;
+    font-size: 32px;
     padding-left: 54px;
   }
 
   @media ${device.desktop} {
-    font-size: 40px;
+    font-size: 32px;
     padding-left: 54px;
   }
 `;
 
 const TextSubTitle1 = styled.div<AnimationStyledProps>`
+  text-align: center;
   animation: ${AnimationStyledProps =>
     AnimationStyledProps.animation
       ? css`
     1s ease-in-out 0s 1 normal none running ${fadeIn2};
         `
       : ``};
-  color: ${props => props.theme.textColor1};
+  color: ${props => props.theme.textColor2};
+  position: relative;
+  z-index: 1;
 
   @media ${device.mobile} {
     font-size: 12px;
     padding-left: 32px;
     margin-top: 8px;
+    > p {
+      line-height: 24px;
+    }
   }
 
   @media ${device.tablet} {
     font-size: 18px;
     padding-left: 32px;
     margin-top: 8px;
+    > p {
+      line-height: 30px;
+    }
   }
 
   @media ${device.laptop} {
     font-size: 20px;
     padding-left: 54px;
     margin-top: 16px;
+    > p {
+      line-height: 32px;
+    }
   }
 
   @media ${device.desktop} {
-    font-size: 24px;
+    font-size: 20px;
     padding-left: 54px;
     margin-top: 16px;
+    > p {
+      line-height: 32px;
+    }
   }
 `;
 
@@ -812,7 +870,6 @@ const DescList = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-
   flex-wrap: wrap;
 
   @media ${device.mobile} {
@@ -928,16 +985,21 @@ const DescListEl1 = styled.li<AnimationStyledProps>`
   &:hover {
     background: linear-gradient(
       36deg,
-      #6255a4 0%,
+      #7f74bb 0%,
       #968ec2 20%,
-      #f4c6b2 90%,
+      #f4c6b2 75%,
       #ffdbb3 100%
     );
-
     color: white;
 
     ${ElTitle} {
+      transition: 0.8s;
       color: white;
+    }
+
+    ${LandingVideoImg} {
+      transition: 0.8s;
+      transform: scale(1.1);
     }
   }
 
@@ -965,6 +1027,14 @@ const DescListEl2 = styled(DescListEl1)``;
 const DescListEl3 = styled(DescListEl1)``;
 const DescListEl4 = styled(DescListEl1)``;
 
+const Box2 = styled.div`
+  position: relative;
+  margin: 54px 126px;
+  border-radius: 50px;
+  min-height: 600px;
+  /* background-color: ${props => props.theme.mainLightColor}; */
+`;
+
 const LandingPageTest = (props: Props) => {
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
@@ -978,9 +1048,20 @@ const LandingPageTest = (props: Props) => {
   // 애니메이션 적용
   const [animation, setAnimation] = useState<boolean>(false);
 
+  // 특정 영역 감지
+  // const onCatch = () => {
+  //   const viewHeight = window.innerHeight;
+  //   console.log('현재 브라우저 높이 : ', viewHeight);
+  //   const scrolltop = window.scrollY;
+  //   console.log('현재 스크롤 위치 : ', scrolltop);
+  //   // offset()은 Document 를 기준으로 하는 좌표를 구할 때 쓰입니다.
+  //   // https://inpa.tistory.com/entry/JS-%F0%9F%9A%80-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EB%82%B4%EB%A0%A4%EC%84%9C-%ED%8A%B9%EC%A0%95-%EC%98%81%EC%97%AD-%EA%B0%90%EC%A7%80%ED%95%98%EA%B8%B0
+  // };
+
   // scroll event useEffect
   useEffect(() => {
     window.addEventListener('scroll', e => {
+      // onCatch();
       const temp1 = window.scrollY + window.innerHeight;
 
       if (firstBox.current?.offsetTop && temp1 <= firstBox.current?.offsetTop) {
@@ -1030,11 +1111,18 @@ const LandingPageTest = (props: Props) => {
       </Visual>
       <Content>
         <Box1 ref={firstBox}>
+          <BackBox toggle={props.toggle}></BackBox>
           <TextTitle1 animation={animation}>
             <span>테드 베어(TEADBEAR)</span>는?
           </TextTitle1>
           <TextSubTitle1 animation={animation}>
-            테드로 영어를 쉽게 배울 수 있는 사이트입니다.
+            <p>
+              테드로 영어를 쉽게 배울 수 있는 사이트입니다.
+              <br />
+              테드에서 제공하는 다양한 주제의 강의로
+              <br />
+              회화 연습을 해보세요.
+            </p>
           </TextSubTitle1>
           <DescList ref={descList}>
             <DescListEl1 animation={animation}>
@@ -1074,6 +1162,7 @@ const LandingPageTest = (props: Props) => {
             </DescListEl4>
           </DescList>
         </Box1>
+        <Box2></Box2>
       </Content>
     </Wrapper>
   );
