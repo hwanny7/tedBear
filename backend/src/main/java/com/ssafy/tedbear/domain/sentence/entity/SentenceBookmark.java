@@ -1,4 +1,4 @@
-package com.ssafy.tedbear.domain.bookmark.entity;
+package com.ssafy.tedbear.domain.sentence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

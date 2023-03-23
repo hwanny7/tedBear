@@ -33,4 +33,5 @@ public class WordSearchLog {
 	@ManyToOne
 	@JoinColumn(name = "word_no")
 	private Word word;
+
 }

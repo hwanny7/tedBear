@@ -25,4 +25,8 @@ public class MemberScore extends BaseEntity {
 
 	private int score;
 
+	public void initScore(int defaultScore, int testResult) {
+		this.score = defaultScore + testResult;
+	}
+
 }

@@ -11,7 +11,9 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tedbear.domain.member.dto.ProblemList;
 import com.ssafy.tedbear.domain.member.dto.Streak;
@@ -36,9 +38,13 @@ public class MemberServiceImpl implements MemberService {
 	final SentenceRepository sentenceRepository;
 	final WordRepository wordRepository;
 
+	@Value("${default-value.score}")
+	int defaultScore;
+
 	@Override
-	public StreakList getStreak(Member member) {
+	public StreakList getStreak(long memberNo) {
 		LocalDateTime firstDay = LocalDate.now().with(TemporalAdjusters.firstDayOfYear()).atStartOfDay();
+		Member member = getMember(memberNo);
 		List<SpeakingRecord> speakingRecordList = speakingRecordRepository.findSpeakingRecordsByCreatedDateAfterAndMember(
 			firstDay, member);
 		Map<String, Streak> streakMap = new HashMap<>();
@@ -89,6 +95,13 @@ public class MemberServiceImpl implements MemberService {
 
 		return new ProblemList(problemSentenceList, problemWordList);
 
+	}
+
+	@Override
+	@Transactional
+	public void saveProblemResult(long memberNo, int testResult) {
+		Member member = getMember(memberNo);
+		member.initScore(defaultScore, testResult);
 	}
 
 	@Override

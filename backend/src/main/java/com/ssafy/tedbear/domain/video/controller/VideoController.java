@@ -2,6 +2,7 @@ package com.ssafy.tedbear.domain.video.controller;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import com.ssafy.tedbear.domain.video.dto.VideoInfo;
 import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfo;
 import com.ssafy.tedbear.domain.video.service.VideoService;
+import com.ssafy.tedbear.global.common.SearchDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +34,6 @@ public class VideoController {
 	// 추천 영상 12개 뿌리기
 	@GetMapping("/recommend/list")
 	public ResponseEntity<VideoInfoList> getRecommendList() {
-
 		return ResponseEntity.ok(videoService.getRecommendList(1L));
 	}
 
@@ -47,13 +48,19 @@ public class VideoController {
 	}
 
 	@GetMapping("/watching/list")
-	public ResponseEntity<VideoInfoList> getWatchingList(@RequestParam int page) {
-		return ResponseEntity.ok(videoService.getWatchingList(1L, page));
+	public ResponseEntity<VideoInfoList> getWatchingList(Pageable pageable) {
+		return ResponseEntity.ok(videoService.getWatchingList(1L, pageable));
 	}
 
 	@GetMapping("/complete/list")
-	public ResponseEntity<VideoInfoList> getCompleteList(@RequestParam int page) {
-		return ResponseEntity.ok(videoService.getCompleteList(1L, page));
+	public ResponseEntity<VideoInfoList> getCompleteList(Pageable pageable) {
+		return ResponseEntity.ok(videoService.getCompleteList(1L, pageable));
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<VideoInfoList> searchVideo(SearchDto.Request searchCondition, Pageable pageable) {
+		return ResponseEntity.ok(videoService.searchVideo(searchCondition.getQuery(), pageable));
+
 	}
 
 	@PostMapping("/watching")

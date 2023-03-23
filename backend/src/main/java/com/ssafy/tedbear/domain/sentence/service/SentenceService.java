@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.tedbear.domain.bookmark.repository.SentenceBookmarkRepository;
+import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;

@@ -17,9 +17,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.ssafy.tedbear.domain.bookmark.entity.SentenceBookmark;
-import com.ssafy.tedbear.domain.bookmark.entity.VideoBookmark;
-import com.ssafy.tedbear.domain.bookmark.entity.WordBookmark;
+import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
+import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
+import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import com.ssafy.tedbear.domain.game.entity.GameRecord;
 import com.ssafy.tedbear.domain.model.BaseEntity;
 import com.ssafy.tedbear.domain.model.SnsType;
@@ -86,6 +86,10 @@ public class Member extends BaseEntity {
 	//--//
 	public int getScore() {
 		return memberScore.getScore();
+	}
+
+	public void initScore(int defaultScore, int testResult) {
+		memberScore.initScore(defaultScore, testResult);
 	}
 
 	public Member update(String nickname) {
