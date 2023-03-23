@@ -42,7 +42,7 @@ public class SecurityConfig {
 		// 	.userInfoEndpoint() // 로그인된 유저 정보 가져오기
 		// 	.userService(customOAuth2UserService); // 가져온 유저 정보를 해당 객체가 처리
 		http.csrf().disable()
-			.cors().configurationSource(corsConfigurationSource())
+			.cors()
 			.and()
 			.formLogin().disable();
 		http.authorizeHttpRequests()
