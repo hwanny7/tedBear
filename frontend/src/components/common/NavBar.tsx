@@ -7,6 +7,7 @@ import { ReactComponent as Game } from 'assets/img/game.svg';
 import { ReactComponent as Collection } from 'assets/img/collection.svg';
 import { ReactComponent as Mypage } from 'assets/img/mypage.svg';
 import { ReactComponent as Signout } from 'assets/img/signout.svg';
+import { ReactComponent as Bookmark } from 'assets/img/bookmark.svg';
 import { SetStateAction } from 'react';
 
 interface Props {
@@ -129,6 +130,10 @@ const StyledCollection = styled(Collection)`
   width: 32px;
 `;
 
+const StyledBookmark = styled(Bookmark)`
+  width: 32px;
+`;
+
 const StyledMypage = styled(Mypage)`
   width: 32px;
 `;
@@ -196,6 +201,16 @@ const NavBar2 = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
+        <Link to="/bookmark">
+          <ListBox>
+            <IconDiv open={props.open}>
+              <StyledBookmark />
+            </IconDiv>
+            <IconName open={props.open}>
+              <span>BOOKMARK</span>
+            </IconName>
+          </ListBox>
+        </Link>
         <Link to="/profile">
           <ListBox>
             <IconDiv open={props.open}>
@@ -206,16 +221,6 @@ const NavBar2 = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
-        {/* <Link to="/yuha">
-          <ListBox>
-            <IconDiv open={props.open}>
-              <StyledMypage />
-            </IconDiv>
-            <IconName open={props.open}>
-              <span>YUHA</span>
-            </IconName>
-          </ListBox>
-        </Link> */}
         <Link to="/">
           <ListBoxBottom open={props.open}>
             <IconDiv open={props.open}>
