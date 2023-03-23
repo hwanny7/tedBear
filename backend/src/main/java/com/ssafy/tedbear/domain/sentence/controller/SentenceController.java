@@ -46,10 +46,10 @@ public class SentenceController {
 	}
 
 	@GetMapping("/recommend/list")
-	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendList() {
+	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendSentence() {
 		Member member = memberRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 
-		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendList(member);
+		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendSentence(member);
 		return new ResponseEntity<>(recommendList, HttpStatus.OK);
 	}
 

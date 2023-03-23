@@ -1,9 +1,12 @@
 package com.ssafy.tedbear.domain.sentence.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -54,26 +57,43 @@ public class SentenceService {
 
 	}
 
-	//사용자 맞춤 추천 문장 리스트
-	public SentenceDetailDto.ListResponse getRecommendList(Member member) {
+	@Transactional
+	public SentenceDetailDto.ListResponse getRecommendSentence(Member member) {
 		int memberScore = member.getScore();
-		int recommendScoreFlag = RecommendUtil.getRecommendScore(memberScore);
-		int deltaScore = 10;
-
-		List<Sentence> recommendList = new ArrayList<>();
-		do {
-			recommendList.addAll(sentenceRepository.findByScoreBetween(Math.max(1, recommendScoreFlag - deltaScore),
-				recommendScoreFlag + deltaScore));
-			deltaScore += 3;
-			log.debug(String.valueOf(recommendList.size()));
-		} while (recommendList.size() < resultMaxCnt);
+		List<Sentence> recommendList = getRecommendList(memberScore);
+		recommendList = checkDuplicateVideo(recommendList);
 
 		return new SentenceDetailDto.ListResponse(recommendList.stream()
 			.limit(resultMaxCnt)
 			.peek(sentence -> sentence.setBookmarked(
 				sentenceBookmarkRepository.findByMemberAndSentence(member, sentence).isPresent()))
-			.collect(Collectors.toList()));
+			.collect(Collectors.toSet()));
 
+	}
+
+	private List<Sentence> getRecommendList(int memberScore) {
+		int recommendScoreFlag = RecommendUtil.getRecommendScore(memberScore);
+		int deltaScore = 10;
+
+		List<Sentence> recommendList;
+		do {
+			recommendList = sentenceRepository.findByScoreBetween(Math.max(1, recommendScoreFlag - deltaScore),
+				recommendScoreFlag + deltaScore);
+			deltaScore += 3;
+			log.debug(String.valueOf(recommendList.size()));
+		} while (recommendList.size() < resultMaxCnt);
+		return recommendList;
+	}
+
+	private static List<Sentence> checkDuplicateVideo(List<Sentence> recommendList) {
+		return recommendList.stream()
+			.filter(distinctByKey(sentence -> sentence.getVideo().getWatchId()))
+			.collect(Collectors.toList());
+	}
+
+	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+		Map<Object, Boolean> map = new ConcurrentHashMap<>();
+		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
 	public SentenceDetailDto.ListResponse searchSentence(SearchDto.Request condition, Pageable pageable) {
