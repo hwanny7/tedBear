@@ -42,8 +42,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		clearAuthenticationAttributes(request, response);
 
 		response.addHeader("Set-Cookie", cookie.toString());
-		response.addHeader("Authorization", "Bearer " + accessToken);
 		// response.getWriter().write(accessToken);
+		response.addHeader("Authorization", "Bearer " + accessToken);
 	}
 
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {

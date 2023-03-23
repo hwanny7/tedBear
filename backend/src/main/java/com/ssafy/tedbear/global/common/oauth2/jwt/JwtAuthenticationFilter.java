@@ -32,7 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		String token = parseBearerToken(request);
 
 		try {
-			if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
+			if(StringUtils.hasText(token)){
+				// response.sendRedirect();
+			}
+			else if (jwtProvider.validateToken(token)) {
 				Authentication authentication = jwtProvider.getAuthentication(token);
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 				log.info("{}의 인증정보 저장", authentication.getName());
