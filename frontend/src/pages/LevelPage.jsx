@@ -15,17 +15,17 @@ import LevelCardSen from 'components/level/LevelCardSen';
 const StyledLevel = styled.div`
   position: relative;
   .submit-button {
-    background-color: #6255a4;
+    background-color: #ff8d5b;
     border-radius: 15px;
     .submit-button-text {
       color: white;
     }
   }
   .toggle-button {
-    background-color: #8f84ce;
+    background-color: #6255a4;
     border-radius: 15px;
     .toggle-button-inside {
-      color: ${props => (props.change ? '#8f84ce' : '#FEAD55')};
+      color: ${props => (props.change ? '#FEAD55' : '#8f84ce')};
     }
   }
   .game-board {
@@ -33,7 +33,8 @@ const StyledLevel = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     perspective: 1000px;
-    margin-bottom: -15px;
+    margin-top: 5px;
+    margin-bottom: -20px;
     .card {
       width: 30%;
       user-select: none;
@@ -123,7 +124,7 @@ const StyledLevel = styled.div`
 // Function
 const LevelPage = () => {
   const navigate = useNavigate();
-  const [showSwitch, setShowSwitch] = useState(false);
+  const [showSwitch, setShowSwitch] = useState(true);
   const [senList, setSenList] = useState([]);
   const [wordList, setWordList] = useState([]);
 
@@ -137,9 +138,11 @@ const LevelPage = () => {
           });
           setSenList(senData);
 
-          const wordList = response.data.wordMeanList.map((item, index) => {
-            return { ...item, flipped: false, id: index };
-          });
+          const wordList = response.data.wordMeanList
+            .slice(0, 6) // 단어도 6개만 주세요!
+            .map((item, index) => {
+              return { ...item, flipped: false, id: index };
+            });
           setWordList(wordList);
         })
         .catch(error => {
@@ -154,8 +157,9 @@ const LevelPage = () => {
   };
 
   const handleSubmit = () => {
+    console.log('Back에 Score보내요');
     console.log(senList, wordList);
-    // 여기서 숫자 세서 api 보내주기
+    // 여기서 flipped 값이 true인 애들의 score 합쳐서 api로 post 보내고 홈 화면으로 이동시키기
     // navigate('/home');
   };
 
@@ -186,8 +190,10 @@ const LevelPage = () => {
         onClick={handleSubmit}
         style={{
           position: 'absolute',
-          left: '96.5%',
+          left: '91%',
+          top: '86%',
         }}
+        sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
       >
         <p className="submit-button-text">제출</p>
       </Button>
