@@ -37,7 +37,7 @@ const HomePage = () => {
 
   return (
     <div>
-      {modalOpen && <ShortsModal setOpenModal={setModalOpen} shorts={shorts} />}
+      {modalOpen && <ShortsModal shorts={shorts} />}
       <Carousel data={videoData}></Carousel>
       <ShortsCarousel
         data={shortsData}

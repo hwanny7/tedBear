@@ -1,108 +1,77 @@
-import React, { useRef } from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
+import React from 'react';
+import Grid from '@mui/material/Grid';
 import styled from 'styled-components';
 
-interface Props {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const DarkBackground = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 100vw;
-  height: 100vh;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9998;
+const Box = styled.div`
+  background-color: red;
 `;
 
-const CustomYoutube = styled(YouTube)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
-
-const Wrapper = styled.div`
-  border: 3px red solid;
-  position: relative;
-  width: 100%;
-  height: 0;
-  overflow: hidden;
-  padding-bottom: 56.26%;
-`;
-
-const YoutubeBox = styled.div`
-  min-width: 50%;
-  min-height: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-`;
+const picture = [
+  {
+    title:
+      'How to Calm Your Anxiety, From a Neuroscientist | The Way We Work, a TED series',
+    id: '6Af6b_wyiwI',
+  },
+  {
+    title: 'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
+    id: 'RLESBHduKBs',
+  },
+  {
+    title: 'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
+    id: 'wL8X31XWZW8',
+  },
+  {
+    title:
+      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
+    id: 'BEBKC7Hqfr0',
+  },
+  {
+    title:
+      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
+    id: 'LDVyOnf0t9M',
+  },
+  {
+    title:
+      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
+    id: 'JH_Pa1hOEVc',
+  },
+  {
+    title:
+      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
+    id: '9XGm_uHit5g',
+  },
+];
 
 const SeungPage = () => {
-  const playerRef = useRef<any>();
-  const onPlayerReady: YouTubeProps['onReady'] = event => {
-    const player = event.target;
-    // console.log(player);
-    // playerRef.current.props.opts.playerVars.mute = 1;
-    // console.log(playerRef.current.props.opts.playerVars.mute);
-    // access to player in all event handlers via event.target
-    event.target.playVideo();
-  };
-
-  const onPlayerStateChange: YouTubeProps['onStateChange'] = event => {
-    if (!event.data) {
-      const player = event.target;
-      player.seekTo(0);
-      player.playVideo();
-    }
-    // 1 재생 중, 2 일시중지, 0 종료 https://developers.google.com/youtube/iframe_api_reference?hl=ko#onPlaybackRateChange
-    // https://github.com/tjallingt/react-youtube/issues/187 재생시간 바꾸기
-  };
-
-  const opts: YouTubeProps['opts'] = {
-    height: '100%',
-    width: '100%',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      start: 5,
-      end: 10,
-      controls: 0,
-      disablekb: 1,
-      // autoplay: 1,
-      // mute: 1,
-      rel: 0, // 해당 채널의 관련 영상만 띄어줌
-    },
-  };
-
   return (
-    <div>
-      <DarkBackground />
-      <YoutubeBox>
-        <Wrapper>
-          <CustomYoutube
-            videoId="6Af6b_wyiwI"
-            opts={opts}
-            ref={playerRef}
-            onReady={onPlayerReady}
-            onStateChange={onPlayerStateChange}
-          />
-        </Wrapper>
-      </YoutubeBox>
+    <div
+      style={{
+        position: 'relative',
+        background: 'red',
+        width: '500px',
+        height: '50px',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          background: 'blue',
+          width: '200px',
+          height: '50px',
+          left: '300px',
+        }}
+      ></div>
     </div>
   );
 };
 
 export default SeungPage;
 
-// https://codesandbox.io/s/react-youtube-demo-f6l29?file=/src/App.js:1047-1049 관련 영상 숨기는 방법
-// https://www.npmjs.com/package/react-youtube
-// https://codepen.io/hwanny7/pen/RwYBjWW?editors=1000 자동재생 방법
+{
+  /* <img
+style={{ width: '250px', height: '200px' }}
+src={
+  'https://i.ytimg.com/vi/' + pic.id + '/maxresdefault.jpg'
+}
+></img> */
+}

@@ -1,46 +1,84 @@
+import Card from 'components/video/Card';
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Grid from '@mui/material/Grid';
 
-interface LearnVideo {
-  url: string;
+interface card {
+  title: string;
   id: string;
 }
 
 const StillLearningPage = () => {
-  const [video, setVideo] = useState<LearnVideo[]>([]);
+  const [video, setVideo] = useState<card[]>([]);
   useEffect(() => {
     setVideo([
       {
-        url: 'https://i.ytimg.com/vi/7tSP1M052Sg/hq1.jpg',
+        title:
+          'How to Calm Your Anxiety, From a Neuroscientist | The Way We Work, a TED series',
         id: '6Af6b_wyiwI',
       },
       {
-        url: 'https://i.ytimg.com/vi/tB5J9qgM2zI/hq1.jpg',
+        title: 'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
         id: 'RLESBHduKBs',
       },
       {
-        url: 'https://i.ytimg.com/vi/oITW0XsZd3o/hq1.jpg',
+        title: 'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
         id: 'wL8X31XWZW8',
       },
       {
-        url: 'https://i.ytimg.com/vi/YY6LCOJbve8/hq1.jpg',
+        title:
+          'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
         id: 'BEBKC7Hqfr0',
       },
       {
-        url: 'https://i.ytimg.com/vi/-k0p-DYYZKU/hq1.jpg',
+        title:
+          'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
         id: 'LDVyOnf0t9M',
       },
       {
-        url: 'https://i.ytimg.com/vi/IStsehNAOL8/maxresdefault.jpg',
+        title:
+          'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
         id: 'JH_Pa1hOEVc',
       },
       {
-        url: 'https://i.ytimg.com/vi/UGdLvGbpehQ/maxresdefault.jpg',
+        title:
+          'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
         id: '9XGm_uHit5g',
       },
     ]);
-  });
+  }, []);
 
-  return <div>StillLearningPage</div>;
+  return (
+    <Grid
+      container
+      justifyContent={'start'}
+      style={{ height: '1vh', marginTop: '1vh' }}
+    >
+      {video.map((card, idx) => {
+        return (
+          <Grid
+            item
+            display="flex"
+            justifyContent={'center'}
+            alignItems={'center'}
+            style={{ padding: '0px' }}
+            lg={3}
+            md={4}
+            sm={6}
+            xs={12}
+            key={idx}
+            // xs, extra-small: 0px
+            // sm, small: 600px
+            // md, medium: 900px
+            // lg, large: 1200px
+            // xl, extra-large: 1536px
+          >
+            <Card card={card} key={idx}></Card>
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
 };
 
 export default StillLearningPage;

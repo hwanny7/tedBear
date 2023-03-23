@@ -4,21 +4,8 @@ import styled from 'styled-components';
 import { Shorts } from 'utils/api/recommApi';
 
 interface Props {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   shorts: Shorts | null;
 }
-
-const DarkBackground = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 100vw;
-  height: 100%;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9998;
-`;
 
 const CustomYoutube = styled(YouTube)`
   position: absolute;
@@ -49,8 +36,7 @@ const YoutubeBox = styled.div`
   align-items: center;
 `;
 
-const ShortsModal = ({ setOpenModal, shorts }: Props) => {
-  <DarkBackground onClick={() => setOpenModal(false)} />;
+const ShortsModal = ({ shorts }: Props) => {
   const onPlayerReady: YouTubeProps['onReady'] = event => {
     const player = event.target;
     player.playVideo();

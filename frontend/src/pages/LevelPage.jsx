@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import { ReactComponent as Question } from 'assets/img/question.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LevelWord from 'components/level/LevelWord';
-import LevelSentence from 'components/level/LevelSentence';
 import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { authApi } from 'utils/api/customAxios';
+import { Paper } from '@mui/material';
+import LevelCard from 'components/level/LevelCard';
+import LevelCardSen from 'components/level/LevelCardSen';
 
 // style
 const StyledLevel = styled.div`
@@ -121,16 +123,60 @@ const StyledLevel = styled.div`
 // Function
 const LevelPage = () => {
   const navigate = useNavigate();
-  const [flippedCards, setFlippedCards] = useState([]); // 스코어 POST 부모에서 ... 원래는 12개까지만 뒤집을 수 있게 하기 위함
   const [showSwitch, setShowSwitch] = useState(false);
+  const [senList, setSenList] = useState([]);
+  const [wordList, setWordList] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      await authApi
+        .get(`member/test/problem`)
+        .then(response => {
+          const senData = response.data.sentenceMeanList.map((item, index) => {
+            return { ...item, flipped: false, id: index };
+          });
+          setSenList(senData);
+
+          const wordList = response.data.wordMeanList.map((item, index) => {
+            return { ...item, flipped: false, id: index };
+          });
+          setWordList(wordList);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
+    fetchData();
+  }, []);
 
   const toggleShowSwitch = () => {
     setShowSwitch(prev => !prev);
   };
 
   const handleSubmit = () => {
-    console.log(flippedCards);
-    navigate('/home');
+    console.log(senList, wordList);
+    // 여기서 숫자 세서 api 보내주기
+    // navigate('/home');
+  };
+
+  const handleClick = index => {
+    if (showSwitch) {
+      let updateCards = senList.map(card => {
+        if (card.id === index) {
+          card.flipped = !card.flipped;
+        }
+        return card;
+      });
+      setSenList(updateCards);
+    } else {
+      let updateCards = wordList.map(card => {
+        if (card.id === index) {
+          card.flipped = !card.flipped;
+        }
+        return card;
+      });
+      setWordList(updateCards);
+    }
   };
 
   return (
@@ -155,6 +201,39 @@ const LevelPage = () => {
           transform: 'translate(-50%, -50%)',
         }}
       ></Question>
+      <Paper
+        elevation={3}
+        style={{
+          padding: 100,
+          margin: '75px 30px 30px 30px',
+        }}
+      >
+        <div className="game-board">
+          {showSwitch
+            ? senList.map((card, index) => (
+                <LevelCard
+                  key={index}
+                  id={index}
+                  content={card.content}
+                  mean={card.mean}
+                  score={card.score}
+                  flipped={card.flipped}
+                  clicked={handleClick}
+                />
+              ))
+            : wordList.map((card, index) => (
+                <LevelCardSen
+                  key={index}
+                  id={index}
+                  content={card.content}
+                  mean={card.mean}
+                  score={card.score}
+                  flipped={card.flipped}
+                  clicked={handleClick}
+                />
+              ))}
+        </div>
+      </Paper>
       <div>
         <IconButton
           className="toggle-button"
@@ -184,7 +263,6 @@ const LevelPage = () => {
             {showSwitch ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
           </p>
         </IconButton>
-        {showSwitch ? <LevelSentence /> : <LevelWord />}
       </div>
     </StyledLevel>
   );

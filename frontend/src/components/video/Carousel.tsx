@@ -21,12 +21,12 @@ const Wrapper = styled.div`
 const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
   transition: ${props => props.transition};
-  transform: translateX(-${props => props.transform * 33}%);
+  transform: translateX(-${props => props.transform * 33.3}%);
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 50}%);
   }
   > * {
-    width: 31%;
+    width: 31.3%;
     height: 200px;
     cursor: pointer;
     margin-top: 1%;
@@ -49,29 +49,24 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
 const TitleWithButton = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border: 1px solid black;
   h1 {
     font-size: 4vh;
   }
   .buttom-wrapper {
-    width: 100px;
     display: flex;
   }
 `;
 
 const LeftButton = styled.button`
-  /* position: absolute; */
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  border-radius: 16px;
   background-color: #7b7b7b;
   border: 1px solid black;
 `;
 
 const RightButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  border-radius: 16px;
   background-color: #7b7b7b;
   border: 1px solid black;
 `;
