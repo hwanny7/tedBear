@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.ssafy.tedbear.domain.model.BaseEntity;
 
@@ -24,7 +23,6 @@ public class MemberScore extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
 
-	@NotNull
 	private int score;
 
 }

@@ -27,6 +27,7 @@ import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,6 +36,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "member_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Member extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +47,9 @@ public class Member extends BaseEntity {
 
 	@NotNull
 	private String nickname;
+
+	@Column(name = "refresh_token", nullable = true)
+	private String refreshToken;
 
 	@NotNull
 	@Column(name = "sns_type")
@@ -74,7 +79,7 @@ public class Member extends BaseEntity {
 	private MemberScore memberScore;
 
 	@OneToOne
-	@JoinColumn(name = "member_no")
+	@JoinColumn(name = "level_no")
 	private MemberLevel memberLevel;
 
 	//--//
