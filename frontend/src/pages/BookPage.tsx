@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-
+import BookmarkSentence from 'components/profile/BookmarkSentence';
+import BookmarkVideo from 'components/profile/BookmarkVideo';
+import BookmarkWord from 'components/profile/BookmarkWord';
 //style
 const Bookmark = styled.div`
-  margin-left: 10vw;
+  position: relative;
+  margin-left: 5vw;
   margin-top: 10vh;
   .unclicked-button {
     background: ${props => props.theme.mainLightColor};
@@ -12,15 +15,17 @@ const Bookmark = styled.div`
     background: ${props => props.theme.mainColor};
   }
   .button-wrapper {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
   }
   .button-paper-wrapper {
     display: flex;
     button {
-      width: 5vw;
-      border-radius: 3px 0px 0px 3px;
-      font-size: 150%;
+      height: 13vh;
+      width: 4vw;
+      border-radius: 8px 0px 0px 8px;
+      font-size: 130%;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     }
   }
@@ -29,7 +34,11 @@ const Bookmark = styled.div`
     height: 10vh;
   }
   .paper {
-    width: 75vw;
+    overflow: auto;
+    max-height: 800px;
+    border-radius: 20px;
+    width: 80vw;
+    height: 80vh;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
@@ -81,8 +90,9 @@ const BookPage = () => {
           </button>
         </div>
         <div className="paper">
-          So Id like to ask you all a question that Ive pondered for these past
-          few years
+          <p>{buttonStatus[0] ? <BookmarkWord></BookmarkWord> : ''}</p>
+          <p>{buttonStatus[1] ? <BookmarkSentence></BookmarkSentence> : ''}</p>
+          <p>{buttonStatus[2] ? <BookmarkVideo></BookmarkVideo> : ''}</p>
         </div>
       </div>
     </Bookmark>
