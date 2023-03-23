@@ -35,30 +35,30 @@ class VideoServiceImplTest {
 	@Autowired
 	VideoRepository videoRepository;
 
-	// @Test
-	// @DisplayName("마지막으로 업데이트된 영상 잘 찾아오는지 테스트")
-	// public void saveWatchingTest() throws InterruptedException {
-	// 	Member member = memberRepository.findById(1L)
-	// 		.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-	// 	long lastVideoNo = 1001;
-	// 	for (long videoNo = 1000; videoNo <= lastVideoNo; videoNo++) {
-	// 		WatchingVideo watchingVideo = WatchingVideo.builder()
-	// 			.video(Video.builder().no(videoNo).build())
-	// 			.member(member)
-	// 			.updatedDate(LocalDateTime.now())
-	// 			.videoProgressTime(11)
-	// 			.videoStatus(false)
-	// 			.build();
-	// 		watchingVideoRepository.save(watchingVideo);
-	// 		TimeUnit.SECONDS.sleep(1);
-	// 		System.out.println(videoNo);
-	// 	}
-	// 	assertEquals(watchingVideoRepository.findTop1ByMemberAndVideoStatusOrderByUpdatedDateDesc(member, false)
-	// 		.get()
-	// 		.getVideo()
-	// 		.getNo(), lastVideoNo);
-	//
-	// }
+	@Test
+	@DisplayName("마지막으로 업데이트된 영상 잘 찾아오는지 테스트")
+	public void saveWatchingTest() throws InterruptedException {
+		Member member = memberRepository.findById(1L)
+			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
+		long lastVideoNo = 1010;
+		for (long videoNo = 1000; videoNo <= lastVideoNo; videoNo++) {
+			WatchingVideo watchingVideo = WatchingVideo.builder()
+				.video(Video.builder().no(videoNo).build())
+				.member(member)
+				.updatedDate(LocalDateTime.now())
+				.videoProgressTime(11)
+				.videoStatus(true)
+				.build();
+			watchingVideoRepository.save(watchingVideo);
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println(videoNo);
+		}
+		// assertEquals(watchingVideoRepository.findTop1ByMemberAndVideoStatusOrderByUpdatedDateDesc(member, false)
+		// 	.get()
+		// 	.getVideo()
+		// 	.getNo(), lastVideoNo);
+
+	}
 
 	@Test
 	@DisplayName("북마크 조회 쿼리 하나만 나가는지 테스트")

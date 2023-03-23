@@ -72,7 +72,7 @@ logging:
   level:
     org:
       hibernate:
-        SQL: trace
+        SQL: info
         type:
           descriptor:
             sql:

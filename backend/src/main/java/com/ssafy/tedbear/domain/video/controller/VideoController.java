@@ -46,7 +46,7 @@ public class VideoController {
 
 	@GetMapping("/watching/recent")
 	public ResponseEntity<VideoInfo> getWatchingRecent() {
-		Member member = memberRepository.findById(1L)
+		Member member = memberRepository.findById(2L)
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 		return ResponseEntity.ok(videoService.getWatchingRecent(member));
 	}

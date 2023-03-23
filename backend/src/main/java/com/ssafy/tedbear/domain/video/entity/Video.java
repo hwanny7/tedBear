@@ -76,4 +76,9 @@ public class Video {
 	public void setBookmarked(boolean isBookmarked) {
 		this.isBookmarked = isBookmarked;
 	}
+
+	public Video updateBookmarked(boolean isBookmarked) {
+		this.isBookmarked = isBookmarked;
+		return this;
+	}
 }

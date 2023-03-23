@@ -18,6 +18,6 @@ public interface WatchingVideoRepository extends JpaRepository<WatchingVideo, Lo
 
 	Optional<WatchingVideo> findByMemberAndVideo(Member member, Video video);
 
-	@Query("SELECT distinct t FROM WatchingVideo t join fetch t.video")
+	@Query("SELECT distinct t FROM WatchingVideo t join fetch t.video where t.member = :member and t.videoStatus = :videoStatus")
 	Slice<WatchingVideo> findSliceByMemberAndVideoStatus(Pageable pageable, Member member, boolean videoStatus);
 }
