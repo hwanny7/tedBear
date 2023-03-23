@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.bookmark.repository.SentenceBookmarkRepository;
@@ -18,6 +20,7 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
+import com.ssafy.tedbear.global.common.SearchDto;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -51,6 +54,7 @@ public class SentenceService {
 
 	}
 
+	//사용자 맞춤 추천 문장 리스트
 	public SentenceDetailDto.ListResponse getRecommendList(Member member) {
 		int memberScore = member.getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(memberScore);
@@ -70,6 +74,11 @@ public class SentenceService {
 				sentenceBookmarkRepository.findByMemberAndSentence(member, sentence).isPresent()))
 			.collect(Collectors.toList()));
 
+	}
+
+	public SentenceDetailDto.ListResponse searchSentence(SearchDto.Request condition, Pageable pageable) {
+		Slice<Sentence> sliceByContent = sentenceRepository.findSliceByContent(condition.getQuery(), pageable);
+		return new SentenceDetailDto.ListResponse(sliceByContent);
 	}
 
 }

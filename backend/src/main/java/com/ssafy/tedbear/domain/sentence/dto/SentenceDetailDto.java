@@ -3,6 +3,8 @@ package com.ssafy.tedbear.domain.sentence.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Slice;
+
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.Getter;
@@ -10,6 +12,7 @@ import lombok.Getter;
 @Getter
 public class SentenceDetailDto {
 	Long no;
+	int score;
 	int startTime;
 	int endTime;
 	String content;
@@ -24,6 +27,7 @@ public class SentenceDetailDto {
 		this.endTime = sentence.getEndTime();
 		this.content = sentence.getContent();
 		this.watchId = sentence.getVideo().getWatchId();
+		this.score = sentence.getScore();
 	}
 
 	@Getter
@@ -32,6 +36,10 @@ public class SentenceDetailDto {
 
 		public ListResponse(List<Sentence> list) {
 			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
+		}
+
+		public ListResponse(Slice<Sentence> list) {
+			this.recommendList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
 	}
 

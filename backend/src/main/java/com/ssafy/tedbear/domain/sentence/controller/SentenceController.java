@@ -2,6 +2,7 @@ package com.ssafy.tedbear.domain.sentence.controller;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import com.ssafy.tedbear.domain.sentence.dto.MemberShortsLogDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.service.SentenceService;
+import com.ssafy.tedbear.global.common.SearchDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +59,12 @@ public class SentenceController {
 
 		memberShortsLogService.saveMemberShortsLog(member, shorLogRequest.getSentenceNo());
 		return null;
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, Pageable pageable) {
+		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(searchCondition, pageable);
+		return new ResponseEntity<>(listResponse, HttpStatus.OK);
 	}
 
 }
