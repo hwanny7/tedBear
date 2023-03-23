@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.entity.MemberLevel;
+import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
 import com.ssafy.tedbear.global.common.oauth2.KakaoOAuth2User;
 import com.ssafy.tedbear.global.common.oauth2.MemberLevelRepository;
 import com.ssafy.tedbear.global.common.oauth2.UserRepository;
-import com.ssafy.tedbear.global.common.oauth2.exception.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

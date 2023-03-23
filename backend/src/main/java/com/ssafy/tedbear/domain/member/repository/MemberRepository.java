@@ -11,4 +11,5 @@ import com.ssafy.tedbear.domain.video.entity.Video;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+	Optional<Member> findByUid(String uid);
 }
