@@ -19,6 +19,7 @@ import { useState } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import StillLearningPage from 'pages/StillLearningPage';
+import SearchPage from 'pages/SearchPage';
 
 function App() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -37,6 +38,7 @@ function App() {
               <Route path="/learning" element={<LearningPage />} />
               <Route path="/bookmark" element={<BookPage />} />
               <Route path="/still-learn" element={<StillLearningPage />} />
+              <Route path="/search" element={<SearchPage />} />
             </Route>
 
             <Route path="/seung" element={<SeungPage />} />

@@ -23,13 +23,6 @@ const OutletWrapper = styled.div<OpenProps>`
   left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
   transition: all 0.5s ease;
   background-color: ${props => props.theme.bgColor};
-  ${props =>
-    (props.center === '/still-learn' || props.center === '/home') &&
-    css`
-      display: flex;
-      justify-content: center;
-      align-items: ${props.center === '/home' && 'center'};
-    `}
 `;
 
 const DarkBackground = styled.div`

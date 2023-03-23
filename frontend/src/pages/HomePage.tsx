@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getVideoRecomm, getShortsRecomm, Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useOutletContext } from 'react-router-dom';
+import SearchBar from 'components/common/SearchBar';
 
 interface HomeRecomm {
   thumbnailUrl: string;
@@ -18,6 +19,13 @@ interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   modalOpen: boolean;
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+`;
 
 const HomePage = () => {
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
@@ -36,15 +44,18 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      {modalOpen && <ShortsModal shorts={shorts} />}
-      <Carousel data={videoData}></Carousel>
-      <ShortsCarousel
-        data={shortsData}
-        setOpenModal={setModalOpen}
-        setShortsId={setShorts}
-      ></ShortsCarousel>
-    </div>
+    <Wrapper>
+      <div>
+        {modalOpen && <ShortsModal shorts={shorts} />}
+        <SearchBar></SearchBar>
+        <Carousel data={videoData}></Carousel>
+        <ShortsCarousel
+          data={shortsData}
+          setOpenModal={setModalOpen}
+          setShortsId={setShorts}
+        ></ShortsCarousel>
+      </div>
+    </Wrapper>
   );
 };
 

@@ -2,6 +2,7 @@ import Card from 'components/video/VideoCard';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 interface card {
   title: string;
@@ -49,40 +50,40 @@ const StillLearningPage = () => {
   }, []);
 
   return (
-    <Grid
-      container
-      justifyContent={'start'}
-      style={{ height: '1%', marginTop: '1%', width: '90%' }}
-    >
-      {video.map((card, idx) => {
-        return (
-          <Grid
-            item
-            display="flex"
-            justifyContent={'center'}
-            alignItems={'center'}
-            style={{
-              padding: '0px',
-              marginTop: '2vh',
-              paddingLeft: '1%',
-              paddingRight: '1%',
-            }}
-            lg={3}
-            md={4}
-            sm={6}
-            xs={12}
-            key={idx}
-            // xs, extra-small: 0px
-            // sm, small: 600px
-            // md, medium: 900px
-            // lg, large: 1200px
-            // xl, extra-large: 1536px
-          >
-            <Card card={card} key={idx}></Card>
-          </Grid>
-        );
-      })}
-    </Grid>
+    <>
+      <h1 style={{ textAlign: 'center' }}>학습 중인 페이지</h1>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Grid
+          container
+          justifyContent={'start'}
+          style={{ height: '1%', marginTop: '1%', width: '90%' }}
+        >
+          {video.map((card, idx) => {
+            return (
+              <Grid
+                item
+                display="flex"
+                justifyContent={'center'}
+                alignItems={'center'}
+                style={{
+                  padding: '0px',
+                  marginTop: '2%',
+                  paddingLeft: '1%',
+                  paddingRight: '1%',
+                }}
+                lg={3}
+                md={4}
+                sm={6}
+                xs={12}
+                key={idx}
+              >
+                <Card card={card} key={idx}></Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </div>
+    </>
   );
 };
 
