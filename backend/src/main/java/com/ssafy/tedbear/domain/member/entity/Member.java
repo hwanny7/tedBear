@@ -28,16 +28,16 @@ import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Table(name = "member_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@SuperBuilder
 public class Member extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,7 +75,7 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "member")
 	private List<WordBookmark> wordBookmarkList = new ArrayList<>();
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "score_no")
 	private MemberScore memberScore;
 
@@ -84,7 +84,7 @@ public class Member extends BaseEntity {
 	private MemberLevel memberLevel;
 
 	//--//
-	public int getScore() {
+	public Integer getScore() {
 		return memberScore.getScore();
 	}
 
@@ -92,7 +92,8 @@ public class Member extends BaseEntity {
 		memberScore.initScore(defaultScore, testResult);
 	}
 
-	public Member update(String nickname) {
+	public Member updateNicknameAndRefreshToken(String nickname, String refreshToken){
+		this.refreshToken = refreshToken;
 		this.nickname = nickname;
 		return this;
 	}

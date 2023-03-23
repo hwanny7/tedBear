@@ -12,18 +12,24 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Table(name = "member_score_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
 public class MemberScore extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
 
-	private int score;
+	private Integer score;
+
+	public void initScore(int defaultScore, int testResult) {
+		this.score = defaultScore + testResult;
+	}
 
 	public void initScore(int defaultScore, int testResult) {
 		this.score = defaultScore + testResult;
