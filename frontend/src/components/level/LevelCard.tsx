@@ -7,7 +7,7 @@ interface CardType {
   mean: string;
 }
 
-const GameCard = ({ id, content, flipped, clicked, mean }: CardType) => {
+const LevelCard = ({ id, content, flipped, clicked, mean }: CardType) => {
   return (
     <div
       onClick={() => clicked(id)}
@@ -19,4 +19,4 @@ const GameCard = ({ id, content, flipped, clicked, mean }: CardType) => {
   );
 };
 
-export default GameCard;
+export default LevelCard;
