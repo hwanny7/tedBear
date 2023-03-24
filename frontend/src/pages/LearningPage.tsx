@@ -18,6 +18,10 @@ interface HighlightStyledProps {
   selected: number;
 }
 
+interface ViedoLevelProps {
+  level: number;
+}
+
 const Wrapper = styled.div`
   /* border: 2px solid red; */
   width: 100%;
@@ -290,7 +294,6 @@ const CompleteBtn = styled.button`
 
 const LearningPage = () => {
   const [toggle, setToggle] = useState<boolean>(false);
-  const playerRef = useRef(null);
 
   const clickedToggle = () => {
     setToggle(!toggle);
@@ -304,7 +307,7 @@ const LearningPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getVideoDesc('mt4o-R9wzrs');
+      const data = await getVideoDesc(state);
       setVideoDesc(data);
     };
     fetchData();
@@ -337,7 +340,6 @@ const LearningPage = () => {
 
     // 유튜브 해당 시간으로 이동
     youtubePlayer?.seekTo(startTime);
-    console.log(youtubePlayer?.getDuration());
   };
 
   //하이라이팅 하다 끝남
@@ -351,14 +353,7 @@ const LearningPage = () => {
       <ContentBox>
         <ContentLeft>
           <YoutubeBox>
-            <YouTube
-              videoId="mt4o-R9wzrs"
-              opts={opts}
-              ref={playerRef}
-              onReady={onPlayerReady}
-              // onReady={onPlayerReady}
-            />
-            ;
+            <YouTube videoId={state} opts={opts} onReady={onPlayerReady} />;
             {/* <iframe
               width="560"
               height="315"

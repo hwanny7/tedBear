@@ -33,6 +33,18 @@ export const lightTheme: DefaultTheme = {
   blackColorLight2: '#8E8E8E',
   textColor1: '#000000',
   textColor2: '#7B7B7B',
+
+  // 레벨 색깔 빨주노초파남보동은금
+  badgeRed: '#FF9292',
+  badgeOrange: '#FFA564',
+  badgeYellow: '#F6FF8E',
+  badgeGreen: '#ACFF8F',
+  badgeBlue: '#A6DFFF',
+  badgeIndigo: '#9F9DFF',
+  badgePurple: '#E9BAFF',
+  badgeBronze: '#CDAB8B',
+  badgeSilver: '#ECECEC',
+  badgGold: '#FFD700',
 };
 
 export const darkTheme: DefaultTheme = {
@@ -68,4 +80,16 @@ export const darkTheme: DefaultTheme = {
   blackColorLight2: '#8E8E8E',
   textColor1: '#FFFFFF',
   textColor2: '#E3E3E3',
+
+  // 레벨 색깔 빨주노초파남보동은금
+  badgeRed: '#FF9292',
+  badgeOrange: '#FFA564',
+  badgeYellow: '#F6FF8E',
+  badgeGreen: '#ACFF8F',
+  badgeBlue: '#A6DFFF',
+  badgeIndigo: '#9F9DFF',
+  badgePurple: '#E9BAFF',
+  badgeBronze: '#CDAB8B',
+  badgeSilver: '#ECECEC',
+  badgGold: '#FFD700',
 };

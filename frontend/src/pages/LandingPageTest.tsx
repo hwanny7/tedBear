@@ -1001,6 +1001,10 @@ const DescListEl1 = styled.li<AnimationStyledProps>`
       transition: 0.8s;
       transform: scale(1.1);
     }
+
+    ${ElDesc} {
+      transition: 0.8s;
+    }
   }
 
   @media ${device.mobile} {

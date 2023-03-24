@@ -34,5 +34,16 @@ declare module 'styled-components' {
     blackColorLight2: string;
     textColor1: string;
     textColor2: string;
+
+    badgeRed: string;
+    badgeOrange: string;
+    badgeYellow: string;
+    badgeGreen: string;
+    badgeBlue: string;
+    badgeIndigo: string;
+    badgePurple: string;
+    badgeBronze: string;
+    badgeSilver: string;
+    badgGold: string;
   }
 }
