@@ -2,6 +2,7 @@ import puzzle from 'assets/img/puzzle.svg';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 const Puzzle = styled.div`
   display: flex;
@@ -36,12 +37,13 @@ const ImgBox = styled.div`
   width: 50%;
 `;
 
-const handleStart = () => {
-  console.log('시작 버튼을 클릭');
-};
-
 // 버튼 바꿔야함
 const GamePage = () => {
+  const navigate = useNavigate();
+  const handleStart = () => {
+    console.log('시작 버튼을 클릭');
+    navigate('/game/detail');
+  };
   return (
     <Puzzle>
       <ImgBox></ImgBox>

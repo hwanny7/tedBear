@@ -173,7 +173,7 @@ const LevelPage = () => {
     console.log('Back에 Score보내요');
     console.log(senList, wordList);
     // 여기서 flipped 값이 true인 애들의 score 합쳐서 api로 post 보내고 홈 화면으로 이동시키기
-    // navigate('/home');
+    navigate('/home');
   };
 
   const handleClick = index => {

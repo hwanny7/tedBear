@@ -11,6 +11,7 @@ import SeungPage from 'pages/SeungPage';
 import YuhaPage from 'pages/YuhaPage';
 import JuPage from 'pages/JuPage';
 import LearningPage from 'pages/LearningPage';
+import GameDetailPage from 'pages/GameDetailPage';
 import GlobalStyle from 'GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'theme';
@@ -33,6 +34,7 @@ function App() {
             <Route element={<LayoutPage />}>
               <Route path="/home" element={<HomePage />} />
               <Route path="/game" element={<GamePage />} />
+              <Route path="/game/detail" element={<GameDetailPage />} />
               <Route path="/level" element={<LevelPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/learning" element={<LearningPage />} />
