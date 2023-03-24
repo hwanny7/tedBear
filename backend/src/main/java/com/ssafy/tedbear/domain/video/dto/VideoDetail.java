@@ -20,7 +20,7 @@ public class VideoDetail {
 
 	public VideoDetail(Video video) {
 
-		this.title = HtmlUtils.htmlEscape(video.getTitle());
+		this.title = HtmlUtils.htmlUnescape(video.getTitle());
 		this.videoUrl = video.getVideoUrl();
 		this.score = video.getScore();
 		this.sentenceInfoList = video.getSentenceList().stream().map(SentenceInfo::new).collect(Collectors.toList());

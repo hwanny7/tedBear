@@ -1,5 +1,7 @@
 package com.ssafy.tedbear.domain.sentence.dto;
 
+import org.springframework.web.util.HtmlUtils;
+
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
 import lombok.Getter;
@@ -11,8 +13,8 @@ public class SentenceInfo {
 	int startTime;
 
 	public SentenceInfo(Sentence sentence) {
-		this.content = sentence.getContent();
-		this.translation = sentence.getTranslation();
+		this.content = HtmlUtils.htmlUnescape(sentence.getContent());
+		this.translation = HtmlUtils.htmlUnescape(sentence.getTranslation());
 		this.startTime = sentence.getStartTime();
 	}
 }

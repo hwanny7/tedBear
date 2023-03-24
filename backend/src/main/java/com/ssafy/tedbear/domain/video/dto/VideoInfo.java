@@ -1,5 +1,7 @@
 package com.ssafy.tedbear.domain.video.dto;
 
+import org.springframework.web.util.HtmlUtils;
+
 import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.Getter;
@@ -14,7 +16,7 @@ public class VideoInfo {
 
 	public VideoInfo(Video video) {
 		this.thumbnailUrl = video.getThumbnailUrl();
-		this.title = video.getTitle();
+		this.title = HtmlUtils.htmlUnescape(video.getTitle());
 		this.watchId = video.getWatchId();
 		this.score = video.getScore();
 		this.isBookMarked = video.isBookmarked();
