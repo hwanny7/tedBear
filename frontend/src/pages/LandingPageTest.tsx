@@ -1,5 +1,9 @@
 import styled, { css, keyframes } from 'styled-components';
 import { device } from 'utils/mediaQuery';
+
+//로그인 모달
+import LoginModal from 'components/profile/LoginModal';
+
 // visual svg
 import LandingVisual from 'assets/img/landingVisual.svg';
 import Smog from 'assets/img/landingSmog.svg';
@@ -1040,6 +1044,9 @@ const Box2 = styled.div`
 `;
 
 const LandingPageTest = (props: Props) => {
+  // 로그인 팝업창
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
     props.setToggle(!props.toggle);
@@ -1082,6 +1089,7 @@ const LandingPageTest = (props: Props) => {
 
   return (
     <Wrapper>
+      {modalOpen && <LoginModal setOpenModal={setModalOpen} />}
       <Visual toggle={props.toggle}>
         <LandingVisualImg src={LandingVisual} toggle={props.toggle} />
         {/* <BigWave1Img src={BigWave1} toggle={props.toggle} /> */}
@@ -1098,7 +1106,7 @@ const LandingPageTest = (props: Props) => {
               Let&apos;s Learn with <span>TedBear</span>
             </Title>
             <SubTitle>TedBear로 영어 스피킹 연습을 해보세요!</SubTitle>
-            <StartBtn>Get Started</StartBtn>
+            <StartBtn onClick={() => setModalOpen(true)}>Get Started</StartBtn>
           </TextBox>
           <ImgBox>
             <SmogImg src={Smog} />
