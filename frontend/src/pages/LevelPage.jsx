@@ -52,6 +52,19 @@ const StyledLevel = styled.div`
         transition: 0.4s;
       }
       div {
+        /* 스크롤 */
+        /* border: 1px solid black; */
+        overflow-y: scroll;
+        height: 80%;
+        &::-webkit-scrollbar {
+          width: 8px;
+          cursor: pointer;
+        }
+        &::-webkit-scrollbar-thumb {
+          height: 15%;
+          background-color: ${props => props.theme.mainColor};
+          border-radius: 20px;
+        }
         backface-visibility: hidden;
         position: absolute;
         top: 0;
