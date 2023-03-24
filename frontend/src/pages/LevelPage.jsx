@@ -76,6 +76,7 @@ const StyledLevel = styled.div`
         background: ${props => props.theme.mainLightColor};
       }
       .back {
+        padding: 20px;
         overflow: auto;
         font-size: 20px;
         /* line-height: 120px; */
@@ -86,6 +87,7 @@ const StyledLevel = styled.div`
         justify-content: center;
       }
       .front {
+        padding: 20px;
         overflow: auto;
         transform: rotateY(180deg);
         font-size: 20px;
