@@ -10,20 +10,19 @@ import javax.persistence.Table;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.model.BaseEntity;
-import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Table(name = "video_bookmark_tb")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@SuperBuilder
 public class VideoBookmark extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

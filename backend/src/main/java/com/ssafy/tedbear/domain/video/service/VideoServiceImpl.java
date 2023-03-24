@@ -3,6 +3,7 @@ package com.ssafy.tedbear.domain.video.service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,10 +17,10 @@ import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
 import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.service.MemberService;
-import com.ssafy.tedbear.domain.video.dto.VideoDetail;
-import com.ssafy.tedbear.domain.video.dto.VideoInfo;
-import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
-import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfo;
+import com.ssafy.tedbear.domain.video.dto.VideoDetailDto;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoDto;
+import com.ssafy.tedbear.domain.video.dto.VideoInfoListDto;
+import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfoDto;
 import com.ssafy.tedbear.domain.video.entity.Video;
 import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
@@ -39,7 +40,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoInfoList getRecommendList(long memberNo) {
+	public VideoInfoListDto getRecommendList(long memberNo) {
 		Member member = memberService.getMember(memberNo);
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore);
@@ -61,7 +62,7 @@ public class VideoServiceImpl implements VideoService {
 				.map(x -> x.getVideo().getNo())
 				.collect(Collectors.toSet());
 
-		return new VideoInfoList(
+		return new VideoInfoListDto(
 			recommendVideoList
 				.stream()
 				.sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
@@ -73,15 +74,15 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoDetail getDetail(long memberNo, String watchId) {
+	public VideoDetailDto getDetail(long memberNo, String watchId) {
 		Member member = memberService.getMember(memberNo);
 		Video video = videoRepository.findByWatchId(watchId);
-		video.setBookmarked(videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, video).isPresent());
-		return new VideoDetail(video);
+		video.setBookmarked(videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video).isPresent());
+		return new VideoDetailDto(video);
 	}
 
 	@Override
-	public VideoInfo getWatchingRecent(long memberNo) {
+	public VideoInfoDto getWatchingRecent(long memberNo) {
 		Member member = memberService.getMember(memberNo);
 
 		Optional<WatchingVideo> optionalWatchingVideo = watchingVideoRepository.findTop1ByMemberAndVideoStatusOrderByUpdatedDateDesc(
@@ -91,26 +92,26 @@ public class VideoServiceImpl implements VideoService {
 				member, false)
 			.map(x -> optionalWatchingVideo.get().getVideo())
 			.map(x -> x.updateBookmarked(
-				videoBookmarkRepository.findVideoBookmarksByMemberAndVideo(member, x).isPresent()))
-			.map(VideoInfo::new)
+				videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, x).isPresent()))
+			.map(VideoInfoDto::new)
 			.orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public VideoInfoList getWatchingList(long memberNo, Pageable pageable) {
+	public VideoInfoListDto getWatchingList(long memberNo, Pageable pageable) {
 		Member member = memberService.getMember(memberNo);
 		Slice<WatchingVideo> watchingVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageable,
 			member, false);
 		List<Video> videoList = watchingVideoSlice.get().map(watchingVideo -> watchingVideo.getVideo()).collect(
 			Collectors.toList());
 		updateBookmarkVideo(member, videoList);
-		return new VideoInfoList(videoList);
+		return new VideoInfoListDto(videoList);
 	}
 
 	@Override
 	@Transactional
-	public VideoInfoList getCompleteList(long memberNo, Pageable pageable) {
+	public VideoInfoListDto getCompleteList(long memberNo, Pageable pageable) {
 		Member member = memberService.getMember(memberNo);
 
 		Slice<WatchingVideo> completeVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageable,
@@ -119,19 +120,19 @@ public class VideoServiceImpl implements VideoService {
 		List<Video> videoList = completeVideoSlice.get().map(watchingVideo -> watchingVideo.getVideo()).collect(
 			Collectors.toList());
 		updateBookmarkVideo(member, videoList);
-		return new VideoInfoList(videoList);
+		return new VideoInfoListDto(videoList);
 	}
 
 	@Override
-	public VideoInfoList searchVideo(String query, Pageable pageable) {
-		return new VideoInfoList(videoRepository.findSliceByTitle(query, pageable)
+	public VideoInfoListDto searchVideo(String query, Pageable pageable) {
+		return new VideoInfoListDto(videoRepository.findSliceByTitle(query, pageable)
 			.get()
 			.collect(Collectors.toList()));
 	}
 
 	@Override
 	@Transactional
-	public void saveWatchingRecord(long memberNo, WatchingVideoInfo request) {
+	public void saveWatchingRecord(long memberNo, WatchingVideoInfoDto request) {
 		Member member = memberService.getMember(memberNo);
 
 		// Insert Or Update !!
@@ -151,7 +152,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public void saveCompleteRecord(long memberNo, WatchingVideoInfo request) {
+	public void saveCompleteRecord(long memberNo, WatchingVideoInfoDto request) {
 		Member member = memberService.getMember(memberNo);
 
 		// Insert Or Update !!
@@ -172,30 +173,42 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoInfoList getVideoBookmarkList(long memberNo) {
-		return null;
+	public VideoInfoListDto getVideoBookmarkList(long memberNo) {
+		Member member = Member.builder().no(memberNo).build();
+		List<VideoBookmark> videoBookmarkList = videoBookmarkRepository.findVideoBookmarksByMember(member);
+		return new VideoInfoListDto(videoBookmarkList.stream().map(x -> x.getVideo()).collect(Collectors.toList()));
+
 	}
 
 	@Override
 	public void saveVideoBookmark(long memberNo, long videoNo) {
-		videoBookmarkRepository.save(VideoBookmark
-			.builder()
-			.member(Member.builder().no(memberNo).build())
-			.video(Video.builder().no(videoNo).build())
-			.build());
+		Member member = Member.builder().no(memberNo).build();
+		Video video = Video.builder().no(videoNo).build();
+		videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
+			.ifPresentOrElse(none -> {
+					throw new IllegalArgumentException("이미 존재하는 북마크입니다.");
+				},
+				() -> videoBookmarkRepository.save(
+					VideoBookmark
+						.builder()
+						.member(member)
+						.video(video)
+						.createdDate(LocalDateTime.now())
+						.build()
+				));
 	}
 
 	@Override
 	public void deleteVideoBookmark(long memberNo, long videoNo) {
-		videoBookmarkRepository.delete(VideoBookmark
-			.builder()
-			.member(Member.builder().no(memberNo).build())
-			.video(Video.builder().no(videoNo).build())
-			.build());
+		Member member = Member.builder().no(memberNo).build();
+		Video video = Video.builder().no(videoNo).build();
+		videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
+			.ifPresentOrElse(x -> videoBookmarkRepository.delete(x), () -> {
+				throw new IllegalArgumentException("존재하지 않는 북마크입니다.");
+			});
 	}
 
 	public void updateBookmarkVideo(Member member, List<Video> videoList) {
-
 		Set<Long> bookmarkedVideoNoSet =
 			videoBookmarkRepository
 				.findVideoBookmarksByMemberAndVideoIn(member, videoList)

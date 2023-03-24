@@ -13,8 +13,11 @@ import com.ssafy.tedbear.domain.video.entity.Video;
 
 @Repository
 public interface VideoBookmarkRepository extends JpaRepository<VideoBookmark, Long> {
-	Optional<VideoBookmark> findVideoBookmarksByMemberAndVideo(Member member, Video video);
+	Optional<VideoBookmark> findVideoBookmarkByMemberAndVideo(Member member, Video video);
 
 	@Query("select v from VideoBookmark v  where v.video in :videoList and v.member = :member")
 	List<VideoBookmark> findVideoBookmarksByMemberAndVideoIn(Member member, List<Video> videoList);
+
+	@Query("select v from VideoBookmark v  join fetch v.video where v.member = :member")
+	List<VideoBookmark> findVideoBookmarksByMember(Member member);
 }

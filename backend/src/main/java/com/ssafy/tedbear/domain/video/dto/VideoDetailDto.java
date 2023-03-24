@@ -5,25 +5,25 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.util.HtmlUtils;
 
-import com.ssafy.tedbear.domain.sentence.dto.SentenceInfo;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceInfoDto;
 import com.ssafy.tedbear.domain.video.entity.Video;
 
 import lombok.Getter;
 
 @Getter
-public class VideoDetail {
+public class VideoDetailDto {
 	String title;
 	String videoUrl;
-	int score;
-	List<SentenceInfo> sentenceInfoList;
+	VideoScoreInfoDto scoreInfo;
+	List<SentenceInfoDto> sentenceInfoList;
 	boolean isBookMarked;
 
-	public VideoDetail(Video video) {
+	public VideoDetailDto(Video video) {
 
 		this.title = HtmlUtils.htmlUnescape(video.getTitle());
 		this.videoUrl = video.getVideoUrl();
-		this.score = video.getScore();
-		this.sentenceInfoList = video.getSentenceList().stream().map(SentenceInfo::new).collect(Collectors.toList());
+		this.scoreInfo = new VideoScoreInfoDto(video);
+		this.sentenceInfoList = video.getSentenceList().stream().map(SentenceInfoDto::new).collect(Collectors.toList());
 		this.isBookMarked = video.isBookmarked();
 	}
 }

@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
 
 		Random random = new Random();
 
-		// 단어는 CEFR 다 가져와서, 난이도별로 3개씩 총 18개
+		// 단어는 CEFR 다 가져와서, 난이도별로 1개씩 총 6개
 		List<Word> problemWordList =
 			wordRepository.findByScoreIsNot(0)
 				.stream()
@@ -71,8 +71,8 @@ public class MemberServiceImpl implements MemberService {
 				.values()
 				.stream()
 				.map(x -> x.stream()
-					.skip(random.nextInt(x.size() - 3))
-					.limit(3)
+					.skip(random.nextInt(x.size() - 1))
+					.limit(1)
 					.collect(Collectors.toList()))
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());

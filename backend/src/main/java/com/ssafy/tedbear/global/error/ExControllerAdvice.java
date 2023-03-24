@@ -1,5 +1,7 @@
 package com.ssafy.tedbear.global.error;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +22,13 @@ public class ExControllerAdvice {
 
 	@ExceptionHandler(IllegalStateException.class)
 	public ResponseEntity<ErrorResult> illegalStateExHandle(IllegalStateException e) {
+		log.error("[exceptionHandle] ex", e);
+		ErrorResult errorResult = new ErrorResult("400", e.getMessage());
+		return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(NoSuchElementException.class)
+	public ResponseEntity<ErrorResult> noSuchElementExHandle(NoSuchElementException e) {
 		log.error("[exceptionHandle] ex", e);
 		ErrorResult errorResult = new ErrorResult("400", e.getMessage());
 		return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);

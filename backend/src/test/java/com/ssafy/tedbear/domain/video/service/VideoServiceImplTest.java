@@ -39,7 +39,7 @@ class VideoServiceImplTest {
 	public void saveWatchingTest() throws InterruptedException {
 		Member member = memberRepository.findById(1L)
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-		long lastVideoNo = 1010;
+		long lastVideoNo = 1030;
 		for (long videoNo = 1000; videoNo <= lastVideoNo; videoNo++) {
 			WatchingVideo watchingVideo = WatchingVideo.builder()
 				.video(Video.builder().no(videoNo).build())

@@ -1,7 +1,5 @@
 package com.ssafy.tedbear.domain.member.controller;
 
-import java.util.NoSuchElementException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ssafy.tedbear.domain.member.dto.Problem;
 import com.ssafy.tedbear.domain.member.dto.ProblemList;
 import com.ssafy.tedbear.domain.member.dto.StreakList;
-import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.member.service.MemberService;
-import com.ssafy.tedbear.domain.video.dto.VideoInfo;
-import com.ssafy.tedbear.domain.video.dto.VideoInfoList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

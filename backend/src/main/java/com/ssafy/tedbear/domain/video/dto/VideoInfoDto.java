@@ -7,14 +7,14 @@ import com.ssafy.tedbear.domain.video.entity.Video;
 import lombok.Getter;
 
 @Getter
-public class VideoInfo {
+public class VideoInfoDto {
 	String thumbnailUrl;
 	String title;
 	String watchId;
 	int score;
 	boolean isBookMarked;
 
-	public VideoInfo(Video video) {
+	public VideoInfoDto(Video video) {
 		this.thumbnailUrl = video.getThumbnailUrl();
 		this.title = HtmlUtils.htmlUnescape(video.getTitle());
 		this.watchId = video.getWatchId();

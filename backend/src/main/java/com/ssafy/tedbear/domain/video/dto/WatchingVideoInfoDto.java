@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WatchingVideoInfo {
+public class WatchingVideoInfoDto {
 	long videoNo;
 	int videoProgressTime;
 }
