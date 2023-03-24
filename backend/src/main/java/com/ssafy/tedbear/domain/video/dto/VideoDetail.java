@@ -3,6 +3,8 @@ package com.ssafy.tedbear.domain.video.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.web.util.HtmlUtils;
+
 import com.ssafy.tedbear.domain.sentence.dto.SentenceInfo;
 import com.ssafy.tedbear.domain.video.entity.Video;
 
@@ -17,7 +19,8 @@ public class VideoDetail {
 	boolean isBookMarked;
 
 	public VideoDetail(Video video) {
-		this.title = video.getTitle();
+
+		this.title = HtmlUtils.htmlEscape(video.getTitle());
 		this.videoUrl = video.getVideoUrl();
 		this.score = video.getScore();
 		this.sentenceInfoList = video.getSentenceList().stream().map(SentenceInfo::new).collect(Collectors.toList());

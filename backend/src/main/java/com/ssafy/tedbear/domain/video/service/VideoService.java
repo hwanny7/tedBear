@@ -26,4 +26,10 @@ public interface VideoService {
 
 	void saveCompleteRecord(long memberNo, WatchingVideoInfo request);
 
+	VideoInfoList getVideoBookmarkList(long memberNo);
+
+	void saveVideoBookmark(long memberNo, long videoNo);
+
+	void deleteVideoBookmark(long memberNo, long videoNo);
+
 }

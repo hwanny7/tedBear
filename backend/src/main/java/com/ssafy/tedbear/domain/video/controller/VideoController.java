@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,6 +74,24 @@ public class VideoController {
 	public ResponseEntity saveCompleteRecord(@RequestBody WatchingVideoInfo request) {
 		videoService.saveCompleteRecord(1L, request);
 		return new ResponseEntity(HttpStatus.CREATED);
+	}
+
+	@GetMapping("/bookmark/list")
+	public ResponseEntity<VideoInfoList> getVideoBookmarkList() {
+		return ResponseEntity.ok(videoService.getVideoBookmarkList(1L));
+	}
+
+	@PostMapping("/bookmark/{videoNo}")
+	public ResponseEntity<VideoInfoList> saveVideoBookmark(@PathVariable long videoNo) {
+		videoService.saveVideoBookmark(1L, videoNo);
+		return new ResponseEntity(HttpStatus.CREATED);
+
+	}
+
+	@DeleteMapping("/bookmark/{videoNo}")
+	public ResponseEntity<VideoInfoList> deleteVideoBookmark(@PathVariable long videoNo) {
+		videoService.deleteVideoBookmark(1L, videoNo);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 }

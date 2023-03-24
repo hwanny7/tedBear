@@ -12,6 +12,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
 import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.service.MemberService;
@@ -168,6 +169,29 @@ public class VideoServiceImpl implements VideoService {
 				.build());
 		watchingVideoRepository.save(watchingVideo);
 
+	}
+
+	@Override
+	public VideoInfoList getVideoBookmarkList(long memberNo) {
+		return null;
+	}
+
+	@Override
+	public void saveVideoBookmark(long memberNo, long videoNo) {
+		videoBookmarkRepository.save(VideoBookmark
+			.builder()
+			.member(Member.builder().no(memberNo).build())
+			.video(Video.builder().no(videoNo).build())
+			.build());
+	}
+
+	@Override
+	public void deleteVideoBookmark(long memberNo, long videoNo) {
+		videoBookmarkRepository.delete(VideoBookmark
+			.builder()
+			.member(Member.builder().no(memberNo).build())
+			.video(Video.builder().no(videoNo).build())
+			.build());
 	}
 
 	public void updateBookmarkVideo(Member member, List<Video> videoList) {
