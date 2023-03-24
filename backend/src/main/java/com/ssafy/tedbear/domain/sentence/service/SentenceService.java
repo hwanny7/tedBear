@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -12,15 +13,14 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
+import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
 import com.ssafy.tedbear.global.common.SearchDto;
@@ -57,21 +57,21 @@ public class SentenceService {
 
 	}
 
+	//추천 문장 리스트 불러오기
 	@Transactional
-	public SentenceDetailDto.ListResponse getRecommendSentence(Member member) {
+	public SentenceDetailDto.ListResponse getRecommendList(Member member) {
 		int memberScore = member.getScore();
-		List<Sentence> recommendList = getRecommendList(memberScore);
-		recommendList = checkDuplicateVideo(recommendList);
+		List<Sentence> sentenceList = getRecommendSentence(memberScore);
 
-		return new SentenceDetailDto.ListResponse(recommendList.stream()
-			.limit(resultMaxCnt)
-			.peek(sentence -> sentence.setBookmarked(
-				sentenceBookmarkRepository.findByMemberAndSentence(member, sentence).isPresent()))
-			.collect(Collectors.toSet()));
+		List<Sentence> checkedList = checkDuplicateVideo(sentenceList);
+
+		updateBookmarkSentence(member, checkedList);
+
+		return new SentenceDetailDto.ListResponse(checkedList);
 
 	}
 
-	private List<Sentence> getRecommendList(int memberScore) {
+	private List<Sentence> getRecommendSentence(int memberScore) {
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(memberScore);
 		int deltaScore = 10;
 
@@ -85,9 +85,10 @@ public class SentenceService {
 		return recommendList;
 	}
 
-	private static List<Sentence> checkDuplicateVideo(List<Sentence> recommendList) {
+	private List<Sentence> checkDuplicateVideo(List<Sentence> recommendList) {
 		return recommendList.stream()
 			.filter(distinctByKey(sentence -> sentence.getVideo().getWatchId()))
+			.limit(resultMaxCnt)
 			.collect(Collectors.toList());
 	}
 
@@ -96,9 +97,23 @@ public class SentenceService {
 		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
-	public SentenceDetailDto.ListResponse searchSentence(SearchDto.Request condition, Pageable pageable) {
-		Slice<Sentence> sliceByContent = sentenceRepository.findSliceByContent(condition.getQuery(), pageable);
-		return new SentenceDetailDto.ListResponse(sliceByContent);
+	public SentenceDetailDto.ListResponse searchSentence(Member member, SearchDto.Request condition,
+		Pageable pageable) {
+		List<Sentence> searchList = sentenceRepository.findSliceByContent(condition.getQuery(), pageable)
+			.getContent();
+		updateBookmarkSentence(member, searchList);
+
+		return new SentenceDetailDto.ListResponse(searchList);
+	}
+
+	//해당 문장 리스트에 북마크 정보 업데이트
+	public void updateBookmarkSentence(Member member, List<Sentence> sentenceList) {
+		Set<Long> bookmarkedSet = sentenceBookmarkRepository.findByMemberAndSentenceIn(member, sentenceList)
+			.stream()
+			.map(s -> s.getSentence().getNo())
+			.collect(Collectors.toSet());
+
+		sentenceList.forEach(s -> s.setBookmarked(bookmarkedSet.contains(s.getNo())));
 	}
 
 }

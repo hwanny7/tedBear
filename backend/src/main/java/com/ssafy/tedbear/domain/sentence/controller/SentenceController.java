@@ -49,7 +49,7 @@ public class SentenceController {
 	public ResponseEntity<SentenceDetailDto.ListResponse> getRecommendSentence() {
 		Member member = memberRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
 
-		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendSentence(member);
+		SentenceDetailDto.ListResponse recommendList = sentenceService.getRecommendList(member);
 		return new ResponseEntity<>(recommendList, HttpStatus.OK);
 	}
 
@@ -63,8 +63,15 @@ public class SentenceController {
 
 	@GetMapping("/search")
 	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, Pageable pageable) {
-		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(searchCondition, pageable);
+		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(Member.builder().no(2L).build(),
+			searchCondition, pageable);
 		return new ResponseEntity<>(listResponse, HttpStatus.OK);
+	}
+
+	@GetMapping("/bookmark/list")
+	public ResponseEntity<?> getBookmarkedSentenceList() {
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }
