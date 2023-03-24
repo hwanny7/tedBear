@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,10 @@ import com.ssafy.tedbear.domain.log.service.MemberShortsLogService;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.sentence.dto.MemberShortsLogDto;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
+import com.ssafy.tedbear.domain.sentence.service.SentenceBookmarkService;
 import com.ssafy.tedbear.domain.sentence.service.SentenceService;
 import com.ssafy.tedbear.global.common.SearchDto;
 
@@ -34,6 +37,7 @@ public class SentenceController {
 	private final MemberRepository memberRepository;
 	private final MemberShortsLogService memberShortsLogService;
 	private final SentenceService sentenceService;
+	private final SentenceBookmarkService sentenceBookmarkService;
 
 	@PostMapping("/speaking/{memberNo}")
 	public ResponseEntity<?> saveSpeakingRecord(@PathVariable Long memberNo,
@@ -68,8 +72,25 @@ public class SentenceController {
 		return new ResponseEntity<>(listResponse, HttpStatus.OK);
 	}
 
+	//==북마크==//
 	@GetMapping("/bookmark/list")
 	public ResponseEntity<?> getBookmarkedSentenceList() {
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping("/bookmark")
+	public ResponseEntity<?> postSentenceBookmark(@RequestBody SentenceBookmarkDto sentenceBookmarkDto) {
+		Long memberId = 2L;
+		sentenceBookmarkService.saveSentenceBookmark(memberId, sentenceBookmarkDto);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@DeleteMapping("/bookmark")
+	public ResponseEntity<?> deleteSentenceBookmark(@RequestBody SentenceBookmarkDto sentenceBookmarkDto) {
+		Long memberId = 2L;
+		sentenceBookmarkService.deleteSentenceBookmark(memberId, sentenceBookmarkDto);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

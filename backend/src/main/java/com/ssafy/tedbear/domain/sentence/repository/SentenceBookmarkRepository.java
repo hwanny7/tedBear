@@ -13,4 +13,6 @@ import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
 public interface SentenceBookmarkRepository extends JpaRepository<SentenceBookmark, Long> {
 
 	List<SentenceBookmark> findByMemberAndSentenceIn(Member member, List<Sentence> sentenceList);
+
+	void deleteByMemberAndSentence(Member member, Sentence sentence);
 }
