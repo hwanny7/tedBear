@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
-// import LandingPage from 'pages/LandingPage';
 import LandingPage from 'pages/LandingPageTest';
 import GamePage from 'pages/GamePage';
 import LevelPage from 'pages/LevelPage';

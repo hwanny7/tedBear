@@ -2,12 +2,16 @@ import styled, { css } from 'styled-components';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import LearningMic from 'assets/img/learningMic.svg';
+import LearningStop from 'assets/img/learningStop.svg';
 import Dot from 'assets/img/dot.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
-import { getVideoDesc, VideoDesc } from 'utils/api/leaningApi';
+import { getVideoDesc, VideoDesc } from 'utils/api/learningApi';
 import YouTube, { YouTubeProps } from 'react-youtube';
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -150,6 +154,8 @@ const LearningMicImg = styled.img`
   cursor: pointer;
 `;
 
+const LearningStopImg = styled(LearningMicImg)``;
+
 const ContentRight = styled.div`
   /* border: 1px solid purple; */
   background-color: white;
@@ -241,10 +247,9 @@ const English = styled.span`
 `;
 
 const Korean = styled.span`
-  display: inline-block;
+  display: block;
   font-size: 14px;
-  margin-top: 14px;
-  border: none;
+  margin-top: 8px;
   color: ${props => props.theme.textColor2};
 `;
 
@@ -342,7 +347,43 @@ const LearningPage = () => {
     youtubePlayer?.seekTo(startTime);
   };
 
-  //하이라이팅 하다 끝남
+  // STT
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const [micStatus, setMicStatus] = useState<boolean>(false);
+  const [userTalk, setUserTalk] = useState<string>('');
+  const [answerArray, setAnswerArray] = useState([]);
+  const [speakerArray, setSpeakerArray] = useState([]);
+
+  const onStart = () => {
+    SpeechRecognition.startListening({ continuous: true, language: 'en' });
+    setMicStatus(true);
+  };
+
+  const onStop = () => {
+    SpeechRecognition.stopListening();
+    toArray();
+    onReset();
+    setMicStatus(false);
+  };
+
+  const onReset = () => {
+    setUserTalk(transcript);
+    resetTranscript();
+  };
+
+  // 정답 매칭
+
+  // 문자열 배열에 담기
+  const toArray = () => {
+    const temp1 = transcript.split(' ');
+    console.log(temp1);
+
+    // 스크립트 정규식 제거하기
+    // [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
+    // let regex =  [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
+    const temp2 = videoDesc?.sentenceInfoList[selected].content.split(' ');
+    console.log(temp2);
+  };
 
   return (
     <Wrapper>
@@ -374,8 +415,12 @@ const LearningPage = () => {
                 <p>{videoDesc?.sentenceInfoList[selected].content}</p>
               </SentenceBox>
               <MicBox>
-                <LearningMicImg src={LearningMic} />
-                <p></p>
+                {!micStatus ? (
+                  <LearningMicImg src={LearningMic} onClick={onStart} />
+                ) : (
+                  <LearningStopImg src={LearningStop} onClick={onStop} />
+                )}
+                <p>{transcript}</p>
               </MicBox>
             </div>
           </SpeakBox>
