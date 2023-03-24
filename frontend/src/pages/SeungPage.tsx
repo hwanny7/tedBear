@@ -2,10 +2,6 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import styled from 'styled-components';
 
-const Box = styled.div`
-  background-color: red;
-`;
-
 const picture = [
   {
     title:
@@ -46,19 +42,31 @@ const SeungPage = () => {
   return (
     <div
       style={{
-        position: 'relative',
         background: 'red',
-        width: '500px',
-        height: '50px',
+        width: '50vw',
+        height: '50vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       <div
         style={{
-          position: 'absolute',
-          background: 'blue',
-          width: '200px',
-          height: '50px',
-          left: '300px',
+          background: 'black',
+          width: '50%',
+          height: '50%',
+          marginTop: '5%',
+          marginBottom: '5%',
+          border: '1px solid white',
+        }}
+      ></div>
+      <div
+        style={{
+          background: 'black',
+          width: '50%',
+          height: '50%',
+          border: '1px solid white',
+          marginBottom: '5%',
         }}
       ></div>
     </div>

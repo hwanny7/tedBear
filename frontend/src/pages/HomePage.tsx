@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { getVideoRecomm, getShortsRecomm, Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import SearchBar from 'components/common/SearchBar';
 
 interface HomeRecomm {
@@ -28,6 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shorts, setShorts] = useState<Shorts | null>(null);
@@ -47,7 +48,12 @@ const HomePage = () => {
     <Wrapper>
       <div>
         {modalOpen && <ShortsModal shorts={shorts} />}
-        <SearchBar></SearchBar>
+        <div style={{ display: 'flex' }}>
+          <SearchBar></SearchBar>
+          <button onClick={() => navigate('/still-learn')}>
+            학습 중인 영상
+          </button>
+        </div>
         <Carousel data={videoData}></Carousel>
         <ShortsCarousel
           data={shortsData}

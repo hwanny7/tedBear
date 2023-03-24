@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { getLearningVideo } from 'utils/api/recordVideo';
 
 interface card {
   title: string;
@@ -12,6 +13,7 @@ interface card {
 const StillLearningPage = () => {
   const [video, setVideo] = useState<card[]>([]);
   useEffect(() => {
+    getLearningVideo();
     setVideo([
       {
         title:

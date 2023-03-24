@@ -25,7 +25,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 50}%);
   }
-  > * {
+  > img {
     width: 31.3%;
     height: 200px;
     cursor: pointer;
@@ -50,7 +50,6 @@ const TitleWithButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
   h1 {
     font-size: 4vh;
   }
@@ -60,13 +59,17 @@ const TitleWithButton = styled.div`
 `;
 
 const LeftButton = styled.button`
-  border-radius: 16px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   background-color: #7b7b7b;
   border: 1px solid black;
 `;
 
 const RightButton = styled.button`
-  border-radius: 16px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   background-color: #7b7b7b;
   border: 1px solid black;
 `;
