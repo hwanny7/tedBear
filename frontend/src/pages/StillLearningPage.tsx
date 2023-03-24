@@ -49,8 +49,17 @@ const StillLearningPage = () => {
     ]);
   }, []);
 
+  const handleApi = () => {
+    console.log('hi');
+    let copy = video;
+    copy = copy.concat(copy);
+    console.log(copy);
+    setVideo(copy);
+  };
+
   return (
     <>
+      <button onClick={() => handleApi()}>click!!</button>
       <h1 style={{ textAlign: 'center' }}>학습 중인 페이지</h1>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Grid
