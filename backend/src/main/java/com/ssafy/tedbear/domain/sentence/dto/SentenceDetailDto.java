@@ -36,7 +36,14 @@ public class SentenceDetailDto {
 		public ListResponse(List<Sentence> list) {
 			this.sentenceList = list.stream().map((SentenceDetailDto::new)).collect(Collectors.toList());
 		}
+	}
 
+	@Getter
+	public static class ContentListResponse{
+		List<String> sentenceContentList;
+		public ContentListResponse(List<Sentence> list){
+			 this.sentenceContentList = list.stream().map(c -> c.getContent()).collect(Collectors.toList());
+		}
 	}
 
 }
