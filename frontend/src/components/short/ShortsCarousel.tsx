@@ -43,7 +43,6 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
 const TitleWithButton = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;
   h1 {
     font-size: 4vh;
   }
@@ -54,7 +53,6 @@ const TitleWithButton = styled.div`
 `;
 
 const LeftButton = styled.button`
-  /* position: absolute; */
   width: 50px;
   height: 50px;
   border-radius: 50%;

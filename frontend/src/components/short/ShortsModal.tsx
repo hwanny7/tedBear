@@ -1,7 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import styled from 'styled-components';
 import { Shorts } from 'utils/api/recommApi';
+import BookmarkFull from 'assets/img/bookmarkFull.svg';
+import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
+import VideoLevel from 'assets/img/videoLevel.svg';
+import { device } from 'utils/mediaQuery';
 
 interface Props {
   shorts: Shorts | null;
@@ -25,8 +29,8 @@ const Wrapper = styled.div`
 `;
 
 const YoutubeBox = styled.div`
-  min-width: 50%;
-  min-height: 50%;
+  min-width: 60%;
+  min-height: 60%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -36,9 +40,54 @@ const YoutubeBox = styled.div`
   align-items: center;
 `;
 
+const SentenceBox = styled.div`
+  position: absolute;
+  color: white;
+  bottom: 0;
+  text-align: center;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0)
+  );
+  @media ${device.mobile} {
+    font-size: 5px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 13px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 20px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 24px;
+  }
+`;
+
 const ShortsModal = ({ shorts }: Props) => {
+  // const playRef = useRef<any>(null);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     if (playRef.current) {
+  //       console.log(playRef.current.getCurrentTime());
+  //     }
+  //   }, 1000);
+
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // });
+
   const onPlayerReady: YouTubeProps['onReady'] = event => {
     const player = event.target;
+    player.unloadModule('captions'); //Works for html5 ignored by AS3
+    player.unloadModule('cc'); //Works for AS3 ignored by html5
+    // playRef.current = player;
     player.playVideo();
   };
 
@@ -77,6 +126,20 @@ const ShortsModal = ({ shorts }: Props) => {
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}
           />
+          <img
+            src={VideoLevel}
+            style={{
+              height: '12%',
+              position: 'absolute',
+              top: '4%',
+              left: '4%',
+            }}
+          ></img>
+          <img
+            src={BookmarkFull}
+            style={{ height: '15%', position: 'absolute', left: '93%' }}
+          ></img>
+          <SentenceBox>{shorts?.content}</SentenceBox>
         </Wrapper>
       </YoutubeBox>
     </div>
