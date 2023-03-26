@@ -145,7 +145,7 @@ const ShortsCarousel = ({
                 setOpenModal(true);
                 setShortsId(Thumnail);
               }}
-            />
+            ></img>
           );
         })}
       </ContentBox>

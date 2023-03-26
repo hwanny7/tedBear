@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import BookmarkFull from 'assets/img/bookmarkFull.svg';
+import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
+import VideoLevel from 'assets/img/videoLevel.svg';
 
 interface HomeRecomm {
   thumbnailUrl: string;
@@ -25,23 +28,40 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 50}%);
   }
-  > * {
+  .wrapper {
     width: 31.3%;
-    height: 200px;
-    cursor: pointer;
+    position: relative;
+    height: 300px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    border-radius: 16px;
     margin-top: 1%;
     margin-bottom: 1%;
     margin-left: 1%;
     margin-right: 1%;
-    flex-shrink: 0;
-    flex-grow: 1;
-    border-radius: 16px;
-    &:hover {
-      scale: 1.04;
-      transition: 0.4s;
-    }
     @media (max-width: 768px) {
       width: 48%;
+    }
+    .main-img {
+      border-radius: 16px;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      &:hover {
+        scale: 1.04;
+        transition: 0.4s;
+      }
+    }
+    .video-level {
+      height: 12%;
+      position: absolute;
+      top: 4%;
+      left: 4%;
+    }
+    .book-mark {
+      height: 15%;
+      position: absolute;
+      left: 90%;
     }
   }
 `;
@@ -128,12 +148,16 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
           return (
-            <img
-              key={idx}
-              src={Thumnail.thumbnailUrl}
-              onClick={() => handleClick(Thumnail.watchId)}
-              alt=""
-            />
+            <div className="wrapper" key={idx}>
+              <img
+                className="main-img"
+                src={Thumnail.thumbnailUrl}
+                onClick={() => handleClick(Thumnail.watchId)}
+                alt=""
+              />
+              <img src={VideoLevel} className="video-level"></img>
+              <img src={BookmarkFull} className="book-mark"></img>
+            </div>
           );
         })}
       </ContentBox>
