@@ -46,7 +46,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 			.path("/")
 			.build();
 
-		ResponseCookie accessCookie = ResponseCookie.from("access-token", "Bearer " + accessToken)
+		ResponseCookie accessCookie = ResponseCookie.from("access-token", accessToken)
 			.httpOnly(false)
 			.maxAge(JwtProvider.ACCESS_TOKEN_VALIDATE_TIME)
 			.path("/")
