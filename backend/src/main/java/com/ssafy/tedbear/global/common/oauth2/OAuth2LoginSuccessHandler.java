@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.minidev.json.JSONUtil;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -54,8 +53,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		// response.getWriter().write(accessToken);
 		response.addHeader("Authorization", "Bearer " + accessToken);
 
-		if(join){
+		if (join) {
 			getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung"); // 난이도 측정 페이지로 이동
+		} else {
+			getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung");
 		}
 	}
 
@@ -64,18 +65,19 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		MemberScore memberScore = MemberScore.builder().score(null).createdDate(LocalDateTime.now()).build();
 
 		Optional<Member> oMember = memberRepository.findByUid(oAuth2User.getUid());
-		if(oMember.isEmpty()){
+		if (oMember.isEmpty()) {
 			System.out.println("비었거덩");
 			memberLevelRepository.save(memberLevel);
 			memberScoreRepository.save(memberScore);
 			join = true;
 		}
-		Member member = oMember.map(entity -> entity.updateNicknameAndRefreshToken(oAuth2User.getNickname(), refreshToken))
-				.orElse(oAuth2User.toEntity(
-						oAuth2User.getNickname(),
-						memberLevel,
-						memberScore,
-						null));
+		Member member = oMember.map(
+				entity -> entity.updateNicknameAndRefreshToken(oAuth2User.getNickname(), refreshToken))
+			.orElse(oAuth2User.toEntity(
+				oAuth2User.getNickname(),
+				memberLevel,
+				memberScore,
+				null));
 
 		memberRepository.save(member);
 

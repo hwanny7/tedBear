@@ -38,7 +38,8 @@ public class SecurityConfig {
 
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
-		return new OAuth2LoginSuccessHandler(memberRepository, memberLevelRepository, memberScoreRepository, jwtProvider);
+		return new OAuth2LoginSuccessHandler(memberRepository, memberLevelRepository, memberScoreRepository,
+			jwtProvider);
 	}
 
 	@Bean
@@ -63,8 +64,8 @@ public class SecurityConfig {
 			.authorizationEndpoint()
 			.baseUri("/oauth")
 
-			.and()
-			.redirectionEndpoint()
+			// .and()
+			// .redirectionEndpoint()
 			// .baseUri("/users")
 
 			.and()
@@ -90,7 +91,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://j8b103.p.ssafy.io"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://j8b103.p.ssafy.io"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
 		configuration.setAllowCredentials(true);
