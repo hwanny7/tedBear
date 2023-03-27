@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
 import carouselButton from 'assets/img/carouselButton.svg';
+import rightButton from 'assets/img/rightButton.svg';
 
 import { device } from 'utils/mediaQuery';
 
@@ -42,7 +41,6 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
     margin-bottom: 1%;
     margin-left: 1%;
     margin-right: 1%;
-    overflow-y: hidden;
     &:hover {
       scale: 1.04;
       transition: 0.4s;
@@ -95,28 +93,30 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   }
 `;
 
-const TitleWithButton = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  h1 {
-    font-size: 4vh;
+const RootWrapper = styled.div`
+  position: relative;
+  .right-btn {
+    position: absolute;
+    right: 5%;
+    top: -15%;
+    height: 5vh;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+    }
   }
-  .buttom-wrapper {
-    display: flex;
+  .left-btn {
+    position: absolute;
+    right: 1%;
+    top: -15%;
+    height: 5vh;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+    }
   }
-`;
-
-const LeftButton = styled.button`
-  width: 50%;
-`;
-
-const RightButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #7b7b7b;
-  border: 1px solid black;
 `;
 
 const Carousel = ({ data }: { data: HomeRecomm[] }) => {
@@ -161,46 +161,41 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
     navigate('/learning', { state: watchId });
   };
   return (
-    <Wrapper>
-      <TitleWithButton>
-        <h1>Recommended Videos</h1>
-        <div className="buttom-wrapper">
-          <LeftButton onClick={prev}>
-            <img src={carouselButton} alt="" />
-          </LeftButton>
-          <RightButton onClick={next} className="right-arrow">
-            <ArrowForwardIosIcon />
-          </RightButton>
-        </div>
-      </TitleWithButton>
-      <ContentBox transition={transStyle} transform={currentIndex}>
-        {data.map((Thumnail, idx) => {
-          return (
-            <div className="wrapper" key={idx}>
-              <img
-                className="main-img"
-                src={Thumnail.thumbnailUrl}
-                onClick={() => handleClick(Thumnail.watchId)}
-                alt=""
-              />
-              <img
-                src={VideoLevel}
-                className="video-level"
-                style={{
-                  filter:
-                    'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
-                }}
-              ></img>
-              <img
-                src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                className="book-mark"
-              ></img>
-              <div className="title">{Thumnail.title}</div>
-            </div>
-          );
-        })}
-      </ContentBox>
-    </Wrapper>
+    <RootWrapper>
+      <img onClick={prev} className="right-btn" src={carouselButton} alt="" />
+      <img onClick={next} className="left-btn" src={rightButton} alt="" />
+      <div>
+        <Wrapper>
+          <ContentBox transition={transStyle} transform={currentIndex}>
+            {data.map((Thumnail, idx) => {
+              return (
+                <div className="wrapper" key={idx}>
+                  <img
+                    className="main-img"
+                    src={Thumnail.thumbnailUrl}
+                    onClick={() => handleClick(Thumnail.watchId)}
+                    alt=""
+                  />
+                  <img
+                    src={VideoLevel}
+                    className="video-level"
+                    style={{
+                      filter:
+                        'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
+                    }}
+                  ></img>
+                  <img
+                    src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    className="book-mark"
+                  ></img>
+                  <div className="title">{Thumnail.title}</div>
+                </div>
+              );
+            })}
+          </ContentBox>
+        </Wrapper>
+      </div>
+    </RootWrapper>
   );
 };
 

@@ -21,6 +21,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import StillLearningPage from 'pages/StillLearningPage';
 import SearchPage from 'pages/SearchPage';
+import CrossWordPage from './pages/CrossWordPage';
 
 function App() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -41,6 +42,7 @@ function App() {
               <Route path="/bookmark" element={<BookPage />} />
               <Route path="/still-learn" element={<StillLearningPage />} />
               <Route path="/search/:content?" element={<SearchPage />} />
+              <Route path="cross-word" element={<CrossWordPage />} />
             </Route>
             <Route path="/level" element={<LevelPage />} />
             <Route path="/seung" element={<SeungPage />} />
@@ -49,7 +51,7 @@ function App() {
             <Route
               path="/"
               // element={<LandingPage toggle={toggle} setToggle={setToggle} />}
-              element={<LandingPage toggle={toggle} setToggle={setToggle} />}
+              // element={<LandingPage toggle={toggle} setToggle={setToggle} />}
             />
           </Routes>
         </BrowserRouter>

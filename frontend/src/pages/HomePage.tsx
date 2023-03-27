@@ -6,6 +6,7 @@ import { getVideoRecomm, getShortsRecomm, Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import SearchBar from 'components/common/SearchBar';
+import { device } from 'utils/mediaQuery';
 
 interface HomeRecomm {
   thumbnailUrl: string;
@@ -24,6 +25,46 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const VideoTitle = styled.span`
+  display: block;
+  margin-top: 3vh;
+  @media ${device.mobile} {
+    font-size: 15px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 25px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 35px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 50px;
+  }
+`;
+
+const ShortsTitle = styled.span`
+  display: block;
+  margin-top: 3vh;
+  @media ${device.mobile} {
+    font-size: 15px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 25px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 35px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 50px;
+  }
 `;
 
 const HomePage = () => {
@@ -56,7 +97,9 @@ const HomePage = () => {
             학습 중인 영상
           </button>
         </div>
+        <VideoTitle>Recommended for you</VideoTitle>
         <Carousel data={videoData}></Carousel>
+        <ShortsTitle>Daily Shorts</ShortsTitle>
         <ShortsCarousel
           data={shortsData}
           setOpenModal={setModalOpen}

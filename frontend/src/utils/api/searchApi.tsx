@@ -1,15 +1,15 @@
 import { authApi } from './customAxios';
 
-export interface LearningVideo {
+export interface SearchedVideo {
   score: number;
-  thumbnailUrl: number;
+  thumbnailUrl: string;
   bookmarked: boolean;
   title: string;
   watchId: string;
 }
 
-interface LearningSet {
-  videoInfoList: LearningVideo[];
+interface VideoSet {
+  videoInfoList: SearchedVideo[];
 }
 
 // http://localhost:8080/video/search?query=and&size=10&sort=publishedDate,desc&page=0
@@ -21,12 +21,12 @@ export const searchVideoData = async () => {
     sort: 'publishedDate,desc',
     page: 0,
   };
-  const { data } = await authApi({
+  const { data } = await authApi<VideoSet>({
     method: 'get',
     url: 'video/search',
     params: params,
   });
-
+  console.log(data);
   return data.videoInfoList;
 };
 

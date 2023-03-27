@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import carouselButton from 'assets/img/carouselButton.svg';
+import rightButton from 'assets/img/rightButton.svg';
 import { Shorts } from 'utils/api/recommApi';
 import VideoLevel from 'assets/img/videoLevel.svg';
 
@@ -53,32 +53,31 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   }
 `;
 
-const TitleWithButton = styled.div`
-  display: flex;
-  justify-content: space-between;
-  h1 {
-    font-size: 4vh;
+const RootWrapper = styled.div`
+  position: relative;
+  .right-btn {
+    position: absolute;
+    right: 5%;
+    top: -12%;
+    height: 5vh;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+    }
   }
-  .buttom-wrapper {
-    width: 100px;
-    display: flex;
+  .left-btn {
+    position: absolute;
+    right: 1%;
+
+    top: -12%;
+    height: 5vh;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+    }
   }
-`;
-
-const LeftButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #7b7b7b;
-  border: 1px solid black;
-`;
-
-const RightButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #7b7b7b;
-  border: 1px solid black;
 `;
 
 const ShortsCarousel = ({
@@ -90,7 +89,12 @@ const ShortsCarousel = ({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShortsId: React.Dispatch<React.SetStateAction<Shorts | null>>;
 }) => {
-  data = [...data.slice(7, 12), ...data, ...data.slice(0, 5)];
+  const prevLength = data.length;
+  data = [
+    ...data.slice(prevLength - 5, prevLength),
+    ...data,
+    ...data.slice(0, 5),
+  ];
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(5);
@@ -133,44 +137,40 @@ const ShortsCarousel = ({
   };
 
   return (
-    <Wrapper>
-      <TitleWithButton>
-        <h1>Recommended Videos</h1>
-        <div className="buttom-wrapper">
-          <LeftButton onClick={prev}>
-            <ArrowBackIosNewIcon />
-          </LeftButton>
-          <RightButton onClick={next} className="right-arrow">
-            <ArrowForwardIosIcon />
-          </RightButton>
-        </div>
-      </TitleWithButton>
-      <ContentBox transition={transStyle} transform={currentIndex}>
-        {data.map((Thumnail, idx) => {
-          return (
-            <div className="wrapper" key={idx}>
-              <img
-                className="main-img"
-                src={'https://i.ytimg.com/vi/' + Thumnail.watchId + '/hq1.jpg'}
-                alt=""
-                onClick={() => {
-                  setOpenModal(true);
-                  setShortsId(Thumnail);
-                }}
-              ></img>
-              <img
-                src={VideoLevel}
-                className="video-level"
-                style={{
-                  filter:
-                    'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
-                }}
-              ></img>
-            </div>
-          );
-        })}
-      </ContentBox>
-    </Wrapper>
+    <RootWrapper>
+      <img onClick={prev} className="right-btn" src={carouselButton} alt="" />
+      <img onClick={next} className="left-btn" src={rightButton} alt="" />
+      <div></div>
+      <Wrapper>
+        <ContentBox transition={transStyle} transform={currentIndex}>
+          {data.map((Thumnail, idx) => {
+            return (
+              <div className="wrapper" key={idx}>
+                <img
+                  className="main-img"
+                  src={
+                    'https://i.ytimg.com/vi/' + Thumnail.watchId + '/hq1.jpg'
+                  }
+                  alt=""
+                  onClick={() => {
+                    setOpenModal(true);
+                    setShortsId(Thumnail);
+                  }}
+                ></img>
+                <img
+                  src={VideoLevel}
+                  className="video-level"
+                  style={{
+                    filter:
+                      'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
+                  }}
+                ></img>
+              </div>
+            );
+          })}
+        </ContentBox>
+      </Wrapper>
+    </RootWrapper>
   );
 };
 
