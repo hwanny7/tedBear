@@ -11,11 +11,11 @@ import com.ssafy.tedbear.domain.word.entity.Word;
 import lombok.Getter;
 
 @Getter
-public class ProblemList {
+public class ProblemListDto {
 	List<SentenceProblemDto> sentenceMeanList;
 	List<WordProblem> wordMeanList;
 
-	public ProblemList(List<Sentence> sentenceList, List<Word> wordList) {
+	public ProblemListDto(List<Sentence> sentenceList, List<Word> wordList) {
 		this.sentenceMeanList = sentenceList.stream().map(SentenceProblemDto::new).collect(Collectors.toList());
 		this.wordMeanList = wordList.stream().map(WordProblem::new).collect(Collectors.toList());
 	}

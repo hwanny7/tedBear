@@ -20,4 +20,6 @@ public interface VideoBookmarkRepository extends JpaRepository<VideoBookmark, Lo
 
 	@Query("select v from VideoBookmark v  join fetch v.video where v.member = :member")
 	List<VideoBookmark> findVideoBookmarksByMember(Member member);
+
+	void deleteByMemberAndVideo(Member member, Video video);
 }

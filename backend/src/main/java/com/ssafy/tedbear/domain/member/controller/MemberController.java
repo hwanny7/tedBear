@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ssafy.tedbear.domain.member.dto.Problem;
-import com.ssafy.tedbear.domain.member.dto.ProblemList;
-import com.ssafy.tedbear.domain.member.dto.StreakList;
+import com.ssafy.tedbear.domain.member.dto.PieDto;
+import com.ssafy.tedbear.domain.member.dto.ProblemDto;
+import com.ssafy.tedbear.domain.member.dto.ProblemListDto;
+import com.ssafy.tedbear.domain.member.dto.StreakListDto;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.member.service.MemberService;
 
@@ -28,18 +29,23 @@ public class MemberController {
 	private final MemberService memberService;
 
 	@GetMapping("/streak")
-	public ResponseEntity<StreakList> getStreak() {
+	public ResponseEntity<StreakListDto> getStreak() {
 		return ResponseEntity.ok(memberService.getStreak(2L));
 	}
 
 	@GetMapping("/test/problem")
-	public ResponseEntity<ProblemList> getProblemList() {
+	public ResponseEntity<ProblemListDto> getProblemList() {
 		return ResponseEntity.ok(memberService.getProblemList());
 	}
 
 	@PostMapping("/test/result")
-	public ResponseEntity saveProblemResult(@RequestBody Problem.Request request) {
+	public ResponseEntity saveProblemResult(@RequestBody ProblemDto.Request request) {
 		memberService.saveProblemResult(1L, request.getTestResult());
 		return new ResponseEntity(HttpStatus.CREATED);
+	}
+
+	@GetMapping("/pie")
+	public ResponseEntity<PieDto> getPie(){
+		return ResponseEntity.ok(memberService.getPie(1L));
 	}
 }

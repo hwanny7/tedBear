@@ -7,10 +7,10 @@ import java.util.Map;
 import lombok.Getter;
 
 @Getter
-public class StreakList {
-	List<Streak> streakList;
+public class StreakListDto {
+	List<StreakDto> streakList;
 
-	public StreakList(Map<String, Streak> streakMap) {
+	public StreakListDto(Map<String, StreakDto> streakMap) {
 		this.streakList = new ArrayList<>(streakMap.values());
 	}
 }

@@ -199,13 +199,15 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteVideoBookmark(long memberNo, long videoNo) {
 		Member member = Member.builder().no(memberNo).build();
 		Video video = Video.builder().no(videoNo).build();
-		videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
-			.ifPresentOrElse(x -> videoBookmarkRepository.delete(x), () -> {
-				throw new IllegalArgumentException("존재하지 않는 북마크입니다.");
-			});
+		videoBookmarkRepository.deleteByMemberAndVideo(member, video);
+		// videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
+		// 	.ifPresentOrElse(x -> videoBookmarkRepository.delete(x), () -> {
+		// 		throw new IllegalArgumentException("존재하지 않는 북마크입니다.");
+		// 	});
 	}
 
 	public void updateBookmarkVideo(Member member, List<Video> videoList) {

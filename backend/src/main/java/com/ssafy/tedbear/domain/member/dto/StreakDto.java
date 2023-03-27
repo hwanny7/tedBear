@@ -3,7 +3,7 @@ package com.ssafy.tedbear.domain.member.dto;
 import lombok.Getter;
 
 @Getter
-public class Streak {
+public class StreakDto {
 	String date;
 	Integer count;
 
@@ -14,7 +14,7 @@ public class Streak {
 			this.count++;
 	}
 
-	public Streak(String date) {
+	public StreakDto(String date) {
 		this.date = date;
 	}
 }

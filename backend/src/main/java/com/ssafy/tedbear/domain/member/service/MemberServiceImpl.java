@@ -15,15 +15,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.tedbear.domain.member.dto.ProblemList;
-import com.ssafy.tedbear.domain.member.dto.Streak;
-import com.ssafy.tedbear.domain.member.dto.StreakList;
+import com.ssafy.tedbear.domain.member.dto.PieDto;
+import com.ssafy.tedbear.domain.member.dto.ProblemListDto;
+import com.ssafy.tedbear.domain.member.dto.StreakDto;
+import com.ssafy.tedbear.domain.member.dto.StreakListDto;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceRepository;
 import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
+import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
@@ -37,29 +39,30 @@ public class MemberServiceImpl implements MemberService {
 	final SpeakingRecordRepository speakingRecordRepository;
 	final SentenceRepository sentenceRepository;
 	final WordRepository wordRepository;
+	final WatchingVideoRepository watchingVideoRepository;
 
 	@Value("${default-value.score}")
 	int defaultScore;
 
 	@Override
-	public StreakList getStreak(long memberNo) {
+	public StreakListDto getStreak(long memberNo) {
 		LocalDateTime firstDay = LocalDate.now().with(TemporalAdjusters.firstDayOfYear()).atStartOfDay();
 		Member member = getMember(memberNo);
 		List<SpeakingRecord> speakingRecordList = speakingRecordRepository.findSpeakingRecordsByCreatedDateAfterAndMember(
 			firstDay, member);
-		Map<String, Streak> streakMap = new HashMap<>();
+		Map<String, StreakDto> streakMap = new HashMap<>();
 		for (SpeakingRecord speakingRecord : speakingRecordList) {
 			String date = TimeParseUtil.time2String(speakingRecord.getCreatedDate());
 			if (!streakMap.containsKey(date)) {
-				streakMap.put(date, new Streak(date));
+				streakMap.put(date, new StreakDto(date));
 			}
 			streakMap.get(date).increaseCount();
 		}
-		return new StreakList(streakMap);
+		return new StreakListDto(streakMap);
 	}
 
 	@Override
-	public ProblemList getProblemList() {
+	public ProblemListDto getProblemList() {
 
 		Random random = new Random();
 
@@ -93,7 +96,7 @@ public class MemberServiceImpl implements MemberService {
 				.flatMap(innerStream -> innerStream.stream())
 				.collect(Collectors.toList());
 
-		return new ProblemList(problemSentenceList, problemWordList);
+		return new ProblemListDto(problemSentenceList, problemWordList);
 
 	}
 
@@ -108,6 +111,17 @@ public class MemberServiceImpl implements MemberService {
 	public Member getMember(long memberNo) {
 		return memberRepository.findById(memberNo)
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
+	}
+
+	@Override
+	public PieDto getPie(long memberNo) {
+		Member member = getMember(memberNo);
+
+
+		return new PieDto(watchingVideoRepository.getCompleteVideoList(member)
+			.stream()
+			.map(watchingVideo -> watchingVideo.getVideo().getScore())
+			.collect(Collectors.toList()));
 	}
 
 }
