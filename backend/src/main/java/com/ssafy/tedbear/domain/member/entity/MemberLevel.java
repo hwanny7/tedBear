@@ -31,4 +31,8 @@ public class MemberLevel extends BaseEntity {
 	@Column(name = "level_exp")
 	private int levelExp;
 
+	public void increaseLevel(int amount) {
+		this.levelExp += amount;
+	}
+
 }

@@ -3,7 +3,6 @@ package com.ssafy.tedbear.domain.video.service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
-import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.service.MemberService;
 import com.ssafy.tedbear.domain.video.dto.VideoDetailDto;
@@ -22,7 +19,9 @@ import com.ssafy.tedbear.domain.video.dto.VideoInfoDto;
 import com.ssafy.tedbear.domain.video.dto.VideoInfoListDto;
 import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfoDto;
 import com.ssafy.tedbear.domain.video.entity.Video;
+import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
 import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
+import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
 import com.ssafy.tedbear.global.util.RecommendUtil;
@@ -169,6 +168,7 @@ public class VideoServiceImpl implements VideoService {
 				.videoStatus(true)
 				.build());
 		watchingVideoRepository.save(watchingVideo);
+		memberService.increaseMemberLevel(member, 1000);
 
 	}
 

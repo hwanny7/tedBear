@@ -20,6 +20,7 @@ import com.ssafy.tedbear.domain.member.dto.ProblemListDto;
 import com.ssafy.tedbear.domain.member.dto.StreakDto;
 import com.ssafy.tedbear.domain.member.dto.StreakListDto;
 import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.member.entity.MemberScore;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
@@ -108,6 +109,18 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@Transactional
+	public void updateMemberScore(Member member, int diffScore) {
+		member.getMemberScore().updateScore(diffScore);
+	}
+
+	@Override
+	@Transactional
+	public void increaseMemberLevel(Member member, int amount) {
+		member.getMemberLevel().increaseLevel(amount);
+	}
+
+	@Override
 	public Member getMember(long memberNo) {
 		return memberRepository.findById(memberNo)
 			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
@@ -116,7 +129,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public PieDto getPie(long memberNo) {
 		Member member = getMember(memberNo);
-
 
 		return new PieDto(watchingVideoRepository.getCompleteVideoList(member)
 			.stream()
