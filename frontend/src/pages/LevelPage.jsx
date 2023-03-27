@@ -34,11 +34,11 @@ const StyledLevel = styled.div`
     justify-content: space-between;
     perspective: 1000px;
     margin-top: 5px;
-    margin-bottom: -20px;
+    margin-bottom: 5px;
     .card {
-      width: 30%;
+      width: 31%;
       user-select: none;
-      height: 200px;
+      height: 220px;
       padding: 5px;
       box-sizing: border-box;
       text-align: center;
@@ -222,7 +222,7 @@ const LevelPage = () => {
       });
       console.log(response);
       console.log('POST 완료!');
-      // navigate('/home');
+      navigate('/home');
     } catch (error) {
       console.error(error);
     }
@@ -231,14 +231,21 @@ const LevelPage = () => {
   return (
     <StyledLevel change={showSwitch}>
       <Button
+        variant="outlined"
         className="submit-button"
         onClick={handleSubmit}
         style={{
           position: 'absolute',
-          left: '91%',
-          top: '86%',
+          left: '90.8%',
+          top: '3%',
         }}
-        sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
+        sx={{
+          width: '5vw',
+          height: '8vh',
+          padding: 1,
+          margin: 2,
+          border: '1px solid #ffffff',
+        }}
       >
         <p className="submit-button-text">제출</p>
       </Button>
@@ -255,7 +262,7 @@ const LevelPage = () => {
       <Paper
         elevation={3}
         style={{
-          padding: 100,
+          padding: '100px 100px 10px 100px',
           margin: '75px 30px 30px 30px',
         }}
       >
@@ -291,8 +298,8 @@ const LevelPage = () => {
           onClick={toggleShowSwitch}
           sx={{
             boxShadow: 3,
-            width: '3rem',
-            height: '3rem',
+            width: '4rem',
+            height: '4rem',
             bgcolor: theme =>
               theme.palette.mode === 'dark' ? '#101010' : '#fff',
             color: theme =>
@@ -302,8 +309,8 @@ const LevelPage = () => {
             padding: 20,
             margin: '25px 0px 0px 20px',
             position: 'absolute',
-            left: `${showSwitch ? '96%' : '1%'}`,
-            top: '48%',
+            left: `${showSwitch ? '93%' : '4%'}`,
+            top: '53%',
             transform: 'translate(-50%, -50%)',
             border: '1px solid #FFFFFF',
             background: '#FFFFFF',
