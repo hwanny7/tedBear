@@ -57,9 +57,12 @@ const GamePage = () => {
           size="large"
           onClick={handleStart}
           style={{
-            margin: '3%',
-            width: '25%',
-            height: '10%',
+            marginTop: '40px',
+            padding: '0 12px',
+            width: '15vw',
+            height: '15vh',
+            borderRadius: '15px',
+            fontSize: '40px',
           }}
         >
           <Typography color="white" variant="h3" gutterBottom>

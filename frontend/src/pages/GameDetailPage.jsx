@@ -95,6 +95,7 @@ const GameDetailPage = () => {
 
   const handleNext = () => {
     console.log('다음 문제로');
+    navigate('/game/complete');
   };
 
   const handleHint = () => {
