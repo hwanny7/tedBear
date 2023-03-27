@@ -472,7 +472,7 @@ function CrossWordPage() {
         };
       }
     }
-    console.log('변경함!');
+
     setWordList(copy);
   };
 
