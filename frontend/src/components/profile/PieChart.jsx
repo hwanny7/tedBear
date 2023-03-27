@@ -17,7 +17,7 @@ const ChartStyle = styled.div`
 `;
 
 export default function PieChart() {
-  const [values, setValues] = useState();
+  const [values, setValues] = useState([]);
   const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {

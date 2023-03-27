@@ -22,7 +22,7 @@ const StyledLevel = styled.div`
     background-color: #6255a4;
     border-radius: 15px;
     .next-button-inside {
-      color: ${props => (props.change ? '#FEAD55' : '#8f84ce')};
+      color: ${props => (props.change ? '#8f84ce' : '#8f84ce')};
     }
   }
   .input {
@@ -197,7 +197,7 @@ const GameDetailPage = () => {
             style={{
               position: 'absolute',
               top: '8%' /* vertically center the button */,
-              right: '8%' /* position the button to the right */,
+              right: '3%' /* position the button to the right */,
               transform:
                 'translateY(-50%)' /* adjust vertical position after centering */,
             }}
@@ -220,7 +220,7 @@ const GameDetailPage = () => {
             style={{
               position: 'absolute',
               margin: '20px 0px 0px 20px',
-              top: '40%' /* vertically center the button */,
+              top: '81.8%' /* vertically center the button */,
               right: '-3%' /* position the button to the right */,
               transform:
                 'translateY(-50%)' /* adjust vertical position after centering */,
