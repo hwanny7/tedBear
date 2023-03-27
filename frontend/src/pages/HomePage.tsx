@@ -46,7 +46,9 @@ const HomePage = () => {
   return (
     <Wrapper>
       <div>
-        {modalOpen && <ShortsModal shorts={shorts} />}
+        {modalOpen && (
+          <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />
+        )}
         <div style={{ display: 'flex' }}>
           <SearchBar></SearchBar>
           <button onClick={() => navigate('/still-learn')}>

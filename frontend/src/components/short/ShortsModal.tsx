@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import styled from 'styled-components';
 import { Shorts } from 'utils/api/recommApi';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
-import VideoLevel from 'assets/img/videoLevel.svg';
 import { device } from 'utils/mediaQuery';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   shorts: Shorts | null;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CustomYoutube = styled(YouTube)`
@@ -20,12 +20,26 @@ const CustomYoutube = styled(YouTube)`
 `;
 
 const Wrapper = styled.div`
-  border: 3px red solid;
   position: relative;
   width: 100%;
   height: 0;
-  overflow: hidden;
   padding-bottom: 56.26%;
+  .btn {
+    position: absolute;
+    background: #f08e25;
+    left: 86%;
+    width: 8%;
+    height: 8%;
+    color: white;
+    border-radius: 16px;
+    bottom: 0%;
+    z-index: 999;
+    &:hover {
+      background-color: #e67f51;
+      transition: all 0.3s;
+      transform: translateY(3px);
+    }
+  }
 `;
 
 const YoutubeBox = styled.div`
@@ -41,47 +55,47 @@ const YoutubeBox = styled.div`
 `;
 
 const SentenceBox = styled.div`
+  text-align: center;
   position: absolute;
   color: white;
-  bottom: 0;
-  text-align: center;
-  background: linear-gradient(
+  width: 80%;
+  border-radius: 16px;
+  left: 10%;
+  padding: 1%;
+  bottom: 2%;
+  background-color: black;
+  /* background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.9),
     rgba(0, 0, 0, 0.7),
     rgba(0, 0, 0, 0.5),
     rgba(0, 0, 0, 0)
-  );
+  ); */
   @media ${device.mobile} {
     font-size: 5px;
   }
 
   @media ${device.tablet} {
-    font-size: 13px;
+    font-size: 8px;
   }
 
   @media ${device.laptop} {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   @media ${device.desktop} {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 
-const ShortsModal = ({ shorts }: Props) => {
-  // const playRef = useRef<any>(null);
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     if (playRef.current) {
-  //       console.log(playRef.current.getCurrentTime());
-  //     }
-  //   }, 1000);
+const ShortsModal = ({ shorts, setOpenModal }: Props) => {
+  console.log(shorts?.content.length);
+  const navigate = useNavigate();
 
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // });
+  const handleClick = (watchId: string | undefined) => {
+    setOpenModal(false);
+    navigate('/learning', { state: watchId });
+  };
 
   const onPlayerReady: YouTubeProps['onReady'] = event => {
     const player = event.target;
@@ -110,6 +124,7 @@ const ShortsModal = ({ shorts }: Props) => {
       end: shorts?.endTime,
       controls: 0,
       disablekb: 1,
+      cc_load_policy: 0,
       // autoplay: 1,
       // mute: 1,
       rel: 0, // 해당 채널의 관련 영상만 띄어줌
@@ -127,18 +142,17 @@ const ShortsModal = ({ shorts }: Props) => {
             onStateChange={onPlayerStateChange}
           />
           <img
-            src={VideoLevel}
-            style={{
-              height: '12%',
-              position: 'absolute',
-              top: '4%',
-              left: '4%',
-            }}
-          ></img>
-          <img
-            src={BookmarkFull}
+            src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
             style={{ height: '15%', position: 'absolute', left: '93%' }}
           ></img>
+          <button
+            className="btn"
+            onClick={() => {
+              handleClick(shorts?.watchId);
+            }}
+          >
+            Watch
+          </button>
           <SentenceBox>{shorts?.content}</SentenceBox>
         </Wrapper>
       </YoutubeBox>
@@ -148,6 +162,9 @@ const ShortsModal = ({ shorts }: Props) => {
 
 export default ShortsModal;
 
+function useOutletContext<T>(): { modalOpen: any; setModalOpen: any } {
+  throw new Error('Function not implemented.');
+}
 // https://codesandbox.io/s/react-youtube-demo-f6l29?file=/src/App.js:1047-1049 관련 영상 숨기는 방법
 // https://www.npmjs.com/package/react-youtube
 // https://codepen.io/hwanny7/pen/RwYBjWW?editors=1000 자동재생 방법

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Shorts } from 'utils/api/recommApi';
+import VideoLevel from 'assets/img/videoLevel.svg';
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -13,16 +14,15 @@ const Wrapper = styled.div`
 
 const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
+  height: 40vh;
   transition: ${props => props.transition};
   transform: translateX(-${props => props.transform * 20}%);
   @media (max-width: 768px) {
     transform: translateX(-${props => props.transform * 25}%);
   }
-  > * {
-    cursor: pointer;
+  .wrapper {
     width: 18%;
-    height: 300px;
-    object-fit: cover;
+    position: relative;
     flex-shrink: 0;
     flex-grow: 1;
     border-radius: 16px;
@@ -30,12 +30,25 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
     margin-bottom: 1%;
     margin-left: 1%;
     margin-right: 1%;
+    cursor: pointer;
     &:hover {
       scale: 1.04;
       transition: 0.4s;
     }
     @media (max-width: 768px) {
       width: 23%;
+    }
+    .main-img {
+      border-radius: 16px;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    .video-level {
+      height: 12%;
+      position: absolute;
+      top: 4%;
+      left: 4%;
     }
   }
 `;
@@ -135,15 +148,25 @@ const ShortsCarousel = ({
       <ContentBox transition={transStyle} transform={currentIndex}>
         {data.map((Thumnail, idx) => {
           return (
-            <img
-              key={idx}
-              src={'https://i.ytimg.com/vi/' + Thumnail.watchId + '/hq1.jpg'}
-              alt=""
-              onClick={() => {
-                setOpenModal(true);
-                setShortsId(Thumnail);
-              }}
-            ></img>
+            <div className="wrapper" key={idx}>
+              <img
+                className="main-img"
+                src={'https://i.ytimg.com/vi/' + Thumnail.watchId + '/hq1.jpg'}
+                alt=""
+                onClick={() => {
+                  setOpenModal(true);
+                  setShortsId(Thumnail);
+                }}
+              ></img>
+              <img
+                src={VideoLevel}
+                className="video-level"
+                style={{
+                  filter:
+                    'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
+                }}
+              ></img>
+            </div>
           );
         })}
       </ContentBox>

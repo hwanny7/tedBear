@@ -24,6 +24,8 @@ const SearchBar = () => {
         display: 'flex',
         alignItems: 'center',
         width: '50%',
+        marginTop: '3vh',
+        height: '5vh',
       }}
       onSubmit={handleSearch}
     >
