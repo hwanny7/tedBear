@@ -64,10 +64,6 @@ public class SecurityConfig {
 			.authorizationEndpoint()
 			.baseUri("/oauth")
 
-			// .and()
-			// .redirectionEndpoint()
-			// .baseUri("/users")
-
 			.and()
 			.successHandler(authenticationSuccessHandler()) // 로그인 성공 시 token 만듦
 			.userInfoEndpoint() // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정을 저장
