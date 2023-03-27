@@ -24,6 +24,7 @@
     "react": "^17.0.2",
     "react-apexcharts": "^1.4.0",
     "react-calendar-heatmap": "^1.9.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-full-page": "^0.1.12",
     "react-hook-speech-to-text": "^0.8.0",

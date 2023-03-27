@@ -19,6 +19,7 @@ export interface Shorts {
   content: string;
   bookmarked: boolean;
   watchId: string;
+  score: number;
 }
 
 interface ShortsRecomm {
@@ -30,7 +31,6 @@ export const getVideoRecomm = async () => {
     method: 'get',
     url: '/video/recommend/list',
   });
-
   return data.videoInfoList;
 };
 
@@ -39,6 +39,5 @@ export const getShortsRecomm = async () => {
     method: 'get',
     url: '/sentence/recommend/list',
   });
-
   return data.sentenceList;
 };

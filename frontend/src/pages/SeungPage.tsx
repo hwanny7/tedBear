@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
 
 const picture = [
   {
@@ -39,6 +40,8 @@ const picture = [
 ];
 
 const SeungPage = () => {
+  const [cookies, setCookie] = useCookies(['cookie']);
+
   return (
     <div
       style={{

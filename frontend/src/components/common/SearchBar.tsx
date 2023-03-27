@@ -1,19 +1,30 @@
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
 
-const SearchBar = () => {
+import IconButton from '@mui/material/IconButton';
+
+import SearchIcon from '@mui/icons-material/Search';
+
+import { useLocation, useNavigate } from 'react-router-dom';
+
+interface Props {
+  pathName: string;
+}
+
+const SearchBar = ({ pathName }: Props) => {
+  const navigate = useNavigate();
   const handleSearch = (e: any) => {
     e.preventDefault();
-    console.log(e.target[1].value);
+    const content = e.target[1].value;
+    if (pathName === 'HOME') {
+      navigate(`/search/${content}`);
+    }
+    console.log(pathName);
   };
 
   const handleClick = (e: any) => {
     console.log(e.target);
+    console.log(pathName);
   };
 
   return (

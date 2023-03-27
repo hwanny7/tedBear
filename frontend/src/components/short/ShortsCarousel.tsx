@@ -98,7 +98,7 @@ const ShortsCarousel = ({
   const [transStyle, setTransStyle] = useState(transition);
 
   const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
-    navigate('/learning', { state: e });
+    navigate(`/learning/${e}`);
   };
 
   useEffect(() => {

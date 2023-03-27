@@ -37,10 +37,10 @@ function App() {
               <Route path="/game/detail" element={<GameDetailPage />} />
               <Route path="/game/complete" element={<GameCompletePage />} />
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/learning" element={<LearningPage />} />
+              <Route path="/learning/:videoId" element={<LearningPage />} />
               <Route path="/bookmark" element={<BookPage />} />
               <Route path="/still-learn" element={<StillLearningPage />} />
-              <Route path="/search" element={<SearchPage />} />
+              <Route path="/search/:content?" element={<SearchPage />} />
             </Route>
             <Route path="/level" element={<LevelPage />} />
             <Route path="/seung" element={<SeungPage />} />

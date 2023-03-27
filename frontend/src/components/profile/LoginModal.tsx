@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginBear from 'assets/img/LoginBear.svg';
 import cloud from 'assets/img/cloud.svg';
 import { device } from 'utils/mediaQuery';
+import axios from 'axios';
 
 interface Color {
   BgColor: string;
@@ -142,8 +143,10 @@ interface Props {
 const LoginModal = ({ setOpenModal }: Props) => {
   const navigate = useNavigate();
   const KakaoLogin = () => {
-    window.location.href =
-      'https:kauth.kakao.com/oauth/authorize?client_id=8479739cb2eb523d03215db2f6b5fe23&redirect_uri=http://j8b103.p.ssafy.io:8080/oauth/kakao&response_type=code';
+    // const result = axios.get('http://j8b103.p.ssafy.io:8080/oauth/kakao');
+    // console.log(result);
+    window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
+    // 'https:kauth.kakao.com/oauth/authorize?client_id=8479739cb2eb523d03215db2f6b5fe23&redirect_uri=http://j8b103.p.ssafy.io:8080/oauth/kakao&response_type=code';
     // 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
   };
 

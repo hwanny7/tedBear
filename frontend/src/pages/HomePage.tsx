@@ -32,6 +32,7 @@ const HomePage = () => {
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shorts, setShorts] = useState<Shorts | null>(null);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
+  const pathName = 'HOME';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +51,7 @@ const HomePage = () => {
           <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />
         )}
         <div style={{ display: 'flex' }}>
-          <SearchBar></SearchBar>
+          <SearchBar pathName={pathName}></SearchBar>
           <button onClick={() => navigate('/still-learn')}>
             학습 중인 영상
           </button>
