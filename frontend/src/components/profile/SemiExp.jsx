@@ -1,5 +1,7 @@
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { authApi } from 'utils/api/customAxios';
 
 const SemiStyle = styled.div`
   .exp-paper {
@@ -22,7 +24,6 @@ const SemiStyle = styled.div`
   }
 `;
 
-const series = [76]; // 여기에 경험치 % 넣고
 const options = {
   colors: ['#8F84CE'],
   chart: {
@@ -82,15 +83,41 @@ const options = {
 };
 
 export default function SemiExp() {
+  const [level, setLevel] = useState();
+  const [experience, setExperience] = useState([]);
+  const [Loaded, setLoaded] = useState(false);
+
+  // const series = []; // 여기에 경험치 % 넣고
+  // console.log(series);
+
+  useEffect(() => {
+    async function fetchData() {
+      await authApi
+        .get(`/member/level`)
+        .then(response => {
+          setLevel(response.data.level);
+          const exp = response.data.percent;
+          console.log(response.data.percent);
+          setExperience(prevList => [...prevList, exp]);
+          console.log(experience);
+          // console.log(series);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
+    setLoaded(true);
+    fetchData();
+  }, []);
+
   return (
     <SemiStyle>
       <div className="exp-paper">
-        <p className="exp-name">LV.20</p>
-        {/* 여기에 레벨 넣기 */}
+        <p className="exp-name">Lv.{level}</p>
         <div className="exp-chart">
           <Chart
             options={options}
-            series={series}
+            series={experience}
             type="radialBar"
             height={500}
             width={500}
