@@ -153,11 +153,9 @@ const LevelPage = () => {
           });
           setSenList(senData);
 
-          const wordList = response.data.wordMeanList
-            .slice(0, 6) // 단어도 6개만 주세요!
-            .map((item, index) => {
-              return { ...item, flipped: false, id: index };
-            });
+          const wordList = response.data.wordMeanList.map((item, index) => {
+            return { ...item, flipped: false, id: index };
+          });
           setWordList(wordList);
         })
         .catch(error => {
@@ -166,17 +164,6 @@ const LevelPage = () => {
     }
     fetchData();
   }, []);
-
-  const toggleShowSwitch = () => {
-    setShowSwitch(prev => !prev);
-  };
-
-  const handleSubmit = () => {
-    console.log('Back에 Score보내요');
-    console.log(senList, wordList);
-    // 여기서 flipped 값이 true인 애들의 score 합쳐서 api로 post 보내고 홈 화면으로 이동시키기
-    navigate('/home');
-  };
 
   const handleClick = index => {
     if (showSwitch) {
@@ -195,6 +182,49 @@ const LevelPage = () => {
         return card;
       });
       setWordList(updateCards);
+    }
+  };
+
+  const toggleShowSwitch = () => {
+    setShowSwitch(prev => !prev);
+  };
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    console.log(senList, wordList);
+    // Sum of Scores of Sentences
+    const senSum = senList.reduce((sum1, card) => {
+      if (card.flipped === true) {
+        return sum1 + card.score;
+      } else {
+        return sum1;
+      }
+    }, 0);
+    // Sum of Words of Sentences
+    const wordSum = wordList.reduce((sum2, card) => {
+      if (card.flipped === true) {
+        return sum2 + card.score;
+      } else {
+        return sum2;
+      }
+    }, 0);
+    // total Sum
+    const totalSum = senSum + wordSum;
+    console.log(totalSum);
+    // POST
+    try {
+      const response = await authApi({
+        method: 'POST',
+        url: '/member/test/result',
+        data: {
+          testResult: totalSum,
+        },
+      });
+      console.log(response);
+      console.log('POST 완료!');
+      // navigate('/home');
+    } catch (error) {
+      console.error(error);
     }
   };
 
