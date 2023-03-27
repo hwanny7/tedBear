@@ -61,10 +61,9 @@ public class SecurityConfig {
 			.logoutSuccessUrl("/")
 			.and()
 			.oauth2Login()
-			.authorizationEndpoint()
-			.baseUri("/oauth")
-
-			.and()
+			// .authorizationEndpoint()
+			// .baseUri("/oauth")
+			
 			.successHandler(authenticationSuccessHandler()) // 로그인 성공 시 token 만듦
 			.userInfoEndpoint() // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정을 저장
 			.userService(customOAuth2UserService); // OAuth2 로그인 성공 시, 후작업을 진행할 UserService 인터페이스 구현체 등록
