@@ -176,7 +176,9 @@ public class VideoServiceImpl implements VideoService {
 	public VideoInfoListDto getVideoBookmarkList(long memberNo) {
 		Member member = Member.builder().no(memberNo).build();
 		List<VideoBookmark> videoBookmarkList = videoBookmarkRepository.findVideoBookmarksByMember(member);
-		return new VideoInfoListDto(videoBookmarkList.stream().map(x -> x.getVideo()).collect(Collectors.toList()));
+		List<Video> videoList = videoBookmarkList.stream().map(x -> x.getVideo()).collect(Collectors.toList());
+		updateBookmarkVideo(member, videoList);
+		return new VideoInfoListDto(videoList);
 
 	}
 
@@ -204,10 +206,6 @@ public class VideoServiceImpl implements VideoService {
 		Member member = Member.builder().no(memberNo).build();
 		Video video = Video.builder().no(videoNo).build();
 		videoBookmarkRepository.deleteByMemberAndVideo(member, video);
-		// videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
-		// 	.ifPresentOrElse(x -> videoBookmarkRepository.delete(x), () -> {
-		// 		throw new IllegalArgumentException("존재하지 않는 북마크입니다.");
-		// 	});
 	}
 
 	public void updateBookmarkVideo(Member member, List<Video> videoList) {

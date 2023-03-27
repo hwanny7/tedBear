@@ -21,4 +21,5 @@ public abstract class BaseEntity {
 
 	@CreatedDate
 	private LocalDateTime createdDate;
+
 }

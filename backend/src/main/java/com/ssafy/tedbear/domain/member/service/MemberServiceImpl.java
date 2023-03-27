@@ -15,11 +15,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.tedbear.domain.member.dto.LevelInfoDto;
 import com.ssafy.tedbear.domain.member.dto.PieDto;
 import com.ssafy.tedbear.domain.member.dto.ProblemListDto;
 import com.ssafy.tedbear.domain.member.dto.StreakDto;
 import com.ssafy.tedbear.domain.member.dto.StreakListDto;
 import com.ssafy.tedbear.domain.member.entity.Member;
+import com.ssafy.tedbear.domain.member.entity.MemberLevel;
 import com.ssafy.tedbear.domain.member.entity.MemberScore;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
@@ -29,6 +31,7 @@ import com.ssafy.tedbear.domain.sentence.repository.SpeakingRecordRepository;
 import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
+import com.ssafy.tedbear.global.common.oauth2.MemberLevelRepository;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
 	final SentenceRepository sentenceRepository;
 	final WordRepository wordRepository;
 	final WatchingVideoRepository watchingVideoRepository;
-
+	final MemberLevelRepository memberLevelRepository;
 	@Value("${default-value.score}")
 	int defaultScore;
 
@@ -106,6 +109,12 @@ public class MemberServiceImpl implements MemberService {
 	public void saveProblemResult(long memberNo, int testResult) {
 		Member member = getMember(memberNo);
 		member.initScore(defaultScore, testResult);
+	}
+
+	@Override
+	public LevelInfoDto getLevel(long memberNo) {
+		Member member = getMember(memberNo);
+		return new LevelInfoDto(member.getMemberLevel());
 	}
 
 	@Override

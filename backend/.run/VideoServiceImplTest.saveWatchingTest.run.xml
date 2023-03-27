@@ -3,7 +3,9 @@
     <ExternalSystemSettings>
       <option name="env">
         <map>
+          <entry key="KAKAO_CLIENT_ID" value="8479739cb2eb523d03215db2f6b5fe23" />
           <entry key="MYSQL_ROOT_PASSWORD" value="824b2937-79c0-4595-8ea2-e8930ed750ae" />
+          <entry key="SECRET_KEY" value="815205d3-992d-4e80-b0cd-37745b4e4f3e" />
         </map>
       </option>
       <option name="executionName" />
