@@ -34,7 +34,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
-
 		String accessToken = jwtProvider.createAccessToken(authentication);
 		String refreshToken = jwtProvider.createRefreshToken(authentication);
 
@@ -53,11 +52,11 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		// response.getWriter().write(accessToken);
 		response.addHeader("Authorization", "Bearer " + accessToken);
 
-		// if (join) {
-		// 	getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung"); // 난이도 측정 페이지로 이동
-		// } else {
-		// 	getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung");
-		// }
+		if (join) {
+			getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung"); // 난이도 측정 페이지로 이동
+		} else {
+			getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung"); // 메인 페이지로 이동
+		}
 	}
 
 	private void saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {

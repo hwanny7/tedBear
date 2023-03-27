@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -31,7 +32,6 @@ public class SecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-	private final CorsFilterConfig corsFilterConfig;
 	private final MemberRepository memberRepository;
 	private final MemberLevelRepository memberLevelRepository;
 	private final MemberScoreRepository memberScoreRepository;
@@ -44,10 +44,6 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		// http.csrf().disable()
-		// 	.oauth2Login() // oauth 로그인
-		// 	.userInfoEndpoint() // 로그인된 유저 정보 가져오기
-		// 	.userService(customOAuth2UserService); // 가져온 유저 정보를 해당 객체가 처리
 		http.httpBasic().disable()
 			.cors().configurationSource(corsConfigurationSource())
 			.and()
@@ -61,18 +57,21 @@ public class SecurityConfig {
 			.logoutSuccessUrl("/")
 			.and()
 			.oauth2Login()
-			// .authorizationEndpoint()
-			// .baseUri("/oauth")
-			
+			.authorizationEndpoint()
+			.baseUri("/oauth")
+
+			.and()
+			.redirectionEndpoint()
+			.baseUri("/oauth2/callback/*")
+
+			.and()
 			.successHandler(authenticationSuccessHandler()) // 로그인 성공 시 token 만듦
 			.userInfoEndpoint() // OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정을 저장
 			.userService(customOAuth2UserService); // OAuth2 로그인 성공 시, 후작업을 진행할 UserService 인터페이스 구현체 등록
 		// jwt 사용을 위해 session 해제
-		// http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// jwt 필터 추가
-		// http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		// http.addFilter(corsFilterConfig.corsFilter());
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		// jwt 인증 실패 시 exception handler 등록
 		http.exceptionHandling()
