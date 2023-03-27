@@ -65,7 +65,7 @@ public class SecurityConfig {
 
 			.and()
 			.redirectionEndpoint()
-			.baseUri("/users")
+			// .baseUri("/users")
 
 			.and()
 			.successHandler(authenticationSuccessHandler()) // 로그인 성공 시 token 만듦

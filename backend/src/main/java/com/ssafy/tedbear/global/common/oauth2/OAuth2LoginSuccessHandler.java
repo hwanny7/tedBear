@@ -55,7 +55,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		response.addHeader("Authorization", "Bearer " + accessToken);
 
 		if(join){
-			getRedirectStrategy().sendRedirect(request, response, "http://naver.com"); // 난이도 측정 페이지로 이동
+			getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung"); // 난이도 측정 페이지로 이동
 		}
 	}
 
