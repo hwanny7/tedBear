@@ -18,7 +18,9 @@ import com.ssafy.tedbear.domain.log.service.MemberShortsLogService;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.domain.sentence.dto.MemberShortsLogDto;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDto;
+import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkStatusDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.service.SentenceBookmarkService;
@@ -38,6 +40,7 @@ public class SentenceController {
 	private final MemberShortsLogService memberShortsLogService;
 	private final SentenceService sentenceService;
 	private final SentenceBookmarkService sentenceBookmarkService;
+	Long memberId = 2L;
 
 	@PostMapping("/speaking/{memberNo}")
 	public ResponseEntity<?> saveSpeakingRecord(@PathVariable Long memberNo,
@@ -75,13 +78,12 @@ public class SentenceController {
 	//==북마크==//
 	@GetMapping("/bookmark/list")
 	public ResponseEntity<?> getBookmarkedSentenceList() {
-
-		return new ResponseEntity<>(HttpStatus.OK);
+		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(memberId);
+		return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
 
 	@PostMapping("/bookmark")
 	public ResponseEntity<?> postSentenceBookmark(@RequestBody SentenceBookmarkDto sentenceBookmarkDto) {
-		Long memberId = 2L;
 		sentenceBookmarkService.saveSentenceBookmark(memberId, sentenceBookmarkDto);
 
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -89,10 +91,15 @@ public class SentenceController {
 
 	@DeleteMapping("/bookmark")
 	public ResponseEntity<?> deleteSentenceBookmark(@RequestBody SentenceBookmarkDto sentenceBookmarkDto) {
-		Long memberId = 2L;
 		sentenceBookmarkService.deleteSentenceBookmark(memberId, sentenceBookmarkDto);
 
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("/bookmark/{sentenceId}")
+	public ResponseEntity<SentenceBookmarkStatusDto> getBookmarkStatus(@PathVariable Long sentenceId) {
+		SentenceBookmarkStatusDto bookmarkStatusDto = sentenceBookmarkService.getBookmarkStatus(memberId, sentenceId);
+		return new ResponseEntity<>(bookmarkStatusDto, HttpStatus.OK);
 	}
 
 }

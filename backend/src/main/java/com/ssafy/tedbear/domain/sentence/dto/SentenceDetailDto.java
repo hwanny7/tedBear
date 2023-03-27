@@ -17,6 +17,12 @@ public class SentenceDetailDto {
 	boolean bookmarked;
 	String watchId;
 
+	Double gunningFog;
+
+	Double fleschReadingEase;
+
+	Double fleschKincaidGradeLevel;
+
 	//원본 비디오 영상 링크
 
 	public SentenceDetailDto(Sentence sentence) {
@@ -27,6 +33,9 @@ public class SentenceDetailDto {
 		this.content = sentence.getContent();
 		this.watchId = sentence.getVideo().getWatchId();
 		this.bookmarked = sentence.isBookmarked();
+		this.gunningFog = sentence.getGunningFog();
+		this.fleschReadingEase = sentence.getFleschReadingEase();
+		this.fleschKincaidGradeLevel = sentence.getFleschKincaidGradeLevel();
 	}
 
 	@Getter
@@ -39,10 +48,11 @@ public class SentenceDetailDto {
 	}
 
 	@Getter
-	public static class ContentListResponse{
+	public static class ContentListResponse {
 		List<String> sentenceContentList;
-		public ContentListResponse(List<Sentence> list){
-			 this.sentenceContentList = list.stream().map(c -> c.getContent()).collect(Collectors.toList());
+
+		public ContentListResponse(List<Sentence> list) {
+			this.sentenceContentList = list.stream().map(c -> c.getContent()).collect(Collectors.toList());
 		}
 	}
 

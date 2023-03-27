@@ -60,7 +60,7 @@ public class Sentence {
 	private Double fleschReadingEase;
 
 	@Column(name = "flesch_kincaid_grade_level")
-	private Double fleshKincaidGradeLevel;
+	private Double fleschKincaidGradeLevel;
 
 	@Transient
 	private boolean isBookmarked;
@@ -69,7 +69,7 @@ public class Sentence {
 	public void setScores(double gf, double fr, double fk, int score) {
 		this.gunningFog = gf;
 		this.fleschReadingEase = fr;
-		this.fleshKincaidGradeLevel = fk;
+		this.fleschKincaidGradeLevel = fk;
 		this.score = score;
 	}
 
