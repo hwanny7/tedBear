@@ -12,6 +12,7 @@ import YouTube, { YouTubeProps } from 'react-youtube';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
+import { useParams } from 'react-router-dom';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -305,14 +306,15 @@ const LearningPage = () => {
   };
 
   // 유튜브 아이디
-  const { state } = useLocation();
+  const { videoId } = useParams() as { videoId: string };
 
   // 받아온 data
   const [videoDesc, setVideoDesc] = useState<VideoDesc>();
 
   useEffect(() => {
+    console.log(videoId);
     const fetchData = async () => {
-      const data = await getVideoDesc(state);
+      const data = await getVideoDesc(videoId);
       setVideoDesc(data);
     };
     fetchData();
@@ -394,7 +396,7 @@ const LearningPage = () => {
       <ContentBox>
         <ContentLeft>
           <YoutubeBox>
-            <YouTube videoId={state} opts={opts} onReady={onPlayerReady} />;
+            <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />;
             {/* <iframe
               width="560"
               height="315"
