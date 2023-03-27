@@ -40,17 +40,23 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 		saveOrUpdateUser(refreshToken, oAuth2User);
 
-		ResponseCookie cookie = ResponseCookie.from("refresh", refreshToken)
-			.httpOnly(true)
+		ResponseCookie refreshCookie = ResponseCookie.from("refresh-token", refreshToken)
+			.httpOnly(false)
 			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
+			.path("/")
+			.build();
+
+		ResponseCookie accessCookie = ResponseCookie.from("access-token", "Bearer " + accessToken)
+			.httpOnly(false)
+			.maxAge(JwtProvider.ACCESS_TOKEN_VALIDATE_TIME)
 			.path("/")
 			.build();
 
 		clearAuthenticationAttributes(request, response);
 
-		response.addHeader("Set-Cookie", cookie.toString());
+		response.addHeader("Set-Cookie", refreshCookie.toString());
 		// response.getWriter().write(accessToken);
-		response.addHeader("Authorization", "Bearer " + accessToken);
+		response.addHeader("Set-Cookie", accessCookie.toString());
 
 		if (join) {
 			getRedirectStrategy().sendRedirect(request, response, "http://localhost:3000/seung"); // 난이도 측정 페이지로 이동
