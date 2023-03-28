@@ -1,48 +1,23 @@
 import React, { useEffect } from 'react';
-import { useCookies, Cookies } from 'react-cookie';
-
-const picture = [
-  {
-    title:
-      'How to Calm Your Anxiety, From a Neuroscientist | The Way We Work, a TED series',
-    id: '6Af6b_wyiwI',
-  },
-  {
-    title: 'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
-    id: 'RLESBHduKBs',
-  },
-  {
-    title: 'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
-    id: 'wL8X31XWZW8',
-  },
-  {
-    title:
-      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-    id: 'BEBKC7Hqfr0',
-  },
-  {
-    title:
-      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-    id: 'LDVyOnf0t9M',
-  },
-  {
-    title:
-      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-    id: 'JH_Pa1hOEVc',
-  },
-  {
-    title:
-      'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-    id: '9XGm_uHit5g',
-  },
-];
+import { useNavigate } from 'react-router-dom';
+import { login } from 'redux/user';
+import { useDispatch } from 'react-redux';
 
 const SeungPage = () => {
-  const [cookies, setCookie] = useCookies(['access-token']);
+  const queryParams = new URLSearchParams(document.location.search);
+  const accessToken = queryParams.get('accessToken');
+  const refreshToken = queryParams.get('accessToken');
+  const join = queryParams.get('join');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(document.cookie);
-    console.log(cookies);
+    if (accessToken && refreshToken) {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+      dispatch(login());
+      join ? navigate('/home') : navigate('level');
+    }
   }, []);
 
   return (
@@ -80,12 +55,3 @@ const SeungPage = () => {
 };
 
 export default SeungPage;
-
-{
-  /* <img
-style={{ width: '250px', height: '200px' }}
-src={
-  'https://i.ytimg.com/vi/' + pic.id + '/maxresdefault.jpg'
-}
-></img> */
-}

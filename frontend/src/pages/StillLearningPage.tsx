@@ -25,7 +25,7 @@ const StillLearningPage = () => {
   }, [page]);
 
   useEffect(() => {
-    console.log('use!');
+    console.log('useEffect!');
     if (inView && !loading) {
       setPage(prev => prev + 1);
     }
