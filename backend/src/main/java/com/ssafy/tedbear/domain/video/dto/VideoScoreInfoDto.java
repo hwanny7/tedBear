@@ -15,7 +15,7 @@ public class VideoScoreInfoDto {
 	List<Integer> sentenceScoreInfo;
 
 	public VideoScoreInfoDto(Video video) {
-		this.score = video.getScore() == 0 ? 10 : video.getScore() - 1 / 10000;
+		this.score = video.getScore() == 0 ? 10 : (video.getScore() - 1) / 10000;
 		List<Sentence> sentenceList = video.getSentenceList();
 		this.totalSentenceCount = sentenceList.size();
 		this.sentenceScoreInfo = Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
