@@ -75,7 +75,7 @@ ins[data-clue]:before {
   content: attr(data-clue);
 }
 
-ul {
+.list {
   align-self: flex-start;
   justify-self: flex-start;
   list-style: none;

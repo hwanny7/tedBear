@@ -51,7 +51,7 @@ function App() {
             <Route
               path="/"
               // element={<LandingPage toggle={toggle} setToggle={setToggle} />}
-              // element={<LandingPage toggle={toggle} setToggle={setToggle} />}
+              element={<LandingPage toggle={toggle} setToggle={setToggle} />}
             />
           </Routes>
         </BrowserRouter>
