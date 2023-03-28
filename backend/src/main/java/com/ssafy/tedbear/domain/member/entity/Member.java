@@ -17,14 +17,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
-import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
-import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import com.ssafy.tedbear.domain.game.entity.GameRecord;
 import com.ssafy.tedbear.domain.model.BaseEntity;
 import com.ssafy.tedbear.domain.model.SnsType;
+import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
 import com.ssafy.tedbear.domain.sentence.entity.SpeakingRecord;
+import com.ssafy.tedbear.domain.video.entity.VideoBookmark;
 import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
+import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -92,7 +92,7 @@ public class Member extends BaseEntity {
 		memberScore.initScore(defaultScore, testResult);
 	}
 
-	public Member updateNicknameAndRefreshToken(String nickname, String refreshToken){
+	public Member updateNicknameAndRefreshToken(String nickname, String refreshToken) {
 		this.refreshToken = refreshToken;
 		this.nickname = nickname;
 		return this;

@@ -23,5 +23,8 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 	@Query("select s from Sentence s join fetch s.video where s.content like %:query%")
 	Slice<Sentence> findSliceByContent(String query, Pageable pageable);
 
+	// @Query("select s from Sentence s inner join WordSentence ws on ws.sentence.no = s.no " + "join fetch s.video "
+	// 	+ "where ws.word.no = :wordId " + "order by ABS(s.score - :memberScore) asc limit 1")
+	// Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
 
 }
