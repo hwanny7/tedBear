@@ -22,7 +22,7 @@ public class VideoScoreInfoDto {
 
 		sentenceList.stream().forEach(sentence -> {
 			int sentenceScore = sentence.getScore();
-			int idx = sentenceScore == 0 ? 10 : sentenceScore - 1 / 10000;
+			int idx = sentenceScore == 0 ? 10 : (sentenceScore - 1) / 10000;
 			sentenceScoreInfo.set(idx, sentenceScoreInfo.get(idx) + 1);
 		});
 	}
