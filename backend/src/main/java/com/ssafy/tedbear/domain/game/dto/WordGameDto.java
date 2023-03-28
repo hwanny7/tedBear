@@ -7,6 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class WordGameDto {
+	Long wordNo;
 	String answer;
 	String sentence;
 	int score;
@@ -14,12 +15,14 @@ public class WordGameDto {
 	WordGameDto.Hint hint;
 
 	public WordGameDto(Word word, Sentence sentence) {
+		this.wordNo = word.getNo();
 		this.answer = word.getContent();
-		this.sentence = sentence.getContent().replace(word.getContent(), "answer");
+		this.sentence = sentence.getContent().replace(word.getContent(), "tedbear");
 		this.score = sentence.getScore();
 		this.hint = new Hint(sentence);
 	}
 
+	@Getter
 	static class Hint {
 		int startTime;
 		int endTime;

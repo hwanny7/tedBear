@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.sentence.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -17,14 +18,15 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 	@Query("select s from Sentence s join fetch s.video where s.score between :startScore and :endScore")
 	List<Sentence> findByScoreBetween(int startScore, int endScore);
 
-	// @Query(countQuery = "select count(s.video.watchId) from Sentence s inner join s.video where s.score between :startScore and :endScore")
-	// Long countDistinctByScoreBetween(int startScore, int endScore);
-
 	@Query("select s from Sentence s join fetch s.video where s.content like %:query%")
 	Slice<Sentence> findSliceByContent(String query, Pageable pageable);
 
-	// @Query("select s from Sentence s inner join WordSentence ws on ws.sentence.no = s.no " + "join fetch s.video "
-	// 	+ "where ws.word.no = :wordId " + "order by ABS(s.score - :memberScore) asc limit 1")
-	// Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
+	@Query(value = "select * "
+		+ "from sentence_tb st "
+		+ "         inner join word_sentence_tb wst on wst.sentence_no = st.no "
+		+ "    inner join video_tb vt on st.video_no = vt.no "
+		+ "where wst.word_no = :wordId "
+		+ "order by ABS(st.score- :memberScore) asc limit 1", nativeQuery = true)
+	Optional<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore);
 
 }
