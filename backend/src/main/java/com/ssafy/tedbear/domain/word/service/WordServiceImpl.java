@@ -66,8 +66,8 @@ public class WordServiceImpl {
 			.build();
 	}
 
-	public void saveWordBookmark(String memberNo, WordBookmarkDto wordBookmarkDto) {
-		Member member = findMemberService.findMember(memberNo);
+	public void saveWordBookmark(String memberUid, WordBookmarkDto wordBookmarkDto) {
+		Member member = findMemberService.findMember(memberUid);
 		wordBookmarkRepository.findByMemberAndWord(member, wordBookmarkDto.word())
 			.ifPresentOrElse(noEntity -> {
 					throw new IllegalArgumentException("이미 존재하는 북마크입니다.");
@@ -75,5 +75,13 @@ public class WordServiceImpl {
 				() -> wordBookmarkRepository.save(
 					wordBookmarkDto.toEntity(member)
 				));
+	}
+
+	public void deleteWordBookmark(String memberUid, WordBookmarkDto wordBookmarkDto) {
+		Member member = findMemberService.findMember(memberUid);
+		WordBookmark bookmark = wordBookmarkRepository.findByMemberAndWord(member, wordBookmarkDto.word())
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 북마크입니다."));
+
+		wordBookmarkRepository.delete(bookmark);
 	}
 }

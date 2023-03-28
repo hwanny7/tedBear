@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,6 +52,12 @@ public class WordController {
 	public ResponseEntity<?> saveWordBookmark(@RequestBody WordBookmarkDto wordBookmarkDto) {
 		// Autentication에서 uid 가져와서 밑에 넣기!
 		wordService.saveWordBookmark("271521", wordBookmarkDto);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@DeleteMapping("/bookmark")
+	public ResponseEntity<?> deleteWordBookmark(@RequestBody WordBookmarkDto wordBookmarkDto) {
+		wordService.deleteWordBookmark("271521", wordBookmarkDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
