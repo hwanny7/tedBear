@@ -1,6 +1,4 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
 const picture = [
@@ -40,7 +38,11 @@ const picture = [
 ];
 
 const SeungPage = () => {
-  const [cookies, setCookie] = useCookies(['cookie']);
+  const [cookies, setCookie] = useCookies(['access-token']);
+
+  useEffect(() => {
+    console.log(cookies.get('access-token'));
+  });
 
   return (
     <div

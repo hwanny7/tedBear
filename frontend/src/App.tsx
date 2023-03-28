@@ -42,7 +42,7 @@ function App() {
               <Route path="/bookmark" element={<BookPage />} />
               <Route path="/still-learn" element={<StillLearningPage />} />
               <Route path="/search/:content?" element={<SearchPage />} />
-              <Route path="cross-word" element={<CrossWordPage />} />
+              <Route path="/cross-word" element={<CrossWordPage />} />
             </Route>
             <Route path="/level" element={<LevelPage />} />
             <Route path="/seung" element={<SeungPage />} />
