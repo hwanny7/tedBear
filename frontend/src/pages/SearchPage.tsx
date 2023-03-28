@@ -1,6 +1,6 @@
 import SearchBar from 'components/common/SearchBar';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   searchVideoData,
@@ -15,6 +15,7 @@ import ShortsCarousel from 'components/short/ShortsCarousel';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
+import zIndex from '@mui/material/styles/zIndex';
 
 const Wrapper = styled.div`
   margin-left: 3%;
@@ -29,10 +30,13 @@ const VideoWrapper = styled.div`
   width: 100%;
   .thumbnail {
     width: 25%;
-    height: 100%;
+    height: 25vh;
     display: block;
     border-radius: 16px;
     margin-top: 2%;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .video-level {
     height: 15%;
@@ -44,7 +48,10 @@ const VideoWrapper = styled.div`
     height: 20%;
     position: absolute;
     left: 22%;
-    top: 12.5%;
+    top: 12.8%;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .content {
     padding: 2%;
@@ -96,6 +103,7 @@ const LoadingTitle = styled.div`
   color: #7e7d7d;
   cursor: pointer;
   padding: 1%;
+  border-radius: 16px;
   &:hover {
     background-color: rgba(116, 116, 116, 0.5);
     transition: all 0.3s;
@@ -118,6 +126,12 @@ const LoadingTitle = styled.div`
   }
 `;
 
+const StickySearchBar = styled.div`
+  position: sticky;
+  top: 1%;
+  z-index: 2;
+`;
+
 interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   modalOpen: boolean;
@@ -132,6 +146,7 @@ const SearchPage = () => {
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shorts, setShorts] = useState<Shorts | null>(null);
   const [page, setPage] = useState<number>(0);
+  const navigate = useNavigate();
 
   const fetchData = async (content: string) => {
     const videoData = await searchVideoData(content, 0);
@@ -165,14 +180,26 @@ const SearchPage = () => {
     }
   }, [content]);
 
+  const handleClick = (watchId: string) => {
+    navigate(`/learning/${watchId}`);
+  };
+
   return (
     <Wrapper>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-      <SearchBar fetchData={fetchData}></SearchBar>
+      <StickySearchBar>
+        <SearchBar fetchData={fetchData}></SearchBar>
+      </StickySearchBar>
+
       <VideoTitle>Related Videos</VideoTitle>
       {videos.map((video, idx) => {
         return (
-          <VideoWrapper key={idx}>
+          <VideoWrapper
+            key={idx}
+            onClick={() => {
+              handleClick(video.watchId);
+            }}
+          >
             <img src={video.thumbnailUrl} alt="" className="thumbnail" />
             <img
               src={VideoLevel}
@@ -186,7 +213,14 @@ const SearchPage = () => {
               src={video.bookmarked ? BookmarkFull : BookmarkEmpty}
               className="book-mark"
             ></img>
-            <div className="content">{video.title}</div>
+            <div
+              className="content"
+              onClick={() => {
+                handleClick(video.watchId);
+              }}
+            >
+              {video.title}
+            </div>
           </VideoWrapper>
         );
       })}

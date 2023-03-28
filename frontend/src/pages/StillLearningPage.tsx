@@ -2,64 +2,30 @@ import Card from 'components/video/VideoCard';
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
-
-interface card {
-  title: string;
-  id: string;
-}
+import { learningVideo } from 'utils/api/searchApi';
+import { SearchedVideo } from './../utils/api/searchApi';
 
 const StillLearningPage = () => {
-  const [video, setVideo] = useState<card[]>([]);
+  const [video, setVideo] = useState<SearchedVideo[]>([]);
   const [ref, inView] = useInView();
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
 
-  useEffect(() => {
-    console.log('hi');
+  const fetchData = async () => {
     setLoading(true);
-    setVideo(prev =>
-      prev.concat([
-        {
-          title:
-            'How to Calm Your Anxiety, From a Neuroscientist | The Way We Work, a TED series',
-          id: '6Af6b_wyiwI',
-        },
-        {
-          title:
-            'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
-          id: 'RLESBHduKBs',
-        },
-        {
-          title:
-            'The skill of self confidence | Dr. Ivan Joseph | TEDxRyersonU',
-          id: 'wL8X31XWZW8',
-        },
-        {
-          title:
-            'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-          id: 'BEBKC7Hqfr0',
-        },
-        {
-          title:
-            'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-          id: 'LDVyOnf0t9M',
-        },
-        {
-          title:
-            'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-          id: 'JH_Pa1hOEVc',
-        },
-        {
-          title:
-            'How to motivate yourself to change your behavior | Tali Sharot | TEDxCambridge',
-          id: '9XGm_uHit5g',
-        },
-      ]),
-    );
-    setLoading(false);
+    const data = await learningVideo(page);
+    if (data.length) {
+      setVideo(prev => prev.concat(data));
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [page]);
 
   useEffect(() => {
+    console.log('use!');
     if (inView && !loading) {
       setPage(prev => prev + 1);
     }

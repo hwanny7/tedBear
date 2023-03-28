@@ -55,15 +55,17 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       cursor: pointer;
     }
     .video-level {
-      height: 15%;
+      height: 12%;
+      width: 12%;
       position: absolute;
       top: 4%;
-      left: 4%;
+      left: 2%;
     }
     .book-mark {
-      height: 20%;
+      height: 15%;
+      width: 15%;
       position: absolute;
-      left: 90%;
+      left: 85%;
     }
     .title {
       text-align: center;

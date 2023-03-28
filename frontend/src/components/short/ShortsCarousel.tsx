@@ -45,7 +45,8 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       cursor: pointer;
     }
     .video-level {
-      height: 12%;
+      height: 15%;
+      width: 15%;
       position: absolute;
       top: 4%;
       left: 4%;

@@ -74,7 +74,7 @@ const Button = styled.button<{ changeColor: string }>`
   background-color: white;
   border-radius: 16px;
   padding-top: 1%;
-  margin-top: 1%;
+  height: 60%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   &:hover {
     background-color: ${props => props.changeColor};
@@ -157,7 +157,7 @@ const HomePage = () => {
         )}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <SearchBar></SearchBar>
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', alignItems: 'end' }}>
             <Button
               changeColor={'yellow'}
               style={{ backgroundColor: `${button[0] ? 'yellow' : ''}` }}
@@ -173,8 +173,8 @@ const HomePage = () => {
               Nomal recommend
             </Button>
             <Button
-              changeColor={'blue'}
-              style={{ backgroundColor: `${button[2] ? 'blue' : ''}` }}
+              changeColor={'red'}
+              style={{ backgroundColor: `${button[2] ? 'red' : ''}` }}
               onClick={() => changeDifficulty(2)}
             >
               Hard recommend
