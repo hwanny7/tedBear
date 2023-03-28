@@ -158,7 +158,7 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
   };
 
   const handleClick = (watchId: string): void => {
-    navigate('/learning', { state: watchId });
+    navigate(`/learning/${watchId}`);
   };
   return (
     <RootWrapper>

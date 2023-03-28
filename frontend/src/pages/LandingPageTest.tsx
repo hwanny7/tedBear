@@ -865,11 +865,13 @@ const TextTitle1 = styled.div<AnimationStyledProps2>`
   color: ${props => props.theme.textColor1};
   position: relative;
   z-index: 1;
+  opacity: 0;
 
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
           animation: 1s ease-in-out 0s ${fadeIn2};
+          animation-fill-mode: forwards;
         `
       : ``}
 
@@ -904,11 +906,13 @@ const TextSubTitle1 = styled.div<AnimationStyledProps2>`
   color: ${props => props.theme.textColor2};
   position: relative;
   z-index: 1;
+  opacity: 0;
 
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0s ${fadeIn2};
+          animation: 1s ease-in-out 0.3s ${fadeIn2};
+          animation-fill-mode: forwards;
         `
       : ``}
 
@@ -1054,7 +1058,7 @@ const ElDesc = styled.div`
   }
 `;
 
-const DescListEl1 = styled.li`
+const DescListEl1 = styled.li<AnimationStyledProps2>`
   width: 20%;
   border-top-left-radius: 40px;
   border-bottom-right-radius: 40px;
@@ -1065,6 +1069,16 @@ const DescListEl1 = styled.li`
   // 1.5s ease-in-out 0s 1 normal none running ${fadeIn2};
   color: ${props => props.theme.textColor2};
   margin-bottom: 16px;
+
+  opacity: 0;
+
+  ${AnimationStyledProps2 =>
+    AnimationStyledProps2.inView2
+      ? css`
+          animation: 1s ease-in-out 0.5s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 
   &:hover {
     background: linear-gradient(
@@ -1144,9 +1158,39 @@ const DescListEl1 = styled.li`
     /* min-height: 400px; */
   }
 `;
-const DescListEl2 = styled(DescListEl1)``;
-const DescListEl3 = styled(DescListEl1)``;
-const DescListEl4 = styled(DescListEl1)``;
+const DescListEl2 = styled(DescListEl1)<AnimationStyledProps2>`
+  opacity: 0;
+
+  ${AnimationStyledProps2 =>
+    AnimationStyledProps2.inView2
+      ? css`
+          animation: 1s ease-in-out 0.7s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
+`;
+const DescListEl3 = styled(DescListEl1)<AnimationStyledProps2>`
+  opacity: 0;
+
+  ${AnimationStyledProps2 =>
+    AnimationStyledProps2.inView2
+      ? css`
+          animation: 1s ease-in-out 0.9s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
+`;
+const DescListEl4 = styled(DescListEl1)<AnimationStyledProps2>`
+  opacity: 0;
+
+  ${AnimationStyledProps2 =>
+    AnimationStyledProps2.inView2
+      ? css`
+          animation: 1s ease-in-out 1.1s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
+`;
 
 const Box3 = styled.div<ToggleStyledProps>`
   background-color: ${props => props.theme.bgColor};
@@ -1179,12 +1223,22 @@ const ContentLeft = styled.div`
   position: relative;
 `;
 
-const TextTitle2 = styled.div`
+const TextTitle2 = styled.div<AnimationStyledProps3>`
   text-align: left;
   font-weight: bold;
   color: ${props => props.theme.textColor1};
   position: relative;
   z-index: 1;
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 
   span {
     font-weight: bold;
@@ -1212,11 +1266,20 @@ const TextTitle2 = styled.div`
   }
 `;
 
-const TextSubTitle2 = styled.div`
+const TextSubTitle2 = styled.div<AnimationStyledProps3>`
   text-align: left;
   color: ${props => props.theme.textColor1};
   position: relative;
   z-index: 1;
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 
   @media ${device.mobile} {
     font-size: 12px;
@@ -1269,50 +1332,109 @@ const LandingMan2Img = styled(LandingMan1Img)`
   bottom: 0px;
 `;
 
-const LandingCircleImg = styled.img`
+const LandingCircleImg = styled.img<AnimationStyledProps3>`
   position: absolute;
   width: 380px;
   left: -30px;
   bottom: -10px;
   z-index: 0;
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0.5s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 `;
 
-const LandingMonitorImg = styled.img`
+const LandingMonitorImg = styled.img<AnimationStyledProps3>`
   position: absolute;
   z-index: 1;
   bottom: 0;
   left: 30px;
   width: 300px;
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0.3s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 `;
 
-const LandingBall1Img = styled(LandingMonitorImg)`
+const LandingBall1Img = styled(LandingMonitorImg)<AnimationStyledProps3>`
   bottom: 180px;
   left: 30px;
   width: 150px;
   animation: 1.4s infinite ease-in-out alternate ${upDown};
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0.5s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 `;
 
-const LandingBall2Img = styled(LandingMonitorImg)`
+const LandingBall2Img = styled(LandingMonitorImg)<AnimationStyledProps3>`
   bottom: 30px;
   left: 80px;
   width: 110px;
   animation: 1.2s infinite ease-in-out alternate ${upDown};
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0.5s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 `;
 
-const LandingBall3Img = styled(LandingMonitorImg)`
+const LandingBall3Img = styled(LandingMonitorImg)<AnimationStyledProps3>`
   bottom: 160px;
   left: 220px;
   width: 90px;
   animation: 1.6s infinite ease-in-out alternate ${upDown};
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0.5s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 `;
 
-const ContentRight = styled.div`
+const ContentRight = styled.div<AnimationStyledProps3>`
   /* border: 1px solid red; */
   height: 100%;
   width: 70%;
   position: relative;
   display: flex;
   flex-direction: column;
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 1s ease-in-out 0.7s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
 `;
 
 const DetatilWrapper = styled.ul`
@@ -1320,6 +1442,7 @@ const DetatilWrapper = styled.ul`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  padding: 0px;
 `;
 
 const LandingArrowImg = styled.img`
@@ -1609,6 +1732,7 @@ const LandingPageTest = (props: Props) => {
   const [animation, setAnimation] = useState<boolean>(false);
   const [inView1, setInView1] = useState<boolean>(false);
   const [inView2, setInView2] = useState<boolean>(false);
+  const [inView3, setInView3] = useState<boolean>(false);
   const [inView4, setInView4] = useState<boolean>(false);
 
   // box 열기
@@ -1663,7 +1787,6 @@ const LandingPageTest = (props: Props) => {
         </Slide>
         <Slide>
           <Box1 ref={firstBox}>
-            <InView onChange={setInView2}></InView>
             <BackBox toggle={props.toggle}></BackBox>
             <TextTitle1 inView2={inView2}>
               <span>테드베어(TEDBEAR)</span>는?
@@ -1678,7 +1801,8 @@ const LandingPageTest = (props: Props) => {
               </p>
             </TextSubTitle1>
             <DescList ref={descList}>
-              <DescListEl1>
+              <InView onChange={setInView2}></InView>
+              <DescListEl1 inView2={inView2}>
                 <LandingVideoImg src={LandingVideo} />
                 <div>
                   <ElTitle>VIDEO</ElTitle>
@@ -1689,7 +1813,7 @@ const LandingPageTest = (props: Props) => {
                   </ElDesc>
                 </div>
               </DescListEl1>
-              <DescListEl2>
+              <DescListEl2 inView2={inView2}>
                 <LandingMicImg src={LandingMic} />
                 <div>
                   <ElTitle>SPEAKING</ElTitle>
@@ -1699,7 +1823,7 @@ const LandingPageTest = (props: Props) => {
                   </ElDesc>
                 </div>
               </DescListEl2>
-              <DescListEl3>
+              <DescListEl3 inView2={inView2}>
                 <LandingPuzzleImg src={LandingPuzzle} />
                 <div>
                   <ElTitle>GAME</ElTitle>
@@ -1710,7 +1834,7 @@ const LandingPageTest = (props: Props) => {
                   </ElDesc>
                 </div>
               </DescListEl3>
-              <DescListEl4>
+              <DescListEl4 inView2={inView2}>
                 <LandingCheckImg src={LandingCheck} />
                 <div>
                   <ElTitle>CHECK</ElTitle>
@@ -1726,23 +1850,24 @@ const LandingPageTest = (props: Props) => {
         </Slide>
         <Slide>
           <Box3 toggle={props.toggle}>
+            <InView onChange={setInView3}></InView>
             <ContentLeft>
-              <TextTitle2>DETAIL</TextTitle2>
-              <TextSubTitle2>
+              <TextTitle2 inView3={inView3}>DETAIL</TextTitle2>
+              <TextSubTitle2 inView3={inView3}>
                 <p>
                   TEDBEAR는 다음과 같은
                   <br /> 서비스를 제공합니다.
                 </p>
               </TextSubTitle2>
-              <LandingCircleImg src={LandingCircle} />
-              <LandingMonitorImg src={LandingMonitor} />
-              <LandingBall1Img src={LandingBall1} />
-              <LandingBall2Img src={LandingBall2} />
-              <LandingBall3Img src={LandingBall3} />
+              <LandingCircleImg src={LandingCircle} inView3={inView3} />
+              <LandingMonitorImg src={LandingMonitor} inView3={inView3} />
+              <LandingBall1Img src={LandingBall1} inView3={inView3} />
+              <LandingBall2Img src={LandingBall2} inView3={inView3} />
+              <LandingBall3Img src={LandingBall3} inView3={inView3} />
               {/* <LandingMan1Img src={LandingMan1} /> */}
               {/* <LandingMan2Img src={LandingMan2} /> */}
             </ContentLeft>
-            <ContentRight>
+            <ContentRight inView3={inView3}>
               <DetatilWrapper>
                 <DetailEl openBox={openBox} boxIndex={boxIndex}>
                   <div>1</div>
