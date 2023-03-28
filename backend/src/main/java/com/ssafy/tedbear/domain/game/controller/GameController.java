@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssafy.tedbear.domain.game.dto.CrossWordDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
 import com.ssafy.tedbear.domain.game.service.GameService;
 
@@ -28,8 +29,7 @@ public class GameController {
 	}
 
 	@GetMapping("/crossword")
-	public ResponseEntity<WordGameDto> getCrossWordGame() {
-		WordGameDto question = gameService.getQuestion(2L);
-		return new ResponseEntity<>(question, HttpStatus.OK);
+	public ResponseEntity<CrossWordDto> getCrossWordGame() {
+		return ResponseEntity.ok(gameService.getCrossWord());
 	}
 }
