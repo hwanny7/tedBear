@@ -20,12 +20,15 @@ const Puzzle = styled.div`
   }
 
   h1 {
-    font-size: 10vw;
+    margin-bottom: 20px;
+    font-size: 8.5vw;
     color: white;
   }
 
   span {
-    font-size: 3.5vw;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 3vw;
     color: white;
   }
 `;
@@ -41,7 +44,7 @@ const CrossWordCoverPage = () => {
   const navigate = useNavigate();
   const handleStart = () => {
     console.log('시작 버튼을 클릭');
-    navigate('/game/detail');
+    navigate('/cross-word');
   };
   return (
     <Puzzle>

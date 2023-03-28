@@ -22,6 +22,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import StillLearningPage from 'pages/StillLearningPage';
 import SearchPage from 'pages/SearchPage';
 import CrossWordPage from './pages/CrossWordPage';
+import CrossWordCoverPage from './pages/CrossWordCoverPage';
 
 function App() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -43,8 +44,12 @@ function App() {
               <Route path="/still-learn" element={<StillLearningPage />} />
               <Route path="/search/:content?" element={<SearchPage />} />
               <Route path="/cross-word" element={<CrossWordPage />} />
+              <Route
+                path="/cross-word/cover"
+                element={<CrossWordCoverPage />}
+              />
+              <Route path="/level" element={<LevelPage />} />
             </Route>
-            <Route path="/level" element={<LevelPage />} />
             <Route path="/seung" element={<SeungPage />} />
             <Route path="/yuha" element={<YuhaPage />} />
             <Route path="/ju" element={<JuPage />} />
