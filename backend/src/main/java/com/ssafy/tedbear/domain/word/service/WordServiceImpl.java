@@ -38,10 +38,10 @@ public class WordServiceImpl {
 	 * @param pageable
 	 * @return 단어와 연관된 문장들
 	 */
-	public SentenceDetailDto.ContentListResponse searchWordRelatedSentence(String word, Pageable pageable) {
+	public List<String> searchWordRelatedSentence(String word, Pageable pageable) {
 		List<Sentence> searchList = wordRepository.findByWord(word, pageable).getContent();
 
-		return new SentenceDetailDto.ContentListResponse(searchList);
+		return SentenceDetailDto.ContentListResponse(searchList);
 	}
 
 	/***
@@ -63,6 +63,7 @@ public class WordServiceImpl {
 		return WordDto.SearchWord.builder()
 			.bookMarked(bookMarked)
 			.mean(wordDetail.getMean())
+			.wordNo(wordDetail.getNo())
 			.build();
 	}
 
@@ -84,4 +85,5 @@ public class WordServiceImpl {
 
 		wordBookmarkRepository.delete(bookmark);
 	}
+
 }

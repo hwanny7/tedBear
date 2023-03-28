@@ -47,13 +47,7 @@ public class SentenceDetailDto {
 		}
 	}
 
-	@Getter
-	public static class ContentListResponse {
-		List<String> sentenceContentList;
-
-		public ContentListResponse(List<Sentence> list) {
-			this.sentenceContentList = list.stream().map(c -> c.getContent()).collect(Collectors.toList());
-		}
+	public static List<String> ContentListResponse(List<Sentence> list) {
+		return list.stream().map(c -> c.getContent()).collect(Collectors.toList());
 	}
-
 }

@@ -1,5 +1,7 @@
 package com.ssafy.tedbear.domain.word.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
-import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.word.dto.WordBookmarkDto;
 import com.ssafy.tedbear.domain.word.dto.WordDto;
 import com.ssafy.tedbear.domain.word.service.WordServiceImpl;
@@ -32,7 +33,7 @@ public class WordController {
 	@GetMapping("/search")
 	public ResponseEntity<WordDto.WordSearchResponse> searchWord(WordDto.Request query, Pageable pageable) {
 		String word = query.getQuery();
-		SentenceDetailDto.ContentListResponse list = wordService.searchWordRelatedSentence(word, pageable);
+		List<String> list = wordService.searchWordRelatedSentence(word, pageable);
 		WordDto.SearchWord wordInfo = wordService.searchWordDetail(Member.builder().no((long)1).build(), word);
 
 		return ResponseEntity
