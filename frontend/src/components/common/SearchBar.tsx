@@ -5,26 +5,26 @@ import IconButton from '@mui/material/IconButton';
 
 import SearchIcon from '@mui/icons-material/Search';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  pathName: string;
+  fetchData?: (content: string) => Promise<void>;
 }
 
-const SearchBar = ({ pathName }: Props) => {
+const SearchBar = ({ fetchData }: Props) => {
   const navigate = useNavigate();
   const handleSearch = (e: any) => {
     e.preventDefault();
     const content = e.target[1].value;
-    if (pathName === 'HOME') {
+    if (fetchData) {
+      fetchData(content);
+    } else {
       navigate(`/search/${content}`);
     }
-    console.log(pathName);
   };
 
   const handleClick = (e: any) => {
     console.log(e.target);
-    console.log(pathName);
   };
 
   return (

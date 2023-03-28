@@ -14,9 +14,9 @@ interface VideoSet {
 
 // http://localhost:8080/video/search?query=and&size=10&sort=publishedDate,desc&page=0
 
-export const searchVideoData = async () => {
+export const searchVideoData = async (query: string) => {
   const params = {
-    query: 'motivation',
+    query,
     size: 8,
     sort: 'publishedDate,desc',
     page: 0,
@@ -26,13 +26,13 @@ export const searchVideoData = async () => {
     url: 'video/search',
     params: params,
   });
-  console.log(data);
+
   return data.videoInfoList;
 };
 
-export const searchSenData = async () => {
+export const searchSenData = async (query: string) => {
   const params = {
-    query: 'happy',
+    query,
   };
   const { data } = await authApi({
     method: 'get',

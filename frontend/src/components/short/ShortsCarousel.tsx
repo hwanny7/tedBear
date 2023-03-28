@@ -55,6 +55,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
 
 const RootWrapper = styled.div`
   position: relative;
+  width: 100%;
   .right-btn {
     position: absolute;
     right: 5%;

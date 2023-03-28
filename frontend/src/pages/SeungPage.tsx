@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import { useCookies, Cookies } from 'react-cookie';
 
 const picture = [
   {
@@ -40,9 +40,10 @@ const picture = [
 const SeungPage = () => {
   const [cookies, setCookie] = useCookies(['access-token']);
 
-  // useEffect(() => {
-  //   console.log(cookies.get('access-token'));
-  // });
+  useEffect(() => {
+    console.log(document.cookie);
+    console.log(cookies);
+  }, []);
 
   return (
     <div

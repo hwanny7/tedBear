@@ -29,7 +29,7 @@ interface ShortsRecomm {
 export const getVideoRecomm = async () => {
   const { data } = await authApi<HomeRecomm>({
     method: 'get',
-    url: '/video/recommend/list',
+    url: '/video/recommend/list/nomal',
   });
   return data.videoInfoList;
 };
@@ -37,7 +37,7 @@ export const getVideoRecomm = async () => {
 export const getShortsRecomm = async () => {
   const { data } = await authApi<ShortsRecomm>({
     method: 'get',
-    url: '/sentence/recommend/list',
+    url: '/sentence/recommend/list/nomal',
   });
   return data.sentenceList;
 };
