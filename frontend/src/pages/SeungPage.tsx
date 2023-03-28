@@ -40,9 +40,9 @@ const picture = [
 const SeungPage = () => {
   const [cookies, setCookie] = useCookies(['access-token']);
 
-  useEffect(() => {
-    console.log(cookies.get('access-token'));
-  });
+  // useEffect(() => {
+  //   console.log(cookies.get('access-token'));
+  // });
 
   return (
     <div
