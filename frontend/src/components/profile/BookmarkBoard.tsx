@@ -6,8 +6,8 @@ import BookmarkWord from './BookmarkWord';
 
 //style
 const Bookmark = styled.div`
-  margin-left: 10vw;
-  margin-top: 10vh;
+  padding: 10;
+  overflow: auto;
   .unclicked-button {
     background: ${props => props.theme.mainLightColor};
   }
@@ -32,6 +32,9 @@ const Bookmark = styled.div`
     height: 10vh;
   }
   .paper {
+    padding: 30;
+    margin: 30;
+    overflow: auto;
     width: 75vw;
     background-color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);

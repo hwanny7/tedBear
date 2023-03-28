@@ -23,10 +23,14 @@ const Bookmark = styled.div`
     display: flex;
     button {
       height: 13vh;
-      width: 4vw;
-      border-radius: 8px 0px 0px 8px;
+      width: 5vw;
+      border-radius: 20px 0px 0px 20px;
       font-size: 130%;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      :hover {
+        background-color: #c1bbe4; /* add a hover effect */
+        cursor: pointer; /* change cursor to pointer on mouse over */
+      }
     }
   }
   .stric-wrapper {
