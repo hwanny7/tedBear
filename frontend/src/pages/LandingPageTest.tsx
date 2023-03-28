@@ -869,7 +869,7 @@ const TextTitle1 = styled.div<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0s 1 normal none running ${fadeIn2};
+          animation: 1s ease-in-out 0s ${fadeIn2};
         `
       : ``}
 
@@ -908,7 +908,7 @@ const TextSubTitle1 = styled.div<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0s 1 normal none running ${fadeIn2};
+          animation: 1s ease-in-out 0s ${fadeIn2};
         `
       : ``}
 
