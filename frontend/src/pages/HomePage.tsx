@@ -69,10 +69,11 @@ const ShortsTitle = styled.span`
 `;
 
 const Button = styled.button<{ changeColor: string }>`
-  margin-left: 1%;
+  margin-left: 2%;
+  margin-right: 2%;
   background-color: white;
   border-radius: 16px;
-  padding: 1%;
+  padding-top: 1%;
   margin-top: 1%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   &:hover {
@@ -159,21 +160,21 @@ const HomePage = () => {
           <div style={{ display: 'flex' }}>
             <Button
               changeColor={'yellow'}
-              style={{ backgroundColor: `${button[0] && 'yellow'}` }}
+              style={{ backgroundColor: `${button[0] ? 'yellow' : ''}` }}
               onClick={() => changeDifficulty(0)}
             >
               Easy recommend
             </Button>
             <Button
               changeColor={'green'}
-              style={{ backgroundColor: `${button[1] && 'green'}` }}
+              style={{ backgroundColor: `${button[1] ? 'green' : ''}` }}
               onClick={() => changeDifficulty(1)}
             >
               Nomal recommend
             </Button>
             <Button
               changeColor={'blue'}
-              style={{ backgroundColor: `${button[2] && 'blue'}` }}
+              style={{ backgroundColor: `${button[2] ? 'blue' : ''}` }}
               onClick={() => changeDifficulty(2)}
             >
               Hard recommend
