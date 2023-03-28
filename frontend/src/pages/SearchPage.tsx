@@ -19,7 +19,7 @@ import { device } from 'utils/mediaQuery';
 const Wrapper = styled.div`
   margin-left: 3%;
   .short-wrapper {
-    width: 90%;
+    width: 88%;
   }
 `;
 
@@ -48,6 +48,12 @@ const VideoWrapper = styled.div`
   }
   .content {
     padding: 2%;
+    &:hover {
+      cursor: pointer;
+      color: #7e7d7d;
+      transition: all 0.3s;
+      transform: translateY(3px);
+    }
     @media ${device.mobile} {
       font-size: 10px;
     }
@@ -61,8 +67,54 @@ const VideoWrapper = styled.div`
     }
 
     @media ${device.desktop} {
-      font-size: 30px;
+      font-size: 25px;
     }
+  }
+`;
+
+const VideoTitle = styled.span`
+  display: block;
+  margin-top: 2%;
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 15px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 25px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 35px;
+  }
+`;
+
+const LoadingTitle = styled.div`
+  color: #7e7d7d;
+  cursor: pointer;
+  padding: 1%;
+  &:hover {
+    background-color: rgba(116, 116, 116, 0.5);
+    transition: all 0.3s;
+    transform: translateY(3px);
+  }
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 20px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 30px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 40px;
   }
 `;
 
@@ -73,19 +125,38 @@ interface Props {
 
 const SearchPage = () => {
   const { content } = useParams();
-  const searchWord = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [loading, setLoading] = useState<string>('+ 8 more');
   const [videos, setVideo] = useState<SearchedVideo[]>([]);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shorts, setShorts] = useState<Shorts | null>(null);
+  const [page, setPage] = useState<number>(0);
 
   const fetchData = async (content: string) => {
-    const videoData = await searchVideoData(content);
+    const videoData = await searchVideoData(content, 0);
     const shortData = await searchSenData(content);
-    console.log(shortData, videoData);
     setVideo(videoData);
+    setPage(0);
     setShortsData(shortData);
+    setSearchWord(content);
+    setLoading('+ 8 more');
+  };
+
+  const requestVideo = async () => {
+    if (loading === '+ 8 more') {
+      setLoading('Loading...');
+      const videoData = await searchVideoData(searchWord, page + 1);
+      if (videoData.length) {
+        setVideo(prev => prev.concat(videoData));
+        setLoading('+ 8 more');
+        console.log('비디오 갯수', videoData.length, page);
+        setPage(prev => prev + 1);
+      } else {
+        console.log('data가 없습니다.');
+        setLoading('영상이 없습니다.');
+      }
+    }
   };
 
   useEffect(() => {
@@ -98,6 +169,7 @@ const SearchPage = () => {
     <Wrapper>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
       <SearchBar fetchData={fetchData}></SearchBar>
+      <VideoTitle>Related Videos</VideoTitle>
       {videos.map((video, idx) => {
         return (
           <VideoWrapper key={idx}>
@@ -118,6 +190,10 @@ const SearchPage = () => {
           </VideoWrapper>
         );
       })}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
+      </div>
+      <VideoTitle>Related Shorts</VideoTitle>
       <div className="short-wrapper">
         <ShortsCarousel
           data={shortsData}

@@ -14,12 +14,12 @@ interface VideoSet {
 
 // http://localhost:8080/video/search?query=and&size=10&sort=publishedDate,desc&page=0
 
-export const searchVideoData = async (query: string) => {
+export const searchVideoData = async (query: string, page: number) => {
   const params = {
     query,
     size: 8,
     sort: 'publishedDate,desc',
-    page: 0,
+    page,
   };
   const { data } = await authApi<VideoSet>({
     method: 'get',

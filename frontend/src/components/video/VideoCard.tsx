@@ -14,20 +14,6 @@ interface card {
   id: string;
 }
 
-// const StyledCard = styled.div`
-//   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-//   transition: 0.4s;
-//   &:hover {
-//     scale: 1.04;
-//     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
-//     transition: 0.4s;
-//   }
-//   > img {
-//     width: 100%;
-//     border-radius: 16px;
-//   }
-// `;
-
 const VideoCard = ({ card }: { card: card }) => {
   return (
     <Card sx={{ height: '100%', position: 'relative' }}>
