@@ -25,4 +25,7 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 		+ "(SELECT CEIL(RAND() * (SELECT MAX(no) FROM word_tb)) AS no) AS r2 "
 		+ "WHERE wt.no >= r2.no ORDER BY wt.no ASC LIMIT 1", nativeQuery = true)
 	Word findNoByRand();
+
+	@Query(value = "SELECT * FROM word_tb where length(content) between 3 and 8 and score != 0 order by rand() limit 1000", nativeQuery = true)
+	List<Word> findWordsForCrosswordGame();
 }

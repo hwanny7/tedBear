@@ -17,4 +17,5 @@ public interface WordSentenceRepository extends JpaRepository<WordSentence, Long
     Optional<WordBookmark> findByMemberAndWord(Member member, Word word);
 
 //    Optional<WordBookmark> findByMemberAndWord(Member member, Word word);
+    Optional<WordSentence> findTop1ByWord(Word word);
 }

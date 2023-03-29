@@ -9,27 +9,23 @@ import lombok.Getter;
 public class CrossWordDto {
 	List<GridDto> board;
 	List<ClueDto> clueList;
+	List<List<Character>> answerBoard;
 	int boardSize;
 
-	public CrossWordDto(List<GridDto> board, List<ClueDto> clueList, int boardSize) {
+	public CrossWordDto(List<GridDto> board, List<ClueDto> clueList, char[][] answerBoard, int boardSize) {
 		this.board = board;
 		this.clueList = clueList;
+		this.answerBoard = new ArrayList<>();
+		for (int i = 0; i < boardSize; i++) {
+			List<Character> row = new ArrayList<>();
+			for (int j = 0; j < boardSize; j++) {
+				row.add(answerBoard[i][j]);
+			}
+			this.answerBoard.add(row);
+		}
 		this.boardSize = boardSize;
 	}
 
-	public CrossWordDto(int[][] boardMatrix, List<ClueDto> clueList, int boardSize) {
-		List<GridDto> board = new ArrayList<>();
-		for (int i = 0; i < boardSize; i++) {
-			for (int j = 0; j < boardSize; j++) {
-				if (boardMatrix[i][j] < 0)
-					board.add(new GridDto());
-				else
-					board.add(new GridDto(boardMatrix[i][j], true));
-			}
-		}
-		this.board = board;
-		this.clueList = clueList;
-		this.boardSize = boardSize;
-	}
+
 
 }

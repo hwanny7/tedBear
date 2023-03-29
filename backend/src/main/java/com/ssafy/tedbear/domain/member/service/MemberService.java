@@ -1,5 +1,6 @@
 package com.ssafy.tedbear.domain.member.service;
 
+import com.ssafy.tedbear.domain.member.dto.FeelDto;
 import com.ssafy.tedbear.domain.member.dto.LevelInfoDto;
 import com.ssafy.tedbear.domain.member.dto.PieDto;
 import com.ssafy.tedbear.domain.member.dto.ProblemListDto;
@@ -23,4 +24,6 @@ public interface MemberService {
 	void increaseMemberLevel(Member member, int amount);
 
 	LevelInfoDto getLevel(long memberNo);
+
+	void updateScoreByFeel(long memberNo, FeelDto feelDto);
 }

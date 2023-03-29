@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ssafy.tedbear.domain.member.dto.FeelDto;
 import com.ssafy.tedbear.domain.member.dto.LevelInfoDto;
 import com.ssafy.tedbear.domain.member.dto.PieDto;
 import com.ssafy.tedbear.domain.member.dto.ProblemDto;
@@ -46,11 +48,19 @@ public class MemberController {
 	}
 
 	@GetMapping("/pie")
-	public ResponseEntity<PieDto> getPie(){
+	public ResponseEntity<PieDto> getPie() {
 		return ResponseEntity.ok(memberService.getPie(1L));
 	}
+
 	@GetMapping("/level")
-	public ResponseEntity<LevelInfoDto> getLevel(){
+	public ResponseEntity<LevelInfoDto> getLevel() {
 		return ResponseEntity.ok(memberService.getLevel(1L));
 	}
+
+	@PutMapping("/feel")
+	public ResponseEntity<?> updateScoreByFeel(@RequestBody FeelDto feelDto) {
+		memberService.updateScoreByFeel(1L, feelDto);
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
 }

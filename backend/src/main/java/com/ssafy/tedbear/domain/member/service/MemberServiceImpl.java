@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.tedbear.domain.member.dto.FeelDto;
 import com.ssafy.tedbear.domain.member.dto.LevelInfoDto;
 import com.ssafy.tedbear.domain.member.dto.PieDto;
 import com.ssafy.tedbear.domain.member.dto.ProblemListDto;
@@ -32,6 +33,7 @@ import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.global.common.oauth2.MemberLevelRepository;
+import com.ssafy.tedbear.global.util.RecommendUtil;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -115,6 +117,14 @@ public class MemberServiceImpl implements MemberService {
 	public LevelInfoDto getLevel(long memberNo) {
 		Member member = getMember(memberNo);
 		return new LevelInfoDto(member.getMemberLevel());
+	}
+
+	@Override
+	@Transactional
+	public void updateScoreByFeel(long memberNo, FeelDto feelDto) {
+		Member member = getMember(memberNo);
+		int delta = -(RecommendUtil.getDelta(feelDto.getDifficulty()) / 10);
+		updateMemberScore(member, delta);
 	}
 
 	@Override

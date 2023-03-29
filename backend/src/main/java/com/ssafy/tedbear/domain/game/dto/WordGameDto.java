@@ -4,6 +4,7 @@ import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.word.entity.Word;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 public class WordGameDto {
@@ -23,6 +24,7 @@ public class WordGameDto {
 	}
 
 	@Getter
+	@ToString
 	static class Hint {
 		int startTime;
 		int endTime;
