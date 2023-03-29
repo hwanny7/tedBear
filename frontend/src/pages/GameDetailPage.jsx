@@ -1,8 +1,17 @@
 import styled from 'styled-components';
 import { ReactComponent as Album } from 'assets/img/album.svg';
+import { ReactComponent as AlbumA } from 'assets/img/albuma.svg';
+import { ReactComponent as AlbumB } from 'assets/img/albumb.svg';
+import { ReactComponent as AlbumC } from 'assets/img/albumc.svg';
+import { ReactComponent as AlbumD } from 'assets/img/albumd.svg';
+import Paw1 from 'assets/img/paw1.svg';
+import Paw2 from 'assets/img/paw2.svg';
+import Paw3 from 'assets/img/paw3.svg';
+import Paw4 from 'assets/img/paw4.svg';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { authApi } from 'utils/api/customAxios';
@@ -85,10 +94,33 @@ const GameDetailPage = () => {
   const [answer, setAnswer] = useState('');
   const [wordNumber, setWordNumber] = useState('');
   const [tryCount, setTryCount] = useState(1); // 애초에 1로 ( 바로 맞추면 1로 들어가고 틀리면 +1 씩 틀린 횟수 늘어남 대신에 새 문제면 1로 초기화)
-  const [problemNumber, setProblemNumber] = useState(1);
-  const [correctAnswerCount, setCorrectAnswerCount] = useState(0); // 퍼즐 조각 각각 누적 띄우기 위함
+  const [correctAnswerCount, setCorrectAnswerCount] = useState(1); // 퍼즐 조각 각각 누적 띄우기 위함
   const [hintList, setHintList] = useState([]); // 쇼츠 모달 보여주기 위함 (watchId 들어옴)
   const [input, setInput] = useState('');
+  const [selectedAlbum, setSelectedAlbum] = useState(1);
+  const [showPaw1, setShowPaw1] = useState(false);
+  const [showPaw2, setShowPaw2] = useState(false);
+  const [showPaw3, setShowPaw3] = useState(false);
+  const [showPaw4, setShowPaw4] = useState(false);
+  const [showPaw5, setShowPaw5] = useState(false);
+  const [showPaw6, setShowPaw6] = useState(false);
+  const [showPaw7, setShowPaw7] = useState(false);
+  const [showPaw8, setShowPaw8] = useState(false);
+  const [retry, setRetry] = useState(false);
+
+  const handleRetry = () => {
+    setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
+    setSelectedAlbum(1); // 앨범 퍼즐 초기화
+    setShowPaw1(false);
+    setShowPaw2(false);
+    setShowPaw3(false);
+    setShowPaw4(false);
+    setShowPaw5(false);
+    setShowPaw6(false);
+    setShowPaw7(false);
+    setShowPaw8(false);
+    setRetry(false);
+  };
 
   // 첫 문제
   useEffect(() => {
@@ -96,6 +128,7 @@ const GameDetailPage = () => {
       await authApi
         .get(`game/word`)
         .then(response => {
+          console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data);
           const { sentence, answer, wordNo } = response.data;
           setSentence(sentence);
@@ -116,6 +149,7 @@ const GameDetailPage = () => {
       await authApi
         .get(`game/word`)
         .then(response => {
+          console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data);
           const { sentence, answer, wordNo } = response.data;
           setSentence(sentence);
@@ -127,11 +161,6 @@ const GameDetailPage = () => {
         });
     }
     fetchData();
-    setProblemNumber(problemNumber + 1); // 1부터 시작해서 네문제
-    // 4번째 문제에서 한번 더 누르면 -> Mission Complete
-    if (problemNumber === 4) {
-      navigate('/game/complete');
-    }
   };
 
   // Post 보내기!
@@ -161,25 +190,31 @@ const GameDetailPage = () => {
     const userAnswer = input.toLowerCase();
     if (userAnswer === answer) {
       alert('Correct');
-      console.log('Correct');
+      console.log();
       fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
       setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
       setCorrectAnswerCount(correctAnswerCount + 1);
+      console.log(`맞은개수${correctAnswerCount}`);
       setInput(''); // Clear the input box
-      if (correctAnswerCount === 0) {
+      if (correctAnswerCount === 1) {
         console.log('한개맞힘');
         handleNext();
         // 첫번째 조각 띄우기
-      } else if (correctAnswerCount === 1) {
+        setSelectedAlbum(2);
+      } else if (correctAnswerCount === 2) {
         console.log('두개맞힘');
         handleNext();
         // 두번째 조각도 띄우기
-      } else if (correctAnswerCount === 2) {
+        setSelectedAlbum(3);
+      } else if (correctAnswerCount === 3) {
         console.log('세개맞힘');
         handleNext();
-      } else if (correctAnswerCount === 3) {
+        setSelectedAlbum(4);
+      } else if (correctAnswerCount === 4) {
         console.log('네개맞힘');
-        navigate('/game/complete');
+        setSelectedAlbum(5);
+        // 전부 다 맞힐 때에 미션 완료! handleNext와 무관!
+        // navigate('/game/complete');
       }
     } else {
       alert('Incorrect');
@@ -189,6 +224,42 @@ const GameDetailPage = () => {
     }
   };
 
+  // 발바닥 애니메이션
+  useEffect(() => {
+    console.log('발바닥 useEffect');
+    console.log(correctAnswerCount);
+    if (correctAnswerCount === 5) {
+      console.log('발바닥 True');
+      setTimeout(() => {
+        setShowPaw1(true);
+      }, 500);
+      setTimeout(() => {
+        setShowPaw2(true);
+      }, 1000);
+      setTimeout(() => {
+        setShowPaw3(true);
+      }, 1500);
+      setTimeout(() => {
+        setShowPaw4(true);
+      }, 2000);
+      setTimeout(() => {
+        setShowPaw5(true);
+      }, 2500);
+      setTimeout(() => {
+        setShowPaw6(true);
+      }, 3000);
+      setTimeout(() => {
+        setShowPaw7(true);
+      }, 3500);
+      setTimeout(() => {
+        setShowPaw8(true);
+      }, 4000);
+      setTimeout(() => {
+        setRetry(true);
+      }, 4500);
+    }
+  }, [correctAnswerCount]);
+
   const handleHint = () => {
     console.log('showHintModal');
   };
@@ -196,18 +267,214 @@ const GameDetailPage = () => {
   return (
     <StyledLevel change={showSwitch}>
       <div>
-        <Album
-          style={{
-            height: '90vh',
-            width: '50vw',
-            padding: 30,
-            margin: '10px 10px 10px 10px',
-            position: 'absolute',
-            alignItems: 'left',
-            justifyContent: 'felx-start',
-            transform: 'translate(0%, 0%)',
-          }}
-        ></Album>
+        {selectedAlbum === 1 && (
+          <Album
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
+          ></Album>
+        )}
+        {selectedAlbum === 2 && (
+          <AlbumA
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
+          ></AlbumA>
+        )}
+        {selectedAlbum === 3 && (
+          <AlbumB
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
+          ></AlbumB>
+        )}
+        {selectedAlbum === 4 && (
+          <AlbumC
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
+          ></AlbumC>
+        )}
+        {selectedAlbum === 5 && (
+          <AlbumD
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
+          ></AlbumD>
+        )}
+      </div>
+      <div>
+        {showPaw1 && (
+          <img
+            src={Paw1}
+            alt=""
+            style={{
+              left: '50%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw2 && (
+          <img
+            src={Paw2}
+            alt=""
+            style={{
+              left: '20%',
+              top: '50%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw3 && (
+          <img
+            src={Paw3}
+            alt=""
+            style={{
+              left: '80%',
+              top: '50%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw4 && (
+          <img
+            src={Paw4}
+            alt=""
+            style={{
+              left: '50%',
+              top: '80%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw5 && (
+          <img
+            src={Paw1}
+            alt=""
+            style={{
+              left: '10%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw6 && (
+          <img
+            src={Paw2}
+            alt=""
+            style={{
+              left: '90%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw7 && (
+          <img
+            src={Paw3}
+            alt=""
+            style={{
+              left: '10%',
+              top: '90%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {showPaw8 && (
+          <img
+            src={Paw4}
+            alt=""
+            style={{
+              left: '90%',
+              top: '90%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          />
+        )}
+      </div>
+      <div>
+        {retry && (
+          <IconButton
+            onClick={handleRetry}
+            style={{
+              boxShadow: 3,
+              width: '20rem',
+              height: '20rem',
+              left: '38%',
+              top: '30%',
+              opacity: 1,
+              position: 'absolute',
+              zIndex: 9999, // set a high z-index to ensure it appears on top of other elements
+            }}
+          >
+            <RefreshIcon
+              style={{ width: '20rem', height: '20rem', left: '50%' }}
+            ></RefreshIcon>
+          </IconButton>
+        )}
       </div>
       <div>
         <Paper
