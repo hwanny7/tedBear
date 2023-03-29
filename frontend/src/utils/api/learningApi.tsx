@@ -25,6 +25,15 @@ export interface SentenceBookmark {
   bookmarked: boolean;
 }
 
+export interface SearchedWord {
+  wordInfo: {
+    wordNo: number;
+    bookMarked: boolean;
+    mean: string;
+  };
+  sentenceContentList: string[];
+}
+
 // 비디오 상세 정보
 export const getVideoDesc = async (id: string) => {
   const { data } = await authApi<VideoDesc>({
@@ -59,7 +68,6 @@ export const getSentenceBookmarkState = async (id: number) => {
     method: 'get',
     url: `/sentence/bookmark/${id}`,
   });
-  console.log('문장 북마크 : ', data);
   return data;
 };
 
@@ -98,4 +106,17 @@ export const postCompletedVideo = async (data: object) => {
     url: `/video/complete`,
     data: data,
   });
+};
+
+// 단어 검색 API
+export const getSearchWord = async (
+  word: string,
+  size: number,
+  page: number,
+) => {
+  const { data } = await authApi<SearchedWord>({
+    method: 'get',
+    url: `/word/search?query=${word}&size=${size}&page=${page}`,
+  });
+  return data;
 };

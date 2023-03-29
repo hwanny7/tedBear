@@ -164,19 +164,19 @@ const Visual = styled.div<ToggleStyledProps>`
       : 'linear-gradient( 300deg,#4c4669 0%,#322b4e 30%,#231f37 60%,#110f1b 100%)'};
 
   @media ${device.mobile} {
-    /* height: 500px; */
+    height: 500px;
   }
 
   @media ${device.tablet} {
-    /* height: 600px; */
+    height: 600px;
   }
 
   @media ${device.laptop} {
-    /* height: 700px; */
+    height: 700px;
   }
 
   @media ${device.desktop} {
-    /* height: 700px; */
+    height: 700px;
   }
 `;
 
@@ -784,33 +784,33 @@ const StartBtn = styled.button`
 `;
 
 // 내용
-// const Content = styled.div`
-//   /* border: 1px solid black; */
-//   min-height: 600px;
-//   /* background-color: red; */
+const Content = styled.div`
+  /* border: 1px solid black; */
+  min-height: 600px;
+  /* background-color: red; */
 
-//   @media ${device.mobile} {
-//     margin-top: 0px;
-//   }
+  @media ${device.mobile} {
+    /* margin-top: 0px; */
+  }
 
-//   @media ${device.tablet} {
-//     margin-top: 0px;
-//   }
+  @media ${device.tablet} {
+    /* margin-top: 0px; */
+  }
 
-//   @media ${device.laptop} {
-//     margin-top: 50px;
-//   }
+  @media ${device.laptop} {
+    /* margin-top: 50px; */
+  }
 
-//   @media ${device.desktop} {
-//     margin-top: 50px;
-//   }
-// `;
+  @media ${device.desktop} {
+    /* margin-top: 50px; */
+  }
+`;
 
 // BOX1
 const Box1 = styled.div`
   background-color: ${props => props.theme.bgColor};
   position: relative;
-  height: 100%;
+  /* height: 500px; */
   z-index: 1;
 
   @media ${device.mobile} {
@@ -1195,8 +1195,9 @@ const DescListEl4 = styled(DescListEl1)<AnimationStyledProps2>`
 const Box3 = styled.div<ToggleStyledProps>`
   background-color: ${props => props.theme.bgColor};
   position: relative;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
+  height: 800px;
 
   @media ${device.mobile} {
     padding-top: 56px;
@@ -1229,7 +1230,7 @@ const TextTitle2 = styled.div<AnimationStyledProps3>`
   color: ${props => props.theme.textColor1};
   position: relative;
   z-index: 1;
-
+  height: 10%;
   opacity: 0;
 
   ${AnimationStyledProps3 =>
@@ -1272,6 +1273,7 @@ const TextSubTitle2 = styled.div<AnimationStyledProps3>`
   position: relative;
   z-index: 1;
   opacity: 0;
+  height: 10%;
 
   ${AnimationStyledProps3 =>
     AnimationStyledProps3.inView3
@@ -1318,11 +1320,17 @@ const TextSubTitle2 = styled.div<AnimationStyledProps3>`
   }
 `;
 
+const ImgBox2 = styled.div`
+  position: relative;
+  width: 100%;
+  height: 80%;
+`;
+
 const LandingMan1Img = styled.img`
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
-  left: 30px;
+  position: relative;
+  /* z-index: 1; */
+  /* bottom: 0; */
+  /* left: 30px; */
   width: 300px;
 `;
 
@@ -1335,7 +1343,7 @@ const LandingMan2Img = styled(LandingMan1Img)`
 const LandingCircleImg = styled.img<AnimationStyledProps3>`
   position: absolute;
   width: 380px;
-  left: -30px;
+  left: -40px;
   bottom: -10px;
   z-index: 0;
   opacity: 0;
@@ -1546,10 +1554,10 @@ const DetailElDesc = styled.li<OpenBoxProps>`
 
 const Box2 = styled.div<AnimationStyledProps4>`
   position: relative;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
   overflow: hidden;
-  background-color: #4e4483;
+  background-color: #3a335f;
   padding: 128px 50px;
   display: flex;
   flex-direction: column;
@@ -1557,7 +1565,7 @@ const Box2 = styled.div<AnimationStyledProps4>`
 
   > div {
     &:last-child {
-      background-color: #4e4483;
+      background-color: #3a335f;
       position: relative;
       width: 300px;
       height: 100%;
@@ -1565,7 +1573,7 @@ const Box2 = styled.div<AnimationStyledProps4>`
       justify-content: right;
 
       > div {
-        background-color: #4e4483;
+        background-color: #3a335f;
         height: 100%;
         position: absolute;
         bottom: 0;
@@ -1585,7 +1593,7 @@ const TextTitle3 = styled.div`
   text-align: center;
   font-weight: bold;
   color: ${props => props.theme.whiteColor};
-  position: relative;
+  /* position: relative; */
   z-index: 1;
 
   span {
@@ -1618,7 +1626,7 @@ const TextTitle3 = styled.div`
 const TextSubTitle3 = styled.div`
   text-align: center;
   color: #edd1ff;
-  position: relative;
+  /* position: relative; */
   z-index: 1;
 
   @media ${device.mobile} {
@@ -1661,8 +1669,8 @@ const TextSubTitle3 = styled.div`
 const BigLogoImg = styled.img`
   width: 300px;
   margin-top: 80px;
-  position: absolute;
-  bottom: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
 `;
 
 const BubbleImg = styled.img``;
@@ -1784,163 +1792,167 @@ const LandingPageTest = (props: Props) => {
       </Visual>
       {/* </Slide> */}
       {/* <Slide> */}
-      <Box1 ref={firstBox}>
-        <BackBox toggle={props.toggle}></BackBox>
-        <TextTitle1 inView2={inView2}>
-          <span>테드베어(TEDBEAR)</span>는?
-        </TextTitle1>
-        <TextSubTitle1 inView2={inView2}>
-          <p>
-            테드로 영어를 쉽게 배울 수 있는 사이트입니다.
-            <br />
-            테드에서 제공하는 다양한 주제의 강의로
-            <br />
-            회화 연습을 해보세요.
-          </p>
-        </TextSubTitle1>
-        <DescList ref={descList}>
-          <InView onChange={setInView2}></InView>
-          <DescListEl1 inView2={inView2}>
-            <LandingVideoImg src={LandingVideo} />
-            <div>
-              <ElTitle>VIDEO</ElTitle>
-              <ElDesc>
-                사용자 맞춤형
-                <br /> 다양한 TED 영상들을
-                <br /> 추천해줍니다.
-              </ElDesc>
-            </div>
-          </DescListEl1>
-          <DescListEl2 inView2={inView2}>
-            <LandingMicImg src={LandingMic} />
-            <div>
-              <ElTitle>SPEAKING</ElTitle>
-              <ElDesc>
-                TED 영상과 스크립트로 <br />
-                영어 스피킹 연습을 <br />할 수 있어요.
-              </ElDesc>
-            </div>
-          </DescListEl2>
-          <DescListEl3 inView2={inView2}>
-            <LandingPuzzleImg src={LandingPuzzle} />
-            <div>
-              <ElTitle>GAME</ElTitle>
-              <ElDesc>
-                재밌는 퍼즐 게임과 <br />
-                공부한 내용을 <br />
-                복습해보세요.
-              </ElDesc>
-            </div>
-          </DescListEl3>
-          <DescListEl4 inView2={inView2}>
-            <LandingCheckImg src={LandingCheck} />
-            <div>
-              <ElTitle>CHECK</ElTitle>
-              <ElDesc>
-                통계와 스트릭으로 <br />
-                사용자의 학습 상태를 <br />
-                체크할 수 있어요.
-              </ElDesc>
-            </div>
-          </DescListEl4>
-        </DescList>
-      </Box1>
-      {/* </Slide> */}
-      {/* <Slide> */}
-      <Box3 toggle={props.toggle}>
-        <InView onChange={setInView3}></InView>
-        <ContentLeft>
-          <TextTitle2 inView3={inView3}>DETAIL</TextTitle2>
-          <TextSubTitle2 inView3={inView3}>
+      <Content>
+        <Box1 ref={firstBox}>
+          <BackBox toggle={props.toggle}></BackBox>
+          <TextTitle1 inView2={inView2}>
+            <span>테드베어(TEDBEAR)</span>는?
+          </TextTitle1>
+          <TextSubTitle1 inView2={inView2}>
             <p>
-              TEDBEAR는 다음과 같은
-              <br /> 서비스를 제공합니다.
+              테드로 영어를 쉽게 배울 수 있는 사이트입니다.
+              <br />
+              테드에서 제공하는 다양한 주제의 강의로
+              <br />
+              회화 연습을 해보세요.
             </p>
-          </TextSubTitle2>
-          <LandingCircleImg src={LandingCircle} inView3={inView3} />
-          <LandingMonitorImg src={LandingMonitor} inView3={inView3} />
-          <LandingBall1Img src={LandingBall1} inView3={inView3} />
-          <LandingBall2Img src={LandingBall2} inView3={inView3} />
-          <LandingBall3Img src={LandingBall3} inView3={inView3} />
-          {/* <LandingMan1Img src={LandingMan1} /> */}
-          {/* <LandingMan2Img src={LandingMan2} /> */}
-        </ContentLeft>
-        <ContentRight inView3={inView3}>
-          <DetatilWrapper>
-            <DetailEl openBox={openBox} boxIndex={boxIndex}>
-              <div>1</div>
-              <div>난이도 기반 TED 영상 추천</div>
+          </TextSubTitle1>
+          <DescList ref={descList}>
+            <InView onChange={setInView2}></InView>
+            <DescListEl1 inView2={inView2}>
+              <LandingVideoImg src={LandingVideo} />
               <div>
-                <div onClick={() => onOpenBox(1)}>
-                  <LandingArrowImg src={LandingArrow} />
-                </div>
+                <ElTitle>VIDEO</ElTitle>
+                <ElDesc>
+                  사용자 맞춤형
+                  <br /> 다양한 TED 영상들을
+                  <br /> 추천해줍니다.
+                </ElDesc>
               </div>
-            </DetailEl>
-            <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-              시연 영상2
-            </DetailElDesc>
-            <DetailEl openBox={openBox} boxIndex={boxIndex}>
-              <div>2</div>
-              <div>영어 스피킹 연습</div>
+            </DescListEl1>
+            <DescListEl2 inView2={inView2}>
+              <LandingMicImg src={LandingMic} />
               <div>
-                <div onClick={() => onOpenBox(3)}>
-                  <LandingArrowImg src={LandingArrow} />
-                </div>
+                <ElTitle>SPEAKING</ElTitle>
+                <ElDesc>
+                  TED 영상과 스크립트로 <br />
+                  영어 스피킹 연습을 <br />할 수 있어요.
+                </ElDesc>
               </div>
-            </DetailEl>
-            <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-              시연 영상4
-            </DetailElDesc>
-            <DetailEl openBox={openBox} boxIndex={boxIndex}>
-              <div>3</div>
-              <div>재밌는 게임으로 단어 실력 테스트</div>
+            </DescListEl2>
+            <DescListEl3 inView2={inView2}>
+              <LandingPuzzleImg src={LandingPuzzle} />
               <div>
-                <div onClick={() => onOpenBox(5)}>
-                  <LandingArrowImg src={LandingArrow} />
-                </div>
+                <ElTitle>GAME</ElTitle>
+                <ElDesc>
+                  재밌는 퍼즐 게임과 <br />
+                  공부한 내용을 <br />
+                  복습해보세요.
+                </ElDesc>
               </div>
-            </DetailEl>
-            <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-              시연 영상6
-            </DetailElDesc>
-            <DetailEl openBox={openBox} boxIndex={boxIndex}>
-              <div>4</div>
-              <div>사용자의 학습 상태 체크</div>
+            </DescListEl3>
+            <DescListEl4 inView2={inView2}>
+              <LandingCheckImg src={LandingCheck} />
               <div>
-                <div onClick={() => onOpenBox(7)}>
-                  <LandingArrowImg src={LandingArrow} />
-                </div>
+                <ElTitle>CHECK</ElTitle>
+                <ElDesc>
+                  통계와 스트릭으로 <br />
+                  사용자의 학습 상태를 <br />
+                  체크할 수 있어요.
+                </ElDesc>
               </div>
-            </DetailEl>
-            <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-              시연 영상7
-            </DetailElDesc>
-          </DetatilWrapper>
-        </ContentRight>
-      </Box3>
-      {/* </Slide> */}
-      {/* <Slide> */}
-      <Box2 inView4={inView4}>
-        {/* <LandingMovingBgDiv>
+            </DescListEl4>
+          </DescList>
+        </Box1>
+        {/* </Slide> */}
+        {/* <Slide> */}
+        <Box3 toggle={props.toggle}>
+          <InView onChange={setInView3}></InView>
+          <ContentLeft>
+            <TextTitle2 inView3={inView3}>DETAIL</TextTitle2>
+            <TextSubTitle2 inView3={inView3}>
+              <p>
+                TEDBEAR는 다음과 같은
+                <br /> 서비스를 제공합니다.
+              </p>
+            </TextSubTitle2>
+            <ImgBox2>
+              <LandingCircleImg src={LandingCircle} inView3={inView3} />
+              <LandingMonitorImg src={LandingMonitor} inView3={inView3} />
+              <LandingBall1Img src={LandingBall1} inView3={inView3} />
+              <LandingBall2Img src={LandingBall2} inView3={inView3} />
+              <LandingBall3Img src={LandingBall3} inView3={inView3} />
+              {/* <LandingMan1Img src={LandingMan1} /> */}
+              {/* <LandingMan2Img src={LandingMan2} /> */}
+            </ImgBox2>
+          </ContentLeft>
+          <ContentRight inView3={inView3}>
+            <DetatilWrapper>
+              <DetailEl openBox={openBox} boxIndex={boxIndex}>
+                <div>1</div>
+                <div>난이도 기반 TED 영상 추천</div>
+                <div>
+                  <div onClick={() => onOpenBox(1)}>
+                    <LandingArrowImg src={LandingArrow} />
+                  </div>
+                </div>
+              </DetailEl>
+              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
+                시연 영상2
+              </DetailElDesc>
+              <DetailEl openBox={openBox} boxIndex={boxIndex}>
+                <div>2</div>
+                <div>영어 스피킹 연습</div>
+                <div>
+                  <div onClick={() => onOpenBox(3)}>
+                    <LandingArrowImg src={LandingArrow} />
+                  </div>
+                </div>
+              </DetailEl>
+              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
+                시연 영상4
+              </DetailElDesc>
+              <DetailEl openBox={openBox} boxIndex={boxIndex}>
+                <div>3</div>
+                <div>재밌는 게임으로 단어 실력 테스트</div>
+                <div>
+                  <div onClick={() => onOpenBox(5)}>
+                    <LandingArrowImg src={LandingArrow} />
+                  </div>
+                </div>
+              </DetailEl>
+              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
+                시연 영상6
+              </DetailElDesc>
+              <DetailEl openBox={openBox} boxIndex={boxIndex}>
+                <div>4</div>
+                <div>사용자의 학습 상태 체크</div>
+                <div>
+                  <div onClick={() => onOpenBox(7)}>
+                    <LandingArrowImg src={LandingArrow} />
+                  </div>
+                </div>
+              </DetailEl>
+              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
+                시연 영상7
+              </DetailElDesc>
+            </DetatilWrapper>
+          </ContentRight>
+        </Box3>
+        {/* </Slide> */}
+        {/* <Slide> */}
+        <Box2 inView4={inView4}>
+          {/* <LandingMovingBgDiv>
               <div></div>
             </LandingMovingBgDiv> */}
-        <TextTitle3>
-          TEDBEAR와 함께 <br />
-          영어 공부 하실 준비가 되셨나요?
-        </TextTitle3>
-        <TextSubTitle3>
-          <p>
-            TEADBEAR에서 재밌게 영어 공부해서 영어 실력을 업그레이드 해보세요!
-          </p>
-        </TextSubTitle3>
-        <div>
-          <InView onChange={setInView4}></InView>
-          <BigLogoImg src={BigLogo} />
-          <div></div>
-        </div>
-      </Box2>
-      {/* </Slide> */}
-      {/* </FullPage> */}
+          <TextTitle3>
+            TEDBEAR와 함께 <br />
+            영어 공부 하실 준비가 되셨나요?
+          </TextTitle3>
+          <TextSubTitle3>
+            <p>
+              TEADBEAR에서 재밌게 영어 공부해서 영어 실력을 업그레이드 해보세요!
+            </p>
+          </TextSubTitle3>
+          <div>
+            <InView onChange={setInView4}></InView>
+            <BigLogoImg src={BigLogo} />
+            <div></div>
+          </div>
+        </Box2>
+        {/* </Slide> */}
+        {/* </FullPage> */}
+      </Content>
     </Wrapper>
   );
 };
