@@ -21,6 +21,10 @@ export interface VideoDesc {
   bookMarked: boolean;
 }
 
+export interface SentenceBookmark {
+  bookmarked: boolean;
+}
+
 // 비디오 상세 정보
 export const getVideoDesc = async (id: string) => {
   const { data } = await authApi<VideoDesc>({
@@ -47,6 +51,16 @@ export const deleteVideoBookmark = async (data: object) => {
     url: `/video/bookmark`,
     data: data,
   });
+};
+
+// 문장 북마크 여부 가져오기
+export const getSentenceBookmarkState = async (id: number) => {
+  const { data } = await authApi<SentenceBookmark>({
+    method: 'get',
+    url: `/sentence/bookmark/${id}`,
+  });
+  console.log('문장 북마크 : ', data);
+  return data;
 };
 
 // 문장 북마크 저장

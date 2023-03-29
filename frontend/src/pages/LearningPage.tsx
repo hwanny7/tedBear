@@ -9,10 +9,13 @@ import Dictionary from 'assets/img/dictionary.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 import {
+  deleteSentenceBookmark,
   deleteVideoBookmark,
+  getSentenceBookmarkState,
   getVideoDesc,
   postCompletedVideo,
   postCurrentVideo,
+  postSentenceBookmark,
   postVideoBookmark,
   VideoDesc,
 } from 'utils/api/learningApi';
@@ -542,6 +545,10 @@ const LearningPage = () => {
     }
   };
   // 문장
+  const [sentenceBookmark, setSentenceBookmark] = useState<boolean | undefined>(
+    false,
+  );
+  const [senetenceId, setSentenceId] = useState<number>(0);
 
   // 유튜브 영상 설정  ===================================================
   const opts = {
@@ -564,12 +571,45 @@ const LearningPage = () => {
   };
 
   // 문장 클릭
-  const onSentenceClick = (index: any, startTime: number) => {
+  const onSentenceClick = (
+    index: any,
+    startTime: number,
+    sentenceIdx: number,
+  ) => {
     setHighlight(true);
     setSelected(index);
+    setSentenceId(sentenceIdx);
 
     // 유튜브 해당 시간으로 이동
     youtubePlayer?.seekTo(startTime);
+
+    // 문장 북마크 여부 가져오기
+    const getSentenceBookmark = async () => {
+      const data = await getSentenceBookmarkState(sentenceIdx);
+      setSentenceBookmark(data.bookmarked);
+    };
+    getSentenceBookmark();
+  };
+
+  const onSentenceBookmark = (id: number) => {
+    setSentenceBookmark(!sentenceBookmark);
+
+    const data = {
+      sentenceNo: id,
+    };
+    if (sentenceBookmark) {
+      // bookmark 해제 (true -> false)
+      const delSentenceBookmark = async () => {
+        await deleteSentenceBookmark(data);
+      };
+      delSentenceBookmark();
+    } else {
+      // bookmark 등록 (false -> true)
+      const insertSentenceBookmark = async () => {
+        await postSentenceBookmark(data);
+      };
+      insertSentenceBookmark();
+    }
   };
 
   // 학습 시간 기록  ===================================================
@@ -826,7 +866,17 @@ const LearningPage = () => {
           <SpeakBox>
             <div>
               <SentenceBox>
-                <BookmarkImg src={BookmarkEmpty} />
+                {!sentenceBookmark ? (
+                  <BookmarkImg
+                    src={BookmarkEmpty}
+                    onClick={() => onSentenceBookmark(senetenceId)}
+                  />
+                ) : (
+                  <BookmarkImg
+                    src={BookmarkFull}
+                    onClick={() => onSentenceBookmark(senetenceId)}
+                  />
+                )}
                 <p>{videoDesc?.sentenceInfoList[selected].content}</p>
               </SentenceBox>
               <MicBox result={result}>
@@ -854,7 +904,9 @@ const LearningPage = () => {
             {videoDesc?.sentenceInfoList.map((el, index) => {
               return (
                 <ScriptEl key={index} selected={selected} highlight={highlight}>
-                  <English onClick={() => onSentenceClick(index, el.startTime)}>
+                  <English
+                    onClick={() => onSentenceClick(index, el.startTime, el.no)}
+                  >
                     {el.content}
                   </English>
                   {toggle && <Korean>{el.translation}</Korean>}
