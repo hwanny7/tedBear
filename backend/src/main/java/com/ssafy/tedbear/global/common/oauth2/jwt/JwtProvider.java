@@ -72,6 +72,8 @@ public class JwtProvider {
 	public Authentication getAuthentication(String accessToken) {
 		Claims claims = parseClaims(accessToken);
 
+		log.info("권한정보 : " + claims.get(AUTHORITIES_KEY));
+
 		Collection<? extends GrantedAuthority> authorities =
 			Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
