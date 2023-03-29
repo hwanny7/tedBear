@@ -17,4 +17,7 @@ public interface WordBookmarkRepository extends JpaRepository<WordBookmark, Long
 
 	@Query("select wb from WordBookmark wb join fetch wb.word where wb.member=:member")
 	Slice<WordBookmark> findByMember(Member member);
+
+	@Query("select count(*) from Word as w join fetch WordSentence as ws on w = ws.word join fetch Sentence as s on ws.sentence = s where w.content = :word")
+	Long getSentenceCount(String word);
 }

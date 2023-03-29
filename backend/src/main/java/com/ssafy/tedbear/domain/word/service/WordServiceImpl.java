@@ -53,6 +53,7 @@ public class WordServiceImpl {
 	 */
 	public WordDto.SearchWord searchWordDetail(String memberUid, String word) {
 		Member member = findMemberService.findMember(memberUid);
+		Long sentenceCount = wordBookmarkRepository.getSentenceCount(word);
 
 		Word wordDetail = wordRepository.findByContent(word)
 			.orElseThrow(() -> new IllegalArgumentException("해당 단어가 DB에 없습니다."));
@@ -68,6 +69,7 @@ public class WordServiceImpl {
 			.content(wordDetail.getContent())
 			.mean(wordDetail.getMean())
 			.wordNo(wordDetail.getNo())
+			.sentenceCount(sentenceCount)
 			.build();
 	}
 

@@ -21,6 +21,7 @@ public class WordDto {
 		boolean bookMarked;
 		String content;
 		String mean;
+		Long sentenceCount;
 	}
 
 	@Builder
