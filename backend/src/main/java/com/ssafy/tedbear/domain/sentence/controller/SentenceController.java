@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,9 +71,7 @@ public class SentenceController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, Pageable pageable,
-		Authentication authentication) {
-		log.info("uid 들어오는지 확인: " + authentication.getName());
+	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, Pageable pageable) {
 		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(Member.builder().no(2L).build(),
 			searchCondition, pageable);
 		return new ResponseEntity<>(listResponse, HttpStatus.OK);
