@@ -13,7 +13,6 @@ const authSlice = createSlice({
       state.isLogin = false;
     },
     login: state => {
-      console.log('들어옴ㅋㅋ');
       state.isLogin = true;
     },
   },

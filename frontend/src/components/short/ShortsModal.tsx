@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   shorts: Shorts | null;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShortsData: React.Dispatch<React.SetStateAction<Shorts[]>>;
 }
 
 const CustomYoutube = styled(YouTube)`
@@ -88,8 +89,7 @@ const SentenceBox = styled.div`
   }
 `;
 
-const ShortsModal = ({ shorts, setOpenModal }: Props) => {
-  console.log(shorts?.content.length);
+const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = (watchId: string | undefined) => {
@@ -143,7 +143,12 @@ const ShortsModal = ({ shorts, setOpenModal }: Props) => {
           />
           <img
             src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
-            style={{ height: '15%', position: 'absolute', left: '93%' }}
+            style={{
+              height: '15%',
+              position: 'absolute',
+              left: '93%',
+              cursor: 'pointer',
+            }}
           ></img>
           <button
             className="btn"
@@ -162,9 +167,6 @@ const ShortsModal = ({ shorts, setOpenModal }: Props) => {
 
 export default ShortsModal;
 
-function useOutletContext<T>(): { modalOpen: any; setModalOpen: any } {
-  throw new Error('Function not implemented.');
-}
 // https://codesandbox.io/s/react-youtube-demo-f6l29?file=/src/App.js:1047-1049 관련 영상 숨기는 방법
 // https://www.npmjs.com/package/react-youtube
 // https://codepen.io/hwanny7/pen/RwYBjWW?editors=1000 자동재생 방법

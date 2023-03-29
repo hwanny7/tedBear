@@ -1,15 +1,16 @@
 import { authApi } from './customAxios';
 
-interface HomeRecomm {
-  videoInfoList: [
-    {
-      thumbnailUrl: string;
-      title: string;
-      watchId: string;
-      score: number;
-      bookMarked: boolean;
-    },
-  ];
+export interface HomeRecomm {
+  thumbnailUrl: string;
+  title: string;
+  watchId: string;
+  score: number;
+  bookMarked: boolean;
+  no: number;
+}
+
+interface HomeRecommList {
+  videoInfoList: HomeRecomm[];
 }
 
 export interface Shorts {
@@ -27,10 +28,11 @@ interface ShortsRecomm {
 }
 
 export const getVideoRecomm = async (difficulty: string) => {
-  const { data } = await authApi<HomeRecomm>({
+  const { data } = await authApi<HomeRecommList>({
     method: 'get',
     url: `/video/recommend/list/${difficulty}`,
   });
+  console.log(data);
   return data.videoInfoList;
 };
 

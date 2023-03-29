@@ -8,14 +8,8 @@ import carouselButton from 'assets/img/carouselButton.svg';
 import rightButton from 'assets/img/rightButton.svg';
 
 import { device } from 'utils/mediaQuery';
-
-interface HomeRecomm {
-  thumbnailUrl: string;
-  title: string;
-  watchId: string;
-  score: number;
-  bookMarked: boolean;
-}
+import { HomeRecomm } from 'utils/api/recommApi';
+import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -62,10 +56,11 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       left: 2%;
     }
     .book-mark {
-      height: 15%;
-      width: 15%;
+      height: 18%;
+      width: 18%;
       position: absolute;
       left: 85%;
+      cursor: pointer;
     }
     .title {
       text-align: center;
@@ -95,6 +90,11 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   }
 `;
 
+interface Props {
+  data: HomeRecomm[];
+  setVideoData: React.Dispatch<React.SetStateAction<HomeRecomm[]>>;
+}
+
 const RootWrapper = styled.div`
   position: relative;
   .right-btn {
@@ -121,17 +121,13 @@ const RootWrapper = styled.div`
   }
 `;
 
-const Carousel = ({ data }: { data: HomeRecomm[] }) => {
-  data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
+const Carousel = ({ data, setVideoData }: Props) => {
   const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(3);
-  const [length, setLength] = useState(data.length);
+  const length = data.length;
+  const dataList = data;
   const [transStyle, setTransStyle] = useState(transition);
-
-  useEffect(() => {
-    setLength(data.length);
-  }, [data]);
 
   const next = () => {
     if (currentIndex < length - 3) {
@@ -162,6 +158,24 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
   const handleClick = (watchId: string): void => {
     navigate(`/learning/${watchId}`);
   };
+
+  const handleVideoBm = (videoNo: number) => {
+    let status;
+    const copy = dataList.map(item => {
+      if (item.no === videoNo) {
+        status = item.bookMarked;
+        item.bookMarked = !item.bookMarked;
+      }
+      return item;
+    });
+    setVideoData(copy);
+    if (status) {
+      deleteVideoBookmark({ videoNo });
+    } else {
+      postVideoBookmark({ videoNo });
+    }
+  };
+
   return (
     <RootWrapper>
       <img onClick={prev} className="right-btn" src={carouselButton} alt="" />
@@ -169,7 +183,7 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
       <div>
         <Wrapper>
           <ContentBox transition={transStyle} transform={currentIndex}>
-            {data.map((Thumnail, idx) => {
+            {dataList.map((Thumnail, idx) => {
               return (
                 <div className="wrapper" key={idx}>
                   <img
@@ -189,6 +203,9 @@ const Carousel = ({ data }: { data: HomeRecomm[] }) => {
                   <img
                     src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
                     className="book-mark"
+                    onClick={() => {
+                      handleVideoBm(Thumnail.no);
+                    }}
                   ></img>
                   <div className="title">{Thumnail.title}</div>
                 </div>

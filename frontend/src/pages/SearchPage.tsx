@@ -15,7 +15,6 @@ import ShortsCarousel from 'components/short/ShortsCarousel';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
-import zIndex from '@mui/material/styles/zIndex';
 
 const Wrapper = styled.div`
   margin-left: 3%;
@@ -186,7 +185,13 @@ const SearchPage = () => {
 
   return (
     <Wrapper>
-      {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
+      {modalOpen && (
+        <ShortsModal
+          setShortsData={setShortsData}
+          shorts={shorts}
+          setOpenModal={setModalOpen}
+        />
+      )}
       <StickySearchBar>
         <SearchBar fetchData={fetchData}></SearchBar>
       </StickySearchBar>

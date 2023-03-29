@@ -2,19 +2,16 @@ import Carousel from 'components/video/Carousel';
 import ShortsCarousel from 'components/short/ShortsCarousel';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { getVideoRecomm, getShortsRecomm, Shorts } from 'utils/api/recommApi';
+import {
+  getVideoRecomm,
+  getShortsRecomm,
+  Shorts,
+  HomeRecomm,
+} from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import SearchBar from 'components/common/SearchBar';
 import { device } from 'utils/mediaQuery';
-
-interface HomeRecomm {
-  thumbnailUrl: string;
-  title: string;
-  watchId: string;
-  score: number;
-  bookMarked: boolean;
-}
 
 interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -73,8 +70,7 @@ const Button = styled.button<{ changeColor: string }>`
   margin-right: 2%;
   background-color: white;
   border-radius: 16px;
-  padding-top: 1%;
-  height: 60%;
+  padding: 3%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   &:hover {
     background-color: ${props => props.changeColor};
@@ -82,19 +78,19 @@ const Button = styled.button<{ changeColor: string }>`
     transform: translateY(3px);
   }
   @media ${device.mobile} {
-    font-size: 5px;
+    font-size: 10px;
   }
 
   @media ${device.tablet} {
-    font-size: 5px;
+    font-size: 12px;
   }
 
   @media ${device.laptop} {
-    font-size: 8px;
+    font-size: 15px;
   }
 
   @media ${device.desktop} {
-    font-size: 12px;
+    font-size: 22px;
   }
 `;
 
@@ -106,7 +102,12 @@ const HomePage = () => {
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
 
   const fetchData = async (difficulty: string) => {
-    const data: HomeRecomm[] = await getVideoRecomm(difficulty);
+    let data: HomeRecomm[] = await getVideoRecomm(difficulty);
+    data = [...data.slice(9, 12), ...data, ...data.slice(0, 3)];
+    data = data.map(item => {
+      return { ...item };
+    });
+    // slice로 복사된 객체 얕은 복사실행
     setVideoData(data);
     const shorts = await getShortsRecomm(difficulty);
     setShortsData(shorts);
@@ -153,31 +154,35 @@ const HomePage = () => {
     <Wrapper>
       <div>
         {modalOpen && (
-          <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />
+          <ShortsModal
+            shorts={shorts}
+            setOpenModal={setModalOpen}
+            setShortsData={setShortsData}
+          />
         )}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <SearchBar></SearchBar>
-          <div style={{ display: 'flex', alignItems: 'end' }}>
+          <div style={{ display: 'flex', alignItems: 'end', width: '20%' }}>
             <Button
               changeColor={'yellow'}
               style={{ backgroundColor: `${button[0] ? 'yellow' : ''}` }}
               onClick={() => changeDifficulty(0)}
             >
-              Easy recommend
+              Easy
             </Button>
             <Button
               changeColor={'green'}
               style={{ backgroundColor: `${button[1] ? 'green' : ''}` }}
               onClick={() => changeDifficulty(1)}
             >
-              Nomal recommend
+              Nomal
             </Button>
             <Button
               changeColor={'red'}
               style={{ backgroundColor: `${button[2] ? 'red' : ''}` }}
               onClick={() => changeDifficulty(2)}
             >
-              Hard recommend
+              Hard
             </Button>
           </div>
           {/* <button onClick={() => navigate('/still-learn')}>
@@ -185,7 +190,9 @@ const HomePage = () => {
           </button> */}
         </div>
         <VideoTitle>Recommended for you</VideoTitle>
-        <Carousel data={videoData}></Carousel>
+        {videoData.length !== 0 && (
+          <Carousel data={videoData} setVideoData={setVideoData}></Carousel>
+        )}
         <ShortsTitle>Daily Shorts</ShortsTitle>
         <ShortsCarousel
           data={shortsData}

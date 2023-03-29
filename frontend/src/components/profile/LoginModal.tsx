@@ -143,13 +143,13 @@ interface Props {
 const LoginModal = ({ setOpenModal }: Props) => {
   const navigate = useNavigate();
   const KakaoLogin = () => {
-    // const result = axios.get('http://j8b103.p.ssafy.io:8080/oauth/kakao');
-    // console.log(result);
     window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
-    // 'https:kauth.kakao.com/oauth/authorize?client_id=8479739cb2eb523d03215db2f6b5fe23&redirect_uri=http://j8b103.p.ssafy.io:8080/oauth/kakao&response_type=code';
-    // 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
   };
 
+  const goTo = () => {
+    console.log('클릭!');
+    navigate('/home');
+  };
   return (
     // <Modal style={{ background: 'black' }}>
     //   <Wrapper>
@@ -169,10 +169,15 @@ const LoginModal = ({ setOpenModal }: Props) => {
             <StyledNaverIcon></StyledNaverIcon>
             네이버로 시작하기
           </KakaoButton>
-          {/* <KakaoButton BgColor={'white'}>
+          <KakaoButton
+            BgColor={'white'}
+            onClick={() => {
+              goTo();
+            }}
+          >
             <StyledGoogleIcon></StyledGoogleIcon>
-            Google로 시작하기
-          </KakaoButton> */}
+            연진님 여기가 홈이에요
+          </KakaoButton>
         </div>
       </Modal>
     </div>

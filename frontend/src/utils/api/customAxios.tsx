@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
 const BASE_URL = 'http://j8b103.p.ssafy.io:8080';
+const cookie = new Cookies();
 
 export const authApi = axios.create({
   baseURL: BASE_URL,
@@ -17,13 +19,14 @@ export const basicApi = axios.create({
   },
 });
 
-authApi.interceptors.request.use(function (config: any) {
+authApi.interceptors.request.use((config: any) => {
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
     window.location.href = '/';
+    alert('로그인 시간이 만료되었습니다.');
     return;
   }
-  config.headers.authorization = `${accessToken}`;
+  config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;
 });
@@ -35,17 +38,19 @@ authApi.interceptors.response.use(
   async error => {
     const { config, response } = error;
     const originalRequest = config;
-
+    console.log(config);
     if (response.status === 401) {
       // Unauthorized
-      const refreshToken = localStorage.getItem('refreshToken');
+      // const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = cookie.get('refreshToken');
+      console.log('refresh입니다', typeof refreshToken);
       await axios
         .post(`${BASE_URL}/refresh`, refreshToken)
         .then(res => {
           if (res.status === 200) {
-            const newAccessToken = res.headers.authorization;
+            const newAccessToken = res.headers.Authorization;
 
-            originalRequest.headers.authorization = newAccessToken;
+            originalRequest.headers.Authorization = newAccessToken;
             localStorage.setItem('accessToken', newAccessToken);
 
             return axios(originalRequest);
@@ -54,8 +59,10 @@ authApi.interceptors.response.use(
         .catch(err => {
           if (err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED') {
             localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
+            cookie.remove('refreshToken');
+            // localStorage.removeItem('refreshToken');
             // window.location.replace = "/login";
+            // 리프레시 쿠키 지우기
           }
         });
     }
