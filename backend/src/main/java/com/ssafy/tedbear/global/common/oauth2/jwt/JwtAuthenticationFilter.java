@@ -40,6 +40,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				log.info("들어온 access-token: " + token);
 				Authentication authentication = jwtProvider.getAuthentication(token);
 				SecurityContextHolder.getContext().setAuthentication(authentication); // 인증정보를 authentication에 넣는다.
+
+				log.info("들어온 authentication 정보: " + authentication.getPrincipal() + "===="
+					+ authentication.getAuthorities());
 				log.info("{}의 인증정보 저장", authentication.getName());
 			} else if (StringUtils.hasText(token)) {
 				try {
