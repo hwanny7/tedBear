@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -67,6 +68,7 @@ public class SecurityConfig {
 			.formLogin().disable();
 		http.anonymous().authenticationFilter(customAnonymousFilter());
 		http.authorizeHttpRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // options 메서드 열어두기! Authorization 헤더를 사용하기 때문에 Preflight 넣어줌
 			// 그외 모든 요청은 허용
 			.anyRequest().permitAll()
 			.and()
@@ -105,7 +107,7 @@ public class SecurityConfig {
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://j8b103.p.ssafy.io"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
-		configuration.setAllowCredentials(true);
+		configuration.setAllowCredentials(true); // 클라이언트 요청이 쿠키를 통해 자격 증명을 하는 경우 true
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
