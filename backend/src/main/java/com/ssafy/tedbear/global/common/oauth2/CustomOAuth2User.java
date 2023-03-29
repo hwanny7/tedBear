@@ -30,6 +30,10 @@ public class CustomOAuth2User implements OAuth2User {
 	public CustomOAuth2User(String uid) {
 		this.uid = uid;
 	}
+	public CustomOAuth2User(String uid, Collection<? extends GrantedAuthority> authorities){
+		this.uid = uid;
+		this.authorities = authorities;
+	}
 
 	public String getEmail() {
 		return email;
