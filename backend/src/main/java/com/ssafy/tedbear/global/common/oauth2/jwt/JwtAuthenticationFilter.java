@@ -37,14 +37,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		log.info("request method: {}", request.getMethod());
 		log.info("jwt filter");
 		String token = parseBearerToken(request);
-		Authentication authentication = jwtProvider.getAuthentication(token);
 
 		try {
 			if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) { // 토큰이 있고 유효하다면
+				Authentication authentication = jwtProvider.getAuthentication(token);
 				SecurityContextHolder.getContext().setAuthentication(authentication); // 인증정보를 authentication에 넣는다.
 
 				log.info("{}의 인증정보 저장", authentication.getName());
 			} else if (StringUtils.hasText(token)) {
+				Authentication authentication = jwtProvider.getAuthentication(token);
 				try {
 					// refreshToken 가져온다.
 					String refreshToken = CookieUtils.getCookie(request, "refresh")
