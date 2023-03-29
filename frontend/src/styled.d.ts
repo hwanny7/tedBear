@@ -45,5 +45,6 @@ declare module 'styled-components' {
     badgeBronze: string;
     badgeSilver: string;
     badgGold: string;
+    badgeUnlank: string;
   }
 }

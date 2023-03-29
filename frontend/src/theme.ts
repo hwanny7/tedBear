@@ -35,16 +35,28 @@ export const lightTheme: DefaultTheme = {
   textColor2: '#7B7B7B',
 
   // 레벨 색깔 빨주노초파남보동은금
-  badgeRed: '#FF9292',
-  badgeOrange: '#FFA564',
-  badgeYellow: '#F6FF8E',
-  badgeGreen: '#ACFF8F',
-  badgeBlue: '#A6DFFF',
-  badgeIndigo: '#9F9DFF',
-  badgePurple: '#E9BAFF',
-  badgeBronze: '#CDAB8B',
-  badgeSilver: '#ECECEC',
-  badgGold: '#FFD700',
+  badgeRed:
+    'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
+  badgeOrange:
+    'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
+  badgeYellow:
+    'invert(87%) sepia(32%) saturate(529%) hue-rotate(20deg) brightness(110%) contrast(102%)',
+  badgeGreen:
+    'invert(91%) sepia(13%) saturate(1340%) hue-rotate(47deg) brightness(101%) contrast(101%)',
+  badgeBlue:
+    'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
+  badgeIndigo:
+    'invert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+  badgePurple:
+    'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
+  badgeBronze:
+    'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
+  badgeSilver:
+    'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
+  badgGold:
+    'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
+  badgeUnlank:
+    'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
 };
 
 export const darkTheme: DefaultTheme = {
@@ -82,14 +94,27 @@ export const darkTheme: DefaultTheme = {
   textColor2: '#E3E3E3',
 
   // 레벨 색깔 빨주노초파남보동은금
-  badgeRed: '#FF9292',
-  badgeOrange: '#FFA564',
-  badgeYellow: '#F6FF8E',
-  badgeGreen: '#ACFF8F',
-  badgeBlue: '#A6DFFF',
-  badgeIndigo: '#9F9DFF',
-  badgePurple: '#E9BAFF',
-  badgeBronze: '#CDAB8B',
-  badgeSilver: '#ECECEC',
-  badgGold: '#FFD700',
+  // 레벨 색깔 빨주노초파남보동은금
+  badgeRed:
+    'invert(90%) sepia(17%) saturate(7004%) hue-rotate(303deg) brightness(108%) contrast(103%)',
+  badgeOrange:
+    'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
+  badgeYellow:
+    'invert(87%) sepia(32%) saturate(529%) hue-rotate(20deg) brightness(110%) contrast(102%)',
+  badgeGreen:
+    'invert(91%) sepia(13%) saturate(1340%) hue-rotate(47deg) brightness(101%) contrast(101%)',
+  badgeBlue:
+    'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
+  badgeIndigo:
+    'iinvert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+  badgePurple:
+    'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
+  badgeBronze:
+    'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
+  badgeSilver:
+    'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
+  badgGold:
+    'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
+  badgeUnlank:
+    'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
 };

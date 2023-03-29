@@ -5,14 +5,24 @@ import LearningMic from 'assets/img/learningMic.svg';
 import LearningStop from 'assets/img/learningStop.svg';
 import Dot from 'assets/img/dot.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
+import Dictionary from 'assets/img/dictionary.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
-import { getVideoDesc, VideoDesc } from 'utils/api/learningApi';
+import {
+  deleteVideoBookmark,
+  getVideoDesc,
+  postCompletedVideo,
+  postCurrentVideo,
+  postVideoBookmark,
+  VideoDesc,
+} from 'utils/api/learningApi';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import { useParams } from 'react-router-dom';
+import Chart from 'react-apexcharts';
+import DictionaryModal from 'components/learning/dictionaryModal';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -23,8 +33,12 @@ interface HighlightStyledProps {
   selected: number;
 }
 
-interface ViedoLevelProps {
-  level: number;
+interface BadgeProps {
+  score: number;
+}
+
+interface SpeakerBoxProps {
+  result: number;
 }
 
 const Wrapper = styled.div`
@@ -34,6 +48,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 56px 120px;
+  position: relative;
 `;
 
 const TitleBox = styled.div`
@@ -43,16 +58,121 @@ const TitleBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
 
   p {
     font-weight: bold;
     font-size: 24px;
+    margin-left: 16px;
   }
 `;
 
-const ViedoLevelImg = styled.img`
+const ScoreChart = styled.div`
+  background-color: #ffffffed;
+  border-radius: 16px;
+  box-shadow: 6px 6px 8px #00000042;
+  width: 500px;
+  padding: 50px 24px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  z-index: 5;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+
+  .apexcharts6wyl5juj {
+    border: 1px solid red;
+  }
+
+  .apexcharts-legend {
+    display: none;
+  }
+
+  > div:nth-last-child(3) {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      padding-left: 8px;
+      padding-right: 16px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+  > div:nth-last-child(2) {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      padding-left: 8px;
+      padding-right: 16px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+  > div:nth-last-child(1) {
+    width: 100%;
+    margin-top: 20px;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    /* word-break: keep-all; */
+    font-size: 14px;
+    line-height: 24px;
+    color: ${props => props.theme.blackColorLight2};
+  }
+`;
+
+const ViedoLevelImg = styled.img<BadgeProps>`
+  cursor: pointer;
   width: 32px;
-  margin-right: 16px;
+  /* margin-right: 16px; */
+  filter: ${props => {
+    if (props.score == 0) {
+      return `${props.theme.badgeRed}`;
+    } else if (props.score == 1) {
+      return `${props.theme.badgeOrange}`;
+    } else if (props.score == 2) {
+      return `${props.theme.badgeYellow}`;
+    } else if (props.score == 3) {
+      return `${props.theme.badgeGreen}`;
+    } else if (props.score == 4) {
+      return `${props.theme.badgeBlue}`;
+    } else if (props.score == 5) {
+      return `${props.theme.badgeIndigo}`;
+    } else if (props.score == 6) {
+      return `${props.theme.badgePurple}`;
+    } else if (props.score == 7) {
+      return `${props.theme.badgeBronze}`;
+    } else if (props.score == 8) {
+      return `${props.theme.badgeSilver}`;
+    } else if (props.score == 9) {
+      return `${props.theme.badgGold}`;
+    } else {
+      return `${props.theme.badgeUnlank}`;
+    }
+  }};
+
+  // hover 시 다른 styledcomponent target 할 떄
+  &:hover ~ ${ScoreChart} {
+    opacity: 1;
+    z-index: 4;
+  }
 `;
 
 const ContentBox = styled.div`
@@ -79,6 +199,7 @@ const YoutubeBox = styled.div`
   height: 60%;
   margin-bottom: 8px;
   position: relative;
+  z-index: 3;
 
   ${BookmarkImg} {
     position: absolute;
@@ -133,9 +254,23 @@ const SentenceBox = styled.div`
   }
 `;
 
-const MicBox = styled.div`
+const MicBox = styled.div<SpeakerBoxProps>`
   /* border: 1px solid black; */
-  background-color: ${props => props.theme.learningBoxDefaultColor};
+  background-color: ${props => {
+    if (props.result == 0) {
+      // 틀
+      console.log('틀림');
+      return `${props.theme.learningBoxIncorrectColor}`;
+    } else if (props.result == 1) {
+      // 맞
+      console.log('맞음');
+      return `${props.theme.learningBoxCorrect}`;
+    } else {
+      // 기본
+      console.log('기본');
+      return `${props.theme.learningBoxDefaultColor}`;
+    }
+  }};
   height: 50%;
   border-radius: 10px;
   display: flex;
@@ -298,29 +433,117 @@ const CompleteBtn = styled.button`
   }
 `;
 
+const DictionaryImg = styled.img`
+  width: 56px;
+  z-index: 5;
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  cursor: pointer;
+`;
+
 const LearningPage = () => {
   const [toggle, setToggle] = useState<boolean>(false);
-
   const clickedToggle = () => {
     setToggle(!toggle);
   };
 
-  // 유튜브 아이디
+  // 유튜브 아이디 ==================================================
   const { videoId } = useParams() as { videoId: string };
 
-  // 받아온 data
+  // VIDEO 아이디 Number ==================================================
+  const [videoNumber, setVideoNumber] = useState<number>(0);
+
+  // 받아온 data ===================================================
   const [videoDesc, setVideoDesc] = useState<VideoDesc>();
 
   useEffect(() => {
-    console.log(videoId);
+    // 유튜브 상세 데이터 가져오기
     const fetchData = async () => {
       const data = await getVideoDesc(videoId);
-      setVideoDesc(data);
+      await setVideoDesc(data);
     };
     fetchData();
   }, []);
 
-  // 유튜브 영상 설정
+  // 유튜브 뱃지 색상 설정 및 뱃지 차트 만들기  ===================================================
+  // 레벨
+  const [score, setScore] = useState<number>(0);
+  const chartOptions = {
+    labels: [
+      'level1',
+      'level2',
+      'level3',
+      'level4',
+      'level5',
+      'level6',
+      'level7',
+      'level8',
+      'level9',
+      'level10',
+      'unlanked',
+    ],
+    colors: [
+      '#FF4949',
+      '#FFA564',
+      '#F6FF8E',
+      '#ACFF8F',
+      '#A6DFFF',
+      '#9F9DFF',
+      '#E9BAFF',
+      '#FFD700',
+      '#DBDBDB',
+      '#CDAB8B',
+      '#000000',
+    ],
+  };
+  const [series, setSeries] = useState<number[]>();
+  useEffect(() => {
+    //뱃지 색상 설정
+    if (videoDesc?.scoreInfo.score !== undefined) {
+      setScore(videoDesc?.scoreInfo.score);
+    }
+
+    // 뱃지 차트 만들기
+    if (videoDesc?.scoreInfo.sentenceScoreInfo !== undefined) {
+      setSeries(videoDesc?.scoreInfo.sentenceScoreInfo);
+    }
+
+    // video number
+    if (videoDesc?.no !== undefined) {
+      setVideoNumber(videoDesc?.no);
+    }
+  }, [videoDesc]);
+
+  // 북마크  ===================================================
+  // 영상
+  const [bookmark, setBookmark] = useState<boolean | undefined>(
+    videoDesc?.bookMarked,
+  );
+  // 북마크 클릭시 (등록 및 해제)
+  const onBookmark = () => {
+    setBookmark(!bookmark);
+
+    const data = {
+      videoNo: videoNumber,
+    };
+    if (bookmark) {
+      // bookmark 해제 (true -> false)
+      const delVideoBookmark = async () => {
+        await deleteVideoBookmark(data);
+      };
+      delVideoBookmark();
+    } else {
+      // bookmark 등록 (false -> true)
+      const insertVideoBookmark = async () => {
+        await postVideoBookmark(data);
+      };
+      insertVideoBookmark();
+    }
+  };
+  // 문장
+
+  // 유튜브 영상 설정  ===================================================
   const opts = {
     height: '560',
     width: '315',
@@ -329,18 +552,18 @@ const LearningPage = () => {
     },
   };
 
-  // 하이라이팅
+  // 하이라이팅  ===================================================
   const [highlight, setHighlight] = useState<boolean>(false);
   const [selected, setSelected] = useState(0);
   const [youtubePlayer, setYoutubePlayer] = useState<any>();
 
-  // 문장 클릭
+  // player 준비시
   const onPlayerReady: YouTubeProps['onReady'] = event => {
     const player = event.target;
     setYoutubePlayer(player);
-    // console.log(typeof player);
   };
 
+  // 문장 클릭
   const onSentenceClick = (index: any, startTime: number) => {
     setHighlight(true);
     setSelected(index);
@@ -349,12 +572,64 @@ const LearningPage = () => {
     youtubePlayer?.seekTo(startTime);
   };
 
+  // 학습 시간 기록  ===================================================
+  const [videoTime, setVideoTime] = useState(0);
+  // 1초마다 영상 실행 시간 가져오기
+  useEffect(() => {
+    const watchTime = setInterval(() => {
+      // 현재 시청 시간 state 저장
+      setVideoTime(Math.floor(Number(youtubePlayer?.getCurrentTime())));
+      // 실시간 하이라이팅
+      let flag = false;
+      let idx = 0;
+      while (!flag) {
+        if (
+          videoDesc?.sentenceInfoList[idx].startTime &&
+          videoDesc?.sentenceInfoList[idx].startTime <= videoTime &&
+          videoTime <= videoDesc?.sentenceInfoList[idx + 1].startTime
+        ) {
+          flag = true;
+          break;
+        }
+
+        idx++;
+      }
+
+      setHighlight(true);
+      setSelected(idx);
+    }, 1000);
+    return () => {
+      // 페이지 벗어날 때 시청 중인 영상 기록
+      const data = {
+        videoNo: videoId,
+        videoProgressTime: videoTime.toString(),
+      };
+      const onRecordWatching = async () => {
+        await postCurrentVideo(data);
+      };
+      onRecordWatching();
+      clearInterval(watchTime);
+    };
+  });
+  // 학습 완료
+  const onComplete = () => {
+    if (window.confirm('학습 완료 하시겠습니까?')) {
+      // 학습 왼료 정보 보내기
+      const data = {
+        videoNo: videoId,
+        videoProgressTime: videoTime.toString(),
+      };
+      const onCompleteVideo = async () => {
+        await postCompletedVideo(data);
+      };
+      onCompleteVideo();
+    }
+  };
+
   // STT
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [micStatus, setMicStatus] = useState<boolean>(false);
-  const [userTalk, setUserTalk] = useState<string>('');
-  const [answerArray, setAnswerArray] = useState([]);
-  const [speakerArray, setSpeakerArray] = useState([]);
+  const [result, setResult] = useState(2); // 기본: 2, 맞:1, 틀: 0
 
   const onStart = () => {
     SpeechRecognition.startListening({ continuous: true, language: 'en' });
@@ -363,51 +638,189 @@ const LearningPage = () => {
 
   const onStop = () => {
     SpeechRecognition.stopListening();
-    toArray();
+    onMatching();
     onReset();
     setMicStatus(false);
   };
 
   const onReset = () => {
-    setUserTalk(transcript);
     resetTranscript();
   };
 
   // 정답 매칭
 
   // 문자열 배열에 담기
-  const toArray = () => {
-    const temp1 = transcript.split(' ');
-    console.log(temp1);
-
-    // 스크립트 정규식 제거하기
+  const onMatching = () => {
+    // 스크립트 특수문자 제거하기
     // [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
-    // let regex =  [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
-    const temp2 = videoDesc?.sentenceInfoList[selected].content.split(' ');
-    console.log(temp2);
+    const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/]/gim;
+    // const str = 'AdmiN, **{}()! 1234.안녕[]<>\\/?';
+    // const temp2 = str.replace(reg, '');
+    const answer = videoDesc?.sentenceInfoList[selected].content
+      .replace(reg, '')
+      .toLowerCase()
+      .split(' ');
+
+    const speaker = transcript
+      .toLowerCase()
+      .replace(reg, '')
+      .toLowerCase()
+      .split(' ');
+
+    // 정답 매칭
+    let flag = 1;
+    let idx = 0;
+    if (answer?.length && speaker.length) {
+      while (idx < answer.length && idx < speaker.length) {
+        if (answer[idx] != speaker[idx]) {
+          flag = 0;
+          break;
+        }
+        idx++;
+      }
+    }
+
+    setResult(flag);
+  };
+
+  // 사전
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const onDicModalOpen = () => {
+    setModalOpen(!modalOpen);
   };
 
   return (
     <Wrapper>
       <TitleBox>
-        <ViedoLevelImg src={VideoLevel} />
+        <ViedoLevelImg src={VideoLevel} score={score} />
+        <ScoreChart>
+          <Chart
+            options={chartOptions}
+            series={series}
+            type="donut"
+            width="100%"
+          />
+          <div>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[0]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[1]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(87%) sepia(32%) saturate(529%) hue-rotate(20deg) brightness(110%) contrast(102%)',
+              }}
+            />
+            <span> {videoDesc?.scoreInfo.sentenceScoreInfo[2]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(91%) sepia(13%) saturate(1340%) hue-rotate(47deg) brightness(101%) contrast(101%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[3]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[4]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+              }}
+            />
+            <span> {videoDesc?.scoreInfo.sentenceScoreInfo[5]}</span>
+          </div>
+          <div>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[6]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[7]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[8]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[9]}</span>
+            <ViedoLevelImg
+              src={VideoLevel}
+              score={score}
+              style={{
+                filter:
+                  'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
+              }}
+            />
+            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[10]}</span>
+          </div>
+          <div>
+            현재 영상의 레벨은 문장들의 score를 평균내서 선정한 것입니다.
+            <br />
+            빨, 주, 노, 초, 파, 남, 보, 동, 은, 금 순으로 레벨이 높아집니다.
+            <br />그 외 unlanked 된 문장은 검정색으로 표시 됩니다
+          </div>
+        </ScoreChart>
         <p>{videoDesc?.title}</p>
       </TitleBox>
       <ContentBox>
         <ContentLeft>
           <YoutubeBox>
             <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />;
-            {/* <iframe
-              width="560"
-              height="315"
-              src={videoDesc?.videoUrl}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            ></iframe> */}
-            {!videoDesc?.bookMarked ? (
-              <BookmarkImg src={BookmarkEmpty} />
+            {!bookmark ? (
+              <BookmarkImg src={BookmarkEmpty} onClick={onBookmark} />
             ) : (
-              <BookmarkImg src={BookmarkFull} />
+              <BookmarkImg src={BookmarkFull} onClick={onBookmark} />
             )}
           </YoutubeBox>
           <SpeakBox>
@@ -416,7 +829,7 @@ const LearningPage = () => {
                 <BookmarkImg src={BookmarkEmpty} />
                 <p>{videoDesc?.sentenceInfoList[selected].content}</p>
               </SentenceBox>
-              <MicBox>
+              <MicBox result={result}>
                 {!micStatus ? (
                   <LearningMicImg src={LearningMic} onClick={onStart} />
                 ) : (
@@ -450,10 +863,12 @@ const LearningPage = () => {
             })}
           </ContentRightMiddle>
           <ContentRightFooter>
-            <CompleteBtn>Complete</CompleteBtn>
+            <CompleteBtn onClick={onComplete}>Complete</CompleteBtn>
           </ContentRightFooter>
         </ContentRight>
       </ContentBox>
+      {modalOpen && <DictionaryModal setOpenModal={setModalOpen} />}
+      <DictionaryImg src={Dictionary} onClick={onDicModalOpen} />
     </Wrapper>
   );
 };

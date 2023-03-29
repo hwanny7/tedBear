@@ -187,7 +187,7 @@ const NavBar2 = (props: Props) => {
               <StyledGame />
             </IconDiv>
             <IconName open={props.open}>
-              <span>PUZZLE GAME</span>
+              <span>PUZZLE</span>
             </IconName>
           </ListBox>
         </Link>
@@ -197,7 +197,7 @@ const NavBar2 = (props: Props) => {
               <StyledCrossIcon />
             </IconDiv>
             <IconName open={props.open}>
-              <span>CROSSWORD GAME</span>
+              <span>CROSSWORD</span>
             </IconName>
           </ListBox>
         </Link>
