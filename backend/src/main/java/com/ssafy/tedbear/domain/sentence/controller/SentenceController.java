@@ -25,7 +25,6 @@ import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
 import com.ssafy.tedbear.domain.sentence.service.SentenceBookmarkService;
 import com.ssafy.tedbear.domain.sentence.service.SentenceService;
-import com.ssafy.tedbear.domain.video.controller.VideoController;
 import com.ssafy.tedbear.global.common.SearchDto;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
@@ -80,8 +79,10 @@ public class SentenceController {
 
 	//==북마크==//
 	@GetMapping("/bookmark/list")
-	public ResponseEntity<?> getBookmarkedSentenceList() {
-		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(memberId);
+	public ResponseEntity<?> getBookmarkedSentenceList(Pageable pageable) {
+		log.debug(String.valueOf(pageable.getSort()));
+		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(memberId,
+			pageable);
 		return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
 

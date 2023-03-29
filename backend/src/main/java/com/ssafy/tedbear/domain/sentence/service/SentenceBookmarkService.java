@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
@@ -43,8 +44,9 @@ public class SentenceBookmarkService {
 		return new SentenceBookmarkStatusDto(isBookmarked);
 	}
 
-	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(Long memberId) {
-		List<SentenceBookmarkDetailDto> bookmarkedList = sentenceBookmarkRepository.findSentenceByMember(memberId);
+	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(Long memberId, Pageable pageable) {
+		List<SentenceBookmarkDetailDto> bookmarkedList = sentenceBookmarkRepository.findSentenceByMember(memberId,
+			pageable).getContent();
 		return new SentenceBookmarkDetailDto.ListResponse(bookmarkedList);
 	}
 
