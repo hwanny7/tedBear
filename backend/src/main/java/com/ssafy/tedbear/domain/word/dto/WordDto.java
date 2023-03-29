@@ -19,6 +19,7 @@ public class WordDto {
 	public static class SearchWord {
 		Long wordNo;
 		boolean bookMarked;
+		String content;
 		String mean;
 	}
 

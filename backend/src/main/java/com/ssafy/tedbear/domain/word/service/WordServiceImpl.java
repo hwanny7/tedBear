@@ -46,10 +46,10 @@ public class WordServiceImpl {
 	}
 
 	/***
-	 * 단어검색 - 북마크, 의미
-	 * @param member
+	 * 단어 검색 - 단어 가져오기
+	 * @param memberUid
 	 * @param word
-	 * @return 북마크 여부, 단어 의미
+	 * @return 보낼 단어 detail
 	 */
 	public WordDto.SearchWord searchWordDetail(String memberUid, String word) {
 		Member member = findMemberService.findMember(memberUid);
@@ -65,6 +65,7 @@ public class WordServiceImpl {
 
 		return WordDto.SearchWord.builder()
 			.bookMarked(bookMarked)
+			.content(wordDetail.getContent())
 			.mean(wordDetail.getMean())
 			.wordNo(wordDetail.getNo())
 			.build();
