@@ -42,14 +42,14 @@ public class JwtProvider {
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 
-		String email = oAuth2User.getEmail();
+		String uid = oAuth2User.getUid();
 		String role = authentication.getAuthorities().stream()
 			.map(GrantedAuthority::getAuthority)
 			.collect(Collectors.joining(","));
 
 		return Jwts.builder()
 			.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-			.setSubject(email)
+			.setSubject(uid)
 			.claim(AUTHORITIES_KEY, role)
 			.setIssuer("issuer")
 			.setIssuedAt(now)
@@ -71,8 +71,6 @@ public class JwtProvider {
 
 	public Authentication getAuthentication(String accessToken) {
 		Claims claims = parseClaims(accessToken);
-
-		log.info("권한정보 : " + claims.get(AUTHORITIES_KEY));
 
 		Collection<? extends GrantedAuthority> authorities =
 			Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))

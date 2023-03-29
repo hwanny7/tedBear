@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
-import com.ssafy.tedbear.global.common.oauth2.service.AuthService;
-import com.ssafy.tedbear.global.common.oauth2.service.CustomOAuth2UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -30,8 +27,8 @@ public class CustomOAuth2User implements OAuth2User {
 		this.uid = uid;
 	}
 
-	public CustomOAuth2User(String email) {
-		this.email = email;
+	public CustomOAuth2User(String uid) {
+		this.uid = uid;
 	}
 
 	public String getEmail() {
@@ -62,7 +59,7 @@ public class CustomOAuth2User implements OAuth2User {
 	}
 
 	public Member toEntity(String nickname, MemberLevel memberLevel, MemberScore memberScore, String refreshToken) {
-		Member member =  Member.builder()
+		Member member = Member.builder()
 			.uid(uid)
 			.nickname(nickname)
 			.snsType(SnsType.KAKAO)
