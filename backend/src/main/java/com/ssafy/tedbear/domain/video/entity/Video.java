@@ -69,6 +69,9 @@ public class Video {
 	@Transient
 	private boolean isBookmarked;
 
+	@Transient
+	private int lastWatchingTime;
+
 	public void setScore(int score) {
 		this.score = score;
 	}
@@ -80,5 +83,9 @@ public class Video {
 	public Video updateBookmarked(boolean isBookmarked) {
 		this.isBookmarked = isBookmarked;
 		return this;
+	}
+
+	public void setLastWatchingTime(int lastWatchingTime) {
+		this.lastWatchingTime = lastWatchingTime;
 	}
 }

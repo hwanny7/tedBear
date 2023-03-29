@@ -8,6 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class VideoInfoDto {
+	long no;
 	String thumbnailUrl;
 	String title;
 	String watchId;
@@ -15,6 +16,7 @@ public class VideoInfoDto {
 	boolean isBookMarked;
 
 	public VideoInfoDto(Video video) {
+		this.no = video.getNo();
 		this.thumbnailUrl = video.getThumbnailUrl();
 		this.title = HtmlUtils.htmlUnescape(video.getTitle());
 		this.watchId = video.getWatchId();

@@ -77,6 +77,9 @@ public class VideoServiceImpl implements VideoService {
 		Member member = memberService.getMember(memberNo);
 		Video video = videoRepository.findByWatchId(watchId);
 		video.setBookmarked(videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video).isPresent());
+		watchingVideoRepository.findByMemberAndVideo(member, video)
+			.ifPresentOrElse(x -> video.setLastWatchingTime(x.getVideoProgressTime()),
+				() -> video.setLastWatchingTime(0));
 		return new VideoDetailDto(video);
 	}
 

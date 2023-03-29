@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
+import com.ssafy.tedbear.domain.video.dto.VideoBookmarkDto;
 import com.ssafy.tedbear.domain.video.dto.VideoDetailDto;
 import com.ssafy.tedbear.domain.video.dto.VideoInfoDto;
 import com.ssafy.tedbear.domain.video.dto.VideoInfoListDto;
@@ -79,16 +80,16 @@ public class VideoController {
 		return ResponseEntity.ok(videoService.getVideoBookmarkList(1L));
 	}
 
-	@PostMapping("/bookmark/{videoNo}")
-	public ResponseEntity<VideoInfoListDto> saveVideoBookmark(@PathVariable long videoNo) {
-		videoService.saveVideoBookmark(1L, videoNo);
+	@PostMapping("/bookmark")
+	public ResponseEntity<?> saveVideoBookmark(@RequestBody VideoBookmarkDto videoBookmarkDto) {
+		videoService.saveVideoBookmark(1L, videoBookmarkDto.getVideoNo());
 		return new ResponseEntity(HttpStatus.CREATED);
 
 	}
 
-	@DeleteMapping("/bookmark/{videoNo}")
-	public ResponseEntity<VideoInfoListDto> deleteVideoBookmark(@PathVariable long videoNo) {
-		videoService.deleteVideoBookmark(1L, videoNo);
+	@DeleteMapping("/bookmark")
+	public ResponseEntity<?> deleteVideoBookmark(@RequestBody VideoBookmarkDto videoBookmarkDto) {
+		videoService.deleteVideoBookmark(1L, videoBookmarkDto.getVideoNo());
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
