@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.word.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.word.entity.Word;
@@ -19,5 +20,14 @@ public class WordBookmarkDto {
 
 	public Word word() {
 		return Word.builder().no(this.wordNo).build();
+	}
+
+	@Getter
+	public static class WordBookmarkList {
+		List<WordDto.WordSearchResponse> wordBookmarkList;
+
+		public WordBookmarkList() {
+
+		}
 	}
 }

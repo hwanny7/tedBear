@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.word.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -50,7 +51,9 @@ public class WordServiceImpl {
 	 * @param word
 	 * @return 북마크 여부, 단어 의미
 	 */
-	public WordDto.SearchWord searchWordDetail(Member member, String word) {
+	public WordDto.SearchWord searchWordDetail(String memberUid, String word) {
+		Member member = findMemberService.findMember(memberUid);
+
 		Word wordDetail = wordRepository.findByContent(word)
 			.orElseThrow(() -> new IllegalArgumentException("해당 단어가 DB에 없습니다."));
 		WordBookmark wordBookmark = wordSentenceRepository.findByMemberAndWord(member, wordDetail).orElse(null);
@@ -84,6 +87,15 @@ public class WordServiceImpl {
 			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 북마크입니다."));
 
 		wordBookmarkRepository.delete(bookmark);
+	}
+
+	public List<WordBookmark> findWordBookmark(String memberUid, Pageable pageable) {
+		Member member = findMemberService.findMember(memberUid);
+		List<WordBookmark> bmk = wordBookmarkRepository.findByMember(member).stream().collect(Collectors.toList());
+		for (int i = 0; i < bmk.size(); i++) {
+			System.out.println(bmk.get(i).getWord());
+		}
+		return bmk;
 	}
 
 }

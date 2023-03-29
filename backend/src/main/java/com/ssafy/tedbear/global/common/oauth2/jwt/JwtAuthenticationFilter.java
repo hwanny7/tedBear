@@ -40,8 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				Authentication authentication = jwtProvider.getAuthentication(token);
 				SecurityContextHolder.getContext().setAuthentication(authentication); // 인증정보를 authentication에 넣는다.
 				log.info("{}의 인증정보 저장", authentication.getName());
-			} else if(StringUtils.hasText(token)){
-				// 토큰이 있긴 하다면 유효한지 확인한다.
+			} else if (StringUtils.hasText(token)) {
 				try {
 					// refreshToken 가져온다.
 					String refreshToken = CookieUtils.getCookie(request, "refresh")
@@ -53,10 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					String newAccessToken = authService.reissueAccessToken(token, refreshToken);
 					// 새 access token을 헤더에 추가한다.
 					response.addHeader("Authorization", "Bearer " + newAccessToken);
-				} catch (Exception e){
+				} catch (Exception e) {
 					log.info("refresh token이 유효하지 않습니다.");
-					// 랜딩 페이지로 이동시킨다.
-					response.sendRedirect("http://naver.com");
 				}
 			} else {
 				log.info("유효한 JWT 토큰이 없습니다.");

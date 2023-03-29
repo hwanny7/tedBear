@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.word.dto.WordBookmarkDto;
 import com.ssafy.tedbear.domain.word.dto.WordDto;
+import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import com.ssafy.tedbear.domain.word.service.WordServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -34,20 +34,18 @@ public class WordController {
 	public ResponseEntity<WordDto.WordSearchResponse> searchWord(WordDto.Request query, Pageable pageable) {
 		String word = query.getQuery();
 		List<String> list = wordService.searchWordRelatedSentence(word, pageable);
-		WordDto.SearchWord wordInfo = wordService.searchWordDetail(Member.builder().no((long)1).build(), word);
+		WordDto.SearchWord wordInfo = wordService.searchWordDetail("271521", word);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(WordDto.WordSearchResponse.builder().wordInfo(wordInfo).sentenceContentList(list).build());
 	}
 
-	// @GetMapping("/list")
-	// public ResponseEntity<?> getWordBookMarkList(Authe
-	// ntication authentication, Pageable pageable) {
-	// 	// 멤버 uid로 Member객체 가져오기
-	// 	Member tempMember = Member.builder().no((long)1).build();
-	//
-	// }
+	@GetMapping("/list")
+	public ResponseEntity<?> getWordBookMarkList(Pageable pageable) {
+		List<WordBookmark> m = wordService.findWordBookmark("271521", pageable);
+		return ResponseEntity.status(HttpStatus.OK).body(m);
+	}
 
 	@PostMapping("/bookmark")
 	public ResponseEntity<?> saveWordBookmark(@RequestBody WordBookmarkDto wordBookmarkDto) {
