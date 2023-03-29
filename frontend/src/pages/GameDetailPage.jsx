@@ -18,11 +18,18 @@ const StyledLevel = styled.div`
       color: white;
     }
   }
+  .check-button {
+    background-color: #6255a4;
+    border-radius: 15px;
+    .check-button-text {
+      color: white;
+    }
+  }
   .next-button {
     background-color: #6255a4;
     border-radius: 15px;
     .next-button-inside {
-      color: ${props => (props.change ? '#8f84ce' : '#8f84ce')};
+      color: ${props => (props.change ? '#ff8d5b' : '#ff8d5b')};
     }
   }
   .input {
@@ -74,17 +81,26 @@ const StyledLevel = styled.div`
 const GameDetailPage = () => {
   const navigate = useNavigate();
   const [showSwitch, setShowSwitch] = useState(true);
-  const [Problem, setProblem] = useState([]);
+  const [sentence, setSentence] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [wordNumber, setWordNumber] = useState('');
+  const [tryCount, setTryCount] = useState(1); // 애초에 1로 ( 바로 맞추면 1로 들어가고 틀리면 +1 씩 틀린 횟수 늘어남 대신에 새 문제면 1로 초기화)
+  const [problemNumber, setProblemNumber] = useState(1);
+  const [correctAnswerCount, setCorrectAnswerCount] = useState(0); // 퍼즐 조각 각각 누적 띄우기 위함
+  const [hintList, setHintList] = useState([]); // 쇼츠 모달 보여주기 위함 (watchId 들어옴)
+  const [input, setInput] = useState('');
 
+  // 첫 문제
   useEffect(() => {
     async function fetchData() {
       await authApi
-        .get(`member/test/problem`)
+        .get(`game/word`)
         .then(response => {
-          const Data = response.data.map((item, index) => {
-            return { ...item, id: index };
-          });
-          setProblem(Data);
+          console.log(response.data);
+          const { sentence, answer, wordNo } = response.data;
+          setSentence(sentence);
+          setAnswer(answer);
+          setWordNumber(wordNo);
         })
         .catch(error => {
           console.log(error.data);
@@ -93,13 +109,88 @@ const GameDetailPage = () => {
     fetchData();
   }, []);
 
+  // 다음 문제
   const handleNext = () => {
-    console.log('다음 문제로');
-    navigate('/game/complete');
+    console.log('to the next problem');
+    async function fetchData() {
+      await authApi
+        .get(`game/word`)
+        .then(response => {
+          console.log(response.data);
+          const { sentence, answer, wordNo } = response.data;
+          setSentence(sentence);
+          setAnswer(answer);
+          setWordNumber(wordNo);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
+    fetchData();
+    setProblemNumber(problemNumber + 1); // 1부터 시작해서 네문제
+    // 4번째 문제에서 한번 더 누르면 -> Mission Complete
+    if (problemNumber === 4) {
+      navigate('/game/complete');
+    }
+  };
+
+  // Post 보내기!
+  async function fetchPost() {
+    await authApi({
+      method: 'POST',
+      url: 'game/word',
+      data: {
+        wordNo: wordNumber,
+        tryCnt: tryCount,
+      },
+    })
+      .then(response => {
+        console.log('Posted!');
+      })
+      .catch(error => {
+        console.log(error.data);
+      });
+  }
+
+  const handleInput = event => {
+    const inputValue = event.target.value;
+    setInput(inputValue);
+  };
+
+  const handleCheck = () => {
+    const userAnswer = input.toLowerCase();
+    if (userAnswer === answer) {
+      alert('Correct');
+      console.log('Correct');
+      fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
+      setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
+      setCorrectAnswerCount(correctAnswerCount + 1);
+      setInput(''); // Clear the input box
+      if (correctAnswerCount === 0) {
+        console.log('한개맞힘');
+        handleNext();
+        // 첫번째 조각 띄우기
+      } else if (correctAnswerCount === 1) {
+        console.log('두개맞힘');
+        handleNext();
+        // 두번째 조각도 띄우기
+      } else if (correctAnswerCount === 2) {
+        console.log('세개맞힘');
+        handleNext();
+      } else if (correctAnswerCount === 3) {
+        console.log('네개맞힘');
+        navigate('/game/complete');
+      }
+    } else {
+      alert('Incorrect');
+      console.log('Incorrect');
+      setTryCount(prevCount => prevCount + 1); // 시행착오 횟수 올리기
+      setInput(''); // Clear the input box
+    }
   };
 
   const handleHint = () => {
-    console.log('힌트 모달 띄우기');
+    console.log('showHintModal');
   };
 
   return (
@@ -158,17 +249,7 @@ const GameDetailPage = () => {
             }}
           >
             <Typography className="problem-text">
-              The First: Need to show the problems using map function and axios
-              get method! There will be a blank in a sentencce. ex. _____ like
-              you! Need to show the problems using map function and axios get
-              method! There will be a blank in a sentencce. Need to show the
-              problems using map function and axios get method! There will be a
-              blank in a sentencce. ex. _____ like you! Need to show the
-              problems using map function and axios get method! There will be a
-              blank in a sentencce.Need to show the problems using map function
-              and axios get method! There will be a blank in a sentencce. ex.
-              _____ like you! Need to show the problems using map function and
-              axios get method! There will be a blank in a sentencce.
+              {sentence.replace('tedbear', '_______')}
             </Typography>
           </Paper>
           <Paper
@@ -189,7 +270,28 @@ const GameDetailPage = () => {
                 'translateY(-50%)' /* adjust vertical position after centering */,
             }}
           >
-            <input className="input" placeholder="Enter your Answer"></input>
+            <div>
+              <input
+                className="input"
+                type="text"
+                placeholder="Enter your Answer"
+                onChange={handleInput}
+              ></input>
+              <Button
+                className="check-button"
+                onClick={handleCheck}
+                style={{
+                  position: 'absolute',
+                  top: '25%' /* vertically center the button */,
+                  right: '-20%' /* position the button to the right */,
+                  transform:
+                    'translateY(-50%)' /* adjust vertical position after centering */,
+                }}
+                sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
+              >
+                <p className="check-button-text">제출</p>
+              </Button>
+            </div>
           </Paper>
           <Button
             className="hint-button"
@@ -203,7 +305,7 @@ const GameDetailPage = () => {
             }}
             sx={{ width: '6vw', height: '6vh', padding: 1, margin: 2 }}
           >
-            <p className="hint-button-text">Hint!</p>
+            <p className="hint-button-text">힌트</p>
           </Button>
           <IconButton
             className="next-button"
@@ -220,8 +322,8 @@ const GameDetailPage = () => {
             style={{
               position: 'absolute',
               margin: '20px 0px 0px 20px',
-              top: '81.8%' /* vertically center the button */,
-              right: '-3%' /* position the button to the right */,
+              top: '40%' /* vertically center the button */,
+              right: '-5%' /* position the button to the right */,
               transform:
                 'translateY(-50%)' /* adjust vertical position after centering */,
               border: '1px solid #FFFFFF',

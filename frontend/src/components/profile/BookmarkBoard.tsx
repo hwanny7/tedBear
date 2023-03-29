@@ -66,10 +66,6 @@ const BookmarkBoard = () => {
 
   return (
     <Bookmark>
-      {/* <div className="stric-wrapper">
-        <div className="statistics">통계</div>
-        <div className="stric">스트릭</div>
-      </div> */}
       <div className="button-paper-wrapper ">
         <div className="button-wrapper">
           <button
