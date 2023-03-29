@@ -29,7 +29,9 @@ export interface SearchedWord {
   wordInfo: {
     wordNo: number;
     bookMarked: boolean;
+    content: string;
     mean: string;
+    sentenceCount: number;
   };
   sentenceContentList: string[];
 }
@@ -100,7 +102,6 @@ export const postCurrentVideo = async (data: object) => {
 
 // 학습 완료
 export const postCompletedVideo = async (data: object) => {
-  console.log(data);
   await authApi({
     method: 'post',
     url: `/video/complete`,
@@ -111,12 +112,31 @@ export const postCompletedVideo = async (data: object) => {
 // 단어 검색 API
 export const getSearchWord = async (
   word: string,
-  size: number,
   page: number,
+  size: number,
 ) => {
   const { data } = await authApi<SearchedWord>({
     method: 'get',
     url: `/word/search?query=${word}&size=${size}&page=${page}`,
   });
+
   return data;
+};
+
+// 단어 북마크 등록
+export const postWordBookmark = async (data: object) => {
+  await authApi({
+    method: 'post',
+    url: `/word/bookmark`,
+    data: data,
+  });
+};
+
+// 단어 북마크 해제
+export const deleteWordBookmark = async (data: object) => {
+  await authApi({
+    method: 'delete',
+    url: `/word/bookmark`,
+    data: data,
+  });
 };

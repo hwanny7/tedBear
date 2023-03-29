@@ -250,10 +250,11 @@ const SentenceBox = styled.div`
   /* overflow: scroll; */
 
   p {
-    /* border: 1px solid blue; */
     font-weight: bold;
     font-size: 14px;
     width: 90%;
+
+    overflow-y: scroll;
   }
 `;
 
@@ -512,7 +513,7 @@ const LearningPage = () => {
       setSeries(videoDesc?.scoreInfo.sentenceScoreInfo);
     }
 
-    // video number
+    // video number 설정
     if (videoDesc?.no !== undefined) {
       setVideoNumber(videoDesc?.no);
     }
@@ -520,17 +521,17 @@ const LearningPage = () => {
 
   // 북마크  ===================================================
   // 영상
-  const [bookmark, setBookmark] = useState<boolean | undefined>(
-    videoDesc?.bookMarked,
+  const [videoBookmark, setVideoBookmark] = useState<boolean | undefined>(
+    false,
   );
   // 북마크 클릭시 (등록 및 해제)
   const onBookmark = () => {
-    setBookmark(!bookmark);
+    setVideoBookmark(!videoBookmark);
 
     const data = {
       videoNo: videoNumber,
     };
-    if (bookmark) {
+    if (videoBookmark) {
       // bookmark 해제 (true -> false)
       const delVideoBookmark = async () => {
         await deleteVideoBookmark(data);
@@ -544,6 +545,11 @@ const LearningPage = () => {
       insertVideoBookmark();
     }
   };
+  // 영상 북마크 갱신
+  useEffect(() => {
+    setVideoBookmark(videoDesc?.bookMarked);
+  }, [videoDesc]);
+
   // 문장
   const [sentenceBookmark, setSentenceBookmark] = useState<boolean | undefined>(
     false,
@@ -641,7 +647,7 @@ const LearningPage = () => {
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
       const data = {
-        videoNo: videoId,
+        videoNo: videoNumber,
         videoProgressTime: videoTime.toString(),
       };
       const onRecordWatching = async () => {
@@ -656,7 +662,7 @@ const LearningPage = () => {
     if (window.confirm('학습 완료 하시겠습니까?')) {
       // 학습 왼료 정보 보내기
       const data = {
-        videoNo: videoId,
+        videoNo: videoNumber,
         videoProgressTime: videoTime.toString(),
       };
       const onCompleteVideo = async () => {
@@ -857,7 +863,7 @@ const LearningPage = () => {
         <ContentLeft>
           <YoutubeBox>
             <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />;
-            {!bookmark ? (
+            {!videoBookmark ? (
               <BookmarkImg src={BookmarkEmpty} onClick={onBookmark} />
             ) : (
               <BookmarkImg src={BookmarkFull} onClick={onBookmark} />
