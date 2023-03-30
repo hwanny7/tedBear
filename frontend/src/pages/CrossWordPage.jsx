@@ -5,6 +5,9 @@ import { getCrossWord } from 'utils/api/gameApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
+import { device } from './../utils/mediaQuery';
+import CrossWordAnswerPage from './CrossWordAnswerPage';
+import Swal from 'sweetalert2';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -100,7 +103,28 @@ const Wrapper = styled.div`
   }
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  /* align-content: center; */
+  button {
+    width: 40%;
+    height: 5%;
+    margin-top: 3%;
+    padding: 3%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    cursor: pointer;
+    border: 1px solid black;
+    &:hover {
+      scale: 1.08;
+      transition: 0.4s;
+      background-color: #857bb8;
+    }
+  }
+`;
 
 const ClueBox = styled.div`
   height: 5%;
@@ -108,10 +132,27 @@ const ClueBox = styled.div`
   margin-top: 2%;
   padding: 3%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  height: 80%;
   cursor: pointer;
   border-radius: 16px;
   background-color: ${props => (props.backgroundColor ? '#b4adde' : 'white')};
   position: relative;
+
+  @media ${device.mobile} {
+    font-size: 7px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 10px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 15px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 20px;
+  }
   &:hover {
     scale: 1.08;
     transition: 0.4s;
@@ -120,12 +161,12 @@ const ClueBox = styled.div`
   }
   .shorts-button {
     position: absolute;
+    width: 5%;
     right: 2%;
     bottom: 5%;
     &:hover {
       scale: 1.1;
       transition: 0.4s;
-      /* background-color:  */
     }
   }
 `;
@@ -144,6 +185,7 @@ const CrossWordPage = () => {
     answers: [...Array(size)].map(() => Array(size).fill('')),
     dir: null,
   });
+  const [finish, setFinish] = useState(false);
 
   const findClue = useCallback(
     (clueNum, tab) => {
@@ -508,6 +550,21 @@ const CrossWordPage = () => {
     setModalOpen(true);
   };
 
+  const handleAnswer = () => {
+    // console.log(state.current);
+    // const answer = 0
+    // clueList.forEach(item => {
+    //   for (let i = 0; i < item.length; i++)
+    // })
+
+    Swal.fire({
+      title: '개발 중입니다.',
+      text: '빠른 시일 내에 정답을 보여 드리겠습니당..ㅜ',
+      imageWidth: 400,
+      imageHeight: 200,
+    });
+  };
+
   return (
     <Wrapper>
       <div className="main">
@@ -568,9 +625,10 @@ const CrossWordPage = () => {
             </ClueBox>
           );
         })}
-        {/* <button>제출하기</button> */}
+        <button onClick={() => handleAnswer()}>제출하기</button>
       </Content>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
+      {/* {finish && <CrossWordAnswerPage state={state}></CrossWordAnswerPage>} */}
     </Wrapper>
   );
 };
