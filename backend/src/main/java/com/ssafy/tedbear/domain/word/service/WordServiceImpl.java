@@ -1,7 +1,7 @@
 package com.ssafy.tedbear.domain.word.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -31,13 +31,14 @@ public class WordServiceImpl {
 	private final WordRepository wordRepository;
 	private final WordSentenceRepository wordSentenceRepository;
 	private final WordBookmarkRepository wordBookmarkRepository;
+
 	private final FindMemberService findMemberService;
 
 	/***
-	 * 단어 검색 - 단어와 연관된 문장 가져오기
+	 * 단어검색 - 연관 문장 가져오기
 	 * @param word
 	 * @param pageable
-	 * @return 단어와 연관된 문장들
+	 * @return 문장 리스트
 	 */
 	public List<String> searchWordRelatedSentence(String word, Pageable pageable) {
 		List<Sentence> searchList = wordRepository.findByWord(word, pageable).getContent();
@@ -92,13 +93,40 @@ public class WordServiceImpl {
 		wordBookmarkRepository.delete(bookmark);
 	}
 
-	public List<WordBookmark> findWordBookmark(String memberUid, Pageable pageable) {
+	public WordBookmarkDto.WordBookmarkListResponse findWordBookmark(String memberUid, Pageable pageable) {
 		Member member = findMemberService.findMember(memberUid);
-		List<WordBookmark> bmk = wordBookmarkRepository.findByMember(member).stream().collect(Collectors.toList());
-		for (int i = 0; i < bmk.size(); i++) {
-			System.out.println(bmk.get(i).getWord());
+
+		List<String> sentenceContentList;
+		List<WordBookmarkDto.WordList> wordBookmarkLists = new ArrayList<>();
+		List<WordBookmark> wordBookmarks = wordBookmarkRepository.findByMember(member, pageable).getContent();
+
+		for (WordBookmark wb : wordBookmarks) {
+			sentenceContentList = new ArrayList<>();
+
+			Word word = wb.getWord();
+			WordBookmarkDto.WordDetail wordDetail = WordBookmarkDto.WordDetail.builder()
+				.wordNo(word.getNo())
+				.content(word.getContent())
+				.mean(word.getContent())
+				.build();
+
+			int size = wb.getWord().getWordSentenceList().size();
+			if (size < 3) {
+				for (int i = 0; i < size; i++) {
+					sentenceContentList.add(wb.getWord().getWordSentenceList().get(i).getSentence().getContent());
+				}
+			} else {
+				for (int i = 0; i < 3; i++) {
+					sentenceContentList.add(wb.getWord().getWordSentenceList().get(i).getSentence().getContent());
+				}
+			}
+			wordBookmarkLists.add(
+				WordBookmarkDto.WordList.builder()
+					.wordInfo(wordDetail)
+					.sentenceContentList(sentenceContentList)
+					.build());
 		}
-		return bmk;
+		return new WordBookmarkDto.WordBookmarkListResponse(wordBookmarkLists);
 	}
 
 }

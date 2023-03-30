@@ -16,6 +16,7 @@ public interface WordSentenceRepository extends JpaRepository<WordSentence, Long
     @Query("select wb from WordBookmark wb where wb.member = :member and wb.word = :word")
     Optional<WordBookmark> findByMemberAndWord(Member member, Word word);
 
-//    Optional<WordBookmark> findByMemberAndWord(Member member, Word word);
+    Optional<WordSentence> findByWord(Word word);
+
     Optional<WordSentence> findTop1ByWord(Word word);
 }
