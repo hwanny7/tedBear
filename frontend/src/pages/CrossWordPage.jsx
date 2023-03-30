@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import './CrossWord.css';
 import cx from 'classnames';
 import styled from 'styled-components';
 import { getCrossWord } from 'utils/api/gameApi';
@@ -28,30 +27,93 @@ const Wrapper = styled.div`
       grid-gap: 2px;
     }
   }
-`;
+  ins,
+  del {
+    border-radius: 2px;
+  }
 
-const Content = styled.div`
-  .dic-box {
-    height: 5%;
-    width: 80%;
-    margin-top: 2%;
-    padding: 2%;
+  del {
+    background-color: #ffdbb3;
+  }
+
+  ins {
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-items: center;
     background-color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #444;
+    text-decoration: none;
+    font-size: calc(24px + 0.5vmin);
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  ins[data-clue] {
     cursor: pointer;
-    border-radius: 16px;
     &:hover {
-      scale: 1.08;
+      scale: 1.05;
       transition: 0.4s;
-      background-color: #e6e4f4;
+      z-index: 10;
+      /* background-color: ${props =>
+        props.backgroundColor ? '#b4adde' : '#e6e4f4'}; */
     }
   }
-  .current {
+
+  ins[data-clue]:before {
+    font-family: 'Libre Baskerville';
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    font-size: 15px;
+    content: attr(data-clue);
+  }
+
+  ins.highlight {
+    background-color: #e6e4f4;
+  }
+
+  ins.editting {
     background-color: #b4adde;
   }
-  /* .editting {
-    background-color: #e6e4f4;
-  } */
+
+  ins.cursor {
+    box-shadow: inset 0 0 0 4px #717171;
+    animation-name: pulse;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+  }
+
+  @keyframes pulse {
+    from {
+      box-shadow: inset 0 0 0 4px #717171;
+    }
+    to {
+      box-shadow: inset 0 0 0 6px #717171;
+    }
+  }
+`;
+
+const Content = styled.div``;
+
+const ClueBox = styled.div`
+  height: 5%;
+  width: 80%;
+  margin-top: 2%;
+  padding: 2%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border-radius: 16px;
+  background-color: ${props => (props.backgroundColor ? '#b4adde' : 'white')};
+  &:hover {
+    scale: 1.08;
+    transition: 0.4s;
+    background-color: ${props =>
+      props.backgroundColor ? '#b4adde' : '#e6e4f4'};
+  }
 `;
 
 const CrossWordPage = () => {
@@ -63,7 +125,7 @@ const CrossWordPage = () => {
     clue: null,
     cursor: 0,
     length: null,
-    answers: [...Array(size)].map(e => Array(size).fill('')),
+    answers: [...Array(size)].map(() => Array(size).fill('')),
     dir: null,
   });
 
@@ -406,14 +468,6 @@ const CrossWordPage = () => {
       }
     }
 
-    // let clueCopy = [...clueList];
-    // for (let i = 0; i < clueCopy.length; i++) {
-    //   if (clueCopy[i] === clue) {
-    //     clueCopy[i].highlight = !clueCopy[i].highlight;
-    //   }
-    // }
-    // console.log(clueCopy);
-    // setClueList(clueCopy);
     setWordList(copy);
   };
 
@@ -463,19 +517,18 @@ const CrossWordPage = () => {
         <p>Tab / Tab + Shift / 방향키 조작 / 힌트 클릭 가능합니다!</p>
         {clueList.map((clue, idx) => {
           return (
-            <div
-              className={`dic-box ${clue.editting && 'current'} ${
-                clue.highlight && 'editting'
-              }`}
+            <ClueBox
+              backgroundColor={clue.editting}
               key={idx}
               onClick={() => clickClue(clue)}
               onMouseOver={() => toggleClue(clue)}
               onMouseOut={() => toggleClue(clue)}
             >
               {clue.dic}
-            </div>
+            </ClueBox>
           );
         })}
+        {/* <button>제출하기</button> */}
       </Content>
     </Wrapper>
   );
