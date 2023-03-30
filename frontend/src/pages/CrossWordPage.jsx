@@ -11,6 +11,8 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   align-items: center;
   .main {
+    margin-left: 6%;
+    margin-right: 6%;
     grid-row: 2;
     grid-column: 1/3;
     display: grid;
@@ -29,14 +31,20 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
+  /* margin-left: 10%; */
   .dic-box {
     height: 5%;
+    width: 80%;
     margin-top: 2%;
     padding: 2%;
-    backgroud: yellow;
-    border: 1px solid black;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     border-radius: 16px;
+    &:hover {
+      scale: 1.08;
+      transition: 0.4s;
+    }
   }
 `;
 
@@ -96,7 +104,6 @@ const CrossWordPage = () => {
 
       const { clue } = item;
       const { length, dir } = findClue(clue, tab);
-      console.log('clue', clue, 'length', length, 'dir', dir, 'item', item);
 
       // 수직으로 갈지 수평으로 갈지 불러오기
 
@@ -126,6 +133,20 @@ const CrossWordPage = () => {
       // across [math(index / size)][cursor]
       // down [math(index / size) + cursor][index % size]
       // 해당 축에 edit style 입히고, 만약 입력된 값이 있다면 cursor 위치 변경하기
+
+      const nextClueList = clueList.map(item => {
+        if (item.clue === clue) {
+          item.hightlight = true;
+        }
+
+        if (item.clue === state.current.clue) {
+          item.hightlight = false;
+        }
+        return item;
+      });
+      setClueList(nextClueList);
+
+      // 단어 박스 하이라이팅, 그 전에 있던 하이라이팅이 있다면 지우기
 
       state.current = {
         ...state.current,
@@ -163,7 +184,15 @@ const CrossWordPage = () => {
         };
       }),
     );
-    setClueList(data.clueList);
+    setClueList(
+      data.clueList.map(item => {
+        return {
+          ...item,
+          hightlight: false,
+        };
+      }),
+    );
+    state.current = { ...state.current, realAnswer: data.answerBoard };
   };
 
   useEffect(() => {
@@ -380,7 +409,7 @@ const CrossWordPage = () => {
 
   return (
     <Wrapper>
-      <div className="main" style={{ marginLeft: '5%' }}>
+      <div className="main">
         {wordList.map((word, idx) => {
           if (word.clue) {
             return (
@@ -416,12 +445,13 @@ const CrossWordPage = () => {
         })}
       </div>
       <Content>
-        <h3>Tab / Tab + Shift / 방향키 조작 / 힌트 클릭 가능합니다!</h3>
+        <p>Tab / Tab + Shift / 방향키 조작 / 힌트 클릭 가능합니다!</p>
         {clueList.map((clue, idx) => {
           return (
             <div
               className="dic-box"
               key={idx}
+              style={{ backgroundColor: clue.hightlight ? '#b4adde' : '' }}
               onClick={() => clickClue(clue)}
               onMouseOver={() => toggleClue(clue)}
               onMouseOut={() => toggleClue(clue)}
@@ -431,16 +461,6 @@ const CrossWordPage = () => {
           );
         })}
       </Content>
-      {/* <h1>Tab / Tab + Shift / 방향키 조작 가능</h1> */}
-      {/* <ul className="list">
-        <li className="heading">Across</li>
-        <li data-clue="1" data-dir="across" data-length="2">
-          1. Horizontal viewport unit (2)
-        </li>
-        <li data-clue="4" data-dir="across" data-length="3">
-          4. A line in the grid (3)
-        </li>
-      </ul> */}
     </Wrapper>
   );
 };
