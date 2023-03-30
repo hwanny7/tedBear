@@ -1,6 +1,6 @@
-import CircularStreak from 'components/profile/CircularStreak';
-import SemiExp from 'components/profile/SemiExp';
-import PieChart from 'components/profile/PieChart';
+import CircularStreak from 'components/profile/CircularStreak'; // 스트릭
+import SemiExp from 'components/profile/SemiExp'; // 경험치 & 레벨
+import PieChart from 'components/profile/PieChart'; // 학습 통계 (난이도별)
 import styled from 'styled-components';
 
 const Profile = styled.div`
