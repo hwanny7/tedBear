@@ -9,6 +9,14 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  .main {
+    grid-row: 2;
+    grid-column: 1/3;
+    display: grid;
+    grid-template-rows: repeat(8, 7vmin);
+    grid-template-columns: repeat(8, 7vmin);
+    grid-gap: 2px;
+  }
 `;
 const CrossWordPage = () => {
   const [wordList, setWordList] = useState([]);
@@ -25,7 +33,6 @@ const CrossWordPage = () => {
 
   const findClue = useCallback(
     (clueNum, tab) => {
-      console.log('tab에 들어왔습니다요', tab);
       if (tab) {
         return tab;
       }
@@ -45,7 +52,7 @@ const CrossWordPage = () => {
 
   const editClue = useCallback(
     (item, idx, tab) => {
-      console.log(tab);
+      // console.log(tab, 'tab입니다!');
       let copy = [...wordList];
 
       if (state.current.clue) {
@@ -67,6 +74,7 @@ const CrossWordPage = () => {
 
       const { clue } = item;
       const { length, dir } = findClue(clue, tab);
+      console.log('clue', clue, 'length', length, 'dir', dir, 'item', item);
 
       // 수직으로 갈지 수평으로 갈지 불러오기
 
@@ -167,6 +175,7 @@ const CrossWordPage = () => {
           break;
         case 'Tab': {
           let nextIndex;
+          console.log(state.current.clue, 'clue입니다!');
           if (!state.current.clue) {
             nextIndex = -1;
           } else {
@@ -316,7 +325,6 @@ const CrossWordPage = () => {
   );
 
   useEffect(() => {
-    console.log('useEffect!');
     document.addEventListener('keydown', keyPressHandler);
     return () => {
       document.removeEventListener('keydown', keyPressHandler);
