@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
   .main {
     grid-row: 2;
@@ -16,8 +17,29 @@ const Wrapper = styled.div`
     grid-template-rows: repeat(8, 7vmin);
     grid-template-columns: repeat(8, 7vmin);
     grid-gap: 2px;
+    @media screen and (min-width: 900px) {
+      grid-row: 2/4;
+      grid-column: 1;
+      display: grid;
+      grid-template-rows: repeat(8, 5vw);
+      grid-template-columns: repeat(8, 5vw);
+      grid-gap: 2px;
+    }
   }
 `;
+
+const Content = styled.div`
+  .dic-box {
+    height: 5%;
+    margin-top: 2%;
+    padding: 2%;
+    backgroud: yellow;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+`;
+
 const CrossWordPage = () => {
   const [wordList, setWordList] = useState([]);
   const [clueList, setClueList] = useState([]);
@@ -351,6 +373,11 @@ const CrossWordPage = () => {
     setWordList(copy);
   };
 
+  const clickClue = clue => {
+    const { index } = clue;
+    editClue(wordList[index], index);
+  };
+
   return (
     <Wrapper>
       <div className="main" style={{ marginLeft: '5%' }}>
@@ -388,21 +415,22 @@ const CrossWordPage = () => {
           }
         })}
       </div>
-      <ul>
+      <Content>
         {clueList.map((clue, idx) => {
           return (
-            <li
+            <div
+              className="dic-box"
               key={idx}
-              data-clue={clue.clue}
+              onClick={() => clickClue(clue)}
               onMouseOver={() => toggleClue(clue)}
               onMouseOut={() => toggleClue(clue)}
             >
-              {idx + '.  ' + clue.dic}
-            </li>
+              {clue.dic}
+            </div>
           );
         })}
-      </ul>
-      <h1>Tab / Tab + Shift / 방향키 조작 가능</h1>
+      </Content>
+      {/* <h1>Tab / Tab + Shift / 방향키 조작 가능</h1> */}
       {/* <ul className="list">
         <li className="heading">Across</li>
         <li data-clue="1" data-dir="across" data-length="2">
