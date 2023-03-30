@@ -58,20 +58,27 @@ export const getSentenceBookmark = async (page: number) => {
 
 // 단어 북마크
 // interface IBookmarkWord {
-//   videoInfoList: [
-//     {
-//       thumbnailUrl: string;
-//       title: string;
-//       watchId: string;
-//       score: number;
-//       bookMarked: boolean;
-//     },
-//   ];
+//   sentenceContentList: string[];
+//   wordInfo: {
+//     wordNo: number;
+//     content: string;
+//     mean: string;
+//   }[];
 // }
-// export const getWordBookmark = async () => {
+
+// export const getWordBookmark = async (page: number) => {
+//   const params = {
+//     size: 8,
+//     page,
+//   };
 //   const { data } = await authApi<IBookmarkWord>({
 //     method: 'get',
-//     url: '/word/bookmark/list',
+//     url: 'bookmark/word/list',
+//     params: params,
 //   });
-//   return data.wordInfoList;
+
+//   return {
+//     wordInfo: data.wordInfo,
+//     sentenceContentList: data.sentenceContentList,
+//   };
 // };

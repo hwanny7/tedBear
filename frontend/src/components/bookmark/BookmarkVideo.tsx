@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getVideoBookmark } from 'utils/api/bookmarkApi';
-// import VideoLevel from 'assets/img/videoLevel.svg';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import Card from '@mui/material/Card';
@@ -11,8 +10,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import { useInView } from 'react-intersection-observer';
+// import VideoLevel from 'assets/img/videoLevel.svg';
+// import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface IBookmarkVideo {
   thumbnailUrl: string;
@@ -51,7 +51,7 @@ const BookIn = styled.div`
 const BookmarkVideo = () => {
   const navigate = useNavigate();
   const [videoBookmark, setVideoBookmark] = useState<IBookmarkVideo[]>([]);
-  const [hasMore, setHasMore] = useState(true);
+  // const [hasMore, setHasMore] = useState(true);
   const [ref, inView] = useInView();
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
