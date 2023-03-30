@@ -33,6 +33,10 @@ export const lightTheme: DefaultTheme = {
   blackColorLight2: '#8E8E8E',
   textColor1: '#000000',
   textColor2: '#7B7B7B',
+  learningBoxColor: '#F7F7F7',
+  highlightColor: '#FFE4C6',
+  speakBox: '#FFF6EC',
+  learningBoxColor2: '#FFFFFF',
 
   // 레벨 색깔 빨주노초파남보동은금
   badgeRed:
@@ -92,6 +96,10 @@ export const darkTheme: DefaultTheme = {
   blackColorLight2: '#8E8E8E',
   textColor1: '#FFFFFF',
   textColor2: '#E3E3E3',
+  learningBoxColor: '#5B5B5B',
+  highlightColor: '#967663',
+  speakBox: '#FFD4A4',
+  learningBoxColor2: '#D7D7D7',
 
   // 레벨 색깔 빨주노초파남보동은금
   // 레벨 색깔 빨주노초파남보동은금

@@ -260,7 +260,7 @@ const NavBar2 = (props: Props) => {
             <StyledLogoSmall />
           </IconDiv>
         </Link>
-        <Link to="/home">
+        <Link to="/">
           <IconName open={props.open}>
             <span>TEDBEAR</span>
           </IconName>

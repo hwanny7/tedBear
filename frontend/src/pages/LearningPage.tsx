@@ -70,6 +70,7 @@ const TitleBox = styled.div`
     font-weight: bold;
     font-size: 24px;
     margin-left: 16px;
+    color: ${props => props.theme.textColor1};
   }
 `;
 
@@ -224,19 +225,20 @@ const YoutubeBox = styled.div`
     z-index: 0;
     position: absolute;
     top: 0px;
+    box-shadow: 6px 6px 20px #61616142;
   }
 `;
 
 const SpeakBox = styled.div`
-  background-color: ${props => props.theme.pointLigntGrdColor8};
+  background-color: ${props => props.theme.speakBox};
   border-radius: 16px;
   height: 45%;
   padding: 40px 16px 16px;
-  box-shadow: 2px 3px 3px ${props => props.theme.shadowColor};
+  box-shadow: 6px 6px 20px #61616142;
   position: relative;
 
   > div {
-    background-color: ${props => props.theme.whiteColor};
+    background-color: ${props => props.theme.learningBoxColor2};
     border-radius: 10px;
     width: 100%;
     height: 100%;
@@ -338,7 +340,7 @@ const LearningReplayImg = styled(LearningMicImg)`
 
 const ContentRight = styled.div`
   /* border: 1px solid purple; */
-  background-color: white;
+  background-color: ${props => props.theme.learningBoxColor};
   width: 40%;
   height: 100%;
   border-radius: 16px;
@@ -437,17 +439,17 @@ const Korean = styled.span`
 const ScriptEl = styled.li<HighlightStyledProps>`
   margin: 8px 32px 24px;
 
-  ${HighlightStyledProps => {
-    if (HighlightStyledProps.highlight) {
+  ${props => {
+    if (props.highlight) {
       return `
-      &:nth-child(${HighlightStyledProps.selected + 1}) > ${English}{
-        background-color: #FFE4C6;
+      &:nth-child(${props.selected + 1}) > ${English}{
+        background-color:  ${props.theme.highlightColor};
       }
       `;
     } else {
       return `
       &:nth-child(1) > ${English}{
-        background-color: #FFE4C6;
+        background-color:  ${props.theme.highlightColor};
       }
       `;
     }
@@ -469,12 +471,13 @@ const CompleteBtn = styled.button`
   cursor: pointer;
   font-weight: bold;
   padding: 8px 16px;
-  box-shadow: 2px 3px 3px ${props => props.theme.shadowColor};
+  box-shadow: 2px 3px 3px #747474;
 
   &:hover {
-    background-color: #f08e25;
+    background-color: #fb9222;
     transition: all 0.3s;
     transform: translateY(3px);
+    box-shadow: none;
   }
 `;
 
