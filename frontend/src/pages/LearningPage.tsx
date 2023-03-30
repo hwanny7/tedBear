@@ -20,6 +20,7 @@ import {
   postCurrentVideo,
   postSentenceBookmark,
   postVideoBookmark,
+  speakResult,
   VideoDesc,
 } from 'utils/api/learningApi';
 import YouTube, { YouTubeProps } from 'react-youtube';
@@ -645,6 +646,11 @@ const LearningPage = () => {
     setSelected(index);
     setSentenceId(sentenceIdx);
 
+    // 스피커 박스
+    SpeechRecognition.stopListening();
+    onReset();
+    setResult(2);
+
     // 유튜브 해당 시간으로 이동
     youtubePlayer?.seekTo(startTime);
 
@@ -791,6 +797,7 @@ const LearningPage = () => {
     SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
     // setMicStatus(true);
     youtubePlayer.pauseVideo();
+    setResult(2);
   };
 
   const onReplay = () => {
@@ -842,6 +849,36 @@ const LearningPage = () => {
     }
 
     setResult(flag);
+
+    // flag == 1 맞  , flag == 0 틀
+    // 스피킹 결과 api 보내기
+
+    if (isLogin) {
+      let temp;
+      if (flag == 1) {
+        temp = true;
+      } else {
+        temp = false;
+      }
+      const data = {
+        matchStatus: temp,
+        sentenceNo: senetenceId,
+      };
+
+      // api 보내기
+      const postSpeakResult = async () => {
+        await speakResult(data);
+      };
+      postSpeakResult();
+
+      Swal.fire('<p>스피킹 결과가 경험치에 반영되었습니다.</p>', '', 'success');
+    } else {
+      Swal.fire(
+        '<p>테드베어 회원이 되셔서 <br/>경험치를 올려보세요!</p>',
+        '',
+        'warning',
+      );
+    }
   };
 
   // 사전
