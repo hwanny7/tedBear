@@ -18,7 +18,10 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 	@Query("select s from Sentence s join fetch s.video where s.score between :startScore and :endScore")
 	List<Sentence> findByScoreBetween(int startScore, int endScore);
 
-	@Query("select s from Sentence s join fetch s.video where s.content like %:query%")
+	// @Query(value = "select * from sentence_tb st inner join video_tb vt on st.video_no = vt.no where s.content like %:query%", nativeQuery = true)
+	// Slice<Sentence> findSliceByContent(String query, Pageable pageable);
+
+	@Query(value = "select * from sentence_tb st inner join video_tb vt on st.video_no = vt.no where st.content REGEXP '[[:space:]]+'+:query+'[[[:space:]]?.,;:|*~`!^\\-_+<>@\\#$%&]|'+:query+'[[:space:]]+'", nativeQuery = true)
 	Slice<Sentence> findSliceByContent(String query, Pageable pageable);
 
 	@Query(value = "select * "

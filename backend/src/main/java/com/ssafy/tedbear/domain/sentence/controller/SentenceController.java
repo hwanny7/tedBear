@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.sentence.controller;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -68,7 +69,7 @@ public class SentenceController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, Pageable pageable,
+	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, @PageableDefault(sort = "startTime") Pageable pageable,
 		@AuthenticationPrincipal CustomOAuth2User user) {
 		Member member = findMemberService.findMember(user.getName());
 		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(member, searchCondition, pageable);
