@@ -8,7 +8,9 @@ import { ReactComponent as CrossIcon } from 'assets/img/crossicon.svg';
 import { ReactComponent as Mypage } from 'assets/img/mypage.svg';
 import { ReactComponent as Signout } from 'assets/img/signout.svg';
 import { ReactComponent as Bookmark } from 'assets/img/bookmark.svg';
-import { SetStateAction } from 'react';
+import { SetStateAction, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from 'redux/user';
 
 interface Props {
   open: boolean;
@@ -61,6 +63,8 @@ const OpenBtn = styled.div`
 
 const IconDiv = styled.div<OpenStyledProps>`
   text-align: center;
+  display: flex;
+  align-items: center;
 `;
 
 const IconName = styled.div<OpenStyledProps>`
@@ -70,7 +74,7 @@ const IconName = styled.div<OpenStyledProps>`
   font-weight: 500;
   font-size: 14px;
   margin-left: 16px;
-  opacity: ${OpenStyledProps => (!OpenStyledProps.open ? '0' : '1')};
+  display: ${OpenStyledProps => (!OpenStyledProps.open ? 'none' : 'block')};
   transition: all 0.3s ease;
 `;
 
@@ -146,11 +150,25 @@ const NavBar2 = (props: Props) => {
   // navbar 펼치기
   const openNavbar = () => {
     props.setOpen(!props.open);
+    console.log(isLogin);
   };
 
   // question 정리
   // 1. 아래에서 LogoSmall을 div로 안감싸면 메뉴를 열 때 로고 버튼도 다시 랜더링 된다..
   // 2. Link to도 div 속성이 있는 것 같다. 아래 로고 클릭할 때 로고, 이름 따로따로 Link단 거 수정해야함.
+
+  // 비로그인 시 마이페이지, 북마크 접근금지
+  const { isLogin } = useSelector((state: any) => state.auth);
+
+  // 로그아웃
+  const dispatch = useDispatch();
+
+  const onSignOut = () => {
+    if (window.confirm('로그아웃 하시겠습니까?')) {
+      dispatch(logout());
+      window.location.href = '/';
+    }
+  };
 
   return (
     <Nav open={props.open}>
@@ -201,36 +219,39 @@ const NavBar2 = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
-        <Link to="/bookmark">
-          <ListBox>
-            <IconDiv open={props.open}>
-              <StyledBookmark />
-            </IconDiv>
-            <IconName open={props.open}>
-              <span>BOOKMARK</span>
-            </IconName>
-          </ListBox>
-        </Link>
-        <Link to="/profile">
-          <ListBox>
-            <IconDiv open={props.open}>
-              <StyledMypage />
-            </IconDiv>
-            <IconName open={props.open}>
-              <span>MYPAGE</span>
-            </IconName>
-          </ListBox>
-        </Link>
-        <Link to="/">
-          <ListBoxBottom open={props.open}>
-            <IconDiv open={props.open}>
-              <StyledSignout />
-            </IconDiv>
-            <IconName open={props.open}>
-              <span>SIGNOUT</span>
-            </IconName>
-          </ListBoxBottom>
-        </Link>
+
+        {isLogin ? (
+          <>
+            <Link to="/bookmark">
+              <ListBox>
+                <IconDiv open={props.open}>
+                  <StyledBookmark />
+                </IconDiv>
+                <IconName open={props.open}>
+                  <span>BOOKMARK</span>
+                </IconName>
+              </ListBox>
+            </Link>
+            <Link to="/profile">
+              <ListBox>
+                <IconDiv open={props.open}>
+                  <StyledMypage />
+                </IconDiv>
+                <IconName open={props.open}>
+                  <span>MYPAGE</span>
+                </IconName>
+              </ListBox>
+            </Link>
+            <ListBoxBottom open={props.open} onClick={onSignOut}>
+              <IconDiv open={props.open}>
+                <StyledSignout />
+              </IconDiv>
+              <IconName open={props.open}>
+                <span>SIGNOUT</span>
+              </IconName>
+            </ListBoxBottom>
+          </>
+        ) : null}
       </NavList>
     </Nav>
   );
