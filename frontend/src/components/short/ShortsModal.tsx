@@ -13,7 +13,7 @@ import {
 interface Props {
   shorts: Shorts | null;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShortsData: React.Dispatch<React.SetStateAction<Shorts[]>>;
+  setShortsData?: React.Dispatch<React.SetStateAction<Shorts[]>>;
 }
 
 const CustomYoutube = styled(YouTube)`
@@ -137,18 +137,20 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
 
   const handleBookMark = (bookMark: any) => {
     const status = bookMark.bookmarked;
-    setShortsData(prev =>
-      prev.map(item => {
-        if (item === bookMark) {
-          item.bookmarked = !item.bookmarked;
-        }
-        return item;
-      }),
-    );
-    if (status) {
-      deleteSentenceBookmark({ sentenceNo: bookMark.no });
-    } else {
-      postSentenceBookmark({ sentenceNo: bookMark.no });
+    if (setShortsData) {
+      setShortsData(prev =>
+        prev.map(item => {
+          if (item === bookMark) {
+            item.bookmarked = !item.bookmarked;
+          }
+          return item;
+        }),
+      );
+      if (status) {
+        deleteSentenceBookmark({ sentenceNo: bookMark.no });
+      } else {
+        postSentenceBookmark({ sentenceNo: bookMark.no });
+      }
     }
   };
 
@@ -162,27 +164,31 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}
           />
-          <img
-            src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
-            style={{
-              height: '15%',
-              position: 'absolute',
-              left: '93%',
-              cursor: 'pointer',
-            }}
-            onClick={() => {
-              handleBookMark(shorts);
-            }}
-          ></img>
-          <button
-            className="btn"
-            onClick={() => {
-              handleClick(shorts?.watchId);
-            }}
-          >
-            Watch
-          </button>
-          <SentenceBox>{shorts?.content}</SentenceBox>
+          {shorts?.no && (
+            <img
+              src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
+              style={{
+                height: '15%',
+                position: 'absolute',
+                left: '93%',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                handleBookMark(shorts);
+              }}
+            ></img>
+          )}
+          {shorts?.no && (
+            <button
+              className="btn"
+              onClick={() => {
+                handleClick(shorts?.watchId);
+              }}
+            >
+              Watch
+            </button>
+          )}
+          {shorts?.content && <SentenceBox>{shorts?.content}</SentenceBox>}
         </Wrapper>
       </YoutubeBox>
     </div>

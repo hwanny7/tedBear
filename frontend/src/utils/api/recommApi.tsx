@@ -14,13 +14,13 @@ interface HomeRecommList {
 }
 
 export interface Shorts {
-  no: number;
+  no?: number;
   startTime: number;
   endTime: number;
-  content: string;
-  bookmarked: boolean;
+  content?: string;
+  bookmarked?: boolean;
   watchId: string;
-  score: number;
+  score?: number;
 }
 
 interface ShortsRecomm {

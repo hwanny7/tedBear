@@ -2,6 +2,9 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import cx from 'classnames';
 import styled from 'styled-components';
 import { getCrossWord } from 'utils/api/gameApi';
+import ShortsModal from 'components/short/ShortsModal';
+import { useOutletContext } from 'react-router-dom';
+import shortsPlay from 'assets/img/shortsPlay.svg';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -103,20 +106,33 @@ const ClueBox = styled.div`
   height: 5%;
   width: 80%;
   margin-top: 2%;
-  padding: 2%;
+  padding: 3%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   border-radius: 16px;
   background-color: ${props => (props.backgroundColor ? '#b4adde' : 'white')};
+  position: relative;
   &:hover {
     scale: 1.08;
     transition: 0.4s;
     background-color: ${props =>
       props.backgroundColor ? '#b4adde' : '#e6e4f4'};
   }
+  .shorts-button {
+    position: absolute;
+    right: 2%;
+    bottom: 5%;
+    &:hover {
+      scale: 1.1;
+      transition: 0.4s;
+      /* background-color:  */
+    }
+  }
 `;
 
 const CrossWordPage = () => {
+  const [shorts, setShorts] = useState(null);
+  const { modalOpen, setModalOpen } = useOutletContext();
   const [wordList, setWordList] = useState([]);
   const [clueList, setClueList] = useState([]);
   const size = 8;
@@ -275,6 +291,16 @@ const CrossWordPage = () => {
         case 'Shift':
         case 'Space':
         case 'Enter':
+          return;
+        case ' ':
+          console.log(modalOpen);
+          if (modalOpen) {
+            setModalOpen(false);
+          } else if (state.current.clue) {
+            handleShorts(clueList[state.current.clue - 1]);
+          }
+
+          // clue 한 개가 across랑 down 가질 경우 리스트 순회하는 걸로 변경해야함
           return;
         case 'ArrowUp':
         case 'ArrowLeft':
@@ -441,7 +467,7 @@ const CrossWordPage = () => {
 
       // 다음 커서 반영
     },
-    [wordList, clueList, editClue],
+    [wordList, clueList, editClue, modalOpen],
   );
 
   useEffect(() => {
@@ -474,6 +500,12 @@ const CrossWordPage = () => {
   const clickClue = clue => {
     const { index } = clue;
     editClue(wordList[index], index);
+  };
+
+  const handleShorts = clue => {
+    const { shorts } = clue;
+    setShorts(shorts);
+    setModalOpen(true);
   };
 
   return (
@@ -514,7 +546,7 @@ const CrossWordPage = () => {
         })}
       </div>
       <Content>
-        <p>Tab / Tab + Shift / 방향키 조작 / 힌트 클릭 가능합니다!</p>
+        <p>Tab / Tab + Shift / 방향키 / 스페이스바 / 사용 가능합니다!</p>
         {clueList.map((clue, idx) => {
           return (
             <ClueBox
@@ -525,11 +557,20 @@ const CrossWordPage = () => {
               onMouseOut={() => toggleClue(clue)}
             >
               {clue.dic}
+              <img
+                src={shortsPlay}
+                alt=""
+                className="shorts-button"
+                onClick={() => {
+                  handleShorts(clue);
+                }}
+              />
             </ClueBox>
           );
         })}
         {/* <button>제출하기</button> */}
       </Content>
+      {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
     </Wrapper>
   );
 };
