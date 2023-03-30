@@ -23,8 +23,8 @@ authApi.interceptors.request.use((config: any) => {
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
     // window.location.href = '/';
-    alert('로그인 시간이 만료되었습니다.');
-    return;
+    // alert('로그인 시간이 만료되었습니다.');
+    return config;
   }
   config.headers.Authorization = `Bearer ${accessToken}`;
 

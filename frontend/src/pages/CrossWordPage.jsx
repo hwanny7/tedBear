@@ -45,6 +45,7 @@ const CrossWordPage = () => {
 
   const editClue = useCallback(
     (item, idx, tab) => {
+      console.log(tab);
       let copy = [...wordList];
 
       if (state.current.clue) {
