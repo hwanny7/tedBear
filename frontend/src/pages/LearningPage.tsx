@@ -871,7 +871,11 @@ const LearningPage = () => {
       };
       postSpeakResult();
 
-      Swal.fire('<p>스피킹 결과가 경험치에 반영되었습니다.</p>', '', 'success');
+      Swal.fire(
+        '<p>스피킹 결과가 <br/>경험치에 반영되었습니다.</p>',
+        '',
+        'success',
+      );
     } else {
       Swal.fire(
         '<p>테드베어 회원이 되셔서 <br/>경험치를 올려보세요!</p>',

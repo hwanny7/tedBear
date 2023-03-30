@@ -7,6 +7,7 @@ import { ReactComponent as Game } from 'assets/img/game.svg';
 import { ReactComponent as CrossIcon } from 'assets/img/crossicon.svg';
 import { ReactComponent as Mypage } from 'assets/img/mypage.svg';
 import { ReactComponent as Signout } from 'assets/img/signout.svg';
+import { ReactComponent as Signin } from 'assets/img/signin.svg';
 import { ReactComponent as Bookmark } from 'assets/img/bookmark.svg';
 import { SetStateAction, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -213,6 +214,10 @@ const StyledSignout = styled(Signout)`
   width: 24px;
 `;
 
+const StyledSignin = styled(Signin)`
+  width: 24px;
+`;
+
 const NavBar2 = (props: Props) => {
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
@@ -337,7 +342,7 @@ const NavBar2 = (props: Props) => {
         ) : (
           <ListBoxBottom open={props.open} onClick={onSignIn}>
             <IconDiv open={props.open}>
-              <StyledSignout />
+              <StyledSignin />
             </IconDiv>
             <IconName open={props.open}>
               <span>SIGNIN</span>
