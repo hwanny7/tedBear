@@ -13,6 +13,7 @@ import { useLocation } from 'react-router';
 import {
   deleteSentenceBookmark,
   deleteVideoBookmark,
+  feelDifficulty,
   getSentenceBookmarkState,
   getVideoDesc,
   postCompletedVideo,
@@ -749,10 +750,34 @@ const LearningPage = () => {
           confirmButtonText: '쉬워요',
           cancelButtonText: '평범해요',
           denyButtonText: '어려워요',
+        }).then(result => {
+          let data = {};
+          if (result.isConfirmed) {
+            // 쉬워요
+            data = {
+              difficulty: 'easy',
+            };
+          } else if (result.isDenied) {
+            // 어려워요
+            data = {
+              difficulty: 'hard',
+            };
+          } else {
+            // 평범해요
+            data = {
+              difficulty: 'normal',
+            };
+          }
+
+          // api 보내기
+          const postFeel = async () => {
+            await feelDifficulty(data);
+          };
+          postFeel();
         });
-      } else {
-        alert('로그인 후 이용해주세요.');
       }
+    } else {
+      alert('로그인 후 이용해주세요.');
     }
   };
 

@@ -145,6 +145,7 @@ export const deleteWordBookmark = async (data: object) => {
 
 // 난이도 평가
 export const feelDifficulty = async (data: object) => {
+  console.log('?????', data);
   await authApi({
     method: 'put',
     url: `/member/feel`,
