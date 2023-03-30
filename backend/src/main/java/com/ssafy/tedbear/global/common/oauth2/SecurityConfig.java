@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -34,12 +40,6 @@ import com.ssafy.tedbear.global.common.oauth2.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -68,9 +68,12 @@ public class SecurityConfig {
 			.formLogin().disable();
 		http.anonymous().authenticationFilter(customAnonymousFilter());
 		http.authorizeHttpRequests()
-				.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll() // options 메서드 열어두기! Authorization 헤더를 사용하기 때문에 Preflight 넣어줌
-			// 그외 모든 요청은 허용
-			.anyRequest().permitAll()
+			.antMatchers(HttpMethod.OPTIONS, "/**/*")
+			.permitAll() // options 메서드 열어두기! Authorization 헤더를 사용하기 때문에 Preflight 넣어줌
+
+			.antMatchers(HttpMethod.GET, "/api/**") // GET요청은 열어두고
+			.permitAll()
+			.anyRequest().authenticated() // 그 외 요청은 권한확인
 			.and()
 			.logout()
 			.logoutSuccessUrl("/")
@@ -114,12 +117,11 @@ public class SecurityConfig {
 		return source;
 	}
 
-	protected CustomAnonymousFilter customAnonymousFilter() throws Exception{
+	protected CustomAnonymousFilter customAnonymousFilter() throws Exception {
 		return new CustomAnonymousFilter();
 	}
 
-
-	public class CustomAnonymousFilter extends AnonymousAuthenticationFilter{
+	public class CustomAnonymousFilter extends AnonymousAuthenticationFilter {
 		private final Logger log = LoggerFactory.getLogger(getClass());
 
 		public CustomAnonymousFilter() {
@@ -128,10 +130,10 @@ public class SecurityConfig {
 
 		@Override
 		public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-				throws IOException, ServletException {
+			throws IOException, ServletException {
 
-			if(SecurityContextHolder.getContext().getAuthentication() == null) {
-				Authentication authentication = createAuthentication((HttpServletRequest) req);
+			if (SecurityContextHolder.getContext().getAuthentication() == null) {
+				Authentication authentication = createAuthentication((HttpServletRequest)req);
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 				if (log.isDebugEnabled()) {
@@ -145,7 +147,7 @@ public class SecurityConfig {
 		@Override
 		protected Authentication createAuthentication(HttpServletRequest request) {
 			List<? extends GrantedAuthority> authorities = Collections
-					.unmodifiableList(Arrays.asList(new SimpleGrantedAuthority("ANONYMOUS_USER")));
+				.unmodifiableList(Arrays.asList(new SimpleGrantedAuthority("ANONYMOUS_USER")));
 			CustomOAuth2User principal = new CustomOAuth2User("253243", authorities);
 			return new AnonymousAuthenticationToken("ANONYMOUS", principal, authorities);
 		}
