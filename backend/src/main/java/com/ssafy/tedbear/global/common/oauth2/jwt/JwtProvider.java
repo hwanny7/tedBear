@@ -81,7 +81,7 @@ public class JwtProvider {
 
 	private Claims parseClaims(String accessToken) {
 		try {
-			return Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(accessToken).getBody();
+			return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(accessToken).getBody();
 		} catch (ExpiredJwtException e) {
 			return e.getClaims();
 		}
@@ -89,7 +89,7 @@ public class JwtProvider {
 
 	public boolean validateToken(String token) {
 		try {
-			Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token);
+			Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
 			return true;
 		} catch (ExpiredJwtException e) {
 			log.info("만료된 토큰입니다.");
