@@ -23,38 +23,7 @@ const SeungPage = () => {
     }
   }, []);
 
-  return (
-    <div
-      style={{
-        background: 'red',
-        width: '50vw',
-        height: '50vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <div
-        style={{
-          background: 'black',
-          width: '50%',
-          height: '50%',
-          marginTop: '5%',
-          marginBottom: '5%',
-          border: '1px solid white',
-        }}
-      ></div>
-      <div
-        style={{
-          background: 'black',
-          width: '50%',
-          height: '50%',
-          border: '1px solid white',
-          marginBottom: '5%',
-        }}
-      ></div>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default SeungPage;

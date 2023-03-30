@@ -75,20 +75,22 @@ export const getSentenceBookmarkState = async (id: number) => {
 
 // 문장 북마크 저장
 export const postSentenceBookmark = async (data: object) => {
-  await authApi({
+  const reponse = await authApi({
     method: 'post',
     url: `/sentence/bookmark`,
     data: data,
   });
+  console.log(reponse);
 };
 
 // 문장 북마크 삭제
 export const deleteSentenceBookmark = async (data: object) => {
-  await authApi({
+  const reponse = await authApi({
     method: 'delete',
     url: `/sentence/bookmark`,
     data: data,
   });
+  console.log(reponse);
 };
 
 // 시청 시간 기록

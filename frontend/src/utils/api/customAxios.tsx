@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
-const BASE_URL = 'http://j8b103.p.ssafy.io:8080';
+const BASE_URL = 'http://j8b103.p.ssafy.io/api';
 const cookie = new Cookies();
 
 export const authApi = axios.create({
@@ -19,17 +19,17 @@ export const basicApi = axios.create({
   },
 });
 
-// authApi.interceptors.request.use((config: any) => {
-//   const accessToken = localStorage.getItem('accessToken');
-//   if (!accessToken) {
-//     window.location.href = '/';
-//     alert('로그인 시간이 만료되었습니다.');
-//     return;
-//   }
-//   config.headers.Authorization = `Bearer ${accessToken}`;
+authApi.interceptors.request.use((config: any) => {
+  const accessToken = localStorage.getItem('accessToken');
+  if (!accessToken) {
+    window.location.href = '/';
+    alert('로그인 시간이 만료되었습니다.');
+    return;
+  }
+  config.headers.Authorization = `Bearer ${accessToken}`;
 
-//   return config;
-// });
+  return config;
+});
 
 // authApi.interceptors.response.use(
 //   response => {

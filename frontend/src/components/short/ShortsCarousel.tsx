@@ -97,15 +97,10 @@ const ShortsCarousel = ({
     ...data,
     ...data.slice(0, 5),
   ];
-  const navigate = useNavigate();
   const transition = 'all 0.3s ease-out;';
   const [currentIndex, setCurrentIndex] = useState(5);
   const [length, setLength] = useState(data.length);
   const [transStyle, setTransStyle] = useState(transition);
-
-  const handleClick = (e: React.MouseEventHandler<HTMLDivElement>): void => {
-    navigate(`/learning/${e}`);
-  };
 
   useEffect(() => {
     setLength(data.length);

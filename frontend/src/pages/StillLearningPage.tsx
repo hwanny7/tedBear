@@ -33,7 +33,9 @@ const StillLearningPage = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }}>학습 중인 페이지</h1>
+      <h1 style={{ textAlign: 'center', marginTop: '2%' }}>
+        {video.length ? '학습 중인 영상' : '학습 중인 영상이 없습니다.'}
+      </h1>
       <div style={{ display: 'flex', justifyContent: 'center' }} ref={ref}>
         <Grid
           container

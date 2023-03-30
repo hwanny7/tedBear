@@ -29,10 +29,15 @@ const VideoCard = ({ card }: { card: SearchedVideo }) => {
           style={{ height: '12%', position: 'absolute', top: '4%', left: '4%' }}
         ></img>
         <img
-          src={BookmarkFull}
+          src={card.bookMarked ? BookmarkFull : BookmarkEmpty}
           style={{ height: '15%', position: 'absolute', left: '90%' }}
         ></img>
-        <CardMedia component="img" image={card.thumbnailUrl} alt="" />
+        <CardMedia
+          component="img"
+          image={card.thumbnailUrl}
+          style={{ height: '200px' }}
+          alt=""
+        />
         <CardContent>
           <Typography
             gutterBottom

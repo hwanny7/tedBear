@@ -1,148 +1,27 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import './CrossWord.css';
 import cx from 'classnames';
+import styled from 'styled-components';
+import { getCrossWord } from 'utils/api/gameApi';
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
 const CrossWordPage = () => {
-  const [wordList, setWordList] = useState([
-    {
-      box: true,
-      clue: 1,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 2,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: false,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: false,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: false,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: false,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 3,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 4,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: false,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: false,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-    {
-      box: true,
-      clue: 0,
-      answer: '',
-      cursor: false,
-      edit: false,
-      hightlight: false,
-    },
-  ]);
+  const [wordList, setWordList] = useState([]);
   const [clueList, setClueList] = useState([]);
+  const size = 8;
   const state = useRef({
     index: null,
     clue: null,
     cursor: 0,
     length: null,
-    answers: [...Array(4)].map(e => Array(4).fill('')),
+    answers: [...Array(size)].map(e => Array(size).fill('')),
     dir: null,
   });
-  const hightRef = useRef([]);
 
   const findClue = useCallback(
     (clueNum, tab) => {
@@ -156,7 +35,7 @@ const CrossWordPage = () => {
       if (clues.length === 1) {
         return clues[0];
       } else if (state.current.clue === clues[0].clue) {
-        return state.current.dir === 'across' ? clues[1] : clues[0];
+        return state.current.dir === 'ACROSS' ? clues[1] : clues[0];
       } else {
         return clues[0];
       }
@@ -170,15 +49,15 @@ const CrossWordPage = () => {
 
       if (state.current.clue) {
         const index = state.current.index;
-        if (state.current.dir === 'across') {
+        if (state.current.dir === 'ACROSS') {
           for (let i = 0; i < state.current.length; i++) {
             copy[i + index].cursor = false;
             copy[i + index].edit = false;
           }
         } else {
           for (let i = 0; i < state.current.length; i++) {
-            copy[index + i * 4].cursor = false;
-            copy[index + i * 4].edit = false;
+            copy[index + i * size].cursor = false;
+            copy[index + i * size].edit = false;
           }
         }
       }
@@ -192,18 +71,20 @@ const CrossWordPage = () => {
 
       let cursor = length - 1;
       for (let i = 0; i < length; i++) {
-        if (dir === 'across') {
+        if (dir === 'ACROSS') {
           copy[i + idx] = { ...copy[i + idx], edit: true };
           if (
-            state.current.answers[Math.floor(idx / 4)][(idx % 4) + i] === '' &&
+            state.current.answers[Math.floor(idx / size)][(idx % size) + i] ===
+              '' &&
             cursor === length - 1
           ) {
             cursor = i;
           }
         } else {
-          copy[idx + i * 4] = { ...copy[idx + i * 4], edit: true };
+          copy[idx + i * size] = { ...copy[idx + i * size], edit: true };
           if (
-            state.current.answers[Math.floor(idx / 4 + i)][idx % 4] === '' &&
+            state.current.answers[Math.floor(idx / size + i)][idx % size] ===
+              '' &&
             cursor === length - 1
           ) {
             cursor = i;
@@ -224,10 +105,10 @@ const CrossWordPage = () => {
         cursor,
       };
 
-      if (state.current.dir === 'across') {
+      if (state.current.dir === 'ACROSS') {
         copy[state.current.index + state.current.cursor].cursor = true;
       } else {
-        copy[state.current.index + state.current.cursor * 4].cursor = true;
+        copy[state.current.index + state.current.cursor * size].cursor = true;
       }
 
       setWordList(copy);
@@ -237,41 +118,25 @@ const CrossWordPage = () => {
     [wordList, findClue],
   );
 
+  const fetchData = async () => {
+    const data = await getCrossWord();
+    console.log(data);
+    setWordList(
+      data.array.map(item => {
+        return {
+          ...item,
+          answer: '',
+          cursor: false,
+          edit: false,
+          hightlight: false,
+        };
+      }),
+    );
+    setClueList(data.clueList);
+  };
+
   useEffect(() => {
-    setClueList([
-      {
-        clue: 1,
-        answer: 'dog',
-        length: 3,
-        dir: 'across',
-        index: 0,
-        content: '애완동물',
-      },
-      {
-        clue: 2,
-        answer: 'oman',
-        length: 4,
-        dir: 'down',
-        index: 1,
-        content: '아랍에미레이트 옆에 국가',
-      },
-      {
-        clue: 3,
-        answer: 'daum',
-        length: 4,
-        dir: 'across',
-        index: 8,
-        content: '네이버 전에 잘나가던',
-      },
-      {
-        clue: 4,
-        answer: 'ma',
-        length: 2,
-        dir: 'down',
-        index: 11,
-        content: 'ma',
-      },
-    ]);
+    fetchData();
   }, []);
 
   const keyPressHandler = useCallback(
@@ -288,12 +153,12 @@ const CrossWordPage = () => {
         case 'ArrowRight':
           if (!state.current.clue) return;
           if (
-            (state.current.dir === 'across') &
+            (state.current.dir === 'ACROSS') &
             (e.key === 'ArrowUp' || e.key === 'ArrowDown')
           )
             return;
           else if (
-            (state.current.dir === 'down') &
+            (state.current.dir === 'DOWN') &
             (e.key === 'ArrowLeft' || e.key === 'ArrowRight')
           )
             return;
@@ -340,14 +205,14 @@ const CrossWordPage = () => {
         case 'Backspace':
           if (!state.current.clue) return;
 
-          if (state.current.dir === 'across') {
-            state.current.answers[Math.floor(state.current.index / 4)][
+          if (state.current.dir === 'ACROSS') {
+            state.current.answers[Math.floor(state.current.index / size)][
               state.current.cursor
             ] = '';
           } else {
             state.current.answers[
-              Math.floor(state.current.index / 4) + state.current.cursor
-            ][state.current.index % 4] = '';
+              Math.floor(state.current.index / size) + state.current.cursor
+            ][state.current.index % size] = '';
           }
 
           // 정답에서 해당 인덱스 지우기
@@ -357,14 +222,14 @@ const CrossWordPage = () => {
           console.log(e.key.length);
           if (e.key.length > 1) return;
           // 클루가 없거나 이상한 키를 입력했을 때
-          if (state.current.dir === 'across') {
-            state.current.answers[Math.floor(state.current.index / 4)][
+          if (state.current.dir === 'ACROSS') {
+            state.current.answers[Math.floor(state.current.index / size)][
               state.current.cursor
             ] = e.key;
           } else {
             state.current.answers[
-              Math.floor(state.current.index / 4) + state.current.cursor
-            ][state.current.index % 4] = e.key;
+              Math.floor(state.current.index / size) + state.current.cursor
+            ][state.current.index % size] = e.key;
           }
 
           // 정답에 반영하기
@@ -377,7 +242,7 @@ const CrossWordPage = () => {
       let copy = [...wordList];
       const { dir, index, cursor, length, answers } = state.current;
 
-      if (dir === 'across') {
+      if (dir === 'ACROSS') {
         copy[index + cursor].cursor = false;
         if (e.key.length === 9 && e.key === 'Backspace') {
           copy[index + cursor].answer = '';
@@ -385,11 +250,11 @@ const CrossWordPage = () => {
           copy[index + cursor].answer = e.key;
         }
       } else {
-        copy[index + cursor * 4].cursor = false;
+        copy[index + cursor * size].cursor = false;
         if (e.key.length === 9 && e.key === 'Backspace') {
-          copy[index + cursor * 4].answer = '';
+          copy[index + cursor * size].answer = '';
         } else if (e.key.length === 1) {
-          copy[index + cursor * 4].answer = e.key;
+          copy[index + cursor * size].answer = e.key;
         }
       }
 
@@ -398,16 +263,17 @@ const CrossWordPage = () => {
       } else if (e.key.length === 1) {
         state.current.cursor += 1;
         if (
-          dir === 'across' &&
+          dir === 'ACROSS' &&
           state.current.cursor + 1 < length &&
-          answers[Math.floor(index / 4)][state.current.cursor] !== ''
+          answers[Math.floor(index / size)][state.current.cursor] !== ''
         ) {
           state.current.cursor += 1;
         } else if (
-          dir === 'down' &&
+          dir === 'DOWN' &&
           state.current.cursor + 1 < length &&
-          answers[Math.floor(index / 4) + state.current.cursor][index % 4] !==
-            ''
+          answers[Math.floor(index / size) + state.current.cursor][
+            index % size
+          ] !== ''
         ) {
           state.current.cursor += 1;
         }
@@ -435,10 +301,10 @@ const CrossWordPage = () => {
 
       // 커서가 length 범위를 나가는 예외상황 때 수정
 
-      if (dir === 'across') {
+      if (dir === 'ACROSS') {
         copy[index + state.current.cursor].cursor = true;
       } else {
-        copy[index + state.current.cursor * 4].cursor = true;
+        copy[index + state.current.cursor * size].cursor = true;
       }
       console.log(copy);
       setWordList(copy);
@@ -460,15 +326,15 @@ const CrossWordPage = () => {
     const { index, dir, length } = clue;
     let copy = [...wordList];
     for (let i = 0; i < length; i++) {
-      if (dir === 'across') {
+      if (dir === 'ACROSS') {
         copy[i + index] = {
           ...copy[i + index],
           hightlight: !copy[i + index].hightlight,
         };
       } else {
-        copy[index + i * 4] = {
-          ...copy[index + i * 4],
-          hightlight: !copy[index + i * 4].hightlight,
+        copy[index + i * size] = {
+          ...copy[index + i * size],
+          hightlight: !copy[index + i * size].hightlight,
         };
       }
     }
@@ -477,7 +343,7 @@ const CrossWordPage = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <div className="main" style={{ marginLeft: '5%' }}>
         {wordList.map((word, idx) => {
           if (word.clue) {
@@ -522,12 +388,13 @@ const CrossWordPage = () => {
               onMouseOver={() => toggleClue(clue)}
               onMouseOut={() => toggleClue(clue)}
             >
-              {idx + '.  ' + clue.content}
+              {idx + '.  ' + clue.dic}
             </li>
           );
         })}
       </ul>
-      <ul className="list">
+      <h1>Tab / Tab + Shift / 방향키 조작 가능</h1>
+      {/* <ul className="list">
         <li className="heading">Across</li>
         <li data-clue="1" data-dir="across" data-length="2">
           1. Horizontal viewport unit (2)
@@ -535,8 +402,8 @@ const CrossWordPage = () => {
         <li data-clue="4" data-dir="across" data-length="3">
           4. A line in the grid (3)
         </li>
-      </ul>
-    </div>
+      </ul> */}
+    </Wrapper>
   );
 };
 

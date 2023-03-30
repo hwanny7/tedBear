@@ -9,7 +9,7 @@ import {
   HomeRecomm,
 } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import SearchBar from 'components/common/SearchBar';
 import { device } from 'utils/mediaQuery';
 
@@ -65,7 +65,7 @@ const ShortsTitle = styled.span`
   }
 `;
 
-const Button = styled.button<{ changeColor: string }>`
+const Button = styled.button<{ changeColor?: string }>`
   margin-left: 2%;
   margin-right: 2%;
   background-color: white;
@@ -94,12 +94,41 @@ const Button = styled.button<{ changeColor: string }>`
   }
 `;
 
+const LearningButton = styled.button`
+  margin-left: 2%;
+  margin-right: 2%;
+  background-color: white;
+  border-radius: 16px;
+  padding: 1%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transition: all 0.3s;
+    transform: translateY(3px);
+  }
+  @media ${device.mobile} {
+    font-size: 8px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 8px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 10px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 15px;
+  }
+`;
+
 const HomePage = () => {
   const [button, setButton] = useState<number[]>([0, 1, 0]);
   const [videoData, setVideoData] = useState<HomeRecomm[]>([]);
   const [shortsData, setShortsData] = useState<Shorts[]>([]);
   const [shorts, setShorts] = useState<Shorts | null>(null);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
+  const navigate = useNavigate();
 
   const fetchData = async (difficulty: string) => {
     let data: HomeRecomm[] = await getVideoRecomm(difficulty);
@@ -161,7 +190,12 @@ const HomePage = () => {
           />
         )}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <SearchBar></SearchBar>
+          <div style={{ display: 'flex', alignItems: 'end', width: '100%' }}>
+            <SearchBar></SearchBar>
+            <LearningButton onClick={() => navigate('/still-learn')}>
+              Learning
+            </LearningButton>
+          </div>
           <div style={{ display: 'flex', alignItems: 'end', width: '20%' }}>
             <Button
               changeColor={'yellow'}
@@ -185,9 +219,6 @@ const HomePage = () => {
               Hard
             </Button>
           </div>
-          {/* <button onClick={() => navigate('/still-learn')}>
-            학습 중인 영상
-          </button> */}
         </div>
         <VideoTitle>Recommended for you</VideoTitle>
         {videoData.length !== 0 && (

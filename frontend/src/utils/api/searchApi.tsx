@@ -3,9 +3,10 @@ import { authApi } from './customAxios';
 export interface SearchedVideo {
   score: number;
   thumbnailUrl: string;
-  bookmarked: boolean;
+  bookMarked: boolean;
   title: string;
   watchId: string;
+  no: number;
 }
 
 interface VideoSet {
@@ -24,19 +25,22 @@ export const searchVideoData = async (query: string, page: number) => {
     url: 'video/search',
     params: params,
   });
-
+  console.log(data, 'data입니다!');
   return data.videoInfoList;
 };
 
-export const searchSenData = async (query: string) => {
+export const searchSenData = async (query: string, page: number) => {
   const params = {
     query,
+    page,
+    size: 5,
   };
   const { data } = await authApi({
     method: 'get',
     url: 'sentence/search',
     params: params,
   });
+  console.log(data, 'data입니다!');
 
   return data.sentenceList;
 };

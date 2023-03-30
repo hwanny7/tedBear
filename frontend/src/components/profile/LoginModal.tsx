@@ -21,7 +21,7 @@ const DarkBackground = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: absolute;
+  position: fixed;
   z-index: 9998;
 `;
 
@@ -110,6 +110,11 @@ const KakaoButton = styled.div<Color>`
   font-size: 13px;
   margin-bottom: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px;
+  cursor: pointer;
+  &:hover {
+    scale: 1.04;
+    transition: 0.4s;
+  }
 `;
 
 const StyledKakaoImg = styled(KakaoImg)`
@@ -117,7 +122,6 @@ const StyledKakaoImg = styled(KakaoImg)`
   left: 0;
   margin: 25px;
   width: 20px;
-  cursor: pointer;
 `;
 
 const StyledNaverIcon = styled(NaverIcon)`
@@ -125,7 +129,6 @@ const StyledNaverIcon = styled(NaverIcon)`
   left: 0;
   margin: 25px;
   width: 20px;
-  cursor: pointer;
 `;
 
 const StyledGoogleIcon = styled(GoogleIcon)`
@@ -133,7 +136,6 @@ const StyledGoogleIcon = styled(GoogleIcon)`
   left: 0;
   margin: 25px;
   width: 20px;
-  cursor: pointer;
 `;
 
 interface Props {
@@ -165,18 +167,16 @@ const LoginModal = ({ setOpenModal }: Props) => {
             <StyledKakaoImg></StyledKakaoImg>
             카카오로 시작하기
           </KakaoButton>
-          <KakaoButton BgColor={'#03C75A'} font={'white'}>
+          {/* <KakaoButton BgColor={'#03C75A'} font={'white'}>
             <StyledNaverIcon></StyledNaverIcon>
             네이버로 시작하기
-          </KakaoButton>
+          </KakaoButton> */}
           <KakaoButton
             BgColor={'white'}
-            onClick={() => {
-              goTo();
-            }}
+            style={{ marginBottom: '30px' }}
+            onClick={goTo}
           >
-            <StyledGoogleIcon></StyledGoogleIcon>
-            연진님 여기가 홈이에요
+            비회원으로 시작하기
           </KakaoButton>
         </div>
       </Modal>

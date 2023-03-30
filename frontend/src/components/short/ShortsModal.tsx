@@ -5,6 +5,10 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import { device } from 'utils/mediaQuery';
 import { useNavigate } from 'react-router-dom';
+import {
+  deleteSentenceBookmark,
+  postSentenceBookmark,
+} from 'utils/api/learningApi';
 
 interface Props {
   shorts: Shorts | null;
@@ -46,7 +50,7 @@ const Wrapper = styled.div`
 const YoutubeBox = styled.div`
   min-width: 60%;
   min-height: 60%;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -94,7 +98,7 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
 
   const handleClick = (watchId: string | undefined) => {
     setOpenModal(false);
-    navigate('/learning', { state: watchId });
+    navigate(`/learning/${watchId}`);
   };
 
   const onPlayerReady: YouTubeProps['onReady'] = event => {
@@ -131,6 +135,23 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
     },
   };
 
+  const handleBookMark = (bookMark: any) => {
+    const status = bookMark.bookmarked;
+    setShortsData(prev =>
+      prev.map(item => {
+        if (item === bookMark) {
+          item.bookmarked = !item.bookmarked;
+        }
+        return item;
+      }),
+    );
+    if (status) {
+      deleteSentenceBookmark({ sentenceNo: bookMark.no });
+    } else {
+      postSentenceBookmark({ sentenceNo: bookMark.no });
+    }
+  };
+
   return (
     <div>
       <YoutubeBox>
@@ -148,6 +169,9 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
               position: 'absolute',
               left: '93%',
               cursor: 'pointer',
+            }}
+            onClick={() => {
+              handleBookMark(shorts);
             }}
           ></img>
           <button
