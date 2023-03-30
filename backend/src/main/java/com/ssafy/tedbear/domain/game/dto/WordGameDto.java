@@ -18,7 +18,7 @@ public class WordGameDto {
 	public WordGameDto(Word word, Sentence sentence) {
 		this.wordNo = word.getNo();
 		this.answer = word.getContent();
-		this.sentence = sentence.getContent().replace(word.getContent(), "tedbear");
+		this.sentence = sentence.getContent().replaceAll("(?i)"+word.getContent(), "tedbear");
 		this.score = sentence.getScore();
 		this.hint = new Hint(sentence);
 	}

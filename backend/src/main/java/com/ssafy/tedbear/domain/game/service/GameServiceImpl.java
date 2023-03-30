@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.game.dto.ClueDto;
@@ -44,13 +46,13 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public WordGameDto getQuestion(Member member) {
 		Word randomWord = wordRepository.findNoByRand();
-
-		Optional<Sentence> sentence;
+		Pageable limitOne = PageRequest.of(0, 1);
+		List<Sentence> sentence;
 		do {
-			sentence = sentenceRepository.findByWordOrderByMemberScore(randomWord.getNo(), member.getScore());
-		} while (!sentence.isPresent());
+			sentence = sentenceRepository.findByWordOrderByMemberScore(randomWord.getNo(), member.getScore(), limitOne);
+		} while (sentence.isEmpty());
 
-		return new WordGameDto(randomWord, sentence.get());
+		return new WordGameDto(randomWord, sentence.get(0));
 	}
 
 	@Override
