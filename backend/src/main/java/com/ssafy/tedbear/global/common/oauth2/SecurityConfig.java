@@ -107,7 +107,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://j8b103.p.ssafy.io"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://j8b103.p.ssafy.io"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
 		configuration.setAllowCredentials(true); // 클라이언트 요청이 쿠키를 통해 자격 증명을 하는 경우 true
@@ -121,7 +121,7 @@ public class SecurityConfig {
 		return new CustomAnonymousFilter();
 	}
 
-	public class CustomAnonymousFilter extends AnonymousAuthenticationFilter {
+	public static class CustomAnonymousFilter extends AnonymousAuthenticationFilter {
 		private final Logger log = LoggerFactory.getLogger(getClass());
 
 		public CustomAnonymousFilter() {
