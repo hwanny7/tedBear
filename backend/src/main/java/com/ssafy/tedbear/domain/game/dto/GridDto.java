@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GridDto {
-	int clueIdx;
+	int clue;
 	boolean box;
 
 	public GridDto(int clueIdx, boolean box) {
-		this.clueIdx = clueIdx;
+		this.clue = clueIdx;
 		this.box = box;
 	}
 

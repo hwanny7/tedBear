@@ -7,11 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.ssafy.tedbear.global.common.mattermost.NotificationManager;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class ExControllerAdvice {
+
+	private final NotificationManager notificationManager;
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<ErrorResult> illegalExHandle(IllegalArgumentException e) {
