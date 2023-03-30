@@ -42,7 +42,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		clearAuthenticationAttributes(request, response);
 
 		getRedirectStrategy().sendRedirect(request, response,
-			"http://j8b103.p.ssafy.io:3000/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
+			"http://j8b103.p.ssafy.io/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 
