@@ -61,6 +61,7 @@ interface AnimationStyledProps1 {
 
 interface AnimationStyledProps2 {
   inView2: boolean;
+  toggle: boolean;
 }
 
 interface AnimationStyledProps3 {
@@ -807,8 +808,9 @@ const Content = styled.div`
 `;
 
 // BOX1
-const Box1 = styled.div`
-  background-color: ${props => props.theme.bgColor};
+const Box1 = styled.div<AnimationStyledProps2>`
+  background-color: ${props =>
+    !props.toggle ? `${props.theme.whiteColor}` : `${props.theme.blackColor}`};
   position: relative;
   /* height: 500px; */
   z-index: 1;
@@ -1065,7 +1067,8 @@ const DescListEl1 = styled.li<AnimationStyledProps2>`
   box-shadow: 6px 6px 20px #61616142;
 
   position: relative;
-  background: ${props => props.theme.bgColor};
+  background: ${props =>
+    !props.toggle ? `${props.theme.whiteColor}` : `${props.theme.blackColor}`};
   // 1.5s ease-in-out 0s 1 normal none running ${fadeIn2};
   color: ${props => props.theme.textColor2};
   margin-bottom: 16px;
@@ -1802,12 +1805,12 @@ const LandingPageTest = (props: Props) => {
       {/* </Slide> */}
       {/* <Slide> */}
       <Content>
-        <Box1 ref={firstBox}>
+        <Box1 ref={firstBox} inView2={inView2} toggle={props.toggle}>
           <BackBox toggle={props.toggle}></BackBox>
-          <TextTitle1 inView2={inView2}>
+          <TextTitle1 inView2={inView2} toggle={props.toggle}>
             <span>테드베어(TEDBEAR)</span>는?
           </TextTitle1>
-          <TextSubTitle1 inView2={inView2}>
+          <TextSubTitle1 inView2={inView2} toggle={props.toggle}>
             <p>
               테드로 영어를 쉽게 배울 수 있는 사이트입니다.
               <br />
@@ -1818,7 +1821,7 @@ const LandingPageTest = (props: Props) => {
           </TextSubTitle1>
           <DescList ref={descList}>
             <InView onChange={setInView2}></InView>
-            <DescListEl1 inView2={inView2}>
+            <DescListEl1 inView2={inView2} toggle={props.toggle}>
               <LandingVideoImg src={LandingVideo} />
               <div>
                 <ElTitle>VIDEO</ElTitle>
@@ -1829,7 +1832,7 @@ const LandingPageTest = (props: Props) => {
                 </ElDesc>
               </div>
             </DescListEl1>
-            <DescListEl2 inView2={inView2}>
+            <DescListEl2 inView2={inView2} toggle={props.toggle}>
               <LandingMicImg src={LandingMic} />
               <div>
                 <ElTitle>SPEAKING</ElTitle>
@@ -1839,7 +1842,7 @@ const LandingPageTest = (props: Props) => {
                 </ElDesc>
               </div>
             </DescListEl2>
-            <DescListEl3 inView2={inView2}>
+            <DescListEl3 inView2={inView2} toggle={props.toggle}>
               <LandingPuzzleImg src={LandingPuzzle} />
               <div>
                 <ElTitle>GAME</ElTitle>
@@ -1850,7 +1853,7 @@ const LandingPageTest = (props: Props) => {
                 </ElDesc>
               </div>
             </DescListEl3>
-            <DescListEl4 inView2={inView2}>
+            <DescListEl4 inView2={inView2} toggle={props.toggle}>
               <LandingCheckImg src={LandingCheck} />
               <div>
                 <ElTitle>CHECK</ElTitle>

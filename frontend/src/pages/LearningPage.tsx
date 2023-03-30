@@ -29,6 +29,7 @@ import { useParams } from 'react-router-dom';
 import Chart from 'react-apexcharts';
 import DictionaryModal from 'components/learning/dictionaryModal';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -576,7 +577,7 @@ const LearningPage = () => {
       height: '560',
       width: '315',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         start: videoDesc?.lastWatchingTime,
       },
     };
@@ -737,9 +738,21 @@ const LearningPage = () => {
           await postCompletedVideo(data);
         };
         onCompleteVideo();
+
+        Swal.fire({
+          title: '<p> 영상의 난이도가 어떠셨나요? </p>',
+          icon: 'question',
+          showCloseButton: false,
+          showDenyButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText: '쉬워요',
+          cancelButtonText: '평범해요',
+          denyButtonText: '어려워요',
+        });
+      } else {
+        alert('로그인 후 이용해주세요.');
       }
-    } else {
-      alert('로그인 후 이용해주세요.');
     }
   };
 

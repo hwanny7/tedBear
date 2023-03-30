@@ -140,7 +140,8 @@ const IconName = styled.div<OpenStyledProps>`
   font-weight: 500;
   font-size: 14px;
   margin-left: 16px;
-  display: ${OpenStyledProps => (!OpenStyledProps.open ? 'none' : 'block')};
+  visibility: ${OpenStyledProps =>
+    !OpenStyledProps.open ? 'hidden' : 'visible'};
   transition: all 0.3s ease;
 `;
 

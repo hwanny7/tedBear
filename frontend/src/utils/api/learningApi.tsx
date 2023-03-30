@@ -142,3 +142,12 @@ export const deleteWordBookmark = async (data: object) => {
     data: data,
   });
 };
+
+// 난이도 평가
+export const feelDifficulty = async (data: object) => {
+  await authApi({
+    method: 'put',
+    url: `/member/feel`,
+    data: data,
+  });
+};
