@@ -49,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				Authentication authentication = jwtProvider.getAuthentication(token);
 				try {
 					// refreshToken 가져온다.
-					String refreshToken = CookieUtils.getCookie(request, "refresh")
+					String refreshToken = CookieUtils.getCookie(request, "refreshToken")
 						.orElseThrow(() -> new RuntimeException("refresh token이 없습니다."))
 						.getValue();
 					log.info("refreshToken: {}", refreshToken);
