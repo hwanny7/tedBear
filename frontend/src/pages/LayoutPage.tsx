@@ -2,12 +2,17 @@ import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import NavBar from 'components/common/NavBar';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface OpenProps {
   open: boolean;
   center: string;
+}
+
+interface Props {
+  toggle: boolean;
+  setToggle: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const Wrapper = styled.div`
@@ -38,7 +43,7 @@ const DarkBackground = styled.div`
   z-index: 9998;
 `;
 
-const LayoutPage = () => {
+const LayoutPage = (props: Props) => {
   const location = useLocation();
   const pathname = location.pathname;
   const navigate = useNavigate();
@@ -58,7 +63,14 @@ const LayoutPage = () => {
   ) : (
     <Wrapper>
       {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
-      {pathname !== '/test' && <NavBar open={open} setOpen={setOpen} />}
+      {pathname !== '/test' && (
+        <NavBar
+          open={open}
+          setOpen={setOpen}
+          toggle={props.toggle}
+          setToggle={props.setToggle}
+        />
+      )}
       <OutletWrapper open={open} center={pathname}>
         <Outlet context={{ modalOpen, setModalOpen }} />
       </OutletWrapper>

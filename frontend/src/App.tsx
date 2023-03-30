@@ -33,7 +33,9 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
-            <Route element={<LayoutPage />}>
+            <Route
+              element={<LayoutPage toggle={toggle} setToggle={setToggle} />}
+            >
               <Route path="/home" element={<HomePage />} />
               <Route path="/game" element={<GamePage />} />
               <Route path="/game/detail" element={<GameDetailPage />} />

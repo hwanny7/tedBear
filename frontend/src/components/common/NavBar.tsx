@@ -11,15 +11,81 @@ import { ReactComponent as Bookmark } from 'assets/img/bookmark.svg';
 import { SetStateAction, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'redux/user';
+// toggle svg
+import Sun from 'assets/img/sun.svg';
+import Moon from 'assets/img/moon.svg';
 
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
+  toggle: boolean;
+  setToggle: React.Dispatch<SetStateAction<boolean>>;
 }
 
 interface OpenStyledProps {
   open: boolean;
 }
+
+interface ToggleStyledProps {
+  toggle: boolean;
+}
+
+// 라이트모드, 다크모드 설정 토글
+const ToggleBox = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  justify-content: end;
+  padding: 0 22px;
+  margin: 16px 0 0;
+`;
+
+const ToggleBtn = styled.div`
+  background-image: -webkit-linear-gradient(
+    #b3b3b3 0%,
+    #ececec 80%,
+    #ececec 100%
+  );
+  border-radius: 50px;
+  position: relative;
+  width: 56px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+`;
+
+const Circle = styled.div<ToggleStyledProps>`
+  background: ${ToggleStyledProps =>
+    !ToggleStyledProps.toggle
+      ? 'linear-gradient(270deg, #4cb0b9 0%, #47bcc7 30%, #65e3ee 80%)'
+      : 'linear-gradient(90deg, #000000 0%, #3f0e63 90%, #331056 100%)'};
+  width: 32px;
+  height: 32px;
+  z-index: 999;
+  /* position: absolute; */
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 4px #00000053;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+  /* ${ToggleStyledProps =>
+    ToggleStyledProps.toggle &&
+    `
+      transform: translateX(24px);
+    `} */
+`;
+
+const SunImg = styled.img`
+  width: 70%;
+`;
+
+const MoonImg = styled(SunImg)`
+  width: 100%;
+`;
 
 const Nav = styled.div<OpenStyledProps>`
   width: ${OpenStyledProps => (!OpenStyledProps.open ? '78px' : '200px')};
@@ -39,7 +105,7 @@ const LogoBox = styled.div`
   position: relative;
   cursor: pointer;
   padding: 0 22px;
-  margin: 48px 0 0;
+  margin: 24px 0 0;
 
   span {
     font-weight: 500;
@@ -147,6 +213,11 @@ const StyledSignout = styled(Signout)`
 `;
 
 const NavBar2 = (props: Props) => {
+  // 다크모드, 라이트모드 설정
+  const clickedToggle = () => {
+    props.setToggle(!props.toggle);
+  };
+
   // navbar 펼치기
   const openNavbar = () => {
     props.setOpen(!props.open);
@@ -176,6 +247,13 @@ const NavBar2 = (props: Props) => {
 
   return (
     <Nav open={props.open}>
+      <ToggleBox>
+        {/* <ToggleBtn> */}
+        <Circle onClick={clickedToggle} toggle={props.toggle}>
+          {props.toggle ? <MoonImg src={Moon} /> : <SunImg src={Sun} />}
+        </Circle>
+        {/* </ToggleBtn> */}
+      </ToggleBox>
       <LogoBox>
         <Link to="/">
           <IconDiv open={props.open}>
