@@ -177,7 +177,7 @@ const NavBar2 = (props: Props) => {
   return (
     <Nav open={props.open}>
       <LogoBox>
-        <Link to="/home">
+        <Link to="/">
           <IconDiv open={props.open}>
             <StyledLogoSmall />
           </IconDiv>

@@ -28,6 +28,7 @@ import SpeechRecognition, {
 import { useParams } from 'react-router-dom';
 import Chart from 'react-apexcharts';
 import DictionaryModal from 'components/learning/dictionaryModal';
+import { useSelector } from 'react-redux';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -492,6 +493,9 @@ const LearningPage = () => {
     setToggle(!toggle);
   };
 
+  // 회원 정보 가져오기 ==================================================
+  const { isLogin } = useSelector((state: any) => state.auth);
+
   // 유튜브 아이디 ==================================================
   const { videoId } = useParams() as { videoId: string };
 
@@ -584,23 +588,27 @@ const LearningPage = () => {
   );
   // 북마크 클릭시 (등록 및 해제)
   const onBookmark = () => {
-    setVideoBookmark(!videoBookmark);
+    if (isLogin) {
+      setVideoBookmark(!videoBookmark);
 
-    const data = {
-      videoNo: videoNumber,
-    };
-    if (videoBookmark) {
-      // bookmark 해제 (true -> false)
-      const delVideoBookmark = async () => {
-        await deleteVideoBookmark(data);
+      const data = {
+        videoNo: videoNumber,
       };
-      delVideoBookmark();
+      if (videoBookmark) {
+        // bookmark 해제 (true -> false)
+        const delVideoBookmark = async () => {
+          await deleteVideoBookmark(data);
+        };
+        delVideoBookmark();
+      } else {
+        // bookmark 등록 (false -> true)
+        const insertVideoBookmark = async () => {
+          await postVideoBookmark(data);
+        };
+        insertVideoBookmark();
+      }
     } else {
-      // bookmark 등록 (false -> true)
-      const insertVideoBookmark = async () => {
-        await postVideoBookmark(data);
-      };
-      insertVideoBookmark();
+      alert('로그인 후 이용해주세요.');
     }
   };
 
@@ -645,23 +653,27 @@ const LearningPage = () => {
 
   //문장 북마크
   const onSentenceBookmark = (id: number) => {
-    setSentenceBookmark(!sentenceBookmark);
+    if (isLogin) {
+      setSentenceBookmark(!sentenceBookmark);
 
-    const data = {
-      sentenceNo: id,
-    };
-    if (sentenceBookmark) {
-      // bookmark 해제 (true -> false)
-      const delSentenceBookmark = async () => {
-        await deleteSentenceBookmark(data);
+      const data = {
+        sentenceNo: id,
       };
-      delSentenceBookmark();
+      if (sentenceBookmark) {
+        // bookmark 해제 (true -> false)
+        const delSentenceBookmark = async () => {
+          await deleteSentenceBookmark(data);
+        };
+        delSentenceBookmark();
+      } else {
+        // bookmark 등록 (false -> true)
+        const insertSentenceBookmark = async () => {
+          await postSentenceBookmark(data);
+        };
+        insertSentenceBookmark();
+      }
     } else {
-      // bookmark 등록 (false -> true)
-      const insertSentenceBookmark = async () => {
-        await postSentenceBookmark(data);
-      };
-      insertSentenceBookmark();
+      alert('로그인 후 이용해주세요.');
     }
   };
 
@@ -711,16 +723,20 @@ const LearningPage = () => {
   });
   // 학습 완료
   const onComplete = () => {
-    if (window.confirm('학습 완료 하시겠습니까?')) {
-      // 학습 왼료 정보 보내기
-      const data = {
-        videoNo: videoNumber,
-        videoProgressTime: videoTime.toString(),
-      };
-      const onCompleteVideo = async () => {
-        await postCompletedVideo(data);
-      };
-      onCompleteVideo();
+    if (isLogin) {
+      if (window.confirm('학습 완료 하시겠습니까?')) {
+        // 학습 왼료 정보 보내기
+        const data = {
+          videoNo: videoNumber,
+          videoProgressTime: videoTime.toString(),
+        };
+        const onCompleteVideo = async () => {
+          await postCompletedVideo(data);
+        };
+        onCompleteVideo();
+      }
+    } else {
+      alert('로그인 후 이용해주세요.');
     }
   };
 
