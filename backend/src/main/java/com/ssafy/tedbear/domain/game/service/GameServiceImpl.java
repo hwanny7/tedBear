@@ -42,9 +42,8 @@ public class GameServiceImpl implements GameService {
 	private final WordSentenceRepository wordSentenceRepository;
 
 	@Override
-	public WordGameDto getQuestion(Long memberId) {
+	public WordGameDto getQuestion(Member member) {
 		Word randomWord = wordRepository.findNoByRand();
-		Member member = memberService.getMember(memberId);
 
 		Optional<Sentence> sentence;
 		do {
@@ -55,8 +54,8 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public void completeWordGame(long memberId, WordGameResultDto wordGameResultDto) {
-		gameRecordRepository.save(wordGameResultDto.toEntity(memberId));
+	public void completeWordGame(Member member, WordGameResultDto wordGameResultDto) {
+		gameRecordRepository.save(wordGameResultDto.toEntity(member));
 	}
 
 	public CrossWordDto getCrossWord(int boardSize) {

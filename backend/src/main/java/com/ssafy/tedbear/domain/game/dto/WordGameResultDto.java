@@ -13,11 +13,11 @@ public class WordGameResultDto {
 	Long wordNo;
 	Long tryCnt;
 
-	public GameRecord toEntity(Long memberId) {
+	public GameRecord toEntity(Member member) {
 		return GameRecord.builder()
 			.tryCnt(tryCnt)
 			.createdDate(LocalDateTime.now())
-			.member(Member.builder().no(memberId).build())
+			.member(member)
 			.word(Word.builder().no(this.wordNo).build())
 			.build();
 	}
