@@ -7,13 +7,13 @@ import lombok.Getter;
 
 @Getter
 public class CrossWordDto {
-	List<GridDto> board;
+	List<GridDto> array;
 	List<ClueDto> clueList;
 	List<List<Character>> answerBoard;
 	int boardSize;
 
 	public CrossWordDto(List<GridDto> board, List<ClueDto> clueList, char[][] answerBoard, int boardSize) {
-		this.board = board;
+		this.array = board;
 		this.clueList = clueList;
 		this.answerBoard = new ArrayList<>();
 		for (int i = 0; i < boardSize; i++) {

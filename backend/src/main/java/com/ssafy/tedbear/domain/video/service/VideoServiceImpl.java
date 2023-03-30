@@ -24,6 +24,7 @@ import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
 import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
+import com.ssafy.tedbear.global.common.FindMemberService;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,13 @@ public class VideoServiceImpl implements VideoService {
 	final VideoBookmarkRepository videoBookmarkRepository;
 	final WatchingVideoRepository watchingVideoRepository;
 	final MemberService memberService;
+	final FindMemberService findMemberService;
 	final int resultMaxCnt = 12;
 
 	@Override
 	@Transactional
-	public VideoInfoListDto getRecommendList(long memberNo, int delta) {
-		Member member = memberService.getMember(memberNo);
+	public VideoInfoListDto getRecommendList(String memberUid, int delta) {
+		Member member = findMemberService.findMember(memberUid);
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore + delta);
 		int deltaScore = 1500;
@@ -73,8 +75,8 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoDetailDto getDetail(long memberNo, String watchId) {
-		Member member = memberService.getMember(memberNo);
+	public VideoDetailDto getDetail(String memberUid, String watchId) {
+		Member member = findMemberService.findMember(memberUid);
 		Video video = videoRepository.findByWatchId(watchId);
 		video.setBookmarked(videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video).isPresent());
 		watchingVideoRepository.findByMemberAndVideo(member, video)
@@ -84,8 +86,8 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoInfoDto getWatchingRecent(long memberNo) {
-		Member member = memberService.getMember(memberNo);
+	public VideoInfoDto getWatchingRecent(String memberUid) {
+		Member member = findMemberService.findMember(memberUid);
 
 		Optional<WatchingVideo> optionalWatchingVideo = watchingVideoRepository.findTop1ByMemberAndVideoStatusOrderByUpdatedDateDesc(
 			member, false);
@@ -101,8 +103,8 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoInfoListDto getWatchingList(long memberNo, Pageable pageable) {
-		Member member = memberService.getMember(memberNo);
+	public VideoInfoListDto getWatchingList(String memberUid, Pageable pageable) {
+		Member member = findMemberService.findMember(memberUid);
 		Slice<WatchingVideo> watchingVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageable,
 			member, false);
 		List<Video> videoList = watchingVideoSlice.get().map(watchingVideo -> watchingVideo.getVideo()).collect(
@@ -113,8 +115,8 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public VideoInfoListDto getCompleteList(long memberNo, Pageable pageable) {
-		Member member = memberService.getMember(memberNo);
+	public VideoInfoListDto getCompleteList(String memberUid, Pageable pageable) {
+		Member member = findMemberService.findMember(memberUid);
 
 		Slice<WatchingVideo> completeVideoSlice = watchingVideoRepository.findSliceByMemberAndVideoStatus(pageable,
 			member, true);
@@ -134,8 +136,8 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public void saveWatchingRecord(long memberNo, WatchingVideoInfoDto request) {
-		Member member = memberService.getMember(memberNo);
+	public void saveWatchingRecord(String memberUid, WatchingVideoInfoDto request) {
+		Member member = findMemberService.findMember(memberUid);
 
 		// Insert Or Update !!
 		Video video = Video.builder().no(request.getVideoNo()).build();
@@ -154,8 +156,8 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public void saveCompleteRecord(long memberNo, WatchingVideoInfoDto request) {
-		Member member = memberService.getMember(memberNo);
+	public void saveCompleteRecord(String memberUid, WatchingVideoInfoDto request) {
+		Member member = findMemberService.findMember(memberUid);
 
 		// Insert Or Update !!
 		Video video = Video.builder().no(request.getVideoNo()).build();
@@ -176,8 +178,8 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoInfoListDto getVideoBookmarkList(long memberNo) {
-		Member member = Member.builder().no(memberNo).build();
+	public VideoInfoListDto getVideoBookmarkList(String memberUid) {
+		Member member = findMemberService.findMember(memberUid);
 		List<VideoBookmark> videoBookmarkList = videoBookmarkRepository.findVideoBookmarksByMember(member);
 		List<Video> videoList = videoBookmarkList.stream().map(x -> x.getVideo()).collect(Collectors.toList());
 		updateBookmarkVideo(member, videoList);
@@ -186,8 +188,8 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public void saveVideoBookmark(long memberNo, long videoNo) {
-		Member member = Member.builder().no(memberNo).build();
+	public void saveVideoBookmark(String memberUid, long videoNo) {
+		Member member = findMemberService.findMember(memberUid);
 		Video video = Video.builder().no(videoNo).build();
 		videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
 			.ifPresentOrElse(none -> {
@@ -205,8 +207,8 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@Transactional
-	public void deleteVideoBookmark(long memberNo, long videoNo) {
-		Member member = Member.builder().no(memberNo).build();
+	public void deleteVideoBookmark(String memberUid, long videoNo) {
+		Member member = findMemberService.findMember(memberUid);
 		Video video = Video.builder().no(videoNo).build();
 		videoBookmarkRepository.deleteByMemberAndVideo(member, video);
 	}

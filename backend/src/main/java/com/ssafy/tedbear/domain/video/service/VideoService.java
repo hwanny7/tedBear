@@ -9,26 +9,26 @@ import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfoDto;
 
 public interface VideoService {
 
-	VideoInfoListDto getRecommendList(long memberNo, int delta);
+	VideoInfoListDto getRecommendList(String memberUid, int delta);
 
-	VideoDetailDto getDetail(long memberNo, String watchId);
+	VideoDetailDto getDetail(String memberUid, String watchId);
 
-	VideoInfoDto getWatchingRecent(long memberNo);
+	VideoInfoDto getWatchingRecent(String memberUid);
 
-	VideoInfoListDto getWatchingList(long memberNo, Pageable pageable);
+	VideoInfoListDto getWatchingList(String memberUid, Pageable pageable);
 
-	VideoInfoListDto getCompleteList(long memberNo, Pageable pageable);
+	VideoInfoListDto getCompleteList(String memberUid, Pageable pageable);
 
 	VideoInfoListDto searchVideo(String query, Pageable pageable);
 
-	void saveWatchingRecord(long memberNo, WatchingVideoInfoDto request);
+	void saveWatchingRecord(String memberUid, WatchingVideoInfoDto request);
 
-	void saveCompleteRecord(long memberNo, WatchingVideoInfoDto request);
+	void saveCompleteRecord(String memberUid, WatchingVideoInfoDto request);
 
-	VideoInfoListDto getVideoBookmarkList(long memberNo);
+	VideoInfoListDto getVideoBookmarkList(String memberUid);
 
-	void saveVideoBookmark(long memberNo, long videoNo);
+	void saveVideoBookmark(String memberUid, long videoNo);
 
-	void deleteVideoBookmark(long memberNo, long videoNo);
+	void deleteVideoBookmark(String memberUid, long videoNo);
 
 }

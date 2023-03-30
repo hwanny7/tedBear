@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.ssafy.tedbear.domain.game.dto.CrossWordDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameResultDto;
 import com.ssafy.tedbear.domain.game.service.GameService;
+import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +39,9 @@ public class GameController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/crossword")
-	public ResponseEntity<CrossWordDto> getCrossWordGame() {
-		return ResponseEntity.ok(gameService.getCrossWord());
+	@GetMapping("/crossword/{difficulty}")
+	public ResponseEntity<CrossWordDto> getCrossWordGame(@PathVariable String difficulty) {
+
+		return ResponseEntity.ok(gameService.getCrossWord(RecommendUtil.getBoardSize(difficulty)));
 	}
 }

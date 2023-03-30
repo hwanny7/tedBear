@@ -10,6 +10,6 @@ public interface GameService {
 
 	void completeWordGame(long memberId, WordGameResultDto wordGameResultDto);
 	
-	CrossWordDto getCrossWord();
+	CrossWordDto getCrossWord(int boardSize);
 
 }

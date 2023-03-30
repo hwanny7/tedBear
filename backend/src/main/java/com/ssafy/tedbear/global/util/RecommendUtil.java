@@ -28,4 +28,29 @@ public class RecommendUtil {
 		}
 		return delta;
 	}
+
+	public static int getBoardSize(String difficulty) {
+		int boardSize;
+		switch (difficulty) {
+			case "easy":
+				boardSize = 8;
+				break;
+			case "hard":
+				boardSize = 16;
+				break;
+			case "impossible":
+				boardSize = 24;
+				break;
+			case "master":
+				boardSize = 30;
+				break;
+			case "ssafy":
+				boardSize = 40;
+				break;
+			case "normal":
+			default:
+				boardSize = 12;
+		}
+		return boardSize;
+	}
 }

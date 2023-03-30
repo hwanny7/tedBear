@@ -63,7 +63,7 @@ public class GameServiceImpl implements GameService {
 		gameRecordRepository.save(wordGameResultDto.toEntity(memberId));
 	}
 
-	public CrossWordDto getCrossWord() {
+	public CrossWordDto getCrossWord(int boardSize) {
 		List<Word> wordList = wordRepository
 			.findWordsForCrosswordGame()
 			.stream()
@@ -71,7 +71,7 @@ public class GameServiceImpl implements GameService {
 			.collect(Collectors.toList());
 
 		// 게임판의 크기
-		int SIZE = 10;
+		int SIZE = boardSize;
 		// (matrix가) 비어있음을 나타내는 상수
 		char EMPTY_MATRIX = '.';
 		// (힌트판이) 비어있음을 나타내는 상수
