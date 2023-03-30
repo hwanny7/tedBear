@@ -2,8 +2,6 @@ package com.ssafy.tedbear.global.common.mattermost;
 
 import static com.ssafy.tedbear.global.common.mattermost.MatterMostMessageDto.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class MatterMostSender {
-	private Logger log = LoggerFactory.getLogger(MatterMostSender.class);
 
 	@Value("${notification.mattermost.enabled}")
 	private boolean mmEnabled;
@@ -56,7 +53,6 @@ public class MatterMostSender {
 			restTemplate.postForEntity(webhookUrl, entity, String.class);
 
 		} catch (Exception e) {
-			log.error("#### ERROR!! Notification Manager : {}", e.getMessage());
 		}
 
 	}
