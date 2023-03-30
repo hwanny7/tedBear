@@ -112,7 +112,8 @@ public class GameServiceImpl implements GameService {
 
 			for (int i = 0; i < SIZE; i++) {
 				for (int j = 0; j < SIZE; j++) {
-					if(board[i][j]>0)continue;
+					if (board[i][j] > 0)
+						continue;
 					if (tryPutWord(word, i, j, matrix, Direction.DOWN)) {
 						canI = i;
 						canJ = j;
@@ -160,12 +161,14 @@ public class GameServiceImpl implements GameService {
 		if (direction == Direction.ACROSS) {
 			for (int i = 0; i < content.length(); i++) {
 				matrix[y][x + i] = content.charAt(i);
-				board[y][x + i] = 0;
+				if (board[y][x + i] == -1)
+					board[y][x + i] = 0;
 			}
 		} else if (direction == Direction.DOWN) {
 			for (int i = 0; i < content.length(); i++) {
 				matrix[y + i][x] = content.charAt(i);
-				board[y + i][x] = 0;
+				if (board[y + i][x] == -1)
+					board[y + i][x] = 0;
 			}
 		}
 		board[y][x] = clueIdx;
@@ -175,6 +178,9 @@ public class GameServiceImpl implements GameService {
 		int SIZE = matrix.length;
 		for (int i = 0; i < SIZE; i++)
 			System.out.println(Arrays.toString(matrix[i]));
+		System.out.println();
+		for (int i = 0; i < SIZE; i++)
+			System.out.println(Arrays.toString(board[i]));
 	}
 
 	private boolean tryPutWord(Word word, int i, int j, char[][] matrix, Direction direction) {
