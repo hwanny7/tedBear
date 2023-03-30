@@ -31,7 +31,6 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  /* margin-left: 10%; */
   .dic-box {
     height: 5%;
     width: 80%;
@@ -44,8 +43,15 @@ const Content = styled.div`
     &:hover {
       scale: 1.08;
       transition: 0.4s;
+      background-color: #e6e4f4;
     }
   }
+  .current {
+    background-color: #b4adde;
+  }
+  /* .editting {
+    background-color: #e6e4f4;
+  } */
 `;
 
 const CrossWordPage = () => {
@@ -136,11 +142,11 @@ const CrossWordPage = () => {
 
       const nextClueList = clueList.map(item => {
         if (item.clue === clue) {
-          item.hightlight = true;
+          item.editting = true;
         }
 
         if (item.clue === state.current.clue) {
-          item.hightlight = false;
+          item.editting = false;
         }
         return item;
       });
@@ -180,6 +186,7 @@ const CrossWordPage = () => {
           answer: '',
           cursor: false,
           edit: false,
+          editting: false,
           hightlight: false,
         };
       }),
@@ -399,6 +406,14 @@ const CrossWordPage = () => {
       }
     }
 
+    // let clueCopy = [...clueList];
+    // for (let i = 0; i < clueCopy.length; i++) {
+    //   if (clueCopy[i] === clue) {
+    //     clueCopy[i].highlight = !clueCopy[i].highlight;
+    //   }
+    // }
+    // console.log(clueCopy);
+    // setClueList(clueCopy);
     setWordList(copy);
   };
 
@@ -449,9 +464,10 @@ const CrossWordPage = () => {
         {clueList.map((clue, idx) => {
           return (
             <div
-              className="dic-box"
+              className={`dic-box ${clue.editting && 'current'} ${
+                clue.highlight && 'editting'
+              }`}
               key={idx}
-              style={{ backgroundColor: clue.hightlight ? '#b4adde' : '' }}
               onClick={() => clickClue(clue)}
               onMouseOver={() => toggleClue(clue)}
               onMouseOut={() => toggleClue(clue)}
