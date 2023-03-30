@@ -82,7 +82,7 @@ logging:
 notification:
   mattermost:
     enabled: true # mmSender를 사용할 지 여부, false면 알림이 오지 않는다
-    webhook-url: "https://meeting.ssafy.com/hooks/8cd83atsrty35rpun3zjigi45a"
+    webhook-url: "https://meeting.ssafy.com/hooks/ucu18675zbncmm6nn1sj95if9c"
 #    channel: # 기본 설정한 채널이 아닌 다른 채널로 보내고 싶을 때 기입한다
 #    pretext: # attachments의 상단에 나오게 되는 일반 텍스트 문자
 #    color: # attachment에 왼쪽 사이드 컬러. default=red

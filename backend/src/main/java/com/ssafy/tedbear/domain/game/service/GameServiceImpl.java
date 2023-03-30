@@ -3,16 +3,12 @@ package com.ssafy.tedbear.domain.game.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.game.dto.ClueDto;
@@ -116,6 +112,7 @@ public class GameServiceImpl implements GameService {
 
 			for (int i = 0; i < SIZE; i++) {
 				for (int j = 0; j < SIZE; j++) {
+					if(board[i][j]>0)continue;
 					if (tryPutWord(word, i, j, matrix, Direction.DOWN)) {
 						canI = i;
 						canJ = j;

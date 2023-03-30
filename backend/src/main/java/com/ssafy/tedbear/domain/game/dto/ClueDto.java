@@ -30,6 +30,7 @@ public class ClueDto {
 	public ClueDto(Word word, int clueIdx, int boardIdx, String direction) {
 		this.answer = word.getContent();
 		this.dic = word.getMean();
+		this.length = this.answer.length();
 		this.shorts = null;
 		this.index = boardIdx;
 		this.clue = clueIdx;

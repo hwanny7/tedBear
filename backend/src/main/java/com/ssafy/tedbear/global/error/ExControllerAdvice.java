@@ -1,6 +1,9 @@
 package com.ssafy.tedbear.global.error;
 
+import java.util.Enumeration;
 import java.util.NoSuchElementException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,22 @@ import lombok.extern.slf4j.Slf4j;
 public class ExControllerAdvice {
 
 	private final NotificationManager notificationManager;
+
+	@ExceptionHandler(Exception.class)
+	public void allExHandle(Exception e, HttpServletRequest req) {
+		notificationManager.sendNotification(e, req.getRequestURI(), getParams(req));
+	}
+
+	private String getParams(HttpServletRequest req) {
+		StringBuilder params = new StringBuilder();
+		Enumeration<String> keys = req.getParameterNames();
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			params.append("- ").append(key).append(" : ").append(req.getParameter(key)).append('\n');
+		}
+
+		return params.toString();
+	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<ErrorResult> illegalExHandle(IllegalArgumentException e) {

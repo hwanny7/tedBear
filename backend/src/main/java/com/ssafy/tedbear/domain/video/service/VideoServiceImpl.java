@@ -53,7 +53,6 @@ public class VideoServiceImpl implements VideoService {
 				Math.max(1, recommendScoreFlag - deltaScore),
 				recommendScoreFlag + deltaScore));
 			deltaScore += 10000;
-			System.out.println(recommendVideoList.size());
 		} while (recommendVideoList.size() < resultMaxCnt);
 
 		Set<Long> bookmarkedVideoNoSet =
