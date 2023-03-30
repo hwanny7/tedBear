@@ -12,11 +12,18 @@ interface IBookmarkVideo {
     },
   ];
 }
-export const getVideoBookmark = async () => {
+export const getVideoBookmark = async (page: number) => {
+  const params = {
+    size: 8,
+    page,
+  };
+
   const { data } = await authApi<IBookmarkVideo>({
     method: 'get',
     url: '/video/bookmark/list',
+    params: params,
   });
+  console.log(data, 'data입니다!');
   return data.videoInfoList;
 };
 
@@ -35,10 +42,16 @@ interface IBookmarkSentence {
     },
   ];
 }
-export const getSentenceBookmark = async () => {
+export const getSentenceBookmark = async (page: number) => {
+  const params = {
+    size: 8,
+    page,
+  };
+
   const { data } = await authApi<IBookmarkSentence>({
     method: 'get',
     url: '/sentence/bookmark/list',
+    params: params,
   });
   return data.sentenceList;
 };

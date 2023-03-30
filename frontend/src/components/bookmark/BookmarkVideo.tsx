@@ -11,7 +11,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import InfiniteScroll from 'react-infinite-scroll-component';
+// import InfiniteScroll from 'react-infinite-scroll-component';
+import { useInView } from 'react-intersection-observer';
 
 interface IBookmarkVideo {
   thumbnailUrl: string;
@@ -50,82 +51,95 @@ const BookIn = styled.div`
 const BookmarkVideo = () => {
   const navigate = useNavigate();
   const [videoBookmark, setVideoBookmark] = useState<IBookmarkVideo[]>([]);
-
   const [hasMore, setHasMore] = useState(true);
+  const [ref, inView] = useInView();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
 
   const handleClick = (watchId: string): void => {
     navigate(`/learning/${watchId}`);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data: IBookmarkVideo[] = await getVideoBookmark();
+  const fetchData = async () => {
+    setLoading(true);
+    const data: IBookmarkVideo[] = await getVideoBookmark(page);
+    if (data.length) {
       setVideoBookmark(data);
       console.log(data);
-    };
-    fetchData();
-  }, []);
-
-  const fetchMore = async () => {
-    const data: IBookmarkVideo[] = await getVideoBookmark();
-    // setSentenceBookmark(data);
-    console.log(data);
-    setVideoBookmark([...videoBookmark, ...data]);
-    setHasMore(data.length > 0); // true
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
+
+  useEffect(() => {
+    console.log('useEffect!');
+    if (inView && !loading) {
+      setPage(prev => prev + 1);
+    }
+  }, [inView, loading]);
+
+  // const fetchMore = async () => {
+  //   const data: IBookmarkVideo[] = await getVideoBookmark();
+  //   // setSentenceBookmark(data);
+  //   console.log(data);
+  //   setVideoBookmark([...videoBookmark, ...data]);
+  //   setHasMore(data.length > 0); // true
+  // };
 
   return (
     <BookIn>
       <div className="videoes">
-        <InfiniteScroll
+        {/* <InfiniteScroll
           dataLength={videoBookmark.length}
           next={fetchMore}
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
+        > */}
+        <Grid
+          container
+          justifyContent={'flex-start'}
+          style={{ height: '1%', width: '100%' }}
         >
-          <Grid
-            container
-            justifyContent={'flex-start'}
-            style={{ height: '1%', width: '100%' }}
-          >
-            {videoBookmark.map((Thumnail, idx) => {
-              return (
-                <Grid
-                  item
-                  display="flex"
-                  justifyContent={'center'}
-                  alignItems={'center'}
-                  style={{
-                    padding: '0px',
-                    marginTop: '2%',
-                    paddingLeft: '1%',
-                    paddingRight: '1%',
-                  }}
-                  lg={4}
-                  md={6}
-                  sm={8}
-                  xs={12}
+          {videoBookmark.map((Thumnail, idx) => {
+            return (
+              <Grid
+                item
+                display="flex"
+                justifyContent={'center'}
+                alignItems={'center'}
+                style={{
+                  padding: '0px',
+                  marginTop: '2%',
+                  paddingLeft: '1%',
+                  paddingRight: '1%',
+                }}
+                lg={4}
+                md={6}
+                sm={8}
+                xs={12}
+                key={idx}
+              >
+                <Card
                   key={idx}
+                  sx={{
+                    width: '100%',
+                    height: '50vh',
+                    position: 'relative',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'pink',
+                  }}
+                  onClick={() => handleClick(Thumnail.watchId)}
                 >
-                  <Card
-                    key={idx}
+                  <CardActionArea
                     sx={{
-                      width: '100%',
-                      height: '50vh',
-                      position: 'relative',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'pink',
+                      height: '200px', // adjust the height as needed
+                      width: '400px',
                     }}
-                    onClick={() => handleClick(Thumnail.watchId)}
                   >
-                    <CardActionArea
-                      sx={{
-                        height: '200px', // adjust the height as needed
-                        width: '400px',
-                      }}
-                    >
-                      {/* <img
+                    {/* <img
                         className="video-level"
                         src={VideoLevel}
                         style={{
@@ -135,58 +149,59 @@ const BookmarkVideo = () => {
                           left: '4%',
                         }}
                       ></img> */}
-                      <img
-                        className="book-mark"
-                        src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                        style={{
-                          height: '50%',
+                    <img
+                      className="book-mark"
+                      src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                      style={{
+                        height: '50%',
+                        position: 'absolute',
+                        left: '20%',
+                      }}
+                    ></img>
+                    <CardMedia
+                      className="main-img"
+                      component="img"
+                      image={
+                        'https://i.ytimg.com/vi/' +
+                        Thumnail.watchId +
+                        '/maxresdefault.jpg'
+                      }
+                      alt=""
+                      sx={{
+                        height: '200px', // adjust the height as needed
+                        width: '400px',
+                      }}
+                    />
+                    <CardContent
+                      key={idx}
+                      sx={{
+                        width: '100vw',
+                        height: '30vh',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        overflow: 'auto',
+                      }}
+                    >
+                      <Typography
+                        component="div"
+                        sx={{
                           position: 'absolute',
-                          left: '20%',
-                        }}
-                      ></img>
-                      <CardMedia
-                        className="main-img"
-                        component="img"
-                        image={
-                          'https://i.ytimg.com/vi/' +
-                          Thumnail.watchId +
-                          '/maxresdefault.jpg'
-                        }
-                        alt=""
-                        sx={{
-                          height: '200px', // adjust the height as needed
-                          width: '400px',
-                        }}
-                      />
-                      <CardContent
-                        key={idx}
-                        sx={{
-                          width: '100vw',
-                          height: '30vh',
+                          width: '350px',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          overflow: 'auto',
                         }}
                       >
-                        <Typography
-                          component="div"
-                          sx={{
-                            position: 'absolute',
-                            width: '350px',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}
-                        >
-                          {Thumnail.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </InfiniteScroll>
+                        {Thumnail.title}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+        {/* </InfiniteScroll> */}
+        <div ref={ref} style={{ height: '10vh' }}></div>
       </div>
     </BookIn>
   );

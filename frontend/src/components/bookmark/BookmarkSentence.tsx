@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { getSentenceBookmark } from 'utils/api/bookmarkApi';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import Play from 'assets/img/play.svg';
 import { useNavigate } from 'react-router-dom';
+// import InfiniteScroll from 'react-infinite-scroll-component';
+import { useInView } from 'react-intersection-observer';
+
 interface IBookmarkSentence {
   no: number;
   content: string;
@@ -97,23 +99,37 @@ const BookmarkSentence = () => {
     [],
   );
   const [hasMore, setHasMore] = useState(true);
+  const [ref, inView] = useInView();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data: IBookmarkSentence[] = await getSentenceBookmark();
+  const fetchData = async () => {
+    setLoading(true);
+    const data: IBookmarkSentence[] = await getSentenceBookmark(page);
+    if (data.length) {
       setSentenceBookmark(data);
       console.log(data);
-    };
-    fetchData();
-  }, []);
-
-  const fetchMore = async () => {
-    const data: IBookmarkSentence[] = await getSentenceBookmark();
-    // setSentenceBookmark(data);
-    console.log(data);
-    setSentenceBookmark([...sentenceBookmark, ...data]);
-    setHasMore(data.length > 0); // true
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
+
+  useEffect(() => {
+    console.log('useEffect!');
+    if (inView && !loading) {
+      setPage(prev => prev + 1);
+    }
+  }, [inView, loading]);
+
+  // const fetchMore = async () => {
+  //   const data: IBookmarkSentence[] = await getSentenceBookmark();
+  //   // setSentenceBookmark(data);
+  //   console.log(data);
+  //   setSentenceBookmark([...sentenceBookmark, ...data]);
+  //   setHasMore(data.length > 0); // true
+  // };
 
   const handlePlay = () => {
     navigate('/home');
@@ -121,40 +137,41 @@ const BookmarkSentence = () => {
   return (
     <BookIn>
       <div className="sentences">
-        <InfiniteScroll
+        {/* <InfiniteScroll
           dataLength={sentenceBookmark.length}
           next={fetchMore}
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
-        >
-          <div className="sentence">
-            {sentenceBookmark.map(sen => (
-              <div className="row" key={sen.no}>
-                <div className="bookmark-container">
-                  <img
-                    className="book-mark"
-                    src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
-                  ></img>
-                </div>
-                <div className="play-shorts-container">
-                  <img
-                    className="play-shorts"
-                    onClick={handlePlay}
-                    src={sen.no ? Play : Play}
-                  ></img>
-                </div>
-                <div className="cotent-container">
-                  <p>{sen.content}</p>
-                  <br></br>
-                </div>
-                <div className="translation-container">
-                  <p>{sen.translation}</p>
-                  <br></br>
-                </div>
+        > */}
+        <div className="sentence">
+          {sentenceBookmark.map(sen => (
+            <div className="row" key={sen.no}>
+              <div className="bookmark-container">
+                <img
+                  className="book-mark"
+                  src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
+                ></img>
               </div>
-            ))}
-          </div>
-        </InfiniteScroll>
+              <div className="play-shorts-container">
+                <img
+                  className="play-shorts"
+                  onClick={handlePlay}
+                  src={sen.no ? Play : Play}
+                ></img>
+              </div>
+              <div className="cotent-container">
+                <p>{sen.content}</p>
+                <br></br>
+              </div>
+              <div className="translation-container">
+                <p>{sen.translation}</p>
+                <br></br>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* </InfiniteScroll> */}
+        <div ref={ref} style={{ height: '10vh' }}></div>
       </div>
     </BookIn>
   );
