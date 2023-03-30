@@ -22,7 +22,7 @@ export const basicApi = axios.create({
 authApi.interceptors.request.use((config: any) => {
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
-    window.location.href = '/';
+    // window.location.href = '/';
     alert('로그인 시간이 만료되었습니다.');
     return;
   }
