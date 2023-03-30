@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		log.info("request method: {}", request.getMethod());
 		log.info("jwt filter");
 		String token = parseBearerToken(request);
+		log.info("들어온 토큰확인: " + token);
 
 		try {
 			if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) { // 토큰이 있고 유효하다면
