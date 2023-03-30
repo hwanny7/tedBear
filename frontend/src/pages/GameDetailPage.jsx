@@ -135,10 +135,11 @@ const GameDetailPage = () => {
         .then(response => {
           console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data);
-          const { sentence, answer, wordNo } = response.data;
+          const { sentence, answer, wordNo, hint } = response.data;
           setSentence(sentence);
           setAnswer(answer);
           setWordNumber(wordNo);
+          setHintList(hint);
         })
         .catch(error => {
           console.log(error.data);
@@ -156,10 +157,11 @@ const GameDetailPage = () => {
         .then(response => {
           console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data);
-          const { sentence, answer, wordNo } = response.data;
+          const { sentence, answer, wordNo, hint } = response.data;
           setSentence(sentence);
           setAnswer(answer);
           setWordNumber(wordNo);
+          setHintList(hint);
         })
         .catch(error => {
           console.log(error.data);
@@ -282,7 +284,9 @@ const GameDetailPage = () => {
   }, [correctAnswerCount]);
 
   const handleHint = () => {
-    console.log('showHintModal');
+    console.log(hintList.startTime);
+    console.log(hintList.endTime);
+    console.log(hintList.watchId);
   };
 
   return (
