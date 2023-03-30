@@ -1558,7 +1558,6 @@ const Box2 = styled.div<AnimationStyledProps4>`
   width: 100%;
   overflow: hidden;
   background-color: #3a335f;
-  padding: 128px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1587,6 +1586,22 @@ const Box2 = styled.div<AnimationStyledProps4>`
       }
     }
   }
+
+  @media ${device.mobile} {
+    padding: 128px 24px;
+  }
+
+  @media ${device.tablet} {
+    padding: 128px 24px;
+  }
+
+  @media ${device.laptop} {
+    padding: 128px 32px;
+  }
+
+  @media ${device.desktop} {
+    padding: 128px 48px;
+  }
 `;
 
 const TextTitle3 = styled.div`
@@ -1595,30 +1610,27 @@ const TextTitle3 = styled.div`
   color: ${props => props.theme.whiteColor};
   /* position: relative; */
   z-index: 1;
+  width: 100%;
 
-  span {
+  > span {
     font-weight: bold;
     color: ${props => props.theme.pointColor};
   }
 
   @media ${device.mobile} {
-    font-size: 20px;
-    padding-left: 32px;
+    font-size: 16px;
   }
 
   @media ${device.tablet} {
-    font-size: 20px;
-    padding-left: 32px;
+    font-size: 24px;
   }
 
   @media ${device.laptop} {
-    font-size: 20px;
-    padding-left: 32px;
+    font-size: 28px;
   }
 
   @media ${device.desktop} {
     font-size: 32px;
-    padding-left: 54px;
     line-height: 48px;
   }
 `;
@@ -1628,39 +1640,36 @@ const TextSubTitle3 = styled.div`
   color: #edd1ff;
   /* position: relative; */
   z-index: 1;
+  text-align: center;
 
   @media ${device.mobile} {
     font-size: 12px;
-    padding-left: 32px;
     margin-top: 8px;
-    > p {
+    > span {
       line-height: 24px;
     }
   }
 
   @media ${device.tablet} {
     font-size: 12px;
-    padding-left: 32px;
     margin-top: 8px;
-    > p {
+    > span {
       line-height: 24px;
     }
   }
 
   @media ${device.laptop} {
     font-size: 12px;
-    padding-left: 32px;
     margin-top: 8px;
-    > p {
+    > span {
       line-height: 24px;
     }
   }
 
   @media ${device.desktop} {
     font-size: 20px;
-    padding-left: 54px;
     margin-top: 32px;
-    > p {
+    > span {
       line-height: 32px;
     }
   }
@@ -1856,7 +1865,7 @@ const LandingPageTest = (props: Props) => {
         </Box1>
         {/* </Slide> */}
         {/* <Slide> */}
-        <Box3 toggle={props.toggle}>
+        {/* <Box3 toggle={props.toggle}>
           <InView onChange={setInView3}></InView>
           <ContentLeft>
             <TextTitle2 inView3={inView3}>DETAIL</TextTitle2>
@@ -1872,8 +1881,6 @@ const LandingPageTest = (props: Props) => {
               <LandingBall1Img src={LandingBall1} inView3={inView3} />
               <LandingBall2Img src={LandingBall2} inView3={inView3} />
               <LandingBall3Img src={LandingBall3} inView3={inView3} />
-              {/* <LandingMan1Img src={LandingMan1} /> */}
-              {/* <LandingMan2Img src={LandingMan2} /> */}
             </ImgBox2>
           </ContentLeft>
           <ContentRight inView3={inView3}>
@@ -1928,7 +1935,7 @@ const LandingPageTest = (props: Props) => {
               </DetailElDesc>
             </DetatilWrapper>
           </ContentRight>
-        </Box3>
+        </Box3> */}
         {/* </Slide> */}
         {/* <Slide> */}
         <Box2 inView4={inView4}>
@@ -1940,9 +1947,8 @@ const LandingPageTest = (props: Props) => {
             영어 공부 하실 준비가 되셨나요?
           </TextTitle3>
           <TextSubTitle3>
-            <p>
-              TEADBEAR에서 재밌게 영어 공부해서 영어 실력을 업그레이드 해보세요!
-            </p>
+            <span>TEADBEAR에서 재밌게 영어 공부해서 </span>
+            <span>영어 실력을 업그레이드 해보세요!</span>
           </TextSubTitle3>
           <div>
             <InView onChange={setInView4}></InView>

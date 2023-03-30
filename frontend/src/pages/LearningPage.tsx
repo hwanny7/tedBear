@@ -3,6 +3,8 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import LearningMic from 'assets/img/learningMic.svg';
 import LearningStop from 'assets/img/learningStop.svg';
+import LearningPause from 'assets/img/learningPause.svg';
+import LearningReplay from 'assets/img/learningReplay.svg';
 import Dot from 'assets/img/dot.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
 import Dictionary from 'assets/img/dictionary.svg';
@@ -195,11 +197,14 @@ const ContentLeft = styled.div`
 const BookmarkImg = styled.img`
   width: 20px;
   cursor: pointer;
+  position: absolute;
+  top: 0px;
+  right: 24px;
 `;
 
 const YoutubeBox = styled.div`
   /* background-color: red; */
-  height: 60%;
+  height: 55%;
   margin-bottom: 8px;
   position: relative;
   z-index: 3;
@@ -224,16 +229,17 @@ const YoutubeBox = styled.div`
 const SpeakBox = styled.div`
   background-color: ${props => props.theme.pointLigntGrdColor8};
   border-radius: 16px;
-  height: 40%;
-  padding: 24px;
+  height: 45%;
+  padding: 40px 16px 16px;
   box-shadow: 2px 3px 3px ${props => props.theme.shadowColor};
+  position: relative;
 
   > div {
     background-color: ${props => props.theme.whiteColor};
     border-radius: 10px;
     width: 100%;
     height: 100%;
-    padding: 16px;
+    /* padding: 16px; */
     display: flex;
     flex-direction: column;
   }
@@ -248,13 +254,27 @@ const SentenceBox = styled.div`
   align-items: center;
   justify-content: space-evenly;
   /* overflow: scroll; */
+  overflow-y: scroll;
+  margin: 10px;
+  padding: 0 32px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer; // 커서 포인터 왜 안돼..
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 15%;
+    background-color: ${props => props.theme.mainLightColor};
+    border-radius: 10px;
+  }
 
   p {
     font-weight: bold;
     font-size: 14px;
-    width: 90%;
-
-    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -278,14 +298,30 @@ const MicBox = styled.div<SpeakerBoxProps>`
   height: 50%;
   border-radius: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-
+  margin: 0px 10px 10px;
+  padding-top: 10px;
   p {
-    /* border: 1px solid blue; */
+    padding: 0px 32px;
     font-size: 14px;
-    width: 90%;
+    width: 100%;
+    height: 80%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 8px;
+      cursor: pointer; // 커서 포인터 왜 안돼..
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 15%;
+      background-color: ${props => props.theme.mainLightColor};
+      border-radius: 10px;
+    }
+  }
+
+  div {
+    margin: 4px 0px;
   }
 `;
 
@@ -293,8 +329,11 @@ const LearningMicImg = styled.img`
   width: 24px;
   cursor: pointer;
 `;
-
 const LearningStopImg = styled(LearningMicImg)``;
+const LearningPauseImg = styled(LearningMicImg)``;
+const LearningReplayImg = styled(LearningMicImg)`
+  margin: 0 8px;
+`;
 
 const ContentRight = styled.div`
   /* border: 1px solid purple; */
@@ -302,7 +341,8 @@ const ContentRight = styled.div`
   width: 40%;
   height: 100%;
   border-radius: 16px;
-  box-shadow: 2px 3px 3px ${props => props.theme.shadowColor};
+  /* box-shadow: 2px 3px 3px ${props => props.theme.shadowColor}; */
+  box-shadow: 6px 6px 20px #61616142;
 `;
 
 const ContentRightTop = styled.div`
@@ -461,6 +501,9 @@ const LearningPage = () => {
   // 받아온 data ===================================================
   const [videoDesc, setVideoDesc] = useState<VideoDesc>();
 
+  // 유튜브 옵션
+  const [opts, setOpts] = useState({});
+
   useEffect(() => {
     // 유튜브 상세 데이터 가져오기
     const fetchData = async () => {
@@ -495,9 +538,9 @@ const LearningPage = () => {
       '#A6DFFF',
       '#9F9DFF',
       '#E9BAFF',
-      '#FFD700',
-      '#DBDBDB',
       '#CDAB8B',
+      '#DBDBDB',
+      '#FFD700',
       '#000000',
     ],
   };
@@ -517,6 +560,21 @@ const LearningPage = () => {
     if (videoDesc?.no !== undefined) {
       setVideoNumber(videoDesc?.no);
     }
+
+    // 영상 북마크 갱신
+    setVideoBookmark(videoDesc?.bookMarked);
+
+    // 유튜브 영상 설정  ===================================================
+    const opts = {
+      height: '560',
+      width: '315',
+      playerVars: {
+        autoplay: 1,
+        start: videoDesc?.lastWatchingTime,
+      },
+    };
+
+    setOpts(opts);
   }, [videoDesc]);
 
   // 북마크  ===================================================
@@ -545,27 +603,15 @@ const LearningPage = () => {
       insertVideoBookmark();
     }
   };
-  // 영상 북마크 갱신
-  useEffect(() => {
-    setVideoBookmark(videoDesc?.bookMarked);
-  }, [videoDesc]);
 
   // 문장
   const [sentenceBookmark, setSentenceBookmark] = useState<boolean | undefined>(
     false,
   );
+  // 아래 있는 selected는 html에서 요소의 index값이거 sentencId는 db에 저장되어있는 문장 number
   const [senetenceId, setSentenceId] = useState<number>(0);
 
-  // 유튜브 영상 설정  ===================================================
-  const opts = {
-    height: '560',
-    width: '315',
-    playerVars: {
-      autoplay: 0,
-    },
-  };
-
-  // 하이라이팅  ===================================================
+  // 실시간 하이라이팅  ===================================================
   const [highlight, setHighlight] = useState<boolean>(false);
   const [selected, setSelected] = useState(0);
   const [youtubePlayer, setYoutubePlayer] = useState<any>();
@@ -576,7 +622,7 @@ const LearningPage = () => {
     setYoutubePlayer(player);
   };
 
-  // 문장 클릭
+  // 문장 클릭시 해당 시간으로 영상 이동, 북마크여부 가져오기 및 하이라이팅 하기
   const onSentenceClick = (
     index: any,
     startTime: number,
@@ -597,6 +643,7 @@ const LearningPage = () => {
     getSentenceBookmark();
   };
 
+  //문장 북마크
   const onSentenceBookmark = (id: number) => {
     setSentenceBookmark(!sentenceBookmark);
 
@@ -624,15 +671,17 @@ const LearningPage = () => {
   useEffect(() => {
     const watchTime = setInterval(() => {
       // 현재 시청 시간 state 저장
-      setVideoTime(Math.floor(Number(youtubePlayer?.getCurrentTime())));
+      const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
+
+      setVideoTime(time);
       // 실시간 하이라이팅
       let flag = false;
-      let idx = 0;
+      let idx = selected;
       while (!flag) {
         if (
           videoDesc?.sentenceInfoList[idx].startTime &&
-          videoDesc?.sentenceInfoList[idx].startTime <= videoTime &&
-          videoTime <= videoDesc?.sentenceInfoList[idx + 1].startTime
+          videoDesc?.sentenceInfoList[idx].startTime <= time &&
+          time <= videoDesc?.sentenceInfoList[idx + 1].startTime
         ) {
           flag = true;
           break;
@@ -655,6 +704,9 @@ const LearningPage = () => {
       };
       onRecordWatching();
       clearInterval(watchTime);
+
+      // 마이크 끠
+      // SpeechRecognition.stopListening();
     };
   });
   // 학습 완료
@@ -674,19 +726,25 @@ const LearningPage = () => {
 
   // STT
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
-  const [micStatus, setMicStatus] = useState<boolean>(false);
+  // const [micStatus, setMicStatus] = useState<boolean>(false);
   const [result, setResult] = useState(2); // 기본: 2, 맞:1, 틀: 0
 
+  // https://github.com/JamesBrill/react-speech-recognition/blob/HEAD/docs/API.md#SpeechRecognition
   const onStart = () => {
-    SpeechRecognition.startListening({ continuous: true, language: 'en' });
-    setMicStatus(true);
+    SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
+    // setMicStatus(true);
+    youtubePlayer.pauseVideo();
+  };
+
+  const onReplay = () => {
+    resetTranscript();
   };
 
   const onStop = () => {
     SpeechRecognition.stopListening();
     onMatching();
     onReset();
-    setMicStatus(false);
+    // setMicStatus(false);
   };
 
   const onReset = () => {
@@ -870,28 +928,37 @@ const LearningPage = () => {
             )}
           </YoutubeBox>
           <SpeakBox>
+            {!sentenceBookmark ? (
+              <BookmarkImg
+                src={BookmarkEmpty}
+                onClick={() => onSentenceBookmark(senetenceId)}
+              />
+            ) : (
+              <BookmarkImg
+                src={BookmarkFull}
+                onClick={() => onSentenceBookmark(senetenceId)}
+              />
+            )}
             <div>
               <SentenceBox>
-                {!sentenceBookmark ? (
-                  <BookmarkImg
-                    src={BookmarkEmpty}
-                    onClick={() => onSentenceBookmark(senetenceId)}
-                  />
-                ) : (
-                  <BookmarkImg
-                    src={BookmarkFull}
-                    onClick={() => onSentenceBookmark(senetenceId)}
-                  />
-                )}
                 <p>{videoDesc?.sentenceInfoList[selected].content}</p>
               </SentenceBox>
               <MicBox result={result}>
-                {!micStatus ? (
-                  <LearningMicImg src={LearningMic} onClick={onStart} />
-                ) : (
-                  <LearningStopImg src={LearningStop} onClick={onStop} />
-                )}
                 <p>{transcript}</p>
+                <div>
+                  {listening ? (
+                    <>
+                      {/* <LearningPauseImg src={LearningPause} onClick={onStop} /> */}
+                      <LearningReplayImg
+                        src={LearningReplay}
+                        onClick={onReplay}
+                      />
+                      <LearningStopImg src={LearningStop} onClick={onStop} />
+                    </>
+                  ) : (
+                    <LearningMicImg src={LearningMic} onClick={onStart} />
+                  )}
+                </div>
               </MicBox>
             </div>
           </SpeakBox>
@@ -921,7 +988,7 @@ const LearningPage = () => {
             })}
           </ContentRightMiddle>
           <ContentRightFooter>
-            <CompleteBtn onClick={onComplete}>Complete</CompleteBtn>
+            <CompleteBtn onClick={onComplete}>학습 완료</CompleteBtn>
           </ContentRightFooter>
         </ContentRight>
       </ContentBox>
