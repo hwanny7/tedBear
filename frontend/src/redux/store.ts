@@ -1,6 +1,7 @@
 import authReducer from './user';
+import snackReducer from './snack';
 import storage from 'redux-persist/lib/storage';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import {
   persistStore,
@@ -18,11 +19,17 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const rootReducer = combineReducers({
+  auth: authReducer,
+  snack: snackReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedReducer,
+    snack: persistedReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

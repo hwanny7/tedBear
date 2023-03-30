@@ -16,6 +16,9 @@ import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { authApi } from 'utils/api/customAxios';
 import { Paper } from '@mui/material';
+import { handleSuccessState, handleErrorState } from 'redux/snack';
+import { useDispatch } from 'react-redux';
+import SnackBar from 'components/common/SnackBar';
 
 // style
 const StyledLevel = styled.div`
@@ -88,6 +91,7 @@ const StyledLevel = styled.div`
 `;
 
 const GameDetailPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showSwitch, setShowSwitch] = useState(true);
   const [sentence, setSentence] = useState('');
@@ -120,6 +124,7 @@ const GameDetailPage = () => {
     setShowPaw7(false);
     setShowPaw8(false);
     setRetry(false);
+    handleNext(); // 문제 변경 필요
   };
 
   // 첫 문제
@@ -174,7 +179,7 @@ const GameDetailPage = () => {
       },
     })
       .then(response => {
-        console.log('Posted!');
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error.data);
@@ -189,13 +194,21 @@ const GameDetailPage = () => {
   const handleCheck = () => {
     const userAnswer = input.toLowerCase();
     if (userAnswer === answer) {
-      alert('Correct');
-      console.log();
       fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
       setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
       setCorrectAnswerCount(correctAnswerCount + 1);
       console.log(`맞은개수${correctAnswerCount}`);
       setInput(''); // Clear the input box
+      alert('Correct');
+      // dispatch(
+      //   handleSuccessState({
+      //     open: true,
+      //     message: '정답입니다!',
+      //     severity: 'success',
+      //   }),
+      //   console.log('Dispatch'),
+      // );
+
       if (correctAnswerCount === 1) {
         console.log('한개맞힘');
         handleNext();
@@ -218,6 +231,14 @@ const GameDetailPage = () => {
       }
     } else {
       alert('Incorrect');
+      // dispatch(
+      //   handleErrorState({
+      //     open: true,
+      //     message: 'An error occurred!',
+      //     // severity: 'warning', // set the 'severity' value to 'warning'
+      //   }),
+      //   console.log('Dispatch'),
+      // );
       console.log('Incorrect');
       setTryCount(prevCount => prevCount + 1); // 시행착오 횟수 올리기
       setInput(''); // Clear the input box
@@ -232,31 +253,31 @@ const GameDetailPage = () => {
       console.log('발바닥 True');
       setTimeout(() => {
         setShowPaw1(true);
-      }, 500);
+      }, 250);
       setTimeout(() => {
         setShowPaw2(true);
-      }, 1000);
+      }, 500);
       setTimeout(() => {
         setShowPaw3(true);
-      }, 1500);
+      }, 750);
       setTimeout(() => {
         setShowPaw4(true);
-      }, 2000);
+      }, 1000);
       setTimeout(() => {
         setShowPaw5(true);
-      }, 2500);
+      }, 1250);
       setTimeout(() => {
         setShowPaw6(true);
-      }, 3000);
+      }, 1500);
       setTimeout(() => {
         setShowPaw7(true);
-      }, 3500);
+      }, 1750);
       setTimeout(() => {
         setShowPaw8(true);
-      }, 4000);
+      }, 2000);
       setTimeout(() => {
         setRetry(true);
-      }, 4500);
+      }, 2250);
     }
   }, [correctAnswerCount]);
 
