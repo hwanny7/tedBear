@@ -63,14 +63,12 @@ public class MatterMostMessageDto {
 		private String footer;
 
 		public Attachment addExceptionInfo(Exception e) {
-			this.title = e.getClass().getSimpleName();
 			StringBuilder sb = new StringBuilder(text);
-
-			sb.append("**Error Message**").append('\n').append('\n').append("```").append(e.getMessage()).append("```")
+			sb.append("# :no_entry_sign: ").append(e.getClass().getSimpleName()).append(" :no_entry_sign:").append("\n");
+			sb.append("### **Error Message**").append('\n').append('\n').append("```").append(e.getMessage()).append("```")
 				.append('\n').append('\n');
 
 			this.text = sb.toString();
-
 			return this;
 		}
 
@@ -78,7 +76,7 @@ public class MatterMostMessageDto {
 			this.addExceptionInfo(e);
 			StringBuilder sb = new StringBuilder(text);
 
-			sb.append("**Reqeust URL**").append('\n').append('\n').append(uri).append('\n').append('\n');
+			sb.append("### **Reqeust URL**").append('\n').append('\n').append("- "+uri).append('\n').append('\n');
 
 			this.text = sb.toString();
 			return this;
@@ -88,7 +86,7 @@ public class MatterMostMessageDto {
 			this.addExceptionInfo(e, uri);
 			StringBuilder sb = new StringBuilder(text);
 
-			sb.append("**Parameters**").append('\n').append('\n').append(params.toString()).append('\n').append('\n');
+			sb.append("### **Parameters**").append('\n').append('\n').append(params).append('\n').append('\n');
 
 			this.text = sb.toString();
 			return this;

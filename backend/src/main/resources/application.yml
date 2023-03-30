@@ -83,11 +83,12 @@ notification:
   mattermost:
     enabled: true # mmSender를 사용할 지 여부, false면 알림이 오지 않는다
     webhook-url: "https://meeting.ssafy.com/hooks/ucu18675zbncmm6nn1sj95if9c"
+    color: "#000000"
+    author-icon: "mattermost alert"
+#    pretext: "에러에러"
+
+#    author-name: "박일규"
 #    channel: # 기본 설정한 채널이 아닌 다른 채널로 보내고 싶을 때 기입한다
-#    pretext: # attachments의 상단에 나오게 되는 일반 텍스트 문자
-#    color: # attachment에 왼쪽 사이드 컬러. default=red
-#    author-name: # attachment의 상단에 나오는 이름
-#    author-icon: # author-icon 왼쪽에 나올 아이콘의 url링크
 #    footer: # attachment에 하단에 나올 부분. default=현재 시간
 
 default-value:

@@ -32,7 +32,7 @@ public class ExControllerAdvice {
 		Enumeration<String> keys = req.getParameterNames();
 		while (keys.hasMoreElements()) {
 			String key = keys.nextElement();
-			params.append("- ").append(key).append(" : ").append(req.getParameter(key)).append('\n');
+			params.append("* ").append(key).append(" : ").append(req.getParameter(key)).append('\n');
 		}
 
 		return params.toString();

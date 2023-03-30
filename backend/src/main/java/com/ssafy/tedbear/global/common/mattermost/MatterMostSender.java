@@ -31,9 +31,6 @@ public class MatterMostSender {
 
 		try {
 			Attachment attachment = Attachment.builder()
-				.channel(mmProperties.getChannel())
-				.authorIcon(mmProperties.getAuthorIcon())
-				.authorName(mmProperties.getAuthorName())
 				.color(mmProperties.getColor())
 				.pretext(mmProperties.getPretext())
 				.title(mmProperties.getTitle())
