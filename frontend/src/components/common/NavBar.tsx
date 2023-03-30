@@ -166,8 +166,12 @@ const NavBar2 = (props: Props) => {
   const onSignOut = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       dispatch(logout());
-      window.location.href = '/';
+      window.location.href = '/home';
     }
+  };
+
+  const onSignIn = () => {
+    window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
   };
 
   return (
@@ -251,7 +255,16 @@ const NavBar2 = (props: Props) => {
               </IconName>
             </ListBoxBottom>
           </>
-        ) : null}
+        ) : (
+          <ListBoxBottom open={props.open} onClick={onSignIn}>
+            <IconDiv open={props.open}>
+              <StyledSignout />
+            </IconDiv>
+            <IconName open={props.open}>
+              <span>SIGNIN</span>
+            </IconName>
+          </ListBoxBottom>
+        )}
       </NavList>
     </Nav>
   );
