@@ -125,18 +125,18 @@ const BookmarkVideo = () => {
                   key={idx}
                   sx={{
                     width: '100%',
-                    height: '50vh',
+                    height: '45vh',
                     position: 'relative',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'pink',
+                    backgroundColor: '#ffffff',
                   }}
                   onClick={() => handleClick(Thumnail.watchId)}
                 >
                   <CardActionArea
                     sx={{
                       height: '200px', // adjust the height as needed
-                      width: '400px',
+                      width: '380px',
                     }}
                   >
                     {/* <img
@@ -169,7 +169,7 @@ const BookmarkVideo = () => {
                       alt=""
                       sx={{
                         height: '200px', // adjust the height as needed
-                        width: '400px',
+                        width: '380px',
                       }}
                     />
                     <CardContent
