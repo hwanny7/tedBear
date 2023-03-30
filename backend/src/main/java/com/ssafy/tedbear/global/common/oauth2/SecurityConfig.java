@@ -71,10 +71,9 @@ public class SecurityConfig {
 			.antMatchers(HttpMethod.OPTIONS, "/**/*")
 			.permitAll() // options 메서드 열어두기! Authorization 헤더를 사용하기 때문에 Preflight 넣어줌
 
-				.anyRequest().permitAll()
-//			.antMatchers(HttpMethod.GET) // GET요청은 열어두고
-//			.permitAll()
-//			.anyRequest().authenticated() // 그 외 요청은 권한확인
+			.antMatchers(HttpMethod.GET) // GET요청은 열어두고
+			.permitAll()
+			.anyRequest().authenticated() // 그 외 요청은 권한확인
 			.and()
 			.logout()
 			.logoutSuccessUrl("/")
