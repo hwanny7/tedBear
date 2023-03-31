@@ -264,6 +264,7 @@ const SentenceBox = styled.div`
   overflow-y: scroll;
   margin: 10px;
   padding: 0 32px;
+  color: #1a1a1a;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -276,8 +277,8 @@ const SentenceBox = styled.div`
   }
 
   p {
-    font-weight: bold;
-    font-size: 14px;
+    /* font-weight: bold; */
+    font-size: 16px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -309,9 +310,11 @@ const MicBox = styled.div<SpeakerBoxProps>`
   justify-content: space-evenly;
   margin: 0px 10px 10px;
   padding-top: 10px;
+  color: #1a1a1a;
+
   p {
     padding: 0px 32px;
-    font-size: 14px;
+    font-size: 16px;
     width: 100%;
     height: 80%;
     overflow-y: scroll;
@@ -695,7 +698,7 @@ const LearningPage = () => {
     const watchTime = setInterval(() => {
       // 현재 시청 시간 state 저장
       const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
-
+      console.log('watch');
       setVideoTime(time);
       // 실시간 하이라이팅
       let flag = false;
@@ -716,6 +719,7 @@ const LearningPage = () => {
       setHighlight(true);
       setSelected(idx);
     }, 1000);
+
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
       console.log('언마운트');

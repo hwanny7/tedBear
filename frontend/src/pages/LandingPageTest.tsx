@@ -155,31 +155,70 @@ const Wrapper = styled.div`
 // 상단 비주얼 /////////////////////////////////////////////////////////////////////////////////////////
 const Visual = styled.div<ToggleStyledProps>`
   /* border: 1px solid red; */
+  overflow: hidden;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
-  background: ${ToggleStyledProps =>
+  /* background: ${ToggleStyledProps =>
     !ToggleStyledProps.toggle
       ? 'linear-gradient( 300deg,#8c82c3 0%,#6558a6 30%,#584c93 60%,#38315d 100%)'
-      : 'linear-gradient( 300deg,#4c4669 0%,#322b4e 30%,#231f37 60%,#110f1b 100%)'};
+      : 'linear-gradient( 300deg,#4c4669 0%,#322b4e 30%,#231f37 60%,#110f1b 100%)'}; */
+  background-color: ${props => props.theme.bgColor2};
 
   @media ${device.mobile} {
     height: 500px;
+    background-color: ${props => props.theme.mainColor};
   }
 
   @media ${device.tablet} {
     height: 600px;
+    background-color: ${props => props.theme.mainColor};
   }
 
   @media ${device.laptop} {
-    height: 700px;
+    height: 750px;
+    background-color: ${props => props.theme.bgColor2};
   }
 
   @media ${device.desktop} {
-    height: 700px;
+    height: 800px;
+    background-color: ${props => props.theme.bgColor2};
   }
+`;
+
+const CircleDiv = styled.div`
+  position: absolute;
+  top: -1300px;
+  left: -1000px;
+  width: 5000px;
+
+  height: 2000px;
+  border-radius: 50%;
+  background-color: ${props => props.theme.mainColor};
+
+  @media ${device.mobile} {
+    display: none;
+  }
+
+  @media ${device.tablet} {
+    display: none;
+  }
+
+  @media ${device.laptop} {
+    display: block;
+  }
+
+  @media ${device.desktop} {
+    display: block;
+  }
+`;
+
+const CircleDiv2 = styled(CircleDiv)`
+  background-color: ${props => props.theme.mainLightColor};
+  top: -1280px;
+  left: -1200px;
 `;
 
 // 사이트 대문 배경
@@ -353,10 +392,36 @@ const TextBox = styled.div`
       font-weight: lighter;
     }
   }
+
+  div:nth-child(3) {
+    display: inline-block;
+    position: absolute;
+
+    @media ${device.mobile} {
+      top: 70%;
+      font-size: 16px;
+    }
+
+    @media ${device.tablet} {
+      top: 70%;
+      font-size: 18px;
+    }
+
+    @media ${device.laptop} {
+      top: 45%;
+      font-size: 18px;
+      left: 10%;
+    }
+
+    @media ${device.desktop} {
+      top: 35%;
+      font-size: 18px;
+      left: 20%;
+    }
+  }
 `;
 
 const Title = styled.div`
-  /* background-color: black; */
   position: absolute;
   font-weight: bold;
   color: white;
@@ -774,41 +839,56 @@ const PinkBallImg = styled.img`
 `;
 
 const StartBtn = styled.button`
-  background-color: ${props => props.theme.pointColor};
-  color: white;
-  position: absolute;
-  border-radius: 50px;
+  background-color: #f9e000;
+  color: #1a1a1a;
+  /* position: absolute; */
+  border-radius: 16px;
   cursor: pointer;
   box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
+  margin-right: 24px;
+  font-weight: bold;
 
   @media ${device.mobile} {
     top: 70%;
     font-size: 16px;
-    padding: 12px 39px;
+    padding: 10px 39px;
   }
 
   @media ${device.tablet} {
     top: 70%;
     font-size: 18px;
-    padding: 16px 52px;
+    padding: 14px 52px;
   }
 
   @media ${device.laptop} {
     top: 45%;
     font-size: 18px;
-    padding: 16px 52px;
+    padding: 14px 52px;
     left: 10%;
   }
 
   @media ${device.desktop} {
     top: 35%;
     font-size: 18px;
-    padding: 16px 52px;
+    padding: 14px 52px;
     left: 20%;
   }
 
   &:hover {
-    background-color: #da6a36;
+    background-color: #f9cf00;
+    transition: all 0.3s;
+    transform: translateY(3px);
+    /* box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); */
+  }
+`;
+
+const GuestBtn = styled(StartBtn)`
+  background-color: ${props => props.theme.whiteColor};
+  color: #1a1a1a;
+  margin-right: 0;
+
+  &:hover {
+    background-color: #fffacb;
     transition: all 0.3s;
     transform: translateY(3px);
     /* box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); */
@@ -849,20 +929,24 @@ const Box1 = styled.div<AnimationStyledProps2>`
   @media ${device.mobile} {
     /* padding: 0 24px; */
     padding-top: 56px;
+    min-height: 750px;
   }
 
   @media ${device.tablet} {
     padding-top: 56px;
     /* padding: 0 24px; */
+    min-height: 750px;
   }
 
   @media ${device.laptop} {
     padding-top: 56px;
     /* padding: 64px 0px 0px; */
+    min-height: 800px;
   }
 
   @media ${device.desktop} {
     padding: 80px 0px 64px;
+    min-height: 900px;
   }
 `;
 
@@ -876,15 +960,15 @@ const BackBox = styled.div<ToggleStyledProps>`
   z-index: 0;
 
   @media ${device.mobile} {
-    min-height: 30%;
+    min-height: 25%;
   }
 
   @media ${device.tablet} {
-    min-height: 30%;
+    min-height: 25%;
   }
 
   @media ${device.laptop} {
-    min-height: 30%;
+    min-height: 25%;
   }
 
   @media ${device.desktop} {
@@ -1806,6 +1890,9 @@ const LandingPageTest = (props: Props) => {
       {modalOpen && <LoginModal setOpenModal={setModalOpen} />}
       {/* <Slide> */}
       <Visual toggle={props.toggle}>
+        <CircleDiv2></CircleDiv2>
+        <CircleDiv></CircleDiv>
+
         {/* <LandingVisualImg src={LandingVisual} toggle={props.toggle} /> */}
         {/* <BigWave1Img src={BigWave1} toggle={props.toggle} /> */}
         <ToggleBox>
@@ -1824,8 +1911,12 @@ const LandingPageTest = (props: Props) => {
               TedBear로 영어 스피킹 연습을 해보세요!
               <InView onChange={setInView1}></InView>
             </SubTitle>
-            <StartBtn onClick={() => setModalOpen(true)}>시작하기</StartBtn>
-            <p onClick={goMain}>둘러보기</p>
+            <div>
+              <StartBtn onClick={() => setModalOpen(true)}>
+                카카오 로그인
+              </StartBtn>
+              <GuestBtn onClick={goMain}>게스트</GuestBtn>
+            </div>
           </TextBox>
           <ImgBox>
             <SmogImg src={Smog} />

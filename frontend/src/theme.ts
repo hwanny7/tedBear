@@ -31,7 +31,7 @@ export const lightTheme: DefaultTheme = {
   learningBoxCorrect: '#EBFFEC',
   blackColorLight1: '#7B7B7B',
   blackColorLight2: '#8E8E8E',
-  textColor1: '#000000',
+  textColor1: '#1A1A1A',
   textColor2: '#7B7B7B',
   learningBoxColor: '#F7F7F7',
   highlightColor: '#FFE4C6',
@@ -66,7 +66,7 @@ export const lightTheme: DefaultTheme = {
 
 export const darkTheme: DefaultTheme = {
   mainColor: '#332C55',
-  mainLightColor: '#8F84CE',
+  mainLightColor: '#676092',
   mainDarkColor: '#4D437E',
   pointColor: '#E67F51',
   pointLightColor: '#FEAD55',
