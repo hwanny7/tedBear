@@ -15,7 +15,6 @@ import com.ssafy.tedbear.domain.game.dto.CrossWordDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameResultDto;
 import com.ssafy.tedbear.domain.game.service.GameService;
-import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.global.common.FindMemberService;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
 import com.ssafy.tedbear.global.util.RecommendUtil;
@@ -34,16 +33,14 @@ public class GameController {
 
 	@GetMapping("/word")
 	public ResponseEntity<WordGameDto> getWordGame(@AuthenticationPrincipal CustomOAuth2User user) {
-		Member member = findMemberService.findMember(user.getName());
-		WordGameDto question = gameService.getQuestion(member);
+		WordGameDto question = gameService.getQuestion(user.getName());
 		return new ResponseEntity<>(question, HttpStatus.OK);
 	}
 
 	@PostMapping("/word")
 	public ResponseEntity<WordGameDto> postWordGame(@RequestBody WordGameResultDto wordGameResultDto,
 		@AuthenticationPrincipal CustomOAuth2User user) {
-		Member member = findMemberService.findMember(user.getName());
-		gameService.completeWordGame(member, wordGameResultDto);
+		gameService.completeWordGame(user.getName(), wordGameResultDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
