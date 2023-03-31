@@ -142,7 +142,7 @@ const BookmarkWord = () => {
                 <div className="bookmark-container">
                   <img
                     className="book-mark"
-                    src={item.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    src={item.bookMarked ? BookmarkEmpty : BookmarkFull}
                   ></img>
                 </div>
                 <div className="content-container">

@@ -63,6 +63,7 @@ const StyledLevel = styled.div`
     text-align: center;
   }
   .problem-text {
+    padding-right: 10px;
     /* 스크롤 */
     /* border: 1px solid black; */
     overflow-y: scroll;
@@ -82,7 +83,7 @@ const StyledLevel = styled.div`
     /* top: 30%; */
     /* left: 58%; */
     overflow: auto;
-    font-size: 23px;
+    font-size: 20px;
     display: flex;
     align-items: top; // 맨 윗줄 안 잘리게
     justify-content: center;
@@ -96,6 +97,7 @@ const GameDetailPage = () => {
   const [showSwitch, setShowSwitch] = useState(true);
   const [sentence, setSentence] = useState('');
   const [answer, setAnswer] = useState('');
+  const [translation, setTranslation] = useState('');
   const [wordNumber, setWordNumber] = useState('');
   const [tryCount, setTryCount] = useState(1); // 애초에 1로 ( 바로 맞추면 1로 들어가고 틀리면 +1 씩 틀린 횟수 늘어남 대신에 새 문제면 1로 초기화)
   const [correctAnswerCount, setCorrectAnswerCount] = useState(1); // 퍼즐 조각 각각 누적 띄우기 위함
@@ -111,6 +113,7 @@ const GameDetailPage = () => {
   const [showPaw7, setShowPaw7] = useState(false);
   const [showPaw8, setShowPaw8] = useState(false);
   const [retry, setRetry] = useState(false);
+  const [guide, setGuide] = useState(true);
 
   const handleRetry = () => {
     setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
@@ -135,7 +138,8 @@ const GameDetailPage = () => {
         .then(response => {
           console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data);
-          const { sentence, answer, wordNo, hint } = response.data;
+          const { sentence, answer, wordNo, hint, translation } = response.data;
+          setTranslation(translation);
           setSentence(sentence);
           setAnswer(answer);
           setWordNumber(wordNo);
@@ -157,7 +161,8 @@ const GameDetailPage = () => {
         .then(response => {
           console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data);
-          const { sentence, answer, wordNo, hint } = response.data;
+          const { sentence, answer, wordNo, hint, translation } = response.data;
+          setTranslation(translation);
           setSentence(sentence);
           setAnswer(answer);
           setWordNumber(wordNo);
@@ -542,6 +547,9 @@ const GameDetailPage = () => {
           >
             <Typography className="problem-text">
               {sentence.replace('tedbear', '_______')}
+              <br></br>
+              <br></br>
+              {translation}
             </Typography>
           </Paper>
           <Paper
