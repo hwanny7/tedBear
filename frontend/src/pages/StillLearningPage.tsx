@@ -7,8 +7,8 @@ import { SearchedVideo } from './../utils/api/searchApi';
 import styled from 'styled-components';
 
 const ContentDiv = styled.div`
-  display: 'flex';
-  justify-content: 'center';
+  display: flex;
+  justify-content: center;
   background-color: ${props => props.theme.bgColor};
 `;
 
