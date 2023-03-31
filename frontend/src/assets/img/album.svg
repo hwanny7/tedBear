@@ -3,6 +3,10 @@
 <rect x="10" y="10" width="681" height="680" fill="#6255A4"/>
 </g>
 <rect x="74" y="70" width="560" height="560" fill="white"/>
+<line x1="355" y1="70" x2="355" y2="350" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="4 4"/>
+<line x1="355" y1="350" x2="355" y2="630" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="4 4"/>
+<line x1="74" y1="349" x2="354" y2="349" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="4 4"/>
+<line x1="354" y1="349" x2="634" y2="349" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-dasharray="4 4"/>
 <defs>
 <filter id="filter0_d_1095_802" x="0" y="0" width="721" height="720" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
