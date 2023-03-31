@@ -15,7 +15,6 @@ import com.ssafy.tedbear.domain.game.dto.CrossWordDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameResultDto;
 import com.ssafy.tedbear.domain.game.service.GameService;
-import com.ssafy.tedbear.global.common.FindMemberService;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
@@ -29,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/game")
 public class GameController {
 	private final GameService gameService;
-	private final FindMemberService findMemberService;
 
 	@GetMapping("/word")
 	public ResponseEntity<WordGameDto> getWordGame(@AuthenticationPrincipal CustomOAuth2User user) {
@@ -46,7 +44,6 @@ public class GameController {
 
 	@GetMapping("/crossword/{difficulty}")
 	public ResponseEntity<CrossWordDto> getCrossWordGame(@PathVariable String difficulty) {
-
 		return ResponseEntity.ok(gameService.getCrossWord(RecommendUtil.getBoardSize(difficulty)));
 	}
 }

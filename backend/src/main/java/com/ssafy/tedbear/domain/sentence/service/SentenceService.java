@@ -67,7 +67,8 @@ public class SentenceService {
 
 	//추천 문장 리스트 불러오기
 	@Transactional
-	public SentenceDetailDto.ListResponse getRecommendList(Member member, int delta) {
+	public SentenceDetailDto.ListResponse getRecommendList(String memberUid, int delta) {
+		Member member = findMemberService.findMember(memberUid);
 		int memberScore = member.getScore() + delta;
 		List<Sentence> sentenceList = getRecommendSentence(memberScore);
 

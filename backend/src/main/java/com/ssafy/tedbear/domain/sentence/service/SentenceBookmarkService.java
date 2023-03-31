@@ -15,6 +15,7 @@ import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkStatusDto;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
 import com.ssafy.tedbear.domain.sentence.repository.SentenceBookmarkRepository;
+import com.ssafy.tedbear.global.common.FindMemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SentenceBookmarkService {
 	private final SentenceBookmarkRepository sentenceBookmarkRepository;
+	private final FindMemberService findMemberService;
 
-	public void saveSentenceBookmark(Member member, SentenceBookmarkDto sentenceBookmarkDto) {
+	public void saveSentenceBookmark(String memberUid, SentenceBookmarkDto sentenceBookmarkDto) {
+		Member member = findMemberService.findMember(memberUid);
 		Sentence sentence = new Sentence(sentenceBookmarkDto.getSentenceNo());
 		if (isPresent(member, sentence)) {
 			throw new IllegalArgumentException("이미 북마크된 문장입니다.");
@@ -35,7 +38,8 @@ public class SentenceBookmarkService {
 		sentenceBookmarkRepository.save(sentenceBookmark);
 	}
 
-	public void deleteSentenceBookmark(Member member, SentenceBookmarkDto sentenceBookmarkDto) {
+	public void deleteSentenceBookmark(String memberUid, SentenceBookmarkDto sentenceBookmarkDto) {
+		Member member = findMemberService.findMember(memberUid);
 		Sentence sentence = new Sentence(sentenceBookmarkDto.getSentenceNo());
 		if (!isPresent(member, sentence)) {
 			throw new IllegalArgumentException("해당 문장의 북마크 정보가 존재하지 않습니다.");
@@ -43,13 +47,15 @@ public class SentenceBookmarkService {
 		sentenceBookmarkRepository.deleteByMemberAndSentence(member, sentence);
 	}
 
-	public SentenceBookmarkStatusDto getBookmarkStatus(Member member, Long sentenceId) {
+	public SentenceBookmarkStatusDto getBookmarkStatus(String memberUid, Long sentenceId) {
+		Member member = findMemberService.findMember(memberUid);
 		Sentence sentence = Sentence.builder().no(sentenceId).build();
 		boolean isBookmarked = sentenceBookmarkRepository.findByMemberAndSentence(member, sentence).isPresent();
 		return new SentenceBookmarkStatusDto(isBookmarked);
 	}
 
-	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(Member member, Pageable pageable) {
+	public SentenceBookmarkDetailDto.ListResponse getBookmarkList(String memberUid, Pageable pageable) {
+		Member member = findMemberService.findMember(memberUid);
 		List<Sentence> bookmarkedSenteceList = sentenceBookmarkRepository.findSentenceByMember(member, pageable)
 			.getContent();
 
