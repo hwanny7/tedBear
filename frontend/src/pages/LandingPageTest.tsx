@@ -868,6 +868,7 @@ const TextTitle1 = styled.div<AnimationStyledProps2>`
   position: relative;
   z-index: 1;
   opacity: 0;
+  font-family: S-CoreDream-3Light;
 
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
@@ -909,6 +910,7 @@ const TextSubTitle1 = styled.div<AnimationStyledProps2>`
   position: relative;
   z-index: 1;
   opacity: 0;
+  font-family: S-CoreDream-3Light;
 
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
@@ -1013,6 +1015,7 @@ const ElTitle = styled.div`
   font-weight: bold;
   color: ${props => props.theme.pointColor};
   margin-bottom: 16px;
+  font-family: S-CoreDream-3Light;
 
   @media ${device.mobile} {
     font-size: 16px;
