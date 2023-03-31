@@ -1,12 +1,12 @@
 package com.ssafy.tedbear.global.common.oauth2.service;
 
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.dto.TokenDto;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -14,19 +14,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true)
-@Component
+@Service
 public class AuthService {
 
 	private final MemberRepository memberRepository;
 	private final JwtProvider jwtProvider;
 
-
-	public String reissueAccessToken(String oldAccessToken, String refreshToken) {
+	public TokenDto.Request reissueAccessToken(String oldAccessToken, String refreshToken) {
 		if (!jwtProvider.validateToken(refreshToken)) {
-			throw new RuntimeException("invalid refresh token");
+			log.error("invalid refresh token");
+			return TokenDto.Request.builder().result(false).newAccessToken("invalid refresh token").build();
 		}
 
+		// access-token에서 유저 정보 가져오기
 		Authentication authentication = jwtProvider.getAuthentication(oldAccessToken);
 		String uid = ((CustomOAuth2User)authentication.getPrincipal()).getUid();
 
@@ -37,10 +37,14 @@ public class AuthService {
 
 		// refresh토큰이 같지 않으면
 		if (!refreshToken.equals(member.getRefreshToken())) {
-			throw new RuntimeException("invalid refresh token");
+			log.error("refresh-token이 DB와 다릅니다.");
+			return TokenDto.Request.builder().result(false).newAccessToken("refresh-token이 DB와 다릅니다.").build();
 		}
 
-		return jwtProvider.createAccessToken(authentication);
-	}
+		// access-token 발급
+		String newAccessToken = jwtProvider.createAccessToken(authentication);
+		TokenDto.Request request = TokenDto.Request.builder().result(true).newAccessToken(newAccessToken).build();
 
+		return request;
+	}
 }

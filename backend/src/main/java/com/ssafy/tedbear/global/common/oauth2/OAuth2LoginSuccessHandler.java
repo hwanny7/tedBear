@@ -34,7 +34,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 		String accessToken = jwtProvider.createAccessToken(authentication);
-		String refreshToken = jwtProvider.createRefreshToken(authentication);
+		String refreshToken = jwtProvider.createRefreshToken();
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 		saveOrUpdateUser(refreshToken, oAuth2User);
@@ -42,7 +42,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		clearAuthenticationAttributes(request, response);
 
 		getRedirectStrategy().sendRedirect(request, response,
-			"https://j8b103.p.ssafy.io/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
+			"https://localhost:3000/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 

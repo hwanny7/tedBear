@@ -28,7 +28,7 @@ public class JwtProvider {
 
 	private final String SECRET_KEY;
 
-	public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 60 * 60; // 1분 (잠깐 1시간으로 변경)
+	public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 30 * 60; // 30분
 	public static final Long REFRESH_TOKEN_VALIDATE_TIME = 1000L * 60 * 60 * 24 * 7; // 7일
 	private final String AUTHORITIES_KEY = "role";
 
@@ -57,7 +57,7 @@ public class JwtProvider {
 			.compact();
 	}
 
-	public String createRefreshToken(Authentication authentication) {
+	public String createRefreshToken() {
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + REFRESH_TOKEN_VALIDATE_TIME);
 
@@ -79,7 +79,7 @@ public class JwtProvider {
 		return new UsernamePasswordAuthenticationToken(new CustomOAuth2User(claims.getSubject()), "", authorities);
 	}
 
-	private Claims parseClaims(String accessToken) {
+	public Claims parseClaims(String accessToken) {
 		try {
 			return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(accessToken).getBody();
 		} catch (ExpiredJwtException e) {
