@@ -4,6 +4,12 @@ import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 import { learningVideo } from 'utils/api/searchApi';
 import { SearchedVideo } from './../utils/api/searchApi';
+import styled from 'styled-components';
+
+const BottomDiv = styled.div`
+  height: '10vh';
+  background-color: ${props => props.theme.bgColor};
+`;
 
 const StillLearningPage = () => {
   const [video, setVideo] = useState<SearchedVideo[]>([]);
@@ -67,7 +73,7 @@ const StillLearningPage = () => {
           })}
         </Grid>
       </div>
-      <div ref={ref} style={{ height: '10vh' }}></div>
+      <BottomDiv ref={ref}></BottomDiv>
     </div>
   );
 };

@@ -168,7 +168,7 @@ const Wrapper = styled.div`
     padding-top: 2%;
     margin-left: 2%;
   }
-  background-color: ${props => props.theme.bgColor2};
+  background-color: ${props => props.theme.bgColor};
 `;
 
 interface Props {
