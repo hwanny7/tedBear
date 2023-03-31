@@ -11,12 +11,9 @@ const BookIn = styled.div`
   margin: 30px 30px 30px 30px;
   padding: 30px 30px 30px 30px;
   overflow-y: auto;
-
-  /* 스크롤 */
-  /* border: 1px solid black; */
-
   right: 0%;
   height: 90%;
+
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -26,48 +23,78 @@ const BookIn = styled.div`
     background-color: ${props => props.theme.mainLightColor};
     border-radius: 20px;
   }
-
   .book-mark:hover {
-    opacity: 0.5; /* change opacity when hovered */
-    cursor: pointer; /* change cursor to pointer when hovered */
+    opacity: 0.5;
+    cursor: pointer;
   }
-
   .row {
     display: flex;
     flex-direction: row;
+    margin-bottom: 20px;
   }
-
   .bookmark-container {
     height: 40px;
     display: flex;
-    justify-content: left;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: left;
     margin-right: 10px;
     margin-bottom: 20px;
   }
-
   .content-container {
-    max-width: 50%;
+    max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-right: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
-
   .mean-container {
-    max-width: 50%;
+    max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
+  }
+  .sentence-container {
+    max-width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
 `;
-
-// jsx 로 변환
 
 const BookmarkWord = () => {
   const [ref, inView] = useInView();
@@ -75,11 +102,8 @@ const BookmarkWord = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
   const [wordBookmarkList, setWordBookmarkList] = useState([]);
-  const [wordInfo, setWordInfo] = useState();
-  const [sentenceContentList, setSentenceContentList] = useState();
 
   useEffect(() => {
-    // let mounted = true;
     async function fetchData() {
       setLoading(true);
       setError(null);
@@ -88,60 +112,18 @@ const BookmarkWord = () => {
         .then(response => {
           console.log('then');
           console.log(response.data);
-
           const listData = response.data.wordBookmarkList.map((item, index) => {
             return { ...item, bookmarked: true, id: index };
           });
           setWordBookmarkList(listData);
-
-          // if (mounted) {
-          //   // only update state if component is still mounted
-          //   setWordBookmarkList(listData);
-          //   setLoading(false);
-          // }
-
-          // const wordData = response.data.wordBookmarkList.wordInfo.map(
-          //   (item, index) => {
-          //     return { ...item, bookmarked: true, id: index };
-          //   },
-          // );
-          // setWordInfo(wordData);
-
-          // const senData =
-          //   response.data.wordBookmarkList.sentenceContentList.map(
-          //     (item, index) => {
-          //       return { ...item, bookmarked: true, id: index };
-          //     },
-          //   );
-          // setSentenceContentList(senData);
         })
         .catch(error => {
           console.log(error.data);
-          // if (mounted) {
-          //   setLoading(false);
-          // }
         });
       setLoading(false);
     }
     fetchData();
-    // return () => {
-    //   mounted = false;
-    // };
   }, []);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>An error occurred: {error.message}</div>;
-  // }
-
-  // useEffect(() => {
-  //   console.log('fetchData');
-  //   console.log(wordInfo);
-  //   console.log(sentenceContentList);
-  // }, [page]);
 
   useEffect(() => {
     console.log('Loading');
@@ -161,31 +143,27 @@ const BookmarkWord = () => {
                   <img
                     className="book-mark"
                     src={item.bookMarked ? BookmarkFull : BookmarkEmpty}
-                    style={{
-                      height: '50%',
-                      position: 'absolute',
-                      left: '20%',
-                    }}
                   ></img>
                 </div>
-                <div className="cotent-container">
+                <div className="content-container">
                   <p>{item.wordInfo.content}</p>
                 </div>
                 <div className="mean-container">
                   <p>{item.wordInfo.mean}</p>
                 </div>
-                <div className="sens">
+                <div className="sentence-container">
                   {' '}
                   <ul>
                     {item.sentenceContentList.map((sentence, index) => (
-                      <li key={index}>{sentence}</li>
+                      <li key={index}>
+                        {index + 1} . {sentence}
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
             ))}
         </div>
-        {/* </InfiniteScroll> */}
         <div ref={ref} style={{ height: '10vh' }}></div>
       </div>
     </BookIn>

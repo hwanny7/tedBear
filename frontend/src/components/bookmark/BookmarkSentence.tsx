@@ -52,6 +52,7 @@ const BookIn = styled.div`
   .row {
     display: flex;
     flex-direction: row;
+    margin-bottom: 20px;
   }
 
   .bookmark-container {
@@ -80,6 +81,15 @@ const BookIn = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
 
   .translation-container {
@@ -90,6 +100,15 @@ const BookIn = styled.div`
     justify-content: flex-end;
     align-items: center;
     margin-left: 10px;
+    /* border: 1px solid #ccc; // Add a border */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
+    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    padding: 10px;
+    /* &:hover {
+      border: 1px solid ${props => props.theme.pointLightColor};
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    } */
   }
 `;
 
@@ -98,7 +117,6 @@ const BookmarkSentence = () => {
   const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
     [],
   );
-  const [hasMore, setHasMore] = useState(true);
   const [ref, inView] = useInView();
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
@@ -159,7 +177,7 @@ const BookmarkSentence = () => {
                   src={sen.no ? Play : Play}
                 ></img>
               </div>
-              <div className="cotent-container">
+              <div className="content-container">
                 <p>{sen.content}</p>
                 <br></br>
               </div>
