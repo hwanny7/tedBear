@@ -21,7 +21,7 @@ interface IBookmarkSentence {
 }
 
 const BookIn = styled.div`
-  position: absolute;
+  /* position: absolute; */
   max-height: 800px;
   margin: 30px 30px 30px 30px;
   padding: 30px 30px 30px 30px;
@@ -111,12 +111,23 @@ const BookIn = styled.div`
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
     } */
   }
+  /* .sentences {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
   .empty-caution {
     font-size: 50px;
     color: ${props => props.theme.mainLightColor};
   }
   .study-button {
     background: ${props => props.theme.pointLightColor};
+  }
+  .button-set {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 `;
 
@@ -169,7 +180,7 @@ const BookmarkSentence = () => {
     <BookIn>
       <div className="sentences">
         {sentenceBookmark.length === 0 ? (
-          <div>
+          <div className="button-set">
             <p className="empty-caution">북마크가 비어있어요!</p>
             <Button
               className="study-button"
@@ -180,7 +191,7 @@ const BookmarkSentence = () => {
                 margin: '40px',
                 padding: '10px',
                 width: '15vw',
-                height: '15vh',
+                height: '10vh',
                 borderRadius: '15px',
                 fontSize: '30px',
               }}
