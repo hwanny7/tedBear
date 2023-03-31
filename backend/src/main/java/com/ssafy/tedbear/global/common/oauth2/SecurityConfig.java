@@ -62,8 +62,8 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.httpBasic().disable()
-			// .cors().configurationSource(corsConfigurationSource())
-			// .and()
+			.cors().configurationSource(corsConfigurationSource())
+			.and()
 			.csrf().disable()
 			.formLogin().disable();
 		http.anonymous().authenticationFilter(customAnonymousFilter());
@@ -107,7 +107,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://j8b103.p.ssafy.io"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
 		configuration.setAllowCredentials(true); // 클라이언트 요청이 쿠키를 통해 자격 증명을 하는 경우 true
