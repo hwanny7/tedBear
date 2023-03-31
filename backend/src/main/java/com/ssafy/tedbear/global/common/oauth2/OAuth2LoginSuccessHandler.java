@@ -28,7 +28,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	private final MemberLevelRepository memberLevelRepository;
 	private final MemberScoreRepository memberScoreRepository;
 	private final JwtProvider jwtProvider;
-	private static boolean join;
+	private static boolean join = false;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -42,7 +42,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		clearAuthenticationAttributes(request, response);
 
 		getRedirectStrategy().sendRedirect(request, response,
-			"https://j8b103.p.ssafy.io/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
+			"https://localhost:3000/seung?accessToken=" + accessToken + "&refreshToken=" + refreshToken
 				+ "&join="
 				+ join); // 난이도 측정 페이지로 이동(프론트에서 분기)
 
