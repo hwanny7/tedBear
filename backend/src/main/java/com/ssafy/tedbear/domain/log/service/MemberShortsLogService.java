@@ -7,7 +7,6 @@ import com.ssafy.tedbear.domain.log.repository.MemberShortsLogRepository;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.sentence.dto.MemberShortsLogDto;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
-import com.ssafy.tedbear.domain.sentence.service.SentenceService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,10 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberShortsLogService {
 	private final MemberShortsLogRepository memberShortsLogRepository;
-	private final SentenceService sentenceService;
 
 	public void saveMemberShortsLog(Member member, Long sentenceNo) {
-		Sentence sentence = sentenceService.getSentence(sentenceNo);
+		Sentence sentence = Sentence.builder().no(sentenceNo).build();
 
 		MemberShortsLog memberShortsLog = MemberShortsLogDto.toEntity(member, sentence);
 

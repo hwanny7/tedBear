@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.sentence.dto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 
@@ -32,8 +33,8 @@ public class SentenceBookmarkDetailDto {
 	public static class ListResponse {
 		List<SentenceBookmarkDetailDto> sentenceList;
 
-		public ListResponse(List<SentenceBookmarkDetailDto> list) {
-			this.sentenceList = list;
+		public ListResponse(List<Sentence> list) {
+			this.sentenceList = list.stream().map(SentenceBookmarkDetailDto::new).collect(Collectors.toList());
 		}
 	}
 }

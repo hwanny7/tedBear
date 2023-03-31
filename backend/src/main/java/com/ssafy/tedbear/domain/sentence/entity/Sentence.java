@@ -65,6 +65,10 @@ public class Sentence {
 	@Transient
 	private boolean isBookmarked;
 
+	public Sentence(Long sentenceNo) {
+		this.no = sentenceNo;
+	}
+
 	//========//
 	public void setScores(double gf, double fr, double fk, int score) {
 		this.gunningFog = gf;

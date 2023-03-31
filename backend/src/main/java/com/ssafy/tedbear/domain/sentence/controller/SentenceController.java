@@ -69,7 +69,8 @@ public class SentenceController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition, @PageableDefault(sort = "startTime") Pageable pageable,
+	public ResponseEntity<?> searchSentence(SearchDto.Request searchCondition,
+		@PageableDefault(sort = "startTime") Pageable pageable,
 		@AuthenticationPrincipal CustomOAuth2User user) {
 		Member member = findMemberService.findMember(user.getName());
 		SentenceDetailDto.ListResponse listResponse = sentenceService.searchSentence(member, searchCondition, pageable);
@@ -81,7 +82,7 @@ public class SentenceController {
 	public ResponseEntity<?> getBookmarkedSentenceList(Pageable pageable,
 		@AuthenticationPrincipal CustomOAuth2User user) {
 		Member member = findMemberService.findMember(user.getName());
-		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(member.getNo(),
+		SentenceBookmarkDetailDto.ListResponse bookmarkList = sentenceBookmarkService.getBookmarkList(member,
 			pageable);
 		return new ResponseEntity<>(bookmarkList, HttpStatus.OK);
 	}
@@ -92,7 +93,7 @@ public class SentenceController {
 		Member member = findMemberService.findMember(user.getName());
 		sentenceBookmarkService.saveSentenceBookmark(member, sentenceBookmarkDto);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/bookmark")

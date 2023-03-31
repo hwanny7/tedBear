@@ -3,7 +3,6 @@ package com.ssafy.tedbear.domain.sentence.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -39,16 +38,11 @@ public class SentenceService {
 	private final SentenceBookmarkRepository sentenceBookmarkRepository;
 	final int resultMaxCnt = 12;
 
-	public Sentence getSentence(Long sentenceNo) {
-		return sentenceRepository.findById(sentenceNo)
-			.orElseThrow(() -> new NoSuchElementException("해당 문장을 찾을 수 없습니다"));
-	}
-
 	//스피킹 데이터 저장
 	public void saveSpeakingRecord(Member member, SpeakingDto.Request speakingDto) {
 		SpeakingRecord speakingRecord = SpeakingRecord.builder()
 			.matchStatus(speakingDto.isMatchStatus())
-			.sentence(getSentence(speakingDto.getSentenceNo()))
+			.sentence(Sentence.builder().no(speakingDto.getSentenceNo()).build())
 			.member(member)
 			.createdDate(LocalDateTime.now())
 			.build();
@@ -99,8 +93,7 @@ public class SentenceService {
 
 	public SentenceDetailDto.ListResponse searchSentence(Member member, SearchDto.Request condition,
 		Pageable pageable) {
-		List<Sentence> searchList = sentenceRepository.findSliceByContent(condition.getQuery(), pageable)
-			.getContent();
+		List<Sentence> searchList = sentenceRepository.findSliceByContent(condition.getQuery(), pageable).getContent();
 		updateBookmarkSentence(member, searchList);
 
 		return new SentenceDetailDto.ListResponse(searchList);

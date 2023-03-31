@@ -12,12 +12,8 @@ import lombok.Getter;
 public class SentenceBookmarkDto {
 	Long sentenceNo;
 
-	public SentenceBookmark toEntity(Member member) {
-		Sentence sentence = Sentence.builder().no(this.sentenceNo).build();
+	public SentenceBookmark toEntity(Member member, Sentence sentence) {
 		return SentenceBookmark.builder().member(member).sentence(sentence).createdDate(LocalDateTime.now()).build();
 	}
 
-	public Sentence toSentenceEntity() {
-		return Sentence.builder().no(this.sentenceNo).build();
-	}
 }

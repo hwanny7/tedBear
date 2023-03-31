@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
-import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDetailDto;
 import com.ssafy.tedbear.domain.sentence.entity.Sentence;
 import com.ssafy.tedbear.domain.sentence.entity.SentenceBookmark;
 
@@ -23,8 +22,6 @@ public interface SentenceBookmarkRepository extends JpaRepository<SentenceBookma
 
 	Optional<SentenceBookmark> findByMemberAndSentence(Member member, Sentence sentence);
 
-	@Query("select new com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDetailDto(s) "
-		+ "from Sentence s inner join SentenceBookmark  sb on s.no=sb.sentence.no and sb.member.no=:memberId "
-		+ "join fetch Video v on s.video.no=v.no")
-	Slice<SentenceBookmarkDetailDto> findSentenceByMember(Long memberId, Pageable pageable);
+	@Query("select sb.sentence from SentenceBookmark sb join fetch sb.sentence.video v where sb.member=:member ")
+	Slice<Sentence> findSentenceByMember(Member member, Pageable pageable);
 }
