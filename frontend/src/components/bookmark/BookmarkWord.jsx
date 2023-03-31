@@ -4,6 +4,8 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import { useInView } from 'react-intersection-observer';
 import { authApi } from 'utils/api/customAxios';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const BookIn = styled.div`
   position: absolute;
@@ -98,9 +100,13 @@ const BookIn = styled.div`
     font-size: 50px;
     color: ${props => props.theme.mainLightColor};
   }
+  .study-button {
+    background: ${props => props.theme.pointLightColor};
+  }
 `;
 
 const BookmarkWord = () => {
+  const navigate = useNavigate();
   const [ref, inView] = useInView();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -136,11 +142,33 @@ const BookmarkWord = () => {
     }
   }, [inView, loading]);
 
+  const handleBookmark = () => {
+    navigate('/home');
+  };
+
   return (
     <BookIn>
       <div className="words">
         {wordBookmarkList.length === 0 ? (
-          <p className="empty-caution">북마크가 비어있어요!</p>
+          <div>
+            <p className="empty-caution">북마크가 비어있어요!</p>
+            <Button
+              className="study-button"
+              onClick={handleBookmark}
+              variant="contained"
+              size="large"
+              style={{
+                margin: '40px',
+                padding: '10px',
+                width: '15vw',
+                height: '15vh',
+                borderRadius: '15px',
+                fontSize: '30px',
+              }}
+            >
+              학습하러가기
+            </Button>
+          </div>
         ) : (
           <div className="word">
             <div>

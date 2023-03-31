@@ -12,6 +12,7 @@ import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 // import VideoLevel from 'assets/img/videoLevel.svg';
+import { Button } from '@mui/material';
 
 interface IBookmarkVideo {
   thumbnailUrl: string;
@@ -49,6 +50,9 @@ const BookIn = styled.div`
     font-size: 50px;
     color: ${props => props.theme.mainLightColor};
   }
+  .study-button {
+    background: ${props => props.theme.pointLightColor};
+  }
 `;
 
 const BookmarkVideo = () => {
@@ -82,11 +86,33 @@ const BookmarkVideo = () => {
     }
   }, [inView, loading]);
 
+  const handleBookmark = () => {
+    navigate('/home');
+  };
+
   return (
     <BookIn>
       <div className="videoes">
         {videoBookmark.length === 0 ? (
-          <p className="empty-caution">북마크가 비어있어요!</p>
+          <div>
+            <p className="empty-caution">북마크가 비어있어요!</p>
+            <Button
+              className="study-button"
+              onClick={handleBookmark}
+              variant="contained"
+              size="large"
+              style={{
+                margin: '40px',
+                padding: '10px',
+                width: '15vw',
+                height: '15vh',
+                borderRadius: '15px',
+                fontSize: '30px',
+              }}
+            >
+              학습하러가기
+            </Button>
+          </div>
         ) : (
           <Grid
             container
