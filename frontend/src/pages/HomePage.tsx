@@ -65,17 +65,76 @@ const ShortsTitle = styled.span`
   }
 `;
 
-const Button = styled.button<{ changeColor?: string }>`
-  margin-left: 2%;
-  margin-right: 2%;
-  background-color: white;
-  border-radius: 16px;
+const Button = styled.button<{ changeColor?: number }>`
   padding: 3%;
+  background: ${props =>
+    props.changeColor
+      ? 'linear-gradient(to right, #ffdbb3, #fec88e)'
+      : 'white'};
+  &:hover {
+    background: linear-gradient(to right, #ffdbb3, #fec88e);
+  }
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 12px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 15px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 22px;
+  }
+`;
+
+const LeftButton = styled.button<{ changeColor?: number }>`
+  border-radius: 16px 0 0 16px;
+  background: ${props =>
+    props.changeColor
+      ? 'linear-gradient(to right, #fff6ec, #ffdbb3)'
+      : 'white'};
+  padding: 3%;
+  padding-left: 5%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   &:hover {
-    background-color: ${props => props.changeColor};
-    transition: all 0.3s;
-    transform: translateY(3px);
+    background: linear-gradient(to right, #fff6ec, #ffdbb3);
+    /* transition: all 0.3s;
+    transform: translateY(3px); */
+  }
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
+
+  @media ${device.tablet} {
+    font-size: 12px;
+  }
+
+  @media ${device.laptop} {
+    font-size: 15px;
+  }
+
+  @media ${device.desktop} {
+    font-size: 22px;
+  }
+`;
+
+const RightButton = styled.button<{ changeColor?: number }>`
+  border-radius: 0px 16px 16px 0px;
+  background: ${props =>
+    props.changeColor
+      ? 'linear-gradient(to right, #fec88e, #fead55)'
+      : 'white'};
+  padding: 3%;
+  padding-right: 5%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background: linear-gradient(to right, #fec88e, #fead55);
+    /* transition: all 0.3s;
+    transform: translateY(3px); */
   }
   @media ${device.mobile} {
     font-size: 10px;
@@ -197,34 +256,28 @@ const HomePage = () => {
             </LearningButton>
           </div>
           <div style={{ display: 'flex', alignItems: 'end', width: '20%' }}>
-            <Button
-              changeColor={'yellow'}
-              style={{ backgroundColor: `${button[0] ? 'yellow' : ''}` }}
+            <LeftButton
+              changeColor={button[0]}
               onClick={() => changeDifficulty(0)}
             >
-              Easy
+              초급
+            </LeftButton>
+            <Button changeColor={button[1]} onClick={() => changeDifficulty(1)}>
+              중급
             </Button>
-            <Button
-              changeColor={'green'}
-              style={{ backgroundColor: `${button[1] ? 'green' : ''}` }}
-              onClick={() => changeDifficulty(1)}
-            >
-              Nomal
-            </Button>
-            <Button
-              changeColor={'red'}
-              style={{ backgroundColor: `${button[2] ? 'red' : ''}` }}
+            <RightButton
+              changeColor={button[2]}
               onClick={() => changeDifficulty(2)}
             >
-              Hard
-            </Button>
+              고급
+            </RightButton>
           </div>
         </div>
-        <VideoTitle>Recommended for you</VideoTitle>
+        <VideoTitle>추천 영상</VideoTitle>
         {videoData.length !== 0 && (
           <Carousel data={videoData} setVideoData={setVideoData}></Carousel>
         )}
-        <ShortsTitle>Daily Shorts</ShortsTitle>
+        <ShortsTitle>오늘의 문장</ShortsTitle>
         <ShortsCarousel
           data={shortsData}
           setOpenModal={setModalOpen}

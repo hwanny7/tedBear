@@ -45,7 +45,7 @@ const SearchBar = ({ fetchData }: Props) => {
       </IconButton>
       <InputBase
         sx={{ ml: 1, flex: 1 }}
-        placeholder="Search"
+        placeholder="검색하기"
         inputProps={{ 'aria-label': 'search' }}
       />
     </Paper>

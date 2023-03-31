@@ -22,9 +22,15 @@ const CustomYoutube = styled(YouTube)`
   left: 0;
   width: 100%;
   height: 100%;
+
+  iframe {
+    border-radius: 12px;
+  }
 `;
 
 const Wrapper = styled.div`
+  border: 5px #e6e4f4 solid;
+  border-radius: 16px;
   position: relative;
   width: 100%;
   height: 0;
@@ -62,20 +68,13 @@ const YoutubeBox = styled.div`
 const SentenceBox = styled.div`
   text-align: center;
   position: absolute;
+  border-radius: 12px;
   color: white;
-  width: 80%;
-  border-radius: 16px;
-  left: 10%;
-  padding: 1%;
-  bottom: 2%;
-  background-color: black;
-  /* background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.7),
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0)
-  ); */
+  width: 100%;
+  left: 0%;
+  padding: 2%;
+  bottom: 0%;
+  background-color: #333;
   @media ${device.mobile} {
     font-size: 5px;
   }
@@ -185,7 +184,7 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
                 handleClick(shorts?.watchId);
               }}
             >
-              Watch
+              학습하기
             </button>
           )}
           {shorts?.content && <SentenceBox>{shorts?.content}</SentenceBox>}

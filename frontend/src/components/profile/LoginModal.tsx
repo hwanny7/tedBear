@@ -4,10 +4,7 @@ import { ReactComponent as KakaoImg } from 'assets/img/KakaoImg.svg';
 import { ReactComponent as NaverIcon } from 'assets/img/NaverIcon.svg';
 import { ReactComponent as GoogleIcon } from 'assets/img/GoogleIcon.svg';
 import { useNavigate } from 'react-router-dom';
-import LoginBear from 'assets/img/LoginBear.svg';
-import cloud from 'assets/img/cloud.svg';
-import { device } from 'utils/mediaQuery';
-import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
 interface Color {
   BgColor: string;
@@ -25,60 +22,6 @@ const DarkBackground = styled.div`
   z-index: 9998;
 `;
 
-// const Bear = styled.img`
-//   position: absolute;
-//   left: 30%;
-//   width: 40%;
-//   height: 40%;
-// `;
-
-// const Modal = styled.div`
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   z-index: 9999;
-//   border-radius: 16px;
-//   overflow: hidden;
-// @media ${device.mobile} {
-//   height: 500px;
-//   width: 300px;
-// }
-
-// @media ${device.tablet} {
-//   height: 50%;
-//   width: 30%;
-// }
-
-// @media ${device.laptop} {
-//   height: 50%;
-//   width: 30%;
-// }
-
-// @media ${device.desktop} {
-//   height: 75%;
-//   width: 30%;
-// }
-
-//   /* box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04); */
-// `;
-
-// const Wrapper = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   position: relative;
-// `;
-
-// const Cloud = styled.img`
-//   position: absolute;
-//   bottom: -20%;
-//   width: 100%;
-//   height: 70%;
-//   @media ${device.mobile} {
-//     height: 400px;
-//     width: 400px;
-//   }
-// `;
 const Modal = styled.div`
   position: fixed;
   top: 50%;
@@ -143,22 +86,18 @@ interface Props {
 }
 
 const LoginModal = ({ setOpenModal }: Props) => {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const KakaoLogin = () => {
     window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
   };
 
   const goTo = () => {
-    console.log('클릭!');
+    localStorage.removeItem('accessToken');
+    cookie.remove('refreshToken');
     navigate('/home');
   };
   return (
-    // <Modal style={{ background: 'black' }}>
-    //   <Wrapper>
-    //     <Bear src={LoginBear} alt="" />
-    //     <Cloud src={cloud} alt="" />
-    //   </Wrapper>
-    // </Modal>
     <div>
       <DarkBackground onClick={() => setOpenModal(false)} />
       <Modal>

@@ -202,7 +202,7 @@ const SearchPage = () => {
 
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
-  const [loading, setLoading] = useState<string>('+ 8 more');
+  const [loading, setLoading] = useState<string>('+ 8개 추가');
   const [shortsLoading, setShortsLoading] = useState<boolean>(false);
   const [videos, setVideo] = useState<SearchedVideo[]>([]);
   const [page, setPage] = useState<number>(0);
@@ -235,16 +235,16 @@ const SearchPage = () => {
     setVideo(videoData);
     setPage(0);
     setSearchWord(content);
-    setLoading('+ 8 more');
+    setLoading('+ 8개 추가');
   };
 
   const requestVideo = async () => {
-    if (loading === '+ 8 more') {
+    if (loading === '+ 8개 추가') {
       setLoading('Loading...');
       const videoData = await searchVideoData(searchWord, page + 1);
       if (videoData.length) {
         setVideo(prev => prev.concat(videoData));
-        setLoading('+ 8 more');
+        setLoading('+ 8개 추가');
         console.log('비디오 갯수', videoData.length, page);
         setPage(prev => prev + 1);
       } else {
@@ -308,7 +308,7 @@ const SearchPage = () => {
         <SearchBar fetchData={fetchData}></SearchBar>
       </StickySearchBar>
 
-      <VideoTitle>Related Videos</VideoTitle>
+      <VideoTitle>관련 영상</VideoTitle>
       {videos.map((video, idx) => {
         return (
           <VideoWrapper key={idx}>
@@ -342,7 +342,7 @@ const SearchPage = () => {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
       </div>
-      <VideoTitle>Related Shorts</VideoTitle>
+      <VideoTitle>관련 문장</VideoTitle>
       <div className="short-wrapper">
         <ShortsPageNation
           data={props}
