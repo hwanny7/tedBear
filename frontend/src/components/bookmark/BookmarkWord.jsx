@@ -79,7 +79,7 @@ const BookmarkWord = () => {
   const [sentenceContentList, setSentenceContentList] = useState();
 
   useEffect(() => {
-    let mounted = true;
+    // let mounted = true;
     async function fetchData() {
       setLoading(true);
       setError(null);
@@ -92,13 +92,13 @@ const BookmarkWord = () => {
           const listData = response.data.wordBookmarkList.map((item, index) => {
             return { ...item, bookmarked: true, id: index };
           });
-          // setWordBookmarkList(listData);
+          setWordBookmarkList(listData);
 
-          if (mounted) {
-            // only update state if component is still mounted
-            setWordBookmarkList(listData);
-            setLoading(false);
-          }
+          // if (mounted) {
+          //   // only update state if component is still mounted
+          //   setWordBookmarkList(listData);
+          //   setLoading(false);
+          // }
 
           // const wordData = response.data.wordBookmarkList.wordInfo.map(
           //   (item, index) => {
@@ -117,25 +117,25 @@ const BookmarkWord = () => {
         })
         .catch(error => {
           console.log(error.data);
-          if (mounted) {
-            setLoading(false);
-          }
+          // if (mounted) {
+          //   setLoading(false);
+          // }
         });
-      // setLoading(false);
+      setLoading(false);
     }
     fetchData();
-    return () => {
-      mounted = false; // update mounted variable when component is unmounted
-    };
+    // return () => {
+    //   mounted = false;
+    // };
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>An error occurred: {error.message}</div>;
-  }
+  // if (error) {
+  //   return <div>An error occurred: {error.message}</div>;
+  // }
 
   // useEffect(() => {
   //   console.log('fetchData');
