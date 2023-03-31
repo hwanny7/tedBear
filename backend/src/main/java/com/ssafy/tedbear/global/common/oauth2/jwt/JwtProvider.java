@@ -28,8 +28,10 @@ public class JwtProvider {
 
 	private final String SECRET_KEY;
 
-	public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 30 * 60; // 30분
-	public static final Long REFRESH_TOKEN_VALIDATE_TIME = 1000L * 60 * 60 * 24 * 7; // 7일
+	// public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 30 * 60; // 30분
+	public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 60; // 1분
+	// public static final Long REFRESH_TOKEN_VALIDATE_TIME = 1000L * 60 * 60 * 24 * 7; // 7일
+	public static final Long REFRESH_TOKEN_VALIDATE_TIME = 1000L * 60 * 5; // 5분
 	private final String AUTHORITIES_KEY = "role";
 
 	public JwtProvider(@Value("${app.auth.token-secret}") String secretKey) {

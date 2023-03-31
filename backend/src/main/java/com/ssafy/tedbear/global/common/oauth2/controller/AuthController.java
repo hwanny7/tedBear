@@ -2,6 +2,7 @@ package com.ssafy.tedbear.global.common.oauth2.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.tedbear.global.common.oauth2.CookieUtils;
-import com.ssafy.tedbear.global.common.oauth2.dto.TokenDto;
 import com.ssafy.tedbear.global.common.oauth2.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AuthController {
 	private final AuthService authService;
 
 	@GetMapping
-	public ResponseEntity<TokenDto.Request> reissueAccessToken(
+	public ResponseEntity<String> reissueAccessToken(
 		HttpServletRequest request,
 		@RequestHeader("Authorization") String oldAccessToken) {
 		oldAccessToken = oldAccessToken.substring(7);
@@ -39,8 +39,14 @@ public class AuthController {
 			.getValue();
 		log.info("refreshToken: {}", refreshToken);
 
-		TokenDto.Request req = authService.reissueAccessToken(oldAccessToken, refreshToken);
+		String newAccessToken = authService.reissueAccessToken(oldAccessToken, refreshToken);
+		if (newAccessToken == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(req);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", newAccessToken);
+
+		return ResponseEntity.ok().headers(headers).body("success");
 	}
 }

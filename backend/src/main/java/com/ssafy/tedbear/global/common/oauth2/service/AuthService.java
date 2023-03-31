@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
 import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
-import com.ssafy.tedbear.global.common.oauth2.dto.TokenDto;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -20,10 +19,10 @@ public class AuthService {
 	private final MemberRepository memberRepository;
 	private final JwtProvider jwtProvider;
 
-	public TokenDto.Request reissueAccessToken(String oldAccessToken, String refreshToken) {
+	public String reissueAccessToken(String oldAccessToken, String refreshToken) {
 		if (!jwtProvider.validateToken(refreshToken)) {
 			log.error("invalid refresh token");
-			return TokenDto.Request.builder().result(false).newAccessToken("invalid refresh token").build();
+			return null;
 		}
 
 		// access-token에서 유저 정보 가져오기
@@ -38,13 +37,12 @@ public class AuthService {
 		// refresh토큰이 같지 않으면
 		if (!refreshToken.equals(member.getRefreshToken())) {
 			log.error("refresh-token이 DB와 다릅니다.");
-			return TokenDto.Request.builder().result(false).newAccessToken("refresh-token이 DB와 다릅니다.").build();
+			return null;
 		}
 
 		// access-token 발급
 		String newAccessToken = jwtProvider.createAccessToken(authentication);
-		TokenDto.Request request = TokenDto.Request.builder().result(true).newAccessToken(newAccessToken).build();
 
-		return request;
+		return newAccessToken;
 	}
 }
