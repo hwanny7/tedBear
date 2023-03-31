@@ -6,6 +6,43 @@ import rightButton from 'assets/img/rightButton.svg';
 import { Shorts } from 'utils/api/recommApi';
 import VideoLevel from 'assets/img/videoLevel.svg';
 
+interface BadgeProps {
+  score?: number;
+}
+
+const ViedoLevelImg = styled.img<BadgeProps>`
+  height: 15%;
+  width: 15%;
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  filter: ${props => {
+    if (props.score == 0) {
+      return `${props.theme.badgeRed}`;
+    } else if (props.score == 1) {
+      return `${props.theme.badgeOrange}`;
+    } else if (props.score == 2) {
+      return `${props.theme.badgeYellow}`;
+    } else if (props.score == 3) {
+      return `${props.theme.badgeGreen}`;
+    } else if (props.score == 4) {
+      return `${props.theme.badgeBlue}`;
+    } else if (props.score == 5) {
+      return `${props.theme.badgeIndigo}`;
+    } else if (props.score == 6) {
+      return `${props.theme.badgePurple}`;
+    } else if (props.score == 7) {
+      return `${props.theme.badgeBronze}`;
+    } else if (props.score == 8) {
+      return `${props.theme.badgeSilver}`;
+    } else if (props.score == 9) {
+      return `${props.theme.badgGold}`;
+    } else {
+      return `${props.theme.badgeUnlank}`;
+    }
+  }};
+`;
+
 const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
@@ -43,13 +80,6 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       width: 100%;
       height: 100%;
       cursor: pointer;
-    }
-    .video-level {
-      height: 15%;
-      width: 15%;
-      position: absolute;
-      top: 4%;
-      left: 4%;
     }
   }
 `;
@@ -154,14 +184,7 @@ const ShortsCarousel = ({
                     setShortsId(Thumnail);
                   }}
                 ></img>
-                <img
-                  src={VideoLevel}
-                  className="video-level"
-                  style={{
-                    filter:
-                      'invert(45%) sepia(78%) saturate(1707%) hue-rotate(161deg) brightness(93%) contrast(103%)',
-                  }}
-                ></img>
+                <ViedoLevelImg src={VideoLevel} score={Thumnail.score} />
               </div>
             );
           })}

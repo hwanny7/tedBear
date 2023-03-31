@@ -567,43 +567,47 @@ const CrossWordPage = () => {
 
   return (
     <Wrapper>
-      <div className="main">
-        {wordList.map((word, idx) => {
-          if (word.clue) {
-            return (
-              <ins
-                key={idx}
-                data-clue={word.clue}
-                onClick={() => editClue(word, idx)}
-                className={cx({
-                  cursor: word.cursor,
-                  editting: word.edit,
-                  highlight: word.hightlight,
-                })}
-              >
-                {word.answer}
-              </ins>
-            );
-          } else if (word.box) {
-            return (
-              <ins
-                key={idx}
-                className={cx({
-                  cursor: word.cursor,
-                  editting: word.edit,
-                  highlight: word.hightlight,
-                })}
-              >
-                {word.answer}
-              </ins>
-            );
-          } else {
-            return <del key={idx}></del>;
-          }
-        })}
+      <div>
+        <div className="main">
+          {wordList.map((word, idx) => {
+            if (word.clue) {
+              return (
+                <ins
+                  key={idx}
+                  data-clue={word.clue}
+                  onClick={() => editClue(word, idx)}
+                  className={cx({
+                    cursor: word.cursor,
+                    editting: word.edit,
+                    highlight: word.hightlight,
+                  })}
+                >
+                  {word.answer}
+                </ins>
+              );
+            } else if (word.box) {
+              return (
+                <ins
+                  key={idx}
+                  className={cx({
+                    cursor: word.cursor,
+                    editting: word.edit,
+                    highlight: word.hightlight,
+                  })}
+                >
+                  {word.answer}
+                </ins>
+              );
+            } else {
+              return <del key={idx}></del>;
+            }
+          })}
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용 가능합니다!
+        </div>
       </div>
       <Content>
-        <p>Tab / Tab + Shift / 방향키 / 스페이스바 / 사용 가능합니다!</p>
         {clueList.map((clue, idx) => {
           return (
             <ClueBox
