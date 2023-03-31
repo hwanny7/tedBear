@@ -8,11 +8,22 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const BookIn = styled.div`
-  max-height: 800px;
-  margin: 30px 30px 30px 30px;
-  padding: 30px 30px 30px 30px;
-  overflow: hidden;
+  max-height: 80vh;
+  padding: 30px;
   right: 0%;
+  overflow: auto;
+  /* paper's scroll */
+  &::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 15%;
+    background-color: ${props => props.theme.mainLightColor};
+    border-radius: 20px;
+  }
+  scroll-behavior: auto;
+  //
 
   .book-mark:hover {
     opacity: 0.5;

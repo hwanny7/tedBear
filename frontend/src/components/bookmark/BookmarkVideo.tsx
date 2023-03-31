@@ -22,12 +22,22 @@ interface IBookmarkVideo {
 }
 
 const BookIn = styled.div`
-  max-height: 800px;
-  margin: 10px;
+  max-height: 80vh;
   padding: 10px;
-  overflow: hidden;
   right: 0%;
-
+  overflow: auto;
+  /* paper's scroll */
+  &::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 15%;
+    background-color: ${props => props.theme.mainLightColor};
+    border-radius: 20px;
+  }
+  scroll-behavior: auto;
+  //
   .videoes {
     position: relative;
     margin: 0;

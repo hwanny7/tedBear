@@ -50,17 +50,7 @@ const Bookmark = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: auto;
-    /* paper's scroll */
-    &::-webkit-scrollbar {
-      width: 8px;
-      cursor: pointer;
-    }
-    &::-webkit-scrollbar-thumb {
-      height: 15%;
-      background-color: ${props => props.theme.mainLightColor};
-      border-radius: 20px;
-    }
+    overflow: hidden;
   }
   .statistics {
     background-color: blue;
