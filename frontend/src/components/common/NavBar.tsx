@@ -4,6 +4,7 @@ import { ReactComponent as LogoSmall } from 'assets/img/logoSmall.svg';
 import { ReactComponent as Home } from 'assets/img/home.svg';
 import { ReactComponent as Arrow } from 'assets/img/arrow.svg';
 import { ReactComponent as Game } from 'assets/img/game.svg';
+import { ReactComponent as NavGame } from 'assets/img/navGame.svg';
 import { ReactComponent as CrossIcon } from 'assets/img/crossicon.svg';
 import { ReactComponent as Mypage } from 'assets/img/mypage.svg';
 import { ReactComponent as Signout } from 'assets/img/signout.svg';
@@ -198,6 +199,10 @@ const StyledGame = styled(Game)`
   width: 32px;
 `;
 
+const StyledNavGame = styled(NavGame)`
+  width: 32px;
+`;
+
 const StyledCrossIcon = styled(CrossIcon)`
   width: 32px;
 `;
@@ -287,7 +292,17 @@ const NavBar2 = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
-        <Link to="/game">
+        <Link to="/game/select">
+          <ListBox>
+            <IconDiv open={props.open}>
+              <StyledNavGame />
+            </IconDiv>
+            <IconName open={props.open}>
+              <span>Game</span>
+            </IconName>
+          </ListBox>
+        </Link>
+        {/* <Link to="/game/select">
           <ListBox>
             <IconDiv open={props.open}>
               <StyledGame />
@@ -306,7 +321,7 @@ const NavBar2 = (props: Props) => {
               <span>CROSSWORD</span>
             </IconName>
           </ListBox>
-        </Link>
+        </Link> */}
 
         {isLogin ? (
           <>

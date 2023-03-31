@@ -23,6 +23,7 @@ import StillLearningPage from 'pages/StillLearningPage';
 import SearchPage from 'pages/SearchPage';
 import CrossWordPage from './pages/CrossWordPage';
 import CrossWordCoverPage from './pages/CrossWordCoverPage';
+import GameSelectPage from 'pages/GameSelectPage';
 
 function App() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -38,6 +39,7 @@ function App() {
             >
               <Route path="/home" element={<HomePage />} />
               <Route path="/game" element={<GamePage />} />
+              <Route path="/game/select" element={<GameSelectPage />} />
               <Route path="/game/detail" element={<GameDetailPage />} />
               <Route path="/game/complete" element={<GameCompletePage />} />
               <Route path="/profile" element={<ProfilePage />} />
