@@ -243,7 +243,7 @@ const NavBar2 = (props: Props) => {
   const onSignOut = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       dispatch(logout());
-      window.location.href = '/home';
+      window.location.href = '/';
     }
   };
 
@@ -261,12 +261,12 @@ const NavBar2 = (props: Props) => {
         {/* </ToggleBtn> */}
       </ToggleBox>
       <LogoBox>
-        <Link to="/">
+        <Link to="/home">
           <IconDiv open={props.open}>
             <StyledLogoSmall />
           </IconDiv>
         </Link>
-        <Link to="/">
+        <Link to="/home">
           <IconName open={props.open}>
             <span>TEDBEAR</span>
           </IconName>

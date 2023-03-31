@@ -28,7 +28,7 @@ const OutletWrapper = styled.div<OpenProps>`
   position: relative;
   left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
   transition: all 0.5s ease;
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.bgColor2};
 `;
 
 const DarkBackground = styled.div`
