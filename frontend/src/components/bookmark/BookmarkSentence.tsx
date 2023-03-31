@@ -110,6 +110,10 @@ const BookIn = styled.div`
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
     } */
   }
+  .empty-caution {
+    font-size: 50px;
+    color: ${props => props.theme.mainLightColor};
+  }
 `;
 
 const BookmarkSentence = () => {
@@ -155,40 +159,37 @@ const BookmarkSentence = () => {
   return (
     <BookIn>
       <div className="sentences">
-        {/* <InfiniteScroll
-          dataLength={sentenceBookmark.length}
-          next={fetchMore}
-          hasMore={hasMore}
-          loader={<h4>Loading...</h4>}
-        > */}
-        <div className="sentence">
-          {sentenceBookmark.map(sen => (
-            <div className="row" key={sen.no}>
-              <div className="bookmark-container">
-                <img
-                  className="book-mark"
-                  src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
-                ></img>
+        {sentenceBookmark.length === 0 ? (
+          <p className="empty-caution">북마크가 비어있어요!</p>
+        ) : (
+          <div className="sentence">
+            {sentenceBookmark.map(sen => (
+              <div className="row" key={sen.no}>
+                <div className="bookmark-container">
+                  <img
+                    className="book-mark"
+                    src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
+                  ></img>
+                </div>
+                <div className="play-shorts-container">
+                  <img
+                    className="play-shorts"
+                    onClick={handlePlay}
+                    src={sen.no ? Play : Play}
+                  ></img>
+                </div>
+                <div className="content-container">
+                  <p>{sen.content}</p>
+                  <br></br>
+                </div>
+                <div className="translation-container">
+                  <p>{sen.translation}</p>
+                  <br></br>
+                </div>
               </div>
-              <div className="play-shorts-container">
-                <img
-                  className="play-shorts"
-                  onClick={handlePlay}
-                  src={sen.no ? Play : Play}
-                ></img>
-              </div>
-              <div className="content-container">
-                <p>{sen.content}</p>
-                <br></br>
-              </div>
-              <div className="translation-container">
-                <p>{sen.translation}</p>
-                <br></br>
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* </InfiniteScroll> */}
+            ))}
+          </div>
+        )}
         <div ref={ref} style={{ height: '10vh' }}></div>
       </div>
     </BookIn>

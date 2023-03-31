@@ -94,6 +94,10 @@ const BookIn = styled.div`
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
     } */
   }
+  .empty-caution {
+    font-size: 50px;
+    color: ${props => props.theme.mainLightColor};
+  }
 `;
 
 const BookmarkWord = () => {
@@ -135,35 +139,41 @@ const BookmarkWord = () => {
   return (
     <BookIn>
       <div className="words">
-        <div className="word">
-          {wordBookmarkList.length > 0 &&
-            wordBookmarkList.map(item => (
-              <div className="row" key={item.id}>
-                <div className="bookmark-container">
-                  <img
-                    className="book-mark"
-                    src={item.bookMarked ? BookmarkEmpty : BookmarkFull}
-                  ></img>
-                </div>
-                <div className="content-container">
-                  <p>{item.wordInfo.content}</p>
-                </div>
-                <div className="mean-container">
-                  <p>{item.wordInfo.mean}</p>
-                </div>
-                <div className="sentence-container">
-                  {' '}
-                  <ul>
-                    {item.sentenceContentList.map((sentence, index) => (
-                      <li key={index}>
-                        {index + 1} . {sentence}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-        </div>
+        {wordBookmarkList.length === 0 ? (
+          <p className="empty-caution">북마크가 비어있어요!</p>
+        ) : (
+          <div className="word">
+            <div>
+              {wordBookmarkList.length > 0 &&
+                wordBookmarkList.map(item => (
+                  <div className="row" key={item.id}>
+                    <div className="bookmark-container">
+                      <img
+                        className="book-mark"
+                        src={item.bookMarked ? BookmarkEmpty : BookmarkFull}
+                      ></img>
+                    </div>
+                    <div className="content-container">
+                      <p>{item.wordInfo.content}</p>
+                    </div>
+                    <div className="mean-container">
+                      <p>{item.wordInfo.mean}</p>
+                    </div>
+                    <div className="sentence-container">
+                      {' '}
+                      <ul>
+                        {item.sentenceContentList.map((sentence, index) => (
+                          <li key={index}>
+                            {index + 1} . {sentence}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
         <div ref={ref} style={{ height: '10vh' }}></div>
       </div>
     </BookIn>
