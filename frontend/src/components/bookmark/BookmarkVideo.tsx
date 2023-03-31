@@ -22,7 +22,7 @@ interface IBookmarkVideo {
 }
 
 const BookIn = styled.div`
-  max-height: 80vh;
+  height: 80vh;
   padding: 10px;
   right: 0%;
   overflow: auto;
@@ -134,6 +134,8 @@ const BookmarkVideo = () => {
                     marginTop: '2%',
                     paddingLeft: '1%',
                     paddingRight: '1%',
+                    width: '80vw',
+                    height: '80vh',
                   }}
                   lg={4}
                   md={6}
@@ -144,8 +146,8 @@ const BookmarkVideo = () => {
                   <Card
                     key={idx}
                     sx={{
-                      width: '100%',
-                      height: '45vh',
+                      width: '80vw',
+                      height: '80vh',
                       position: 'relative',
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -155,8 +157,8 @@ const BookmarkVideo = () => {
                   >
                     <CardActionArea
                       sx={{
-                        height: '200px',
-                        width: '380px',
+                        height: '100%',
+                        width: '100',
                       }}
                     >
                       {/* <img
@@ -188,7 +190,7 @@ const BookmarkVideo = () => {
                         }
                         alt=""
                         sx={{
-                          height: '200px',
+                          height: '220px',
                           width: '380px',
                         }}
                       />
@@ -196,19 +198,19 @@ const BookmarkVideo = () => {
                         key={idx}
                         sx={{
                           width: '100vw',
-                          height: '30vh',
+                          height: '100vh',
                           justifyContent: 'center',
                           alignItems: 'center',
-                          overflow: 'auto',
                         }}
                       >
                         <Typography
                           component="div"
                           sx={{
-                            position: 'absolute',
-                            width: '350px',
-                            justifyContent: 'center',
+                            // position: 'absolute',
+                            // justifyContent: 'center',
                             alignItems: 'center',
+                            width: '360px',
+                            height: '80vh',
                           }}
                         >
                           {Thumnail.title}
