@@ -5,7 +5,6 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import Play from 'assets/img/play.svg';
 import { useNavigate } from 'react-router-dom';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 
@@ -21,101 +20,66 @@ interface IBookmarkSentence {
 }
 
 const BookIn = styled.div`
-  /* position: absolute; */
   max-height: 800px;
   margin: 30px 30px 30px 30px;
   padding: 30px 30px 30px 30px;
-  overflow-y: auto;
-
-  /* 스크롤 */
-  /* border: 1px solid black; */
-
+  overflow: hidden;
   right: 0%;
-  height: 90%;
-  &::-webkit-scrollbar {
-    width: 8px;
+
+  .play-shorts:hover {
+    opacity: 0.5;
     cursor: pointer;
   }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  }
-  .play-shorts:hover {
-    opacity: 0.5; /* change opacity when hovered */
-    cursor: pointer; /* change cursor to pointer when hovered */
-  }
   .book-mark:hover {
-    opacity: 0.5; /* change opacity when hovered */
-    cursor: pointer; /* change cursor to pointer when hovered */
+    opacity: 0.5;
+    cursor: pointer;
   }
-
   .row {
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
   }
-
   .bookmark-container {
     height: 40px;
     display: flex;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: left;
     margin-right: 10px;
     margin-bottom: 20px;
   }
-
   .play-shorts-container {
     height: 40px;
     display: flex;
-    justify-content: left;
+    justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
     margin-bottom: 20px;
   }
-
   .content-container {
-    max-width: 50%;
+    max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
-
   .translation-container {
-    max-width: 50%;
+    max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
-  /* .sentences {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  } */
   .empty-caution {
     font-size: 50px;
     color: ${props => props.theme.mainLightColor};
@@ -159,14 +123,6 @@ const BookmarkSentence = () => {
       setPage(prev => prev + 1);
     }
   }, [inView, loading]);
-
-  // const fetchMore = async () => {
-  //   const data: IBookmarkSentence[] = await getSentenceBookmark();
-  //   // setSentenceBookmark(data);
-  //   console.log(data);
-  //   setSentenceBookmark([...sentenceBookmark, ...data]);
-  //   setHasMore(data.length > 0); // true
-  // };
 
   const handlePlay = () => {
     navigate('/home');

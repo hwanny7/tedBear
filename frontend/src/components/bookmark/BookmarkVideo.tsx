@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
-// import VideoLevel from 'assets/img/videoLevel.svg';
 import { Button } from '@mui/material';
 
 interface IBookmarkVideo {
@@ -23,24 +22,12 @@ interface IBookmarkVideo {
 }
 
 const BookIn = styled.div`
-  /* position: absolute; */
   max-height: 800px;
   margin: 10px;
   padding: 10px;
-  overflow-y: auto;
+  overflow: hidden;
+  right: 0%;
 
-  /* 스크롤 */
-  /* border: 1px solid black; */
-  height: 90%;
-  &::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  }
   .videoes {
     position: relative;
     margin: 0;

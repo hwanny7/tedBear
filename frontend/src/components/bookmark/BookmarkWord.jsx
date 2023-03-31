@@ -8,23 +8,12 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const BookIn = styled.div`
-  /* position: absolute; */
   max-height: 800px;
   margin: 30px 30px 30px 30px;
   padding: 30px 30px 30px 30px;
-  overflow-y: auto;
+  overflow: hidden;
   right: 0%;
-  height: 90%;
 
-  &::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  }
   .book-mark:hover {
     opacity: 0.5;
     cursor: pointer;
@@ -50,15 +39,11 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    /* border: 1px solid #ccc; // Add a border */
+    margin-right: 10px;
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .mean-container {
     max-width: 100%;
@@ -67,16 +52,10 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .sentence-container {
     max-width: 100%;
@@ -86,15 +65,10 @@ const BookIn = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
-    /* border: 1px solid #ccc; // Add a border */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); // Add a shadow to bookmark-container
-    transition: box-shadow 0.3s ease-in-out; // Add a transition effect on hover
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
     padding: 10px;
-    /* &:hover {
-      border: 1px solid ${props => props.theme.pointLightColor};
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-    } */
   }
   .empty-caution {
     font-size: 50px;
