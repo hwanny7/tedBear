@@ -281,6 +281,21 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
     setWordMean(meanArr);
   };
 
+  // esc로 모달 닫기
+  useEffect(() => {
+    const escKeyModalClose = (e: any) => {
+      if (e.keyCode === 27) {
+        closeThing();
+      }
+    };
+    window.addEventListener('keydown', escKeyModalClose);
+    return () => window.removeEventListener('keydown', escKeyModalClose);
+  }, []);
+
+  const closeThing = () => {
+    setOpenModal(false);
+  };
+
   return (
     <Wrapper>
       <SearchBox>
