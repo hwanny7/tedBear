@@ -10,6 +10,7 @@ import rightButton from 'assets/img/rightButton.svg';
 import { device } from 'utils/mediaQuery';
 import { HomeRecomm } from 'utils/api/recommApi';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
+import { useSelector } from 'react-redux';
 
 interface BadgeProps {
   score: number;
@@ -100,7 +101,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       left: 10%;
       color: white;
       background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 5px;
       @media ${device.mobile} {
         font-size: 6px;
@@ -114,7 +115,7 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       }
 
       @media ${device.desktop} {
-        font-size: 13px;
+        font-size: 15px;
       }
     }
   }
@@ -158,6 +159,7 @@ const Carousel = ({ data, setVideoData }: Props) => {
   const length = data.length;
   const dataList = data;
   const [transStyle, setTransStyle] = useState(transition);
+  const { isLogin } = useSelector((state: any) => state.auth);
 
   const next = () => {
     if (currentIndex < length - 3) {
@@ -223,13 +225,15 @@ const Carousel = ({ data, setVideoData }: Props) => {
                     alt=""
                   />
                   <ViedoLevelImg src={VideoLevel} score={Thumnail.score} />
-                  <img
-                    src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                    className="book-mark"
-                    onClick={() => {
-                      handleVideoBm(Thumnail.no);
-                    }}
-                  ></img>
+                  {isLogin && (
+                    <img
+                      src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                      className="book-mark"
+                      onClick={() => {
+                        handleVideoBm(Thumnail.no);
+                      }}
+                    ></img>
+                  )}
                   <div className="title">{Thumnail.title}</div>
                 </div>
               );

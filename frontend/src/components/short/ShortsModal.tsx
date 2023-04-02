@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { Shorts } from 'utils/api/recommApi';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
+import { ReactComponent as Shortcut } from 'assets/img/shortcut.svg';
 import { device } from 'utils/mediaQuery';
 import { useNavigate } from 'react-router-dom';
 import {
   deleteSentenceBookmark,
   postSentenceBookmark,
 } from 'utils/api/learningApi';
+import { useSelector } from 'react-redux';
 
 interface Props {
   shorts: Shorts | null;
@@ -66,34 +68,60 @@ const YoutubeBox = styled.div`
 `;
 
 const SentenceBox = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   border-radius: 12px;
   color: white;
   width: 100%;
+  height: 20%;
   left: 0%;
   padding: 2%;
   bottom: 0%;
   background-color: #333;
-  @media ${device.mobile} {
-    font-size: 5px;
+  overflow-y: hidden;
+  cursor: pointer;
+  &:hover .text {
+    text-decoration: underline;
+    color: ${props => props.theme.mainLightColor};
+    transition: all 0.3s;
+    transform: translateY(3px);
+  }
+  &:hover .shortcut {
+    fill: ${props => props.theme.mainLightColor};
+    transition: all 0.3s;
+    transform: translateY(3px);
   }
 
-  @media ${device.tablet} {
-    font-size: 8px;
-  }
+  .text {
+    @media ${device.mobile} {
+      font-size: 5px;
+    }
 
-  @media ${device.laptop} {
-    font-size: 16px;
-  }
+    @media ${device.tablet} {
+      font-size: 8px;
+    }
 
-  @media ${device.desktop} {
-    font-size: 20px;
+    @media ${device.laptop} {
+      font-size: 16px;
+    }
+
+    @media ${device.desktop} {
+      font-size: 20px;
+    }
+  }
+  .shortcut {
+    width: 3%;
+    height: 3%;
+    fill: white;
+    margin-left: 1%;
   }
 `;
 
 const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
   const navigate = useNavigate();
+  const { isLogin } = useSelector((state: any) => state.auth);
 
   const handleClick = (watchId: string | undefined) => {
     setOpenModal(false);
@@ -163,7 +191,7 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}
           />
-          {shorts?.no && (
+          {shorts?.no && isLogin && (
             <img
               src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
               style={{
@@ -177,7 +205,7 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
               }}
             ></img>
           )}
-          {shorts?.no && (
+          {/* {shorts?.no && (
             <button
               className="btn"
               onClick={() => {
@@ -186,8 +214,19 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
             >
               학습하기
             </button>
+          )} */}
+          {shorts?.content && (
+            <SentenceBox
+              onClick={() => {
+                handleClick(shorts?.watchId);
+              }}
+            >
+              <p className="text">
+                {shorts?.content}
+                <Shortcut className="shortcut"></Shortcut>
+              </p>
+            </SentenceBox>
           )}
-          {shorts?.content && <SentenceBox>{shorts?.content}</SentenceBox>}
         </Wrapper>
       </YoutubeBox>
     </div>

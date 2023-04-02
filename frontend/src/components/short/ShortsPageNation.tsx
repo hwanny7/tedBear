@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Shorts } from 'utils/api/recommApi';
 import VideoLevel from 'assets/img/videoLevel.svg';
@@ -91,6 +91,7 @@ interface Props {
   upStreamPage: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShortsId: React.Dispatch<React.SetStateAction<Shorts | null>>;
+  searchWord: string;
 }
 
 const ShortsPageNation = ({
@@ -99,8 +100,13 @@ const ShortsPageNation = ({
   upStreamPage,
   setOpenModal,
   setShortsId,
+  searchWord,
 }: Props) => {
   const [page, setPage] = useState<number>(0);
+
+  useEffect(() => {
+    setPage(0);
+  }, [searchWord]);
 
   const handleNext = (next: number) => {
     setPage(next);
@@ -115,9 +121,7 @@ const ShortsPageNation = ({
           <div className="wrapper" key={idx}>
             <img
               className="main-img"
-              src={`https://i.ytimg.com/vi/${Thumnail.watchId}/hq${
-                (idx % 3) + 1
-              }.jpg`}
+              src={`https://i.ytimg.com/vi/${Thumnail.watchId}/hq1.jpg`}
               alt=""
               onClick={() => {
                 setOpenModal(true);

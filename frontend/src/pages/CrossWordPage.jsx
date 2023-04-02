@@ -28,6 +28,7 @@ const Wrapper = styled.div`
       grid-row: 2/4;
       grid-column: 1;
       display: grid;
+      /* height: 80%; */
       grid-template-rows: repeat(8, 5vw);
       grid-template-columns: repeat(8, 5vw);
       grid-gap: 2px;
@@ -35,7 +36,7 @@ const Wrapper = styled.div`
   }
   ins,
   del {
-    border-radius: 2px;
+    border-radius: 12px;
   }
 
   del {
@@ -104,38 +105,58 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
+  margin-left: 6%;
+  margin-right: 6%;
   display: flex;
+  border-radius: 16px;
+  background-color: ${props => props.theme.learningBoxColor2};
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-  /* align-content: center; */
-  button {
-    width: 40%;
-    height: 5%;
-    margin-top: 3%;
-    padding: 3%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 16px;
+  border: 1px black solid;
+  height: 80%;
+  width: 80%;
+  padding: 2%;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
     cursor: pointer;
-    border: 1px solid black;
-    &:hover {
-      scale: 1.08;
-      transition: 0.4s;
-      background-color: #857bb8;
-    }
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 15%;
+    background-color: ${props => props.theme.mainLightColor};
+    border-radius: 10px;
+  }
+`;
+const SubmitButton = styled.div`
+  width: 40%;
+  height: 3%;
+  margin-top: 2%;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+  background: ${props => props.theme.learningBoxColor2};
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  cursor: pointer;
+  border: 1px solid black;
+  &:hover {
+    scale: 1.08;
+    transition: 0.4s;
+    background-color: #857bb8;
   }
 `;
 
 const ClueBox = styled.div`
-  height: 5%;
   width: 80%;
   margin-top: 2%;
   padding: 3%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  height: 80%;
   cursor: pointer;
   border-radius: 16px;
-  background-color: ${props => (props.backgroundColor ? '#b4adde' : 'white')};
+  background-color: ${props =>
+    props.backgroundColor ? '#b4adde' : props.theme.learningBoxColor2};
   position: relative;
 
   @media ${device.mobile} {
@@ -177,14 +198,7 @@ const CrossWordPage = () => {
   const [wordList, setWordList] = useState([]);
   const [clueList, setClueList] = useState([]);
   const size = 8;
-  const state = useRef({
-    index: null,
-    clue: null,
-    cursor: 0,
-    length: null,
-    answers: [...Array(size)].map(() => Array(size).fill('')),
-    dir: null,
-  });
+  const state = useRef();
   const [finish, setFinish] = useState(false);
 
   const findClue = useCallback(
@@ -237,6 +251,7 @@ const CrossWordPage = () => {
       for (let i = 0; i < length; i++) {
         if (dir === 'ACROSS') {
           copy[i + idx] = { ...copy[i + idx], edit: true };
+          console.log(Math.floor(idx / size), (idx % size) + i);
           if (
             state.current.answers[Math.floor(idx / size)][(idx % size) + i] ===
               '' &&
@@ -323,8 +338,18 @@ const CrossWordPage = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!finish) {
+      fetchData();
+      state.current = {
+        index: null,
+        clue: null,
+        cursor: 0,
+        length: null,
+        answers: [...Array(size)].map(() => Array(size).fill('')),
+        dir: null,
+      };
+    }
+  }, [finish]);
 
   const keyPressHandler = useCallback(
     e => {
@@ -460,21 +485,21 @@ const CrossWordPage = () => {
         state.current.cursor -= 1;
       } else if (e.key.length === 1) {
         state.current.cursor += 1;
-        if (
-          dir === 'ACROSS' &&
-          state.current.cursor + 1 < length &&
-          answers[Math.floor(index / size)][state.current.cursor] !== ''
-        ) {
-          state.current.cursor += 1;
-        } else if (
-          dir === 'DOWN' &&
-          state.current.cursor + 1 < length &&
-          answers[Math.floor(index / size) + state.current.cursor][
-            index % size
-          ] !== ''
-        ) {
-          state.current.cursor += 1;
-        }
+        // if (
+        //   dir === 'ACROSS' &&
+        //   state.current.cursor + 1 < length &&
+        //   answers[Math.floor(index / size)][state.current.cursor] !== ''
+        // ) {
+        //   state.current.cursor += 1;
+        // } else if (
+        //   dir === 'DOWN' &&
+        //   state.current.cursor + 1 < length &&
+        //   answers[Math.floor(index / size) + state.current.cursor][
+        //     index % size
+        //   ] !== ''
+        // ) {
+        //   state.current.cursor += 1;
+        // }
         // 키 입력할 때 해당 인덱스가 채워져 있다면 다음 인덱스로 이동
       } else {
         if (e.key === 'ArrowLeft') {
@@ -504,7 +529,6 @@ const CrossWordPage = () => {
       } else {
         copy[index + state.current.cursor * size].cursor = true;
       }
-      console.log(copy);
       setWordList(copy);
 
       // 다음 커서 반영
@@ -551,18 +575,37 @@ const CrossWordPage = () => {
   };
 
   const handleAnswer = () => {
-    // console.log(state.current);
+    let correct = 0;
+    clueList.forEach(item => {
+      let mine = '';
+      const { index, dir, length, answer } = item;
+      for (let i = 0; i < length; i++) {
+        if (dir === 'ACROSS') {
+          mine +=
+            state.current.answers[Math.floor(index / size)][(index % size) + i];
+        } else {
+          mine +=
+            state.current.answers[Math.floor(index / size + i)][index % size];
+        }
+      }
+      if (mine === answer) {
+        correct += 1;
+      }
+    });
+    state.current = { ...state.current, correct };
+    console.log(state.current);
     // const answer = 0
     // clueList.forEach(item => {
     //   for (let i = 0; i < item.length; i++)
     // })
 
-    Swal.fire({
-      title: '개발 중입니다.',
-      text: '빠른 시일 내에 정답을 보여 드리겠습니당..ㅜ',
-      imageWidth: 400,
-      imageHeight: 200,
-    });
+    // Swal.fire({
+    //   title: '개발 중입니다.',
+    //   text: '빠른 시일 내에 정답을 보여 드리겠습니당..ㅜ',
+    //   imageWidth: 400,
+    //   imageHeight: 200,
+    // });
+    setFinish(true);
   };
 
   return (
@@ -603,36 +646,51 @@ const CrossWordPage = () => {
             }
           })}
         </div>
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ marginLeft: '6%', marginTop: '1%' }}>
           Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용 가능합니다!
         </div>
       </div>
-      <Content>
-        {clueList.map((clue, idx) => {
-          return (
-            <ClueBox
-              backgroundColor={clue.editting}
-              key={idx}
-              onClick={() => clickClue(clue)}
-              onMouseOver={() => toggleClue(clue)}
-              onMouseOut={() => toggleClue(clue)}
-            >
-              {clue.dic}
-              <img
-                src={shortsPlay}
-                alt=""
-                className="shorts-button"
-                onClick={() => {
-                  handleShorts(clue);
-                }}
-              />
-            </ClueBox>
-          );
-        })}
-        <button onClick={() => handleAnswer()}>제출하기</button>
-      </Content>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+        }}
+      >
+        <Content>
+          {clueList.map((clue, idx) => {
+            return (
+              <ClueBox
+                backgroundColor={clue.editting}
+                key={idx}
+                onClick={() => clickClue(clue)}
+                onMouseOver={() => toggleClue(clue)}
+                onMouseOut={() => toggleClue(clue)}
+              >
+                {clue.dic}
+                <img
+                  src={shortsPlay}
+                  alt=""
+                  className="shorts-button"
+                  onClick={() => {
+                    handleShorts(clue);
+                  }}
+                />
+              </ClueBox>
+            );
+          })}
+        </Content>
+        <SubmitButton onClick={() => handleAnswer()}>제출하기</SubmitButton>
+      </div>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-      {/* {finish && <CrossWordAnswerPage state={state}></CrossWordAnswerPage>} */}
+      {finish && (
+        <CrossWordAnswerPage
+          state={state}
+          setFinish={setFinish}
+        ></CrossWordAnswerPage>
+      )}
     </Wrapper>
   );
 };

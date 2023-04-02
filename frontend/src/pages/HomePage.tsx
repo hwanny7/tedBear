@@ -67,10 +67,13 @@ const ShortsTitle = styled.span`
 
 const Button = styled.button<{ changeColor?: number }>`
   padding: 3%;
+  cursor: pointer;
   background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #ffdbb3, #fec88e)'
       : 'white'};
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   &:hover {
     background: linear-gradient(to right, #ffdbb3, #fec88e);
   }
@@ -92,6 +95,7 @@ const Button = styled.button<{ changeColor?: number }>`
 `;
 
 const LeftButton = styled.button<{ changeColor?: number }>`
+  cursor: pointer;
   border-radius: 16px 0 0 16px;
   background: ${props =>
     props.changeColor
@@ -99,7 +103,8 @@ const LeftButton = styled.button<{ changeColor?: number }>`
       : 'white'};
   padding: 3%;
   padding-left: 5%;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   &:hover {
     background: linear-gradient(to right, #fff6ec, #ffdbb3);
     /* transition: all 0.3s;
@@ -123,6 +128,8 @@ const LeftButton = styled.button<{ changeColor?: number }>`
 `;
 
 const RightButton = styled.button<{ changeColor?: number }>`
+  cursor: pointer;
+
   border-radius: 0px 16px 16px 0px;
   background: ${props =>
     props.changeColor
@@ -130,7 +137,8 @@ const RightButton = styled.button<{ changeColor?: number }>`
       : 'white'};
   padding: 3%;
   padding-right: 5%;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   &:hover {
     background: linear-gradient(to right, #fec88e, #fead55);
     /* transition: all 0.3s;
@@ -159,7 +167,8 @@ const LearningButton = styled.button`
   background-color: white;
   border-radius: 16px;
   padding: 1%;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   &:hover {
     transition: all 0.3s;
     transform: translateY(3px);

@@ -41,7 +41,7 @@ authApi.interceptors.response.use(
       console.log('access 만료!! post 보내기 전!!');
       const refreshToken = cookie.get('refreshToken');
       const accessToken = localStorage.getItem('accessToken');
-      console.log(refreshToken)
+      console.log(refreshToken);
       await axios
         .get(`${BASE_URL}/reissue`, {
           headers: {
@@ -55,6 +55,7 @@ authApi.interceptors.response.use(
 
           if (res.status === 200) {
             const newAccessToken = res.headers.Authorization;
+            console.log(res, '새로 받은 access token');
 
             originalRequest.headers.Authorization = newAccessToken;
             localStorage.setItem('accessToken', newAccessToken);

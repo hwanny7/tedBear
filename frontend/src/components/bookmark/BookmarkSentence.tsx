@@ -7,6 +7,8 @@ import Play from 'assets/img/play.svg';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
+import { useOutletContext } from 'react-router-dom';
+import ShortsModal from 'components/short/ShortsModal';
 
 interface IBookmarkSentence {
   no: number;
@@ -105,7 +107,14 @@ const BookIn = styled.div`
   }
 `;
 
+interface Props {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  modalOpen: boolean;
+}
+
 const BookmarkSentence = () => {
+  const [shorts, setShorts] = useState(null);
+  const { modalOpen, setModalOpen } = useOutletContext<Props>();
   const navigate = useNavigate();
   const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
     [],
@@ -134,8 +143,10 @@ const BookmarkSentence = () => {
     }
   }, [inView, loading]);
 
-  const handlePlay = () => {
-    navigate('/home');
+  const handlePlay = (shorts: any) => {
+    console.log(shorts);
+    setShorts(shorts);
+    setModalOpen(true);
   };
 
   const handleBookmark = () => {
@@ -178,7 +189,7 @@ const BookmarkSentence = () => {
                 <div className="play-shorts-container">
                   <img
                     className="play-shorts"
-                    onClick={handlePlay}
+                    onClick={() => handlePlay(sen)}
                     src={sen.no ? Play : Play}
                   ></img>
                 </div>
@@ -196,6 +207,7 @@ const BookmarkSentence = () => {
         )}
         <div ref={ref} style={{ height: '10vh' }}></div>
       </div>
+      {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
     </BookIn>
   );
 };

@@ -21,6 +21,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import buttonLeft from 'assets/img/buttonLeft.svg';
 import buttonRight from 'assets/img/buttonRight.svg';
+import { useSelector } from 'react-redux';
 
 interface BadgeProps {
   score: number;
@@ -111,6 +112,7 @@ const VideoWrapper = styled.div`
 const VideoTitle = styled.span`
   display: block;
   margin-top: 2%;
+  color: ${props => props.theme.textColor1};
   @media ${device.mobile} {
     font-size: 10px;
   }
@@ -129,12 +131,13 @@ const VideoTitle = styled.span`
 `;
 
 const LoadingTitle = styled.div`
-  color: #7e7d7d;
+  color: ${props => props.theme.textColor1};
   cursor: pointer;
   padding: 1%;
   border-radius: 16px;
   &:hover {
     background-color: rgba(116, 116, 116, 0.5);
+
     transition: all 0.3s;
     transform: translateY(3px);
   }
@@ -208,6 +211,7 @@ const SearchPage = () => {
   const [page, setPage] = useState<number>(0);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
   const navigate = useNavigate();
+  const { isLogin } = useSelector((state: any) => state.auth);
 
   const [shorts, setShorts] = useState<Shorts | null>(null);
   // 유튜브 모달용
@@ -265,7 +269,7 @@ const SearchPage = () => {
         setNext(false);
       }
     }
-    console.log('성공!');
+    console.log('성공!', nextPage);
     const copy = shortsData.slice(nextPage * 5, nextPage * 5 + 5);
     setProps(copy);
   };
@@ -321,13 +325,15 @@ const SearchPage = () => {
               }}
             />
             <ViedoLevelImg src={VideoLevel} score={video.score} />
-            <img
-              src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
-              className="book-mark"
-              onClick={() => {
-                handleVideoBm(video, idx);
-              }}
-            ></img>
+            {isLogin && (
+              <img
+                src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
+                className="book-mark"
+                onClick={() => {
+                  handleVideoBm(video, idx);
+                }}
+              ></img>
+            )}
             <div
               className="content"
               onClick={() => {
@@ -350,6 +356,7 @@ const SearchPage = () => {
           requestShorts={requestShorts}
           setOpenModal={setModalOpen}
           setShortsId={setShorts}
+          searchWord={searchWord}
         ></ShortsPageNation>
       </div>
       {/* <Slider {...settings}>

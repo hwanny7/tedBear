@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { authApi } from 'utils/api/customAxios';
 
 const YuhaPage = () => {
@@ -7,15 +7,7 @@ const YuhaPage = () => {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      await authApi
-        .get(`word/bookmark/list`)
-        .then(response => console.log(response.data))
-        .catch(error => {
-          console.log(error.data);
-        });
-    }
-    fetchData();
+    console.log('언마운트!');
   }, []);
 
   return (
