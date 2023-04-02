@@ -190,7 +190,12 @@ const ContentBox = styled.div`
   /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
-  height: 92%;
+  /* height: 92%; */
+  height: 100%;
+
+  /* @media (min-width: 900px) {
+    flex-direction: column;
+  } */
 `;
 
 const ContentLeft = styled.div`
@@ -926,11 +931,11 @@ const LearningPage = () => {
   };
 
   // 사전
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  // const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const onDicModalOpen = () => {
-    setModalOpen(!modalOpen);
-  };
+  // const onDicModalOpen = () => {
+  //   setModalOpen(!modalOpen);
+  // };
 
   return (
     <Wrapper>
@@ -1132,8 +1137,8 @@ const LearningPage = () => {
           </ContentRightFooter>
         </ContentRight>
       </ContentBox>
-      {modalOpen && <DictionaryModal setOpenModal={setModalOpen} />}
-      <DictionaryImg src={Dictionary} onClick={onDicModalOpen} />
+      {/* {modalOpen && <DictionaryModal setOpenModal={setModalOpen} />}
+      <DictionaryImg src={Dictionary} onClick={onDicModalOpen} /> */}
     </Wrapper>
   );
 };

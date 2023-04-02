@@ -7,6 +7,9 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { device } from 'utils/mediaQuery';
 
+import Dictionary from 'assets/img/dictionary.svg';
+import DictionaryModal from 'components/learning/dictionaryModal';
+
 interface OpenProps {
   open: boolean;
   center: string;
@@ -53,6 +56,16 @@ const DarkBackground = styled.div`
   z-index: 9998;
 `;
 
+// 사전
+const DictionaryImg = styled.img`
+  width: 56px;
+  z-index: 5;
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  cursor: pointer;
+`;
+
 const LayoutPage = (props: Props) => {
   const location = useLocation();
   const pathname = location.pathname;
@@ -67,6 +80,13 @@ const LayoutPage = (props: Props) => {
     alert('로그인이 필요한 서비스입니다.');
     window.location.href = '/home';
   }
+
+  // 사전
+  const [dicModalOpen, setDicModalOpen] = useState<boolean>(false);
+
+  const onDicModalOpen = () => {
+    setDicModalOpen(!dicModalOpen);
+  };
 
   return !isLogin && (pathname === '/profile' || pathname === '/bookmark') ? (
     <Navigate to="/home" />
@@ -87,6 +107,8 @@ const LayoutPage = (props: Props) => {
       <OutletWrapper open={open} center={pathname}>
         <Outlet context={{ modalOpen, setModalOpen }} />
       </OutletWrapper>
+      <DictionaryImg src={Dictionary} onClick={onDicModalOpen} />
+      {dicModalOpen && <DictionaryModal setOpenModal={setDicModalOpen} />}
     </Wrapper>
   );
 
