@@ -41,6 +41,7 @@ import LandingBall1 from 'assets/img/landingBall1.svg';
 import LandingBall2 from 'assets/img/landingBall2.svg';
 import LandingBall3 from 'assets/img/landingBall3.svg';
 import LandingCircle from 'assets/img/landingCircle.svg';
+import LandingImgTemp1 from 'assets/img/landingImgTemp1.svg';
 
 // Box2 svg
 import LandingMan1 from 'assets/img/landingMan1.svg';
@@ -48,6 +49,8 @@ import LandingMan2 from 'assets/img/landingMan2.svg';
 import Bubble from 'assets/img/bubble.svg';
 import BigLogo from 'assets/img/bigLogo.svg';
 import { useNavigate } from 'react-router-dom';
+
+import Top from 'assets/img/top.svg';
 
 // 인터페이스
 interface Props {
@@ -70,6 +73,7 @@ interface AnimationStyledProps2 {
 
 interface AnimationStyledProps3 {
   inView3: boolean;
+  toggle: boolean;
 }
 
 interface AnimationStyledProps4 {
@@ -79,6 +83,10 @@ interface AnimationStyledProps4 {
 interface OpenBoxProps {
   openBox: boolean;
   boxIndex: number;
+}
+
+interface CarouselProps {
+  selectedEl: number;
 }
 
 // 애니메이션 keyframes ////////////////////////////////////////////////////////////////
@@ -344,7 +352,6 @@ const TextBox = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  /* border: 1px solid red; */
 
   @media ${device.mobile} {
     width: 100%;
@@ -437,7 +444,7 @@ const Title = styled.div`
   @media ${device.mobile} {
     padding: 0 4px;
     top: 20%;
-    font-size: 28px;
+    font-size: 24px;
   }
 
   @media ${device.tablet} {
@@ -853,8 +860,9 @@ const StartBtn = styled.button`
 
   @media ${device.mobile} {
     top: 70%;
-    font-size: 16px;
+    font-size: 12px;
     padding: 10px 39px;
+    border-radius: 8px;
   }
 
   @media ${device.tablet} {
@@ -923,8 +931,7 @@ const Content = styled.div`
 
 // BOX1
 const Box1 = styled.div<AnimationStyledProps2>`
-  background-color: ${props =>
-    !props.toggle ? `${props.theme.whiteColor}` : `${props.theme.blackColor}`};
+  background-color: ${props => props.theme.bgColor2};
   position: relative;
   /* height: 500px; */
   z-index: 1;
@@ -990,7 +997,7 @@ const TextTitle1 = styled.div<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0s ${fadeIn2};
+          animation: 0.5s ease-in-out 0s ${fadeIn2};
           animation-fill-mode: forwards;
         `
       : ``}
@@ -1031,7 +1038,7 @@ const TextSubTitle1 = styled.div<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0.3s ${fadeIn2};
+          animation: 0.5s ease-in-out 0.3s ${fadeIn2};
           animation-fill-mode: forwards;
         `
       : ``}
@@ -1196,7 +1203,7 @@ const DescListEl1 = styled.li<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0.5s ${fadeIn2};
+          animation: 0.5s ease-in-out 0.5s ${fadeIn2};
           animation-fill-mode: forwards;
         `
       : ``}
@@ -1285,7 +1292,7 @@ const DescListEl2 = styled(DescListEl1)<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0.7s ${fadeIn2};
+          animation: 0.5s ease-in-out 0.7s ${fadeIn2};
           animation-fill-mode: forwards;
         `
       : ``}
@@ -1296,7 +1303,7 @@ const DescListEl3 = styled(DescListEl1)<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 0.9s ${fadeIn2};
+          animation: 0.5s ease-in-out 0.9s ${fadeIn2};
           animation-fill-mode: forwards;
         `
       : ``}
@@ -1307,35 +1314,319 @@ const DescListEl4 = styled(DescListEl1)<AnimationStyledProps2>`
   ${AnimationStyledProps2 =>
     AnimationStyledProps2.inView2
       ? css`
-          animation: 1s ease-in-out 1.1s ${fadeIn2};
+          animation: 0.5s ease-in-out 1.1s ${fadeIn2};
           animation-fill-mode: forwards;
         `
       : ``}
 `;
 
-const Box3 = styled.div<ToggleStyledProps>`
-  background-color: ${props => props.theme.bgColor};
+const Box3 = styled.div`
+  background-color: ${props => props.theme.bgColor2};
   position: relative;
   /* height: 100%; */
   display: flex;
-  height: 800px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  width: 100%;
 
   @media ${device.mobile} {
-    padding-top: 56px;
+    padding: 0px 0px 80px;
   }
 
   @media ${device.tablet} {
-    padding-top: 56px;
+    padding: 0px 0px 160px;
   }
 
   @media ${device.laptop} {
-    padding-top: 56px;
+    padding: 0px 0px 160px;
   }
 
   @media ${device.desktop} {
-    padding: 100px 56px 80px;
-    flex-direction: row;
+    padding: 0px 0px 160px;
   }
+`;
+
+const ButtonBox = styled.div<AnimationStyledProps3>`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+  margin-bottom: 56px;
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 0.5s ease-in-out 0s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
+`;
+
+const ButtonEl = styled.button<CarouselProps>`
+  ${props => {
+    return `
+      &:nth-child(${props.selectedEl}){
+        background-color:${props.theme.pointColor};
+        color: white;
+        border: 2px solid ${props.theme.pointColor};
+      }
+      &:not(:nth-child(${props.selectedEl})){
+        background-color:${props.theme.bgColor2};
+        color: ${props.theme.pointColor};
+        border: 2px solid ${props.theme.pointColor};
+      }
+      `;
+  }};
+
+  cursor: pointer;
+
+  @media ${device.mobile} {
+    font-size: 10px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    margin-bottom: 0px;
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      margin-left: 12px;
+    }
+  }
+
+  @media ${device.tablet} {
+    font-size: 14px;
+    padding: 8px 32px;
+    border-radius: 50px;
+    margin-bottom: 0px;
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      margin-left: 16px;
+    }
+  }
+
+  @media ${device.laptop} {
+    font-size: 20px;
+    padding: 8px 32px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      margin-left: 24px;
+    }
+  }
+
+  @media ${device.desktop} {
+    font-size: 20px;
+    padding: 8px 32px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      margin-left: 24px;
+    }
+  }
+`;
+
+const ContentBox = styled.div<AnimationStyledProps3>`
+  /* border: 1px solid blue; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+
+  opacity: 0;
+
+  ${AnimationStyledProps3 =>
+    AnimationStyledProps3.inView3
+      ? css`
+          animation: 0.5s ease-in-out 0.5s ${fadeIn2};
+          animation-fill-mode: forwards;
+        `
+      : ``}
+
+  @media ${device.mobile} {
+    padding: 48px 0px 64px;
+  }
+
+  @media ${device.tablet} {
+    padding: 48px 0px 64px;
+  }
+
+  @media ${device.laptop} {
+    padding: 64px 0px 64px;
+  }
+
+  @media ${device.desktop} {
+    padding: 64px 0px 64px;
+  }
+`;
+
+const SiteImgUl = styled.ul<CarouselProps>`
+  /* border: 2px solid red; */
+  display: flex;
+  transition: 0.5s;
+
+  @media ${device.mobile} {
+    transform: ${props => {
+      if (props.selectedEl == 1) {
+        return `translate3d(calc(50% - 150px), 0px, 0px)`;
+      } else if (props.selectedEl == 2) {
+        return `translate3d(calc(50% - 490px), 0px, 0px)`;
+      } else if (props.selectedEl == 3) {
+        return `translate3d(calc(50% - 830px), 0px, 0px)`;
+      } else if (props.selectedEl == 4) {
+        return `translate3d(calc(50% - 1170px), 0px, 0px)`;
+      }
+    }};
+  }
+
+  @media ${device.tablet} {
+    transform: ${props => {
+      if (props.selectedEl == 1) {
+        return `translate3d(calc(50% - 200px), 0px, 0px)`;
+      } else if (props.selectedEl == 2) {
+        return `translate3d(calc(50% - 640px), 0px, 0px)`;
+      } else if (props.selectedEl == 3) {
+        return `translate3d(calc(50% - 1080px), 0px, 0px)`;
+      } else if (props.selectedEl == 4) {
+        return `translate3d(calc(50% - 1520px), 0px, 0px)`;
+      }
+    }};
+  }
+
+  @media ${device.laptop} {
+    transform: ${props => {
+      if (props.selectedEl == 1) {
+        return `translate3d(calc(50% - 300px), 0px, 0px)`;
+      } else if (props.selectedEl == 2) {
+        return `translate3d(calc(50% - 940px), 0px, 0px)`;
+      } else if (props.selectedEl == 3) {
+        return `translate3d(calc(50% - 1580px), 0px, 0px)`;
+      } else if (props.selectedEl == 4) {
+        return `translate3d(calc(50% - 2220px), 0px, 0px)`;
+      }
+    }};
+  }
+
+  @media ${device.desktop} {
+    // 1번 : 50% - 400px
+    // 2번 : 50% - 1240px
+    // 3번 : 50% - 2080px
+    // 4번 : 50% - 2920px
+
+    transform: ${props => {
+      if (props.selectedEl == 1) {
+        return `translate3d(calc(50% - 400px), 0px, 0px)`;
+      } else if (props.selectedEl == 2) {
+        return `translate3d(calc(50% - 1240px), 0px, 0px)`;
+      } else if (props.selectedEl == 3) {
+        return `translate3d(calc(50% - 2080px), 0px, 0px)`;
+      } else if (props.selectedEl == 4) {
+        return `translate3d(calc(50% - 2920px), 0px, 0px)`;
+      }
+    }};
+  }
+`;
+
+const SiteImgEl = styled.li`
+  background-color: ${props => props.theme.bgColor2};
+  box-shadow: 0 0 50px 20px #cacaca42;
+  margin-right: 40px;
+  text-align: center;
+
+  display: flex;
+
+  > div:nth-child(1) {
+    /* border: 1px solid red; */
+    width: 40%;
+  }
+
+  > div:nth-child(2) {
+    /* border: 1px solid blue; */
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+
+  p {
+    color: ${props => props.theme.textColor1};
+
+    text-align: left;
+    font-weight: bold;
+
+    > span {
+      color: ${props => props.theme.pointColor};
+      font-weight: bold;
+    }
+  }
+
+  @media ${device.mobile} {
+    width: 300px;
+    height: 150px;
+    border-radius: 14px;
+    padding: 20px;
+    p {
+      font-size: 8px;
+      line-height: 20px;
+    }
+
+    > div:nth-child(1) {
+      /* border: 1px solid red; */
+      width: 55%;
+    }
+
+    > div:nth-child(2) {
+      /* border: 1px solid blue; */
+      width: 45%;
+    }
+  }
+
+  @media ${device.tablet} {
+    width: 400px;
+    height: 200px;
+    border-radius: 14px;
+    padding: 20px;
+    p {
+      font-size: 8px;
+      line-height: 20px;
+    }
+  }
+
+  @media ${device.laptop} {
+    width: 600px;
+    height: 300px;
+    border-radius: 22px;
+    padding: 32px;
+    p {
+      font-size: 14px;
+      line-height: 26px;
+    }
+  }
+
+  @media ${device.desktop} {
+    width: 800px;
+    height: 400px;
+    border-radius: 22px;
+    padding: 32px;
+    p {
+      font-size: 20px;
+      line-height: 32px;
+    }
+  }
+`;
+
+const SiteImg = styled.img`
+  width: 100%;
 `;
 
 const ContentLeft = styled.div`
@@ -1852,9 +2143,74 @@ const LandingMovingBgDiv = styled.div`
   }
 `;
 
+// Top Btn ====================================================
+const TopBtn = styled.div`
+  background-color: ${props => props.theme.pointColor};
+  position: fixed;
+
+  z-index: 999;
+  border-radius: 50%;
+  box-shadow: 0.208vw 0.208vw 0.208vw rgba(0, 0, 0, 0.3);
+  padding: 1.042vw;
+  cursor: pointer;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media ${device.mobile} {
+    right: 20px;
+    bottom: 30px;
+    width: 40px;
+    height: 40px;
+  }
+
+  @media ${device.tablet} {
+    right: 20px;
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
+  }
+
+  @media ${device.laptop} {
+    right: 20px;
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
+  }
+
+  @media ${device.desktop} {
+    right: 50px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+  }
+`;
+
+const TopImg = styled.img`
+  @media ${device.mobile} {
+    width: 60%;
+  }
+
+  @media ${device.tablet} {
+    width: 60%;
+  }
+
+  @media ${device.laptop} {
+    width: 60%;
+  }
+
+  @media ${device.desktop} {
+    width: 100%;
+  }
+`;
+
 const LandingPageTest = (props: Props) => {
   // 로그인 팝업창
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  // const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const KakaoLogin = () => {
+    window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
+  };
 
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
@@ -1893,10 +2249,42 @@ const LandingPageTest = (props: Props) => {
     navigate('/home');
   };
 
+  // 캐러셀 이동 애니메이션
+  const [selectedEl, setSelectedEl] = useState<number>(1);
+  const menuClick = (el: number) => {
+    setSelectedEl(el);
+  };
+
+  // top 버튼
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const ShowButtonClick = () => {
+      if (window.scrollY > 700) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener('scroll', ShowButtonClick);
+
+    return () => {
+      window.removeEventListener('scroll', ShowButtonClick);
+    };
+  }, []);
+
   return (
     <Wrapper>
       {/* <FullPage duration={100}> */}
-      {modalOpen && <LoginModal setOpenModal={setModalOpen} />}
+      {/* {modalOpen && <LoginModal setOpenModal={setModalOpen} />} */}
       {/* <Slide> */}
       <Visual toggle={props.toggle}>
         <CircleDiv2></CircleDiv2>
@@ -1921,9 +2309,7 @@ const LandingPageTest = (props: Props) => {
               <InView onChange={setInView1}></InView>
             </SubTitle>
             <div>
-              <StartBtn onClick={() => setModalOpen(true)}>
-                카카오 로그인
-              </StartBtn>
+              <StartBtn onClick={KakaoLogin}>카카오 로그인</StartBtn>
               <GuestBtn onClick={goMain}>게스트</GuestBtn>
             </div>
           </TextBox>
@@ -2079,6 +2465,88 @@ const LandingPageTest = (props: Props) => {
         </Box3> */}
         {/* </Slide> */}
         {/* <Slide> */}
+        <Box3>
+          <ButtonBox inView3={inView3} toggle={props.toggle}>
+            <ButtonEl selectedEl={selectedEl} onClick={() => menuClick(1)}>
+              비디오
+            </ButtonEl>
+            <ButtonEl selectedEl={selectedEl} onClick={() => menuClick(2)}>
+              스피킹
+            </ButtonEl>
+            <ButtonEl selectedEl={selectedEl} onClick={() => menuClick(3)}>
+              게임
+            </ButtonEl>
+            <ButtonEl selectedEl={selectedEl} onClick={() => menuClick(4)}>
+              통계
+            </ButtonEl>
+          </ButtonBox>
+          <InView onChange={setInView3} triggerOnce={true}></InView>
+          <ContentBox inView3={inView3} toggle={props.toggle}>
+            <SiteImgUl selectedEl={selectedEl}>
+              <SiteImgEl>
+                <div>
+                  <p>
+                    실시간으로 업데이트 되는
+                    <br />
+                    <span>추천 영상, 문장</span>들을 만나보세요.
+                    <br />
+                    <span>귀여운 곰 뱃지</span>로
+                    <br />
+                    난이도를 확인할 수 있어요.
+                  </p>
+                </div>
+                <div>
+                  <SiteImg src={LandingImgTemp1} />
+                </div>
+              </SiteImgEl>
+              <SiteImgEl>
+                <div>
+                  <p>
+                    영상과 스크립트로
+                    <br />
+                    <span>영어 학습</span>을 해보세요.
+                    <br />
+                    <span>문장을 클릭</span>하면 해당 문장의
+                    <br />
+                    스피킹 연습을 할 수 있어요.
+                  </p>
+                </div>
+                <div>
+                  <SiteImg src={LandingImgTemp1} />
+                </div>
+              </SiteImgEl>
+              <SiteImgEl>
+                <div>
+                  <p>
+                    재밌는 <span>퍼즐게임</span>과 <span>십자말풀이</span>
+                    <br />
+                    복습도 게임으로 재밌게 해봐요.
+                  </p>
+                </div>
+                <div>
+                  <SiteImg src={LandingImgTemp1} />
+                </div>
+              </SiteImgEl>
+              <SiteImgEl>
+                <div>
+                  <p>
+                    마이페이지에서 학습 상태를
+                    <br />
+                    <span>그래프</span>와 <span>스트릭</span>으로 만나보세요.
+                    <br />
+                    <span>북마크</span>에서 공부 했던 내용을
+                    <br />
+                    다시 볼 수 있어요.
+                  </p>
+                </div>
+                <div>
+                  <SiteImg src={LandingImgTemp1} />
+                </div>
+              </SiteImgEl>
+            </SiteImgUl>
+          </ContentBox>
+        </Box3>
+
         <Box2 inView4={inView4}>
           {/* <LandingMovingBgDiv>
               <div></div>
@@ -2100,6 +2568,12 @@ const LandingPageTest = (props: Props) => {
         {/* </Slide> */}
         {/* </FullPage> */}
       </Content>
+
+      {showButton && (
+        <TopBtn onClick={scrollToTop}>
+          <TopImg src={Top} />
+        </TopBtn>
+      )}
     </Wrapper>
   );
 };

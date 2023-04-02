@@ -98,6 +98,11 @@ const Nav = styled.div<OpenStyledProps>`
   top: 0;
   z-index: 99;
   transition: all 0.5s ease;
+
+  display: none;
+  @media (min-width: 900px) {
+    display: block;
+  }
 `;
 
 const LogoBox = styled.div`
@@ -223,7 +228,7 @@ const StyledSignin = styled(Signin)`
   width: 24px;
 `;
 
-const NavBar2 = (props: Props) => {
+const NavBar = (props: Props) => {
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
     props.setToggle(!props.toggle);
@@ -369,4 +374,4 @@ const NavBar2 = (props: Props) => {
   );
 };
 
-export default NavBar2;
+export default NavBar;

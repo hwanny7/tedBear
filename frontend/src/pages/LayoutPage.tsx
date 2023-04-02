@@ -1,9 +1,11 @@
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import NavBar from 'components/common/NavBar';
+import NavBarMobile from 'components/common/NavBarMobile';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { device } from 'utils/mediaQuery';
 
 interface OpenProps {
   open: boolean;
@@ -17,18 +19,29 @@ interface Props {
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100vh;
   position: relative;
+  background-color: ${props => props.theme.bgColor};
+  width: 100%;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+  }
 `;
 
 const OutletWrapper = styled.div<OpenProps>`
-  width: ${OpenProps =>
-    !OpenProps.open ? 'calc(100% - 78px)' : 'calc(100% - 200px)'};
   position: relative;
-  left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
   transition: all 0.5s ease;
   background-color: ${props => props.theme.bgColor};
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: 900px) {
+    left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
+    width: ${OpenProps =>
+      !OpenProps.open ? 'calc(100% - 78px)' : 'calc(100% - 200px)'};
+  }
 `;
 
 const DarkBackground = styled.div`
@@ -61,12 +74,15 @@ const LayoutPage = (props: Props) => {
     <Wrapper>
       {modalOpen && <DarkBackground onClick={() => setModalOpen(false)} />}
       {pathname !== '/test' && (
-        <NavBar
-          open={open}
-          setOpen={setOpen}
-          toggle={props.toggle}
-          setToggle={props.setToggle}
-        />
+        <>
+          <NavBar
+            open={open}
+            setOpen={setOpen}
+            toggle={props.toggle}
+            setToggle={props.setToggle}
+          />
+          <NavBarMobile />
+        </>
       )}
       <OutletWrapper open={open} center={pathname}>
         <Outlet context={{ modalOpen, setModalOpen }} />
