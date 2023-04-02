@@ -287,6 +287,7 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
         <SearchBar
           placeholder="영어 단어를 입력하세요."
           onChange={el => onSetKeyword(el)}
+          onKeyUp={onSearchWord}
         />
         <SearchImg src={Search} onClick={onSearchWord} />
       </SearchBox>

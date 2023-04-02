@@ -17,7 +17,7 @@ export const lightTheme: DefaultTheme = {
   pointLigntGrdColor8: '#FFF6EC',
   bgColor: '#EAEAEA',
   whiteColor: '#FFFFFF',
-  blackColor: '#000000',
+  blackColor: '#1A1A1A',
   redColor: '#FF0000',
   shadowColor: '#BFBFBF',
   kakaoColor: '#FEE500',
@@ -43,23 +43,23 @@ export const lightTheme: DefaultTheme = {
   badgeRed:
     'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
   badgeOrange:
-    'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
+    ' invert(61%) sepia(77%) saturate(821%) hue-rotate(331deg) brightness(101%) contrast(102%)',
   badgeYellow:
-    'invert(87%) sepia(32%) saturate(529%) hue-rotate(20deg) brightness(110%) contrast(102%)',
+    'invert(93%) sepia(99%) saturate(1462%) hue-rotate(8deg) brightness(104%) contrast(103%)',
   badgeGreen:
-    'invert(91%) sepia(13%) saturate(1340%) hue-rotate(47deg) brightness(101%) contrast(101%)',
+    'invert(74%) sepia(44%) saturate(1457%) hue-rotate(73deg) brightness(95%) contrast(124%)',
   badgeBlue:
-    'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
+    'invert(53%) sepia(83%) saturate(1300%) hue-rotate(176deg) brightness(104%) contrast(101%)',
   badgeIndigo:
-    'invert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+    'invert(18%) sepia(96%) saturate(6580%) hue-rotate(258deg) brightness(102%) contrast(102%)',
   badgePurple:
-    'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
+    'invert(32%) sepia(74%) saturate(6084%) hue-rotate(269deg) brightness(106%) contrast(102%)',
   badgeBronze:
-    'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
+    ' invert(85%) sepia(18%) saturate(683%) hue-rotate(336deg) brightness(83%) contrast(93%)',
   badgeSilver:
-    'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
+    'invert(92%) sepia(0%) saturate(654%) hue-rotate(188deg) brightness(88%) contrast(89%)',
   badgGold:
-    'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
+    'invert(72%) sepia(89%) saturate(892%) hue-rotate(0deg) brightness(105%) contrast(103%)',
   badgeUnlank:
     'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
 };
@@ -81,7 +81,7 @@ export const darkTheme: DefaultTheme = {
   pointLigntGrdColor8: '#FFF6EC',
   bgColor: '#000000',
   whiteColor: '#FFFFFF',
-  blackColor: '#000000',
+  blackColor: '#1A1A1A',
   redColor: '#FF0000',
   shadowColor: '#BFBFBF',
   kakaoColor: '#FEE500',
@@ -104,27 +104,26 @@ export const darkTheme: DefaultTheme = {
   bgColor2: '#000000',
 
   // 레벨 색깔 빨주노초파남보동은금
-  // 레벨 색깔 빨주노초파남보동은금
   badgeRed:
     'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
   badgeOrange:
-    'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
+    ' invert(61%) sepia(77%) saturate(821%) hue-rotate(331deg) brightness(101%) contrast(102%)',
   badgeYellow:
-    'invert(87%) sepia(32%) saturate(529%) hue-rotate(20deg) brightness(110%) contrast(102%)',
+    'invert(93%) sepia(99%) saturate(1462%) hue-rotate(8deg) brightness(104%) contrast(103%)',
   badgeGreen:
-    'invert(91%) sepia(13%) saturate(1340%) hue-rotate(47deg) brightness(101%) contrast(101%)',
+    'invert(74%) sepia(44%) saturate(1457%) hue-rotate(73deg) brightness(95%) contrast(124%)',
   badgeBlue:
-    'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
+    'invert(53%) sepia(83%) saturate(1300%) hue-rotate(176deg) brightness(104%) contrast(101%)',
   badgeIndigo:
-    'invert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+    'invert(18%) sepia(96%) saturate(6580%) hue-rotate(258deg) brightness(102%) contrast(102%)',
   badgePurple:
-    'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
+    'invert(32%) sepia(74%) saturate(6084%) hue-rotate(269deg) brightness(106%) contrast(102%)',
   badgeBronze:
-    'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
+    ' invert(85%) sepia(18%) saturate(683%) hue-rotate(336deg) brightness(83%) contrast(93%)',
   badgeSilver:
-    'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
+    'invert(92%) sepia(0%) saturate(654%) hue-rotate(188deg) brightness(88%) contrast(89%)',
   badgGold:
-    'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
+    'invert(72%) sepia(89%) saturate(892%) hue-rotate(0deg) brightness(105%) contrast(103%)',
   badgeUnlank:
     'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
 };

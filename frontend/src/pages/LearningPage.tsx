@@ -371,6 +371,20 @@ const ContentRightTop = styled.div`
       padding: 0 8px;
       font-size: 14px;
     }
+
+    > div:nth-child(3) {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #dadada84;
+      }
+    }
   }
 `;
 
@@ -384,7 +398,8 @@ const ToggleBtn = styled.div<ToggleStyledProps>`
   height: 20px;
   display: flex;
   align-items: center;
-  margin-right: 16px;
+  margin-right: 24px;
+  cursor: pointer;
 `;
 
 const Circle = styled.div<ToggleStyledProps>`
@@ -545,15 +560,15 @@ const LearningPage = () => {
     ],
     colors: [
       '#FF4949',
-      '#FFA564',
-      '#F6FF8E',
-      '#ACFF8F',
-      '#A6DFFF',
-      '#9F9DFF',
-      '#E9BAFF',
+      '#FF8E3D',
+      '#EBFF00',
+      '#00FF38',
+      '#2EB4FF',
+      '#5F27FF',
+      '#BC2FFF',
       '#CDAB8B',
-      '#DBDBDB',
-      '#FFD700',
+      '#C6C6C6',
+      '#BC2FFF',
       '#000000',
     ],
   };
@@ -943,7 +958,7 @@ const LearningPage = () => {
               score={score}
               style={{
                 filter:
-                  'invert(81%) sepia(39%) saturate(1565%) hue-rotate(314deg) brightness(103%) contrast(101%)',
+                  ' invert(61%) sepia(77%) saturate(821%) hue-rotate(331deg) brightness(101%) contrast(102%)',
               }}
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[1]}</span>
@@ -952,7 +967,7 @@ const LearningPage = () => {
               score={score}
               style={{
                 filter:
-                  'invert(87%) sepia(32%) saturate(529%) hue-rotate(20deg) brightness(110%) contrast(102%)',
+                  'invert(93%) sepia(99%) saturate(1462%) hue-rotate(8deg) brightness(104%) contrast(103%)',
               }}
             />
             <span> {videoDesc?.scoreInfo.sentenceScoreInfo[2]}</span>
@@ -961,7 +976,7 @@ const LearningPage = () => {
               score={score}
               style={{
                 filter:
-                  'invert(91%) sepia(13%) saturate(1340%) hue-rotate(47deg) brightness(101%) contrast(101%)',
+                  'invert(74%) sepia(44%) saturate(1457%) hue-rotate(73deg) brightness(95%) contrast(124%)',
               }}
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[3]}</span>
@@ -970,7 +985,7 @@ const LearningPage = () => {
               score={score}
               style={{
                 filter:
-                  'invert(77%) sepia(31%) saturate(412%) hue-rotate(169deg) brightness(101%) contrast(103%)',
+                  'invert(53%) sepia(83%) saturate(1300%) hue-rotate(176deg) brightness(104%) contrast(101%)',
               }}
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[4]}</span>
@@ -979,7 +994,7 @@ const LearningPage = () => {
               score={score}
               style={{
                 filter:
-                  'invert(69%) sepia(14%) saturate(6678%) hue-rotate(203deg) brightness(101%) contrast(101%)',
+                  'invert(18%) sepia(96%) saturate(6580%) hue-rotate(258deg) brightness(102%) contrast(102%)',
               }}
             />
             <span> {videoDesc?.scoreInfo.sentenceScoreInfo[5]}</span>
@@ -990,7 +1005,7 @@ const LearningPage = () => {
               score={score}
               style={{
                 filter:
-                  'invert(100%) sepia(99%) saturate(5796%) hue-rotate(215deg) brightness(103%) contrast(102%)',
+                  'invert(32%) sepia(74%) saturate(6084%) hue-rotate(269deg) brightness(106%) contrast(102%)',
               }}
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[6]}</span>
@@ -1035,7 +1050,7 @@ const LearningPage = () => {
             현재 영상의 레벨은 문장들의 score를 평균내서 선정한 것입니다.
             <br />
             빨, 주, 노, 초, 파, 남, 보, 동, 은, 금 순으로 레벨이 높아집니다.
-            <br />그 외 unlanked 된 문장은 검정색으로 표시 됩니다
+            <br />그 외 unranked 문장은 검정색으로 표시 됩니다
           </div>
         </ScoreChart>
         <p>{videoDesc?.title}</p>
@@ -1043,7 +1058,7 @@ const LearningPage = () => {
       <ContentBox>
         <ContentLeft>
           <YoutubeBox>
-            <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />;
+            <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />
             {!videoBookmark ? (
               <BookmarkImg src={BookmarkEmpty} onClick={onBookmark} />
             ) : (
@@ -1090,10 +1105,12 @@ const LearningPage = () => {
           <ContentRightTop>
             <div>
               <p>KOR</p>
-              <ToggleBtn toggle={toggle}>
-                <Circle onClick={clickedToggle} toggle={toggle}></Circle>
+              <ToggleBtn toggle={toggle} onClick={clickedToggle}>
+                <Circle toggle={toggle}></Circle>
               </ToggleBtn>
-              <DotImg src={Dot} />
+              <div>
+                <DotImg src={Dot} />
+              </div>
             </div>
           </ContentRightTop>
           <ContentRightMiddle>
