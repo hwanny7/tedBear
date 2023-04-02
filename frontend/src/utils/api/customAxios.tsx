@@ -65,7 +65,7 @@ authApi.interceptors.response.use(
         })
         .catch(err => {
           if (err.response.status === 401) {
-            console.log('refresh도 만료 됐짜너!! 다시 로그인해!');
+            console.log('refresh도 만료 됐음', err.response);
 
             localStorage.removeItem('accessToken');
             cookie.remove('refreshToken');

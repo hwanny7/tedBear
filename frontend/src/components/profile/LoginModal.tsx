@@ -5,6 +5,8 @@ import { ReactComponent as NaverIcon } from 'assets/img/NaverIcon.svg';
 import { ReactComponent as GoogleIcon } from 'assets/img/GoogleIcon.svg';
 import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import { logout } from 'redux/user';
 
 interface Color {
   BgColor: string;
@@ -86,6 +88,7 @@ interface Props {
 }
 
 const LoginModal = ({ setOpenModal }: Props) => {
+  const dispatch = useDispatch();
   const cookie = new Cookies();
   const navigate = useNavigate();
   const KakaoLogin = () => {
@@ -95,6 +98,7 @@ const LoginModal = ({ setOpenModal }: Props) => {
   const goTo = () => {
     localStorage.removeItem('accessToken');
     cookie.remove('refreshToken');
+    dispatch(logout());
     navigate('/home');
   };
   return (
