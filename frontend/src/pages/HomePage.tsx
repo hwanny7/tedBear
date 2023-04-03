@@ -96,7 +96,7 @@ const Button = styled.button<{ changeColor?: number }>`
 
 const LeftButton = styled.button<{ changeColor?: number }>`
   cursor: pointer;
-  border-radius: 16px 0 0 16px;
+  border-radius: 8px 0 0 8px;
   background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #fff6ec, #ffdbb3)'
@@ -130,7 +130,7 @@ const LeftButton = styled.button<{ changeColor?: number }>`
 const RightButton = styled.button<{ changeColor?: number }>`
   cursor: pointer;
 
-  border-radius: 0px 16px 16px 0px;
+  border-radius: 0px 8px 8px 0px;
   background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #fec88e, #fead55)'
@@ -264,7 +264,14 @@ const HomePage = () => {
               Learning
             </LearningButton>
           </div>
-          <div style={{ display: 'flex', alignItems: 'end', width: '20%' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'end',
+              width: '20%',
+              border: '1px solid red',
+            }}
+          >
             <LeftButton
               changeColor={button[0]}
               onClick={() => changeDifficulty(0)}

@@ -607,6 +607,13 @@ const LearningPage = () => {
       },
     };
 
+    // 문장 번호
+    if (videoDesc?.sentenceInfoList[0].no !== undefined) {
+      setSentenceId(videoDesc?.sentenceInfoList[0].no);
+
+      console.log(videoDesc?.sentenceInfoList[0].no);
+    }
+
     setOpts(opts);
   }, [videoDesc]);
 
@@ -684,6 +691,16 @@ const LearningPage = () => {
     };
     getSentenceBookmark();
   };
+
+  useEffect(() => {
+    // 문장 북마크 여부 가져오기
+    console.log('번호 : ', senetenceId);
+    const getSentenceBookmark = async () => {
+      const data = await getSentenceBookmarkState(senetenceId);
+      setSentenceBookmark(data.bookmarked);
+    };
+    getSentenceBookmark();
+  }, [senetenceId]);
 
   //문장 북마크
   const onSentenceBookmark = (id: number) => {
