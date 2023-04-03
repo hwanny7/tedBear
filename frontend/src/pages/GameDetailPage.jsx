@@ -136,8 +136,8 @@ const GameDetailPage = () => {
       await authApi
         .get(`game/word`)
         .then(response => {
-          console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data);
+          // console.log(`누적정답횟수${correctAnswerCount}`);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -146,7 +146,7 @@ const GameDetailPage = () => {
           setHintList(hint);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     fetchData();
@@ -159,8 +159,8 @@ const GameDetailPage = () => {
       await authApi
         .get(`game/word`)
         .then(response => {
-          console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data);
+          // console.log(`누적정답횟수${correctAnswerCount}`);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -169,7 +169,7 @@ const GameDetailPage = () => {
           setHintList(hint);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     fetchData();
@@ -186,10 +186,10 @@ const GameDetailPage = () => {
       },
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
-        console.log(error.data);
+        // console.log(error.data);
       });
   }
 
@@ -204,7 +204,7 @@ const GameDetailPage = () => {
       fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
       setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
       setCorrectAnswerCount(correctAnswerCount + 1);
-      console.log(`맞은개수${correctAnswerCount}`);
+      // console.log(`맞은개수${correctAnswerCount}`);
       setInput(''); // Clear the input box
       alert('Correct');
       // dispatch(
@@ -217,21 +217,21 @@ const GameDetailPage = () => {
       // );
 
       if (correctAnswerCount === 1) {
-        console.log('한개맞힘');
+        // console.log('한개맞힘');
         handleNext();
         // 첫번째 조각 띄우기
         setSelectedAlbum(2);
       } else if (correctAnswerCount === 2) {
-        console.log('두개맞힘');
+        // console.log('두개맞힘');
         handleNext();
         // 두번째 조각도 띄우기
         setSelectedAlbum(3);
       } else if (correctAnswerCount === 3) {
-        console.log('세개맞힘');
+        // console.log('세개맞힘');
         handleNext();
         setSelectedAlbum(4);
       } else if (correctAnswerCount === 4) {
-        console.log('네개맞힘');
+        // console.log('네개맞힘');
         setSelectedAlbum(5);
         // 전부 다 맞힐 때에 미션 완료! handleNext와 무관!
         // navigate('/game/complete');
@@ -246,7 +246,7 @@ const GameDetailPage = () => {
       //   }),
       //   console.log('Dispatch'),
       // );
-      console.log('Incorrect');
+      // console.log('Incorrect');
       setTryCount(prevCount => prevCount + 1); // 시행착오 횟수 올리기
       setInput(''); // Clear the input box
     }
@@ -254,10 +254,10 @@ const GameDetailPage = () => {
 
   // 발바닥 애니메이션
   useEffect(() => {
-    console.log('발바닥 useEffect');
-    console.log(correctAnswerCount);
+    // console.log('발바닥 useEffect');
+    // console.log(correctAnswerCount);
     if (correctAnswerCount === 5) {
-      console.log('발바닥 True');
+      // console.log('발바닥 True');
       setTimeout(() => {
         setShowPaw1(true);
       }, 250);
@@ -289,9 +289,9 @@ const GameDetailPage = () => {
   }, [correctAnswerCount]);
 
   const handleHint = () => {
-    console.log(hintList.startTime);
-    console.log(hintList.endTime);
-    console.log(hintList.watchId);
+    // console.log(hintList.startTime);
+    // console.log(hintList.endTime);
+    // console.log(hintList.watchId);
   };
 
   return (
