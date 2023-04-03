@@ -159,11 +159,11 @@ const Content = styled.div`
   background-color: ${props => props.theme.learningBoxColor2};
   flex-direction: column;
   align-items: center;
-  border: 1px black solid;
   height: 80vh;
   width: 80%;
   padding: 2%;
   overflow-y: scroll;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   &::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
@@ -187,7 +187,6 @@ const SubmitButton = styled.div`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   cursor: pointer;
-  border: 1px solid black;
   &:hover {
     scale: 1.08;
     transition: 0.4s;

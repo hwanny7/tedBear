@@ -288,9 +288,8 @@ const GameDetailPage = () => {
   }, [correctAnswerCount]);
 
   const handleHint = () => {
-    setShorts(shorts);
+    setShorts(hintList);
     setModalOpen(true);
-    console.log(shorts); // null
   };
 
   return (
