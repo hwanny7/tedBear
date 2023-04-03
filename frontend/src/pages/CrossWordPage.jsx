@@ -1,13 +1,53 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import cx from 'classnames';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { getCrossWord } from 'utils/api/gameApi';
 import ShortsModal from 'components/short/ShortsModal';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
 import { device } from './../utils/mediaQuery';
 import CrossWordAnswerPage from './CrossWordAnswerPage';
 import Swal from 'sweetalert2';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+const Replay = styled.div`
+  width: 100%;
+  height: 10%;
+  border-radius: 16px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  cursor: pointer;
+  background-color: ${props => props.theme.whiteColor};
+  &:hover {
+    background-color: #fffacb;
+    transition: all 0.3s;
+    transform: translateY(3px);
+`;
+
+const Stop = styled.div`
+  width: 100%;
+  height: 10%;
+  margin-top: 10%;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: ${props => props.theme.whiteColor};
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #f9cf00;
+    transition: all 0.3s;
+    transform: translateY(3px);
+  }
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,8 +61,24 @@ const Wrapper = styled.div`
     grid-row: 2;
     grid-column: 1/3;
     display: grid;
-    grid-template-rows: repeat(8, 7vmin);
-    grid-template-columns: repeat(8, 7vmin);
+    ${props => {
+      if (props.size === 8) {
+        return css`
+          grid-template-rows: repeat(8, 9vmin);
+          grid-template-columns: repeat(8, 9vmin);
+        `;
+      } else if (props.size === 12) {
+        return css`
+          grid-template-rows: repeat(12, 6vmin);
+          grid-template-columns: repeat(12, 6vmin);
+        `;
+      } else if (props.size === 16) {
+        return css`
+          grid-template-rows: repeat(16, 5vmin);
+          grid-template-columns: repeat(16, 5vmin);
+        `;
+      }
+    }}
     grid-gap: 2px;
     @media screen and (min-width: 900px) {
       grid-row: 2/4;
@@ -112,7 +168,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   border: 1px black solid;
-  height: 80%;
+  height: 80vh;
   width: 80%;
   padding: 2%;
   overflow-y: scroll;
@@ -196,9 +252,11 @@ const CrossWordPage = () => {
   const { modalOpen, setModalOpen } = useOutletContext();
   const [wordList, setWordList] = useState([]);
   const [clueList, setClueList] = useState([]);
-  const size = 8;
+  const [size, setSize] = useState(8);
   const state = useRef();
   const [finish, setFinish] = useState(false);
+  const [correct, setCorrect] = useState(0);
+  const navigate = useNavigate();
 
   const findClue = useCallback(
     (clueNum, tab) => {
@@ -221,7 +279,6 @@ const CrossWordPage = () => {
 
   const editClue = useCallback(
     (item, idx, tab) => {
-      // console.log(tab, 'tab입니다!');
       let copy = [...wordList];
 
       if (state.current.clue) {
@@ -250,7 +307,6 @@ const CrossWordPage = () => {
       for (let i = 0; i < length; i++) {
         if (dir === 'ACROSS') {
           copy[i + idx] = { ...copy[i + idx], edit: true };
-          console.log(Math.floor(idx / size), (idx % size) + i);
           if (
             state.current.answers[Math.floor(idx / size)][(idx % size) + i] ===
               '' &&
@@ -311,8 +367,8 @@ const CrossWordPage = () => {
   );
 
   const fetchData = async () => {
-    const data = await getCrossWord();
-    console.log(data);
+    const data = await getCrossWord(size);
+    console.log(data.answerBoard);
     setWordList(
       data.array.map(item => {
         return {
@@ -348,10 +404,11 @@ const CrossWordPage = () => {
         dir: null,
       };
     }
-  }, [finish]);
+  }, [finish, size]);
 
   const keyPressHandler = useCallback(
     e => {
+      if (finish) return;
       e.preventDefault();
       switch (e.key) {
         case 'Shift':
@@ -359,7 +416,6 @@ const CrossWordPage = () => {
         case 'Enter':
           return;
         case ' ':
-          console.log(modalOpen);
           if (modalOpen) {
             setModalOpen(false);
           } else if (state.current.clue) {
@@ -387,7 +443,6 @@ const CrossWordPage = () => {
           break;
         case 'Tab': {
           let nextIndex;
-          console.log(state.current.clue, 'clue입니다!');
           if (!state.current.clue) {
             nextIndex = -1;
           } else {
@@ -415,7 +470,6 @@ const CrossWordPage = () => {
           } else if (nextIndex < 0) {
             nextIndex = clueList.length - 1;
           }
-          console.log(nextIndex);
           editClue(
             wordList[clueList[nextIndex].index],
             clueList[nextIndex].index,
@@ -441,12 +495,11 @@ const CrossWordPage = () => {
           break;
         default:
           if (!state.current.clue) return;
-          console.log(e.key.length);
           if (e.key.length > 1) return;
           // 클루가 없거나 이상한 키를 입력했을 때
           if (state.current.dir === 'ACROSS') {
             state.current.answers[Math.floor(state.current.index / size)][
-              state.current.cursor
+              state.current.cursor + (state.current.index % size)
             ] = e.key;
           } else {
             state.current.answers[
@@ -507,7 +560,6 @@ const CrossWordPage = () => {
           state.current.cursor += 1;
         } else if (e.key === 'ArrowDown') {
           state.current.cursor += 1;
-          console.log(e.key);
         } else if (e.key === 'ArrowUp') {
           state.current.cursor -= 1;
         }
@@ -542,19 +594,19 @@ const CrossWordPage = () => {
     };
   }, [keyPressHandler]);
 
-  const toggleClue = clue => {
+  const toggleClue = (clue, boolean) => {
     const { index, dir, length } = clue;
     let copy = [...wordList];
     for (let i = 0; i < length; i++) {
       if (dir === 'ACROSS') {
         copy[i + index] = {
           ...copy[i + index],
-          hightlight: !copy[i + index].hightlight,
+          hightlight: boolean,
         };
       } else {
         copy[index + i * size] = {
           ...copy[index + i * size],
-          hightlight: !copy[index + i * size].hightlight,
+          hightlight: boolean,
         };
       }
     }
@@ -575,6 +627,7 @@ const CrossWordPage = () => {
 
   const handleAnswer = () => {
     let correct = 0;
+    let copy = [...wordList];
     clueList.forEach(item => {
       let mine = '';
       const { index, dir, length, answer } = item;
@@ -582,17 +635,38 @@ const CrossWordPage = () => {
         if (dir === 'ACROSS') {
           mine +=
             state.current.answers[Math.floor(index / size)][(index % size) + i];
+          copy[index + i].answer = answer[i];
+          copy[index + i].cursor = false;
+          copy[index + i].edit = false;
+          copy[index + i].editting = false;
+          copy[index + i].hightlight = false;
         } else {
           mine +=
             state.current.answers[Math.floor(index / size + i)][index % size];
+          copy[index + i * size].answer = answer[i];
+          copy[index + i * size].cursor = false;
+          copy[index + i * size].edit = false;
+          copy[index + i * size].editting = false;
+          copy[index + i * size].hightlight = false;
         }
       }
       if (mine === answer) {
         correct += 1;
+        for (let i = 0; i < length; i++) {
+          if (dir === 'ACROSS') {
+            copy[index + i].hightlight = true;
+          } else {
+            copy[index + i * size].hightlight = true;
+          }
+        }
       }
     });
-    state.current = { ...state.current, correct };
-    console.log(state.current);
+    console.log(state.current.answers);
+    setWordList(copy);
+    setFinish(true);
+    setCorrect(correct);
+
+    // state.current = { ...state.current, correct };
     // const answer = 0
     // clueList.forEach(item => {
     //   for (let i = 0; i < item.length; i++)
@@ -604,12 +678,57 @@ const CrossWordPage = () => {
     //   imageWidth: 400,
     //   imageHeight: 200,
     // });
-    setFinish(true);
+  };
+
+  const handleChange = event => {
+    const nextMode = event.target.value;
+    if (nextMode === 'Easy') {
+      setSize(8);
+    } else if (nextMode === 'Normal') {
+      setSize(12);
+    } else {
+      setSize(16);
+    }
+  };
+
+  const modeValue = () => {
+    if (size === 8) {
+      return 'Easy';
+    } else if (size === 12) {
+      return 'Normal';
+    } else {
+      return 'Hard';
+    }
+  };
+
+  const goHome = () => {
+    navigate('/home');
+  };
+  const rePlay = () => {
+    setFinish(false);
   };
 
   return (
-    <Wrapper>
+    <Wrapper size={size}>
       <div>
+        {finish ? undefined : (
+          <Box sx={{ m: 1, width: '20%', marginLeft: '6%' }} size="small">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Mode</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={modeValue()}
+                label="Mode"
+                onChange={handleChange}
+              >
+                <MenuItem value={'Easy'}>Easy</MenuItem>
+                <MenuItem value={'Normal'}>Normal</MenuItem>
+                <MenuItem value={'Hard'}>Hard</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        )}
         <div className="main">
           {wordList.map((word, idx) => {
             if (word.clue) {
@@ -617,7 +736,7 @@ const CrossWordPage = () => {
                 <ins
                   key={idx}
                   data-clue={word.clue}
-                  onClick={() => editClue(word, idx)}
+                  onClick={finish ? undefined : () => editClue(word, idx)}
                   className={cx({
                     cursor: word.cursor,
                     editting: word.edit,
@@ -645,51 +764,72 @@ const CrossWordPage = () => {
             }
           })}
         </div>
-        <div style={{ marginLeft: '6%', marginTop: '1%' }}>
-          Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용 가능합니다!
+        {!finish && (
+          <div style={{ marginLeft: '6%', marginTop: '1%' }}>
+            Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용
+            가능합니다!
+          </div>
+        )}
+      </div>
+      {finish ? (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '20%',
+            height: '100%',
+          }}
+        >
+          <h1>맞은 갯수: {correct}</h1>
+          <Replay onClick={() => rePlay()}>다시하기</Replay>
+          <Stop onClick={() => goHome()}>그만하기</Stop>
         </div>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-        }}
-      >
-        <Content>
-          {clueList.map((clue, idx) => {
-            return (
-              <ClueBox
-                backgroundColor={clue.editting}
-                key={idx}
-                onClick={() => clickClue(clue)}
-                onMouseOver={() => toggleClue(clue)}
-                onMouseOut={() => toggleClue(clue)}
-              >
-                {clue.dic}
-                <img
-                  src={shortsPlay}
-                  alt=""
-                  className="shorts-button"
-                  onClick={() => {
-                    handleShorts(clue);
-                  }}
-                />
-              </ClueBox>
-            );
-          })}
-        </Content>
-        <SubmitButton onClick={() => handleAnswer()}>제출하기</SubmitButton>
-      </div>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+          }}
+        >
+          <Content>
+            {clueList.map((clue, idx) => {
+              return (
+                <ClueBox
+                  backgroundColor={clue.editting}
+                  key={idx}
+                  onClick={() => clickClue(clue)}
+                  onMouseOver={() => toggleClue(clue, true)}
+                  onMouseOut={() => toggleClue(clue, false)}
+                >
+                  {clue.dic}
+                  <img
+                    src={shortsPlay}
+                    alt=""
+                    className="shorts-button"
+                    onClick={() => {
+                      handleShorts(clue);
+                    }}
+                  />
+                </ClueBox>
+              );
+            })}
+          </Content>
+          <SubmitButton onClick={() => handleAnswer()}>제출하기</SubmitButton>
+        </div>
+      )}
+
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-      {finish && (
+      {/* {finish && (
         <CrossWordAnswerPage
           state={state}
           setFinish={setFinish}
         ></CrossWordAnswerPage>
-      )}
+      )} */}
     </Wrapper>
   );
 };
