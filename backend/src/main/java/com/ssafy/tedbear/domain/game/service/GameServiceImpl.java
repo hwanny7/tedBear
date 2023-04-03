@@ -2,9 +2,10 @@ package com.ssafy.tedbear.domain.game.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -71,7 +72,7 @@ public class GameServiceImpl implements GameService {
 	public CrossWordDto getCrossWord(int boardSize) {
 		List<Word> wordList = wordRepository.findWordsForCrosswordGame()
 			.stream()
-			.sorted(Comparator.comparing(x -> x.getContent().length()))
+			// .sorted(Comparator.comparing(x -> x.getContent().length()))
 			.collect(Collectors.toList());
 
 		// 게임판의 크기
@@ -109,9 +110,12 @@ public class GameServiceImpl implements GameService {
 		putWord(firstWord, firstY, firstX, firstDirection, CLUEIDX, matrix, board);
 		clueList.add(getClueDto(firstWord, CLUEIDX, firstDirection, firstY, firstX, SIZE));
 		CLUEIDX++;
-
-		while (wordList.size() > 0) {
-			Word word = wordList.remove(wordList.size() - 1);
+		Set<String> useContent = new HashSet<>();
+		// 전체 단어를 두바퀴 돌면서 최대한 채워넣기
+		for (int w = 0; w < wordList.size() * 2; w++) {
+			Word word = wordList.get(w % wordList.size());
+			if(useContent.contains(word.getContent()))
+				continue;
 
 			int canI = -1;
 			int canJ = -1;
@@ -142,6 +146,7 @@ public class GameServiceImpl implements GameService {
 				CLUEIDX++;
 			}
 		}
+
 		printState(matrix, board);
 
 		for (int i = 0; i < SIZE; i++) {
