@@ -9,21 +9,19 @@ import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.entity.MemberScore;
 
 public interface MemberService {
-	StreakListDto getStreak(long memberNo);
+	StreakListDto getStreak(String memberUid);
 
 	ProblemListDto getProblemList();
 
-	Member getMember(long memberNo);
+	PieDto getPie(String memberUid);
 
-	PieDto getPie(long memberNo);
-
-	void saveProblemResult(long memberNo, int testResult);
+	void saveProblemResult(String memberUid, int testResult);
 
 	void updateMemberScore(Member member, int diffScore);
 
 	void increaseMemberLevel(Member member, int amount);
 
-	LevelInfoDto getLevel(long memberNo);
+	LevelInfoDto getLevel(String memberUid);
 
-	void updateScoreByFeel(long memberNo, FeelDto feelDto);
+	void updateScoreByFeel(String memberUid, FeelDto feelDto);
 }

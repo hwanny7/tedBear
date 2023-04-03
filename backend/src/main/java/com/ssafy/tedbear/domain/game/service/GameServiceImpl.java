@@ -143,6 +143,7 @@ public class GameServiceImpl implements GameService {
 			if (canPut) {
 				putWord(word, canI, canJ, canDirection, CLUEIDX, matrix, board);
 				clueList.add(getClueDto(word, CLUEIDX, canDirection, canI, canJ, SIZE));
+				useContent.add(word.getContent());
 				CLUEIDX++;
 			}
 		}

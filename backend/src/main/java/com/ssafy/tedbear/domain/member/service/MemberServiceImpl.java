@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.ssafy.tedbear.global.common.FindMemberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,13 +48,14 @@ public class MemberServiceImpl implements MemberService {
 	final WordRepository wordRepository;
 	final WatchingVideoRepository watchingVideoRepository;
 	final MemberLevelRepository memberLevelRepository;
+	final FindMemberService findMemberService;
 	@Value("${default-value.score}")
 	int defaultScore;
 
 	@Override
-	public StreakListDto getStreak(long memberNo) {
+	public StreakListDto getStreak(String memberUid) {
 		LocalDateTime firstDay = LocalDate.now().with(TemporalAdjusters.firstDayOfYear()).atStartOfDay();
-		Member member = getMember(memberNo);
+		Member member = findMemberService.findMember(memberUid);
 		List<SpeakingRecord> speakingRecordList = speakingRecordRepository.findSpeakingRecordsByCreatedDateAfterAndMember(
 			firstDay, member);
 		Map<String, StreakDto> streakMap = new HashMap<>();
@@ -108,21 +110,21 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	@Transactional
-	public void saveProblemResult(long memberNo, int testResult) {
-		Member member = getMember(memberNo);
+	public void saveProblemResult(String memberUid, int testResult) {
+		Member member = findMemberService.findMember(memberUid);
 		member.initScore(defaultScore, testResult);
 	}
 
 	@Override
-	public LevelInfoDto getLevel(long memberNo) {
-		Member member = getMember(memberNo);
+	public LevelInfoDto getLevel(String memberUid) {
+		Member member = findMemberService.findMember(memberUid);
 		return new LevelInfoDto(member.getMemberLevel());
 	}
 
 	@Override
 	@Transactional
-	public void updateScoreByFeel(long memberNo, FeelDto feelDto) {
-		Member member = getMember(memberNo);
+	public void updateScoreByFeel(String memberUid, FeelDto feelDto) {
+		Member member = findMemberService.findMember(memberUid);
 		int delta = -(RecommendUtil.getDelta(feelDto.getDifficulty()) / 10);
 		updateMemberScore(member, delta);
 	}
@@ -139,15 +141,10 @@ public class MemberServiceImpl implements MemberService {
 		member.getMemberLevel().increaseLevel(amount);
 	}
 
-	@Override
-	public Member getMember(long memberNo) {
-		return memberRepository.findById(memberNo)
-			.orElseThrow(() -> new NoSuchElementException("해당 회원을 찾을 수 없습니다"));
-	}
 
 	@Override
-	public PieDto getPie(long memberNo) {
-		Member member = getMember(memberNo);
+	public PieDto getPie(String memberUid) {
+		Member member = findMemberService.findMember(memberUid);
 
 		return new PieDto(watchingVideoRepository.getCompleteVideoList(member)
 			.stream()
