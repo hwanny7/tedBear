@@ -4,7 +4,6 @@ import { ReactComponent as KakaoImg } from 'assets/img/KakaoImg.svg';
 import { ReactComponent as NaverIcon } from 'assets/img/NaverIcon.svg';
 import { ReactComponent as GoogleIcon } from 'assets/img/GoogleIcon.svg';
 import { useNavigate } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { logout } from 'redux/user';
 
@@ -89,7 +88,6 @@ interface Props {
 
 const LoginModal = ({ setOpenModal }: Props) => {
   const dispatch = useDispatch();
-  const cookie = new Cookies();
   const navigate = useNavigate();
   const KakaoLogin = () => {
     window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
@@ -97,7 +95,6 @@ const LoginModal = ({ setOpenModal }: Props) => {
 
   const goTo = () => {
     localStorage.removeItem('accessToken');
-    cookie.remove('refreshToken');
     dispatch(logout());
     navigate('/home');
   };

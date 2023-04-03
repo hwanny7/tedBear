@@ -1,10 +1,6 @@
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
-
 
 const BASE_URL = 'https://ted-bear.com/api';
-
-const cookie = new Cookies();
 
 export const authApi = axios.create({
   baseURL: BASE_URL,
@@ -41,15 +37,12 @@ authApi.interceptors.response.use(
     const originalRequest = config;
     if (response.status === 401) {
       console.log('access 만료!! post 보내기 전!!');
-      const refreshToken = cookie.get('refreshToken');
       const accessToken = localStorage.getItem('accessToken');
-      console.log(refreshToken);
       await axios
         .get(`${BASE_URL}/reissue`, {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            Cookie: `refreshToken=${refreshToken}`,
           },
         })
         .then(res => {
@@ -68,11 +61,8 @@ authApi.interceptors.response.use(
         })
         .catch(err => {
           if (err.response.status === 401) {
-            console.log('refresh도 만료 됐음', err.response);
-
             localStorage.removeItem('accessToken');
-            cookie.remove('refreshToken');
-            alert('리프레시 토큰 만료! 재로그인 해주세요');
+            alert('토큰 만료! 재로그인 해주세요.');
             window.location.href = '/';
           }
         });
