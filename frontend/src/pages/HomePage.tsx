@@ -258,13 +258,27 @@ const HomePage = () => {
           />
         )}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'end', width: '100%' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'end',
+              width: '70%',
+              border: '1px solid red',
+            }}
+          >
             <SearchBar></SearchBar>
             <LearningButton onClick={() => navigate('/still-learn')}>
               Learning
             </LearningButton>
           </div>
-          <div style={{ display: 'flex', alignItems: 'end', width: '20%' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'end',
+              width: '30%',
+              border: '1px solid red',
+            }}
+          >
             <LeftButton
               changeColor={button[0]}
               onClick={() => changeDifficulty(0)}
