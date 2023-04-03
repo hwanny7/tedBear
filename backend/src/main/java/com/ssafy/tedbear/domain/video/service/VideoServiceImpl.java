@@ -129,7 +129,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public VideoInfoListDto searchVideo(String memberUid, String query, Pageable pageable) {
-		Member member = findMemberService.findMemberOnlyMember(memberUid);
+		Member member = findMemberService.findMember(memberUid);
 		List<Video> videoList = videoRepository.findSliceByTitle(query, pageable)
 			.get()
 			.collect(Collectors.toList());
