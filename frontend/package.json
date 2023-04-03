@@ -27,6 +27,7 @@
     "react-calendar-heatmap": "^1.9.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
+    "react-ga": "^3.3.1",
     "react-hook-speech-to-text": "^0.8.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-intersection-observer": "^9.4.3",
