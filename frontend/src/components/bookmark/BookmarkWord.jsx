@@ -136,6 +136,9 @@ const BookmarkWord = () => {
   const handleBookmark = () => {
     navigate('/home');
   };
+  const handleMark = () => {
+    console.log('북마크를 켜고 끄고');
+  };
 
   return (
     <BookIn>
@@ -170,6 +173,7 @@ const BookmarkWord = () => {
                       <img
                         className="book-mark"
                         src={item.bookMarked ? BookmarkEmpty : BookmarkFull}
+                        onClick={handleMark}
                       ></img>
                     </div>
                     <div className="content-container">
