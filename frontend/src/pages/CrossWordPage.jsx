@@ -360,7 +360,6 @@ const CrossWordPage = () => {
 
   const fetchData = async () => {
     const data = await getCrossWord(size);
-    console.log(data.answerBoard);
     setWordList(
       data.array.map(item => {
         return {
@@ -658,7 +657,6 @@ const CrossWordPage = () => {
         }
       }
     });
-    console.log(state.current.answers);
     setWordList(copy);
     setFinish(true);
     setCorrect(correct);
