@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +25,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -59,8 +59,14 @@ public class Video {
 	@Column(name = "published_date")
 	private LocalDateTime publishedDate;
 
-	@OneToMany(mappedBy = "video")
+	@OneToMany(mappedBy = "video", cascade = CascadeType.REMOVE)
 	private List<Sentence> sentenceList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "video", cascade = CascadeType.REMOVE)
+	private List<VideoBookmark> bookmarkList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "video", cascade = CascadeType.REMOVE)
+	private List<WatchingVideo> watchingVideoList = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_no")

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("data")
+@RequestMapping("/api/data")
 public class DataController {
 	final DataService dataService;
 
@@ -49,5 +49,8 @@ public class DataController {
 	public void initVideoScore() {
 		dataService.initVideoScore();
 	}
+
+	@GetMapping("/clean-data")
+	public void cleanData(){dataService.cleanData();}
 
 }

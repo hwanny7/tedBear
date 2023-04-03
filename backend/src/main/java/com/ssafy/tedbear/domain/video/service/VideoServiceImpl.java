@@ -47,7 +47,7 @@ public class VideoServiceImpl implements VideoService {
 		int myScore = member.getMemberScore().getScore();
 		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore + delta);
 		int deltaScore = 1500;
-		log.info("[VideoRecommendList] : {}",recommendScoreFlag);
+		log.info("[VideoRecommendList] : {}", recommendScoreFlag);
 		List<Video> recommendVideoList = null;
 		do {
 			recommendVideoList = (videoRepository.findByScoreBetween(
@@ -88,7 +88,7 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public VideoInfoDto getWatchingRecent(String memberUid) {
 		Member member = findMemberService.findMember(memberUid);
-
+		System.out.println(member.getNo());
 		Optional<WatchingVideo> optionalWatchingVideo = watchingVideoRepository.findTop1ByMemberAndVideoStatusOrderByUpdatedDateDesc(
 			member, false);
 
@@ -137,7 +137,7 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	@Transactional
 	public void saveWatchingRecord(String memberUid, WatchingVideoInfoDto request) {
-		Member member = findMemberService.findMember(memberUid);
+		Member member = findMemberService.findMemberOnlyMember(memberUid);
 
 		// Insert Or Update !!
 		Video video = Video.builder().no(request.getVideoNo()).build();
@@ -157,7 +157,7 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	@Transactional
 	public void saveCompleteRecord(String memberUid, WatchingVideoInfoDto request) {
-		Member member = findMemberService.findMember(memberUid);
+		Member member = findMemberService.findMemberOnlyMember(memberUid);
 
 		// Insert Or Update !!
 		Video video = Video.builder().no(request.getVideoNo()).build();
@@ -179,7 +179,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public VideoInfoListDto getVideoBookmarkList(String memberUid) {
-		Member member = findMemberService.findMember(memberUid);
+		Member member = findMemberService.findMemberOnlyMember(memberUid);
 		List<VideoBookmark> videoBookmarkList = videoBookmarkRepository.findVideoBookmarksByMember(member);
 		List<Video> videoList = videoBookmarkList.stream().map(x -> x.getVideo()).collect(Collectors.toList());
 		updateBookmarkVideo(member, videoList);
@@ -189,7 +189,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public void saveVideoBookmark(String memberUid, long videoNo) {
-		Member member = findMemberService.findMember(memberUid);
+		Member member = findMemberService.findMemberOnlyMember(memberUid);
 		Video video = Video.builder().no(videoNo).build();
 		videoBookmarkRepository.findVideoBookmarkByMemberAndVideo(member, video)
 			.ifPresentOrElse(none -> {
@@ -208,7 +208,7 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	@Transactional
 	public void deleteVideoBookmark(String memberUid, long videoNo) {
-		Member member = findMemberService.findMember(memberUid);
+		Member member = findMemberService.findMemberOnlyMember(memberUid);
 		Video video = Video.builder().no(videoNo).build();
 		videoBookmarkRepository.deleteByMemberAndVideo(member, video);
 	}

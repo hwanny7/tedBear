@@ -48,6 +48,7 @@ public class VideoController {
 
 	@GetMapping("/watching/recent")
 	public ResponseEntity<VideoInfoDto> getWatchingRecent(@AuthenticationPrincipal CustomOAuth2User user) {
+		System.out.println("watching/recent");
 		return ResponseEntity.ok(videoService.getWatchingRecent(user.getName()));
 	}
 

@@ -2,13 +2,13 @@ package com.ssafy.tedbear.domain.word.repository;
 
 import java.util.Optional;
 
-import com.ssafy.tedbear.domain.member.entity.Member;
-import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.word.entity.Word;
+import com.ssafy.tedbear.domain.word.entity.WordBookmark;
 import com.ssafy.tedbear.domain.word.entity.WordSentence;
 
 @Repository

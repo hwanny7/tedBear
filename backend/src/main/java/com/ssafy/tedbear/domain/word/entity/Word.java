@@ -3,6 +3,7 @@ package com.ssafy.tedbear.domain.word.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class Word {
 
 	private int score;
 
-	@OneToMany(mappedBy = "word")
+	@OneToMany(mappedBy = "word",cascade = CascadeType.REMOVE)
 	private List<WordSentence> wordSentenceList = new ArrayList<>();
 
 	@Override

@@ -1,20 +1,13 @@
 package com.ssafy.tedbear.global.util.data.service;
 
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
-import org.apache.tomcat.util.json.JSONParser;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,7 +96,8 @@ public class DataServiceImpl implements DataService {
 				videoRepository.save(video);
 				List<Sentence> sentenceList = new ArrayList<>();
 				for (LinkedHashMap script : (List<LinkedHashMap>)element.get("scripts")) {
-					Sentence sentence = Sentence.builder().content((String)script.get("content"))
+					Sentence sentence = Sentence.builder()
+						.content((String)script.get("content"))
 						.startTime(((BigDecimal)script.get("start_time")).intValue())
 						.endTime(((BigDecimal)script.get("end_time")).intValue())
 						.video(video)
@@ -139,7 +133,8 @@ public class DataServiceImpl implements DataService {
 	public void initSentenceScore() {
 		List<Sentence> sentenceList = sentenceRepository.findAll();
 		for (Sentence sentence : sentenceList) {
-
+			if (sentence.getScore() != 0)
+				continue;
 			String content = sentence.getContent();
 			double gf = CalcScoreUtil.getGunningFog(content);
 			double fr = CalcScoreUtil.getFleschReadingEase(content);
@@ -170,19 +165,16 @@ public class DataServiceImpl implements DataService {
 		for (Sentence sentence : sentenceList) {
 			String content = sentence.getContent();
 			for (String word : content.split("\\s+")) {
-				String processedWord = word
-					.trim()
+				String processedWord = word.trim()
 					.replaceAll(specialWordRegex, "")
 					.replaceAll(noWordRegex, "")
 					.toLowerCase();
-
 				if (!wordMap.containsKey(processedWord)) {
 					wordMap.put(processedWord, new ArrayList<>());
 				}
 				wordMap.get(processedWord).add(sentence);
 			}
 			System.out.println(String.format("문장에서 단어 추출 ... %d / %d", sentenceCnt++, sentenceAll));
-
 		}
 
 		List<WordSentence> wordSentenceList = new ArrayList<>();
@@ -198,10 +190,7 @@ public class DataServiceImpl implements DataService {
 				wordRepository.save(word);
 			}
 			for (Sentence sentence : wordMap.get(content)) {
-				WordSentence wordSentence = WordSentence.builder()
-					.word(word)
-					.sentence(sentence)
-					.build();
+				WordSentence wordSentence = WordSentence.builder().word(word).sentence(sentence).build();
 				wordSentenceList.add(wordSentence);
 			}
 			System.out.println(String.format("추출된 단어 DB에 삽입중 ... %d / %d", cnt++, all));
@@ -226,7 +215,31 @@ public class DataServiceImpl implements DataService {
 					cnt += 1;
 				}
 			}
-			video.setScore(sumScore / Math.max(1,cnt));
+			video.setScore(sumScore / Math.max(1, cnt));
+		}
+	}
+
+	@Override
+	@Transactional
+	public void cleanData() {
+		// 포함된 문장의 개수가 10개 미만인 영상들 모두 삭제
+		int videoCnt = 0;
+		List<Video> videoList = videoRepository.findAll();
+		for (Video video : videoList) {
+			if (video.getSentenceList().size() < 10) {
+				videoRepository.delete(video);
+				System.out.println(video.getTitle());
+			}
+		}
+		//
+		// 영어단어로만 이루어지지 않은 단어 모두 삭제
+		List<Word> wordList = wordRepository.findAll();
+		for (Word word : wordList) {
+			if (!word.getContent().matches("^[a-zA-Z]*$") | word.getContent().length() <= 2) {
+				wordRepository.delete(word);
+				System.out.println(word.getContent());
+
+			}
 		}
 	}
 }

@@ -24,7 +24,8 @@ public class ExControllerAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public void allExHandle(Exception e, HttpServletRequest req) {
-		notificationManager.sendNotification(e, req.getRequestURI(), getParams(req));
+		System.out.println(req.getMethod());
+		notificationManager.sendNotification(e, req, getParams(req));
 	}
 
 	private String getParams(HttpServletRequest req) {

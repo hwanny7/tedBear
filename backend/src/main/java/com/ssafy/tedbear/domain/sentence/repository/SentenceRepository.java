@@ -37,4 +37,7 @@ public interface SentenceRepository extends JpaRepository<Sentence, Long> {
 	List<Sentence> findByWordOrderByMemberScore(Long wordId, Integer memberScore,Pageable pageable);
 
 
+	// @Modifying
+	// @Query(value = "UPDATE sentence_tb  SET content = TRIM(SUBSTRING_INDEX(content,':',-1)) WHERE content LIKE '%:%'", nativeQuery = true)
+	// void processSentence();
 }

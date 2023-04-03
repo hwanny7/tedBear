@@ -12,4 +12,6 @@ public interface DataService {
 	void initSentenceWord();
 
 	void initVideoScore();
+
+    void cleanData();
 }
