@@ -53,6 +53,11 @@ export default function PieChart() {
     },
     // 라벨
     labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'etc'],
+
+    // 숫자 지우기
+    yaxis: {
+      show: false,
+    },
     // 컬러
     colors: [
       '#FF4949',

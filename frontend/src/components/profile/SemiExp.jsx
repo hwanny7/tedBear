@@ -69,7 +69,7 @@ const options = {
     },
   },
   fill: {
-    type: 'gradient',
+    type: 'solid',
     gradient: {
       shade: 'light',
       shadeIntensity: 0.4,
