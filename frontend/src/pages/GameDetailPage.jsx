@@ -142,7 +142,7 @@ const GameDetailPage = () => {
         .get(`game/word`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -165,7 +165,7 @@ const GameDetailPage = () => {
         .get(`game/word`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
