@@ -4,6 +4,7 @@ import { authApi } from './customAxios';
 interface IBookmarkVideo {
   videoInfoList: [
     {
+      no: number;
       thumbnailUrl: string;
       title: string;
       watchId: string;

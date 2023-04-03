@@ -14,6 +14,7 @@ import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 
 interface IBookmarkVideo {
+  no: number;
   thumbnailUrl: string;
   title: string;
   watchId: string;
@@ -91,6 +92,10 @@ const BookmarkVideo = () => {
 
   const handleBookmark = () => {
     navigate('/home');
+  };
+
+  const handleMark = () => {
+    console.log('북마크를 켜고 끄고');
   };
 
   return (
@@ -174,6 +179,7 @@ const BookmarkVideo = () => {
                       <img
                         className="book-mark"
                         src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
+                        onClick={handleMark}
                         style={{
                           height: '50%',
                           position: 'absolute',
