@@ -72,7 +72,7 @@ const TitleBox = styled.div`
   position: relative;
 
   p {
-    position: absolute;
+    /* position: absolute; */
     font-weight: bold;
     font-size: 24px;
     margin-left: 16px;
@@ -81,29 +81,7 @@ const TitleBox = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    left: 24px;
-  }
-
-  div {
-    position: relative;
-    /* border: 1px solid red; */
-    width: 32px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    > span {
-      position: absolute;
-      color: Black;
-      font-weight: bold;
-      /* border: 1px solid red; */
-      z-index: 80;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    /* left: 24px; */
   }
 `;
 
@@ -994,7 +972,9 @@ const LearningPage = () => {
           <ViedoLevelImg src={VideoLevel} score={score} />
           <span>{badgeTxt}</span>
         </div> */}
-        <Badge score={score} />
+        <div>
+          <Badge score={score} />
+        </div>
         <ScoreChart>
           <Chart
             options={chartOptions}
