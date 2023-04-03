@@ -128,10 +128,13 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoInfoListDto searchVideo(String query, Pageable pageable) {
-		return new VideoInfoListDto(videoRepository.findSliceByTitle(query, pageable)
+	public VideoInfoListDto searchVideo(String memberUid, String query, Pageable pageable) {
+		Member member = findMemberService.findMemberOnlyMember(memberUid);
+		List<Video> videoList = videoRepository.findSliceByTitle(query, pageable)
 			.get()
-			.collect(Collectors.toList()));
+			.collect(Collectors.toList());
+		updateBookmarkVideo(member, videoList);
+		return new VideoInfoListDto(videoList);
 	}
 
 	@Override

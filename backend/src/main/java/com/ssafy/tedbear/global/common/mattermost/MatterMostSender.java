@@ -48,7 +48,6 @@ public class MatterMostSender {
 
 			attachment.addExceptionInfo(excpetion, req);
 			Attachments attachments = new Attachments(attachment);
-			attachments.addProps(excpetion);
 			String payload = new Gson().toJson(attachments);
 
 			HttpHeaders headers = new HttpHeaders();

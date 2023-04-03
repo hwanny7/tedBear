@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -70,10 +69,7 @@ public class GameServiceImpl implements GameService {
 	}
 
 	public CrossWordDto getCrossWord(int boardSize) {
-		List<Word> wordList = wordRepository.findWordsForCrosswordGame()
-			.stream()
-			// .sorted(Comparator.comparing(x -> x.getContent().length()))
-			.collect(Collectors.toList());
+		List<Word> wordList = wordRepository.findWordsForCrosswordGame();
 
 		// 게임판의 크기
 		int SIZE = boardSize;
@@ -114,7 +110,7 @@ public class GameServiceImpl implements GameService {
 		// 전체 단어를 두바퀴 돌면서 최대한 채워넣기
 		for (int w = 0; w < wordList.size() * 2; w++) {
 			Word word = wordList.get(w % wordList.size());
-			if(useContent.contains(word.getContent()))
+			if (useContent.contains(word.getContent()))
 				continue;
 
 			int canI = -1;

@@ -19,7 +19,7 @@ public interface VideoService {
 
 	VideoInfoListDto getCompleteList(String memberUid, Pageable pageable);
 
-	VideoInfoListDto searchVideo(String query, Pageable pageable);
+	VideoInfoListDto searchVideo(String memberUid,String query, Pageable pageable);
 
 	void saveWatchingRecord(String memberUid, WatchingVideoInfoDto request);
 

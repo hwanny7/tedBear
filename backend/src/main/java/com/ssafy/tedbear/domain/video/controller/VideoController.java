@@ -67,7 +67,7 @@ public class VideoController {
 	@GetMapping("/search")
 	public ResponseEntity<VideoInfoListDto> searchVideo(SearchDto.Request searchCondition, Pageable pageable,
 		@AuthenticationPrincipal CustomOAuth2User user) {
-		return ResponseEntity.ok(videoService.searchVideo(searchCondition.getQuery(), pageable));
+		return ResponseEntity.ok(videoService.searchVideo(user.getName(), searchCondition.getQuery(), pageable));
 
 	}
 
