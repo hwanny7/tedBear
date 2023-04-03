@@ -56,14 +56,15 @@ public class WordServiceImpl {
 		Member member = findMemberService.findMember(memberUid);
 		Long sentenceCount = wordBookmarkRepository.getSentenceCount(word);
 
-		Word wordDetail = wordRepository.findByContent(word)
-			.orElseThrow(() -> new IllegalArgumentException("해당 단어가 DB에 없습니다."));
+		Word wordDetail = wordRepository.findByContent(word).orElse(null);
+
+		if (wordDetail == null) {
+			return null;
+		}
+
 		WordBookmark wordBookmark = wordSentenceRepository.findByMemberAndWord(member, wordDetail).orElse(null);
 
-		boolean bookMarked = false;
-		if (wordBookmark != null) {
-			bookMarked = true;
-		}
+		boolean bookMarked = wordBookmark != null;
 
 		return WordDto.SearchWord.builder()
 			.bookMarked(bookMarked)
@@ -76,13 +77,9 @@ public class WordServiceImpl {
 
 	public void saveWordBookmark(String memberUid, WordBookmarkDto wordBookmarkDto) {
 		Member member = findMemberService.findMember(memberUid);
-		wordBookmarkRepository.findByMemberAndWord(member, wordBookmarkDto.word())
-			.ifPresentOrElse(noEntity -> {
-					throw new IllegalArgumentException("이미 존재하는 북마크입니다.");
-				},
-				() -> wordBookmarkRepository.save(
-					wordBookmarkDto.toEntity(member)
-				));
+		wordBookmarkRepository.findByMemberAndWord(member, wordBookmarkDto.word()).ifPresentOrElse(noEntity -> {
+			throw new IllegalArgumentException("이미 존재하는 북마크입니다.");
+		}, () -> wordBookmarkRepository.save(wordBookmarkDto.toEntity(member)));
 	}
 
 	public void deleteWordBookmark(String memberUid, WordBookmarkDto wordBookmarkDto) {
@@ -120,11 +117,10 @@ public class WordServiceImpl {
 					sentenceContentList.add(wb.getWord().getWordSentenceList().get(i).getSentence().getContent());
 				}
 			}
-			wordBookmarkLists.add(
-				WordBookmarkDto.WordList.builder()
-					.wordInfo(wordDetail)
-					.sentenceContentList(sentenceContentList)
-					.build());
+			wordBookmarkLists.add(WordBookmarkDto.WordList.builder()
+				.wordInfo(wordDetail)
+				.sentenceContentList(sentenceContentList)
+				.build());
 		}
 		return new WordBookmarkDto.WordBookmarkListResponse(wordBookmarkLists);
 	}
