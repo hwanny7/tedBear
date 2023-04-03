@@ -285,17 +285,14 @@ const SearchPage = () => {
   };
 
   const handleVideoBm = (video: SearchedVideo, idx: number) => {
-    const status = video.bookMarked;
     const copy = [...videos];
-    console.log(copy[idx].bookMarked);
     copy[idx].bookMarked = !copy[idx].bookMarked;
     setVideo(copy);
-    console.log(copy[idx].bookMarked);
 
-    if (status) {
-      deleteVideoBookmark({ videoNo: video.no });
-    } else {
+    if (copy[idx].bookMarked) {
       postVideoBookmark({ videoNo: video.no });
+    } else {
+      deleteVideoBookmark({ videoNo: video.no });
     }
   };
 

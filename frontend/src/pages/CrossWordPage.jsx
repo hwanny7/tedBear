@@ -6,8 +6,6 @@ import ShortsModal from 'components/short/ShortsModal';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
 import { device } from './../utils/mediaQuery';
-import CrossWordAnswerPage from './CrossWordAnswerPage';
-import Swal from 'sweetalert2';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -818,12 +816,6 @@ const CrossWordPage = () => {
       )}
 
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-      {/* {finish && (
-        <CrossWordAnswerPage
-          state={state}
-          setFinish={setFinish}
-        ></CrossWordAnswerPage>
-      )} */}
     </Wrapper>
   );
 };
