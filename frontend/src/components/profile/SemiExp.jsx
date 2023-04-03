@@ -79,7 +79,7 @@ const options = {
       stops: [0, 50, 53, 91],
     },
   },
-  labels: ['Experience'],
+  labels: ['경험치'],
 };
 
 export default function SemiExp() {
@@ -113,7 +113,7 @@ export default function SemiExp() {
   return (
     <SemiStyle>
       <div className="exp-paper">
-        <p className="exp-name">Lv.{level}</p>
+        <p className="exp-name">레벨.{level}</p>
         <div className="exp-chart">
           <Chart
             options={options}

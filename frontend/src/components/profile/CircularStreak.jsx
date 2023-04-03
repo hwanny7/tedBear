@@ -66,7 +66,7 @@ const CircularStreak = () => {
   return (
     <StreakStyle>
       <div className="streak-paper">
-        <h2 className="streak-name">Streak</h2>
+        <h2 className="streak-name">학습 기록</h2>
         {/* 원 ~ 사각형  */}
         {/* <div className="gauge">
           <h5>Custom the roundness!</h5>

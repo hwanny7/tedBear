@@ -52,7 +52,19 @@ export default function PieChart() {
       opacity: 0.8,
     },
     // 라벨
-    labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'etc'],
+    labels: [
+      '난이도 1',
+      '난이도 2',
+      '난이도 3',
+      '난이도 4',
+      '난이도 5',
+      '난이도 6',
+      '난이도 7',
+      '난이도 8',
+      '난이도 9',
+      '난이도 10',
+      '난이도 미정',
+    ],
 
     // 숫자 지우기
     yaxis: {
@@ -100,7 +112,7 @@ export default function PieChart() {
   return (
     <ChartStyle>
       <div className="chart-paper">
-        <h2 className="chart-name">Statistics</h2>
+        <h2 className="chart-name">학습 통계</h2>
         <Chart
           options={options}
           series={series}
