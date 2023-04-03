@@ -287,13 +287,12 @@ const SearchPage = () => {
   const handleVideoBm = (video: SearchedVideo, idx: number) => {
     const copy = [...videos];
     copy[idx].bookMarked = !copy[idx].bookMarked;
-    setVideo(copy);
-
     if (copy[idx].bookMarked) {
       postVideoBookmark({ videoNo: video.no });
     } else {
       deleteVideoBookmark({ videoNo: video.no });
     }
+    setVideo(copy);
   };
 
   return (
