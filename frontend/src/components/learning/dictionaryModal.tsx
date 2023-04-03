@@ -215,7 +215,7 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
 
   const fetchData = async () => {
     const data = await getSearchWord(keyword, page, size);
-
+    console.log(data);
     setWordDesc(data);
   };
 
@@ -259,10 +259,12 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
   };
 
   useEffect(() => {
-    setBookmark(wordDesc?.wordInfo.bookMarked);
-    onRegexMean();
-    if (wordDesc?.wordInfo.sentenceCount != undefined) {
-      setTotalElements(wordDesc?.wordInfo.sentenceCount);
+    if (wordDesc?.wordInfo != null) {
+      setBookmark(wordDesc?.wordInfo.bookMarked);
+      onRegexMean();
+      if (wordDesc?.wordInfo.sentenceCount != undefined) {
+        setTotalElements(wordDesc?.wordInfo.sentenceCount);
+      }
     }
   }, [wordDesc]);
 
@@ -310,7 +312,7 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
 
       <ContentBox>
         <SearchResult>
-          {wordDesc !== null ? (
+          {wordDesc?.wordInfo !== null ? (
             <>
               <Menu menu={menu}>
                 <div onClick={() => setMenu(1)}>의미</div>

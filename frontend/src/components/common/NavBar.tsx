@@ -39,7 +39,7 @@ const ToggleBox = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
-  justify-content: end;
+  justify-content: first;
   padding: 0 22px;
   margin: 16px 0 0;
 `;
@@ -145,10 +145,9 @@ const IconName = styled.div<OpenStyledProps>`
   text-align: left;
   color: ${props => props.theme.whiteColor};
   font-weight: 500;
-  font-size: 14px;
+  font-size: 20px;
   margin-left: 16px;
-  visibility: ${OpenStyledProps =>
-    !OpenStyledProps.open ? 'hidden' : 'visible'};
+  display: ${OpenStyledProps => (!OpenStyledProps.open ? 'none' : 'block')};
   transition: all 0.3s ease;
 `;
 
@@ -228,7 +227,7 @@ const StyledSignin = styled(Signin)`
   width: 24px;
 `;
 
-const NavBar = (props: Props) => {
+const NavBar2 = (props: Props) => {
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
     props.setToggle(!props.toggle);
@@ -307,26 +306,6 @@ const NavBar = (props: Props) => {
             </IconName>
           </ListBox>
         </Link>
-        {/* <Link to="/game/select">
-          <ListBox>
-            <IconDiv open={props.open}>
-              <StyledGame />
-            </IconDiv>
-            <IconName open={props.open}>
-              <span>PUZZLE</span>
-            </IconName>
-          </ListBox>
-        </Link>
-        <Link to="/cross-word/cover">
-          <ListBox>
-            <IconDiv open={props.open}>
-              <StyledCrossIcon />
-            </IconDiv>
-            <IconName open={props.open}>
-              <span>CROSSWORD</span>
-            </IconName>
-          </ListBox>
-        </Link> */}
 
         {isLogin ? (
           <>
@@ -374,4 +353,4 @@ const NavBar = (props: Props) => {
   );
 };
 
-export default NavBar;
+export default NavBar2;
