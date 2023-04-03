@@ -22,41 +22,13 @@ import 'slick-carousel/slick/slick-theme.css';
 import buttonLeft from 'assets/img/buttonLeft.svg';
 import buttonRight from 'assets/img/buttonRight.svg';
 import { useSelector } from 'react-redux';
+import Badge from 'components/common/Badge';
 
-interface BadgeProps {
-  score: number;
-}
-
-const ViedoLevelImg = styled.img<BadgeProps>`
+const ViedoLevelImg = styled.div`
   height: 15%;
   position: absolute;
   top: 15%;
   left: 1%;
-  filter: ${props => {
-    if (props.score == 0) {
-      return `${props.theme.badgeRed}`;
-    } else if (props.score == 1) {
-      return `${props.theme.badgeOrange}`;
-    } else if (props.score == 2) {
-      return `${props.theme.badgeYellow}`;
-    } else if (props.score == 3) {
-      return `${props.theme.badgeGreen}`;
-    } else if (props.score == 4) {
-      return `${props.theme.badgeBlue}`;
-    } else if (props.score == 5) {
-      return `${props.theme.badgeIndigo}`;
-    } else if (props.score == 6) {
-      return `${props.theme.badgePurple}`;
-    } else if (props.score == 7) {
-      return `${props.theme.badgeBronze}`;
-    } else if (props.score == 8) {
-      return `${props.theme.badgeSilver}`;
-    } else if (props.score == 9) {
-      return `${props.theme.badgGold}`;
-    } else {
-      return `${props.theme.badgeUnlank}`;
-    }
-  }};
 `;
 
 const VideoWrapper = styled.div`
@@ -292,7 +264,7 @@ const SearchPage = () => {
     } else {
       deleteVideoBookmark({ videoNo: video.no });
     }
-    console.log(video.no, copy[idx].bookMarked)
+    console.log(video.no, copy[idx].bookMarked);
     setVideo(copy);
   };
 
@@ -321,7 +293,10 @@ const SearchPage = () => {
                 handleClick(video.watchId);
               }}
             />
-            <ViedoLevelImg src={VideoLevel} score={video.score} />
+            <ViedoLevelImg>
+              <Badge score={video.score} />
+            </ViedoLevelImg>
+            {/* <ViedoLevelImg src={VideoLevel} score={video.score} /> */}
             {isLogin && (
               <img
                 src={video.bookMarked ? BookmarkFull : BookmarkEmpty}

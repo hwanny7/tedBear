@@ -20,7 +20,7 @@ export interface Shorts {
   content?: string;
   bookmarked?: boolean;
   watchId: string;
-  score?: number;
+  score: number;
 }
 
 interface ShortsRecomm {
