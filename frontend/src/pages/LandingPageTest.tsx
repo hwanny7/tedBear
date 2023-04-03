@@ -272,6 +272,7 @@ const ToggleBox = styled.div`
 `;
 
 const ToggleBtn = styled.div`
+  cursor: pointer;
   background-image: -webkit-linear-gradient(
     #b3b3b3 0%,
     #ececec 80%,
@@ -2292,7 +2293,7 @@ const LandingPageTest = (props: Props) => {
         {/* <LandingVisualImg src={LandingVisual} toggle={props.toggle} /> */}
         {/* <BigWave1Img src={BigWave1} toggle={props.toggle} /> */}
         <ToggleBox>
-          <ToggleBtn>
+          <ToggleBtn onClick={clickedToggle}>
             <Circle onClick={clickedToggle} toggle={props.toggle}>
               {props.toggle ? <MoonImg src={Moon} /> : <SunImg src={Sun} />}
             </Circle>
