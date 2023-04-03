@@ -19,6 +19,8 @@ import { Paper } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ShortsModal from 'components/short/ShortsModal';
+import { useOutletContext } from 'react-router-dom';
 
 // style
 const StyledLevel = styled.div`
@@ -111,6 +113,8 @@ const GameDetailPage = () => {
   const [retry, setRetry] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
+  const [shorts, setShorts] = useState(null);
+  const { modalOpen, setModalOpen } = useOutletContext();
 
   const handleRetry = () => {
     setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
@@ -284,9 +288,9 @@ const GameDetailPage = () => {
   }, [correctAnswerCount]);
 
   const handleHint = () => {
-    // console.log(hintList.startTime);
-    // console.log(hintList.endTime);
-    // console.log(hintList.watchId);
+    setShorts(shorts);
+    setModalOpen(true);
+    console.log(shorts); // null
   };
 
   return (
@@ -692,6 +696,7 @@ const GameDetailPage = () => {
           </IconButton>
         </Paper>
       </div>
+      {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
     </StyledLevel>
   );
 };
