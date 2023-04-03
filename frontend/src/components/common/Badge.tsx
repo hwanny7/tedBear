@@ -33,7 +33,6 @@ const ViedoLevelImg = styled.img<Props>`
   width: 100%;
   /* margin-right: 16px; */
   filter: ${props => {
-    console.log('props: ', props.score);
     if (props.score == 0) {
       return `${props.theme.badgeRed}`;
     } else if (props.score == 1) {
@@ -64,7 +63,6 @@ const Badge = (props: Props) => {
   const [badgeTxt, setBadgeTxt] = useState<string>('');
 
   useEffect(() => {
-    console.log('점수2  : ', props.score);
     if (props.score == 0) {
       setBadgeTxt('A');
     } else if (props.score == 1) {

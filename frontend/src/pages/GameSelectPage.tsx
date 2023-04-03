@@ -26,9 +26,10 @@ const Box = styled.div`
   border-radius: 50px;
   width: 500px;
   height: 330px;
-  box-shadow: 6px 6px 20px #61616142;
+  box-shadow: 14px 14px 20px #9d9d9d42;
   cursor: pointer;
   position: relative;
+  background-color: ${props => props.theme.learningBoxColor};
 
   display: flex;
   flex-direction: column;
@@ -62,17 +63,6 @@ const PuzzleDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  ${Box} {
-    /* background: linear-gradient(
-      220deg,
-      rgba(255, 182, 170, 1) 0%,
-      rgba(255, 144, 124, 1) 42%,
-      rgba(255, 97, 70, 1) 76%,
-      rgba(249, 50, 15, 1) 100%
-    ); */
-    background-color: white;
-  }
 `;
 
 const CrossDiv = styled.div`
@@ -82,17 +72,6 @@ const CrossDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  ${Box} {
-    /* background: linear-gradient(
-      220deg,
-      rgba(204, 232, 171, 1) 0%,
-      rgba(180, 228, 124, 1) 42%,
-      #8ede32 76%,
-      #65b20d 100%
-    ); */
-    background-color: white;
-  }
 `;
 
 const PuzzleIconImg = styled.img`
