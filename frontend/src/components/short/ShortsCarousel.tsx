@@ -5,6 +5,7 @@ import carouselButton from 'assets/img/carouselButton.svg';
 import rightButton from 'assets/img/rightButton.svg';
 import { Shorts } from 'utils/api/recommApi';
 import VideoLevel from 'assets/img/videoLevel.svg';
+import Badge from 'components/common/Badge';
 
 interface BadgeProps {
   score?: number;
@@ -80,6 +81,12 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       width: 100%;
       height: 100%;
       cursor: pointer;
+    }
+
+    .badge-wrapper {
+      position: absolute;
+      top: 10%;
+      left: 4%;
     }
   }
 `;
@@ -184,7 +191,12 @@ const ShortsCarousel = ({
                     setShortsId(Thumnail);
                   }}
                 ></img>
-                <ViedoLevelImg src={VideoLevel} score={Thumnail.score} />
+                {/* <ViedoLevelImg src={VideoLevel} score={Thumnail.score} /> */}
+                <div className="badge-wrapper">
+                  {Thumnail.score != undefined && (
+                    <Badge score={Thumnail.score} />
+                  )}
+                </div>
               </div>
             );
           })}

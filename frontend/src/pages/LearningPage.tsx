@@ -33,6 +33,7 @@ import DictionaryModal from 'components/learning/dictionaryModal';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { warn } from 'console';
+import Badge from 'components/common/Badge';
 
 interface ToggleStyledProps {
   toggle: boolean;
@@ -71,10 +72,38 @@ const TitleBox = styled.div`
   position: relative;
 
   p {
+    position: absolute;
     font-weight: bold;
     font-size: 24px;
     margin-left: 16px;
     color: ${props => props.theme.textColor1};
+    /* border: 1px solid red; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    left: 24px;
+  }
+
+  div {
+    position: relative;
+    /* border: 1px solid red; */
+    width: 32px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    > span {
+      position: absolute;
+      color: Black;
+      font-weight: bold;
+      /* border: 1px solid red; */
+      z-index: 80;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;
 
@@ -150,8 +179,9 @@ const ScoreChart = styled.div`
 `;
 
 const ViedoLevelImg = styled.img<BadgeProps>`
+  position: absolute;
   cursor: pointer;
-  width: 32px;
+  width: 100%;
   /* margin-right: 16px; */
   filter: ${props => {
     if (props.score == 0) {
@@ -581,6 +611,7 @@ const LearningPage = () => {
   useEffect(() => {
     //뱃지 색상 설정
     if (videoDesc?.scoreInfo.score !== undefined) {
+      console.log('점수 : ', videoDesc?.scoreInfo.score);
       setScore(videoDesc?.scoreInfo.score);
     }
 
@@ -610,8 +641,6 @@ const LearningPage = () => {
     // 문장 번호
     if (videoDesc?.sentenceInfoList[0].no !== undefined) {
       setSentenceId(videoDesc?.sentenceInfoList[0].no);
-
-      console.log(videoDesc?.sentenceInfoList[0].no);
     }
 
     setOpts(opts);
@@ -694,7 +723,6 @@ const LearningPage = () => {
 
   useEffect(() => {
     // 문장 북마크 여부 가져오기
-    console.log('번호 : ', senetenceId);
     const getSentenceBookmark = async () => {
       const data = await getSentenceBookmarkState(senetenceId);
       setSentenceBookmark(data.bookmarked);
@@ -732,30 +760,35 @@ const LearningPage = () => {
   const [videoTime, setVideoTime] = useState(0);
   // 1초마다 영상 실행 시간 가져오기
   useEffect(() => {
-    const watchTime = setInterval(() => {
-      // 현재 시청 시간 state 저장
-      const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
-      console.log('watch');
-      setVideoTime(time);
-      // 실시간 하이라이팅
-      let flag = false;
-      let idx = selected;
-      while (!flag) {
-        if (
-          videoDesc?.sentenceInfoList[idx].startTime &&
-          videoDesc?.sentenceInfoList[idx].startTime <= time &&
-          time <= videoDesc?.sentenceInfoList[idx + 1].startTime
-        ) {
-          flag = true;
-          break;
+    let watchTime: NodeJS.Timer;
+    if (isLogin) {
+      watchTime = setInterval(() => {
+        // 현재 시청 시간 state 저장
+        const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
+        console.log('watch');
+        setVideoTime(time);
+        // 실시간 하이라이팅
+        let flag = false;
+        let idx = selected;
+        while (!flag) {
+          if (videoDesc?.sentenceInfoList[idx].startTime != undefined) {
+            if (
+              videoDesc?.sentenceInfoList[idx].startTime &&
+              videoDesc?.sentenceInfoList[idx].startTime <= time &&
+              time <= videoDesc?.sentenceInfoList[idx + 1].startTime
+            ) {
+              flag = true;
+              break;
+            }
+
+            idx++;
+          }
         }
 
-        idx++;
-      }
-
-      setHighlight(true);
-      setSelected(idx);
-    }, 1000);
+        setHighlight(true);
+        setSelected(idx);
+      }, 1000);
+    }
 
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
@@ -770,9 +803,9 @@ const LearningPage = () => {
           await postCurrentVideo(data);
         };
         onRecordWatching();
-      }
 
-      clearInterval(watchTime);
+        clearInterval(watchTime);
+      }
 
       // 마이크 끠
       // SpeechRecognition.stopListening();
@@ -957,7 +990,11 @@ const LearningPage = () => {
   return (
     <Wrapper>
       <TitleBox>
-        <ViedoLevelImg src={VideoLevel} score={score} />
+        {/* <div>
+          <ViedoLevelImg src={VideoLevel} score={score} />
+          <span>{badgeTxt}</span>
+        </div> */}
+        <Badge score={score} />
         <ScoreChart>
           <Chart
             options={chartOptions}

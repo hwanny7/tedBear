@@ -11,6 +11,7 @@ import { device } from 'utils/mediaQuery';
 import { HomeRecomm } from 'utils/api/recommApi';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 import { useSelector } from 'react-redux';
+import Badge from 'components/common/Badge';
 
 interface BadgeProps {
   score: number;
@@ -118,6 +119,12 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
         font-size: 15px;
       }
     }
+
+    .badge-wrapper {
+      position: absolute;
+      top: 14%;
+      left: 4%;
+    }
   }
 `;
 
@@ -224,7 +231,10 @@ const Carousel = ({ data, setVideoData }: Props) => {
                     onClick={() => handleClick(Thumnail.watchId)}
                     alt=""
                   />
-                  <ViedoLevelImg src={VideoLevel} score={Thumnail.score} />
+                  {/* <ViedoLevelImg src={VideoLevel} score={Thumnail.score} /> */}
+                  <div className="badge-wrapper">
+                    <Badge score={Thumnail.score} />
+                  </div>
                   {isLogin && (
                     <img
                       src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
