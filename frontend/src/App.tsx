@@ -30,6 +30,7 @@ function App() {
   const [toggle, setToggle] = useState<boolean>(false);
 
   RouterChangeTracker();
+
   return (
     <>
       <ThemeProvider theme={!toggle ? lightTheme : darkTheme}>

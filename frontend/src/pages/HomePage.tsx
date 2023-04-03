@@ -66,16 +66,19 @@ const ShortsTitle = styled.span`
 `;
 
 const Button = styled.button<{ changeColor?: number }>`
-  padding: 3%;
+  padding: 1% 8% 1%;
   cursor: pointer;
-  background: ${props =>
+  /* background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #ffdbb3, #fec88e)'
-      : 'white'};
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      : 'white'}; */
+  background: ${props =>
+    props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
+  /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); */
+  box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
-    background: linear-gradient(to right, #ffdbb3, #fec88e);
+    background: ${props => props.theme.pointLightColor};
   }
   @media ${device.mobile} {
     font-size: 10px;
@@ -90,23 +93,25 @@ const Button = styled.button<{ changeColor?: number }>`
   }
 
   @media ${device.desktop} {
-    font-size: 22px;
+    font-size: 20px;
   }
 `;
 
 const LeftButton = styled.button<{ changeColor?: number }>`
   cursor: pointer;
-  border-radius: 16px 0 0 16px;
-  background: ${props =>
+  border-radius: 8px 0 0 8px;
+  /* background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #fff6ec, #ffdbb3)'
-      : 'white'};
-  padding: 3%;
-  padding-left: 5%;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      : 'white'}; */
+  background: ${props =>
+    props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
+  padding: 1% 8% 1%;
+  /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); */
+  box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
-    background: linear-gradient(to right, #fff6ec, #ffdbb3);
+    background: ${props => props.theme.pointLightColor};
     /* transition: all 0.3s;
     transform: translateY(3px); */
   }
@@ -123,24 +128,26 @@ const LeftButton = styled.button<{ changeColor?: number }>`
   }
 
   @media ${device.desktop} {
-    font-size: 22px;
+    font-size: 20px;
   }
 `;
 
 const RightButton = styled.button<{ changeColor?: number }>`
   cursor: pointer;
 
-  border-radius: 0px 16px 16px 0px;
-  background: ${props =>
+  border-radius: 0px 8px 8px 0px;
+  /* background: ${props =>
     props.changeColor
       ? 'linear-gradient(to right, #fec88e, #fead55)'
-      : 'white'};
-  padding: 3%;
-  padding-right: 5%;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      : 'white'}; */
+  background: ${props =>
+    props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
+  padding: 1% 8% 1%;
+  /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); */
+  box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
-    background: linear-gradient(to right, #fec88e, #fead55);
+    background: ${props => props.theme.pointLightColor};
     /* transition: all 0.3s;
     transform: translateY(3px); */
   }
@@ -157,7 +164,7 @@ const RightButton = styled.button<{ changeColor?: number }>`
   }
 
   @media ${device.desktop} {
-    font-size: 22px;
+    font-size: 20px;
   }
 `;
 
@@ -263,7 +270,6 @@ const HomePage = () => {
               display: 'flex',
               alignItems: 'end',
               width: '70%',
-              border: '1px solid red',
             }}
           >
             <SearchBar></SearchBar>
@@ -274,9 +280,9 @@ const HomePage = () => {
           <div
             style={{
               display: 'flex',
+              justifyContent: 'end',
               alignItems: 'end',
               width: '30%',
-              border: '1px solid red',
             }}
           >
             <LeftButton

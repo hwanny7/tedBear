@@ -573,7 +573,7 @@ const LearningPage = () => {
       '#BC2FFF',
       '#CDAB8B',
       '#C6C6C6',
-      '#BC2FFF',
+      '#FFD700',
       '#000000',
     ],
   };

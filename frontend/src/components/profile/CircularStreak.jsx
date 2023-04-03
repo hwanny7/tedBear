@@ -68,8 +68,7 @@ const CircularStreak = () => {
       <div className="streak-paper">
         <h2 className="streak-name">Streak</h2>
         {/* 원 ~ 사각형  */}
-        <div className="gauge">
-          {/* roundness gauge */}
+        {/* <div className="gauge">
           <h5>Custom the roundness!</h5>
           <input
             className="gauge-text"
@@ -80,8 +79,8 @@ const CircularStreak = () => {
             step="0.1"
             value={range}
             onChange={e => setRange(e.target.value)}
-          />{' '}
-        </div>
+          />
+        </div> */}
         <HeatMap
           // 히트맵 크기
           width={1200}

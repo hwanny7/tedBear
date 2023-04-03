@@ -59,13 +59,14 @@ const Box = styled.div`
     font-weight: bold;
     font-size: 32px;
     margin-bottom: 16px;
-    color: ${props => props.theme.whiteColor};
+    color: ${props => props.theme.textColor1};
   }
 
   p:nth-child(2) {
     font-size: 18px;
     margin-bottom: 16px;
-    color: #ffffffad;
+    /* color: #ffffffad; */
+    color: ${props => props.theme.textColor2};
   }
 
   &:hover {
@@ -83,13 +84,14 @@ const PuzzleDiv = styled.div`
   align-items: center;
 
   ${Box} {
-    background: linear-gradient(
+    /* background: linear-gradient(
       220deg,
       rgba(255, 182, 170, 1) 0%,
       rgba(255, 144, 124, 1) 42%,
       rgba(255, 97, 70, 1) 76%,
       rgba(249, 50, 15, 1) 100%
-    );
+    ); */
+    background-color: white;
   }
 `;
 
@@ -102,13 +104,14 @@ const CrossDiv = styled.div`
   align-items: center;
 
   ${Box} {
-    background: linear-gradient(
+    /* background: linear-gradient(
       220deg,
       rgba(204, 232, 171, 1) 0%,
       rgba(180, 228, 124, 1) 42%,
       #8ede32 76%,
       #65b20d 100%
-    );
+    ); */
+    background-color: white;
   }
 `;
 

@@ -31,7 +31,7 @@ const SearchBar = ({ fetchData }: Props) => {
     <Paper
       component="form"
       sx={{
-        p: '2px 4px',
+        p: '2% 4px',
         display: 'flex',
         alignItems: 'center',
         width: '50%',
