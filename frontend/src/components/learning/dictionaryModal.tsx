@@ -215,11 +215,12 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
 
   const fetchData = async () => {
     const data = await getSearchWord(keyword, page, size);
+
     setWordDesc(data);
   };
 
-  const onSearchWord = () => {
-    if (keyword == '') {
+  const onSearchWord = (el: any) => {
+    if (el._reactName != 'onKeyUp' && keyword == '') {
       alert('검색어를 입력해주세요');
       return;
     }

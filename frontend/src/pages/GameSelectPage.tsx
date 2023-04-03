@@ -1,37 +1,16 @@
-import styled, { css } from 'styled-components';
-import BookmarkFull from 'assets/img/bookmarkFull.svg';
-import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
-import LearningMic from 'assets/img/learningMic.svg';
-import LearningStop from 'assets/img/learningStop.svg';
-import LearningPause from 'assets/img/learningPause.svg';
-import LearningReplay from 'assets/img/learningReplay.svg';
-import Dot from 'assets/img/dot.svg';
-import VideoLevel from 'assets/img/videoLevel.svg';
-import Dictionary from 'assets/img/dictionary.svg';
-import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router';
-import {
-  deleteSentenceBookmark,
-  deleteVideoBookmark,
-  feelDifficulty,
-  getSentenceBookmarkState,
-  getVideoDesc,
-  postCompletedVideo,
-  postCurrentVideo,
-  postSentenceBookmark,
-  postVideoBookmark,
-  speakResult,
-  VideoDesc,
-} from 'utils/api/learningApi';
-import YouTube, { YouTubeProps } from 'react-youtube';
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from 'react-speech-recognition';
-import { useNavigate, useParams } from 'react-router-dom';
-import Chart from 'react-apexcharts';
-import DictionaryModal from 'components/learning/dictionaryModal';
-import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
+import styled, { keyframes } from 'styled-components';
+import PuzzleIcon from 'assets/img/puzzleIcon.svg';
+import CrosswordIcon from 'assets/img/crosswordIcon.svg';
+import { useNavigate } from 'react-router-dom';
+
+const upDown = keyframes`
+    from{
+    transform: translateY(0px);
+  }
+  to{
+    transform: translateY(-10px);
+  }
+`;
 
 const Wrapper = styled.div`
   /* border: 2px solid red; */
@@ -49,20 +28,21 @@ const Box = styled.div`
   height: 330px;
   box-shadow: 6px 6px 20px #61616142;
   cursor: pointer;
+  position: relative;
 
   display: flex;
   flex-direction: column;
   padding: 32px 64px;
   justify-content: end;
 
-  p:nth-child(1) {
+  p:nth-child(2) {
     font-weight: bold;
     font-size: 32px;
     margin-bottom: 16px;
     color: ${props => props.theme.textColor1};
   }
 
-  p:nth-child(2) {
+  p:nth-child(3) {
     font-size: 18px;
     margin-bottom: 16px;
     /* color: #ffffffad; */
@@ -115,6 +95,20 @@ const CrossDiv = styled.div`
   }
 `;
 
+const PuzzleIconImg = styled.img`
+  width: 280px;
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% - 80px);
+  animation: 1.4s infinite ease-in-out alternate ${upDown};
+`;
+
+const CrosswordIconImg = styled(PuzzleIconImg)`
+  width: 300px;
+  top: calc(50% - 210px);
+  left: calc(50% - 70px);
+`;
+
 const GameSelectPage = () => {
   const navigate = useNavigate();
 
@@ -130,12 +124,14 @@ const GameSelectPage = () => {
     <Wrapper>
       <PuzzleDiv>
         <Box onClick={goPuzzle}>
+          <PuzzleIconImg src={PuzzleIcon} />
           <p>퍼즐</p>
           <p>단어를 맞춰서 귀여운 그림을 모아보세요!</p>
         </Box>
       </PuzzleDiv>
       <CrossDiv>
         <Box onClick={goCross}>
+          <CrosswordIconImg src={CrosswordIcon} />
           <p>십자말풀이</p>
           <p>단어를 맞춰서 격자판을 채워보세요! </p>
         </Box>
