@@ -9,6 +9,10 @@ import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
 import { useOutletContext } from 'react-router-dom';
 import ShortsModal from 'components/short/ShortsModal';
+import {
+  postSentenceBookmark,
+  deleteSentenceBookmark,
+} from 'utils/api/learningApi';
 
 interface IBookmarkSentence {
   no: number;
@@ -113,6 +117,7 @@ interface Props {
 }
 
 const BookmarkSentence = () => {
+  const navigate = useNavigate();
   const [shorts, setShorts] = useState(null);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
   const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
@@ -151,11 +156,20 @@ const BookmarkSentence = () => {
   };
 
   const handleBookmark = () => {
-    // navigate('/home');
+    navigate('/home');
   };
 
-  const handleMark = () => {
+  const handleMark = (sen: IBookmarkSentence, idx: number) => {
     console.log('북마크를 켜고 끄고');
+    const copy = [...sentenceBookmark];
+    copy[idx].bookMarked = !copy[idx].bookMarked;
+    if (copy[idx].bookMarked) {
+      postSentenceBookmark({ sentenceNo: sen.no });
+    } else {
+      deleteSentenceBookmark({ sentenceNo: sen.no });
+    }
+    console.log(sen.no, copy[idx].bookMarked);
+    setSentenceBookmark(copy);
   };
 
   return (
@@ -183,13 +197,16 @@ const BookmarkSentence = () => {
           </div>
         ) : (
           <div className="sentence">
-            {sentenceBookmark.map(sen => (
+            {sentenceBookmark.map((sen, idx) => (
               <div className="row" key={sen.no}>
                 <div className="bookmark-container">
                   <img
                     className="book-mark"
-                    src={sen.bookMarked ? BookmarkEmpty : BookmarkFull}
-                    onClick={handleMark}
+                    src={sen.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    onClick={() => {
+                      handleMark(sen, idx);
+                    }}
+                    style={{ zIndex: 9999 }}
                   ></img>
                 </div>
                 <div className="play-shorts-container">

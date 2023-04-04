@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { authApi } from 'utils/api/customAxios';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { postWordBookmark, deleteWordBookmark } from 'utils/api/learningApi';
 
 const BookIn = styled.div`
   max-height: 80vh;
@@ -137,8 +138,18 @@ const BookmarkWord = () => {
   const handleBookmark = () => {
     navigate('/home');
   };
-  const handleMark = () => {
+
+  const handleMark = (item, idx) => {
     console.log('북마크를 켜고 끄고');
+    const copy = [...wordBookmarkList];
+    copy[idx].bookMarked = !copy[idx].bookMarked;
+    if (copy[idx].bookMarked) {
+      postWordBookmark({ wordNo: item.no });
+    } else {
+      deleteWordBookmark({ wordNo: item.no });
+    }
+    console.log(item.no, copy[idx].bookMarked);
+    setWordBookmarkList(copy);
   };
 
   return (
@@ -168,13 +179,16 @@ const BookmarkWord = () => {
           <div className="word">
             <div>
               {wordBookmarkList.length > 0 &&
-                wordBookmarkList.map(item => (
+                wordBookmarkList.map((item, idx) => (
                   <div className="row" key={item.id}>
                     <div className="bookmark-container">
                       <img
                         className="book-mark"
-                        src={item.bookMarked ? BookmarkEmpty : BookmarkFull}
-                        onClick={handleMark}
+                        src={item.bookMarked ? BookmarkFull : BookmarkEmpty}
+                        onClick={() => {
+                          handleMark(item, idx);
+                        }}
+                        style={{ zIndex: 9999 }}
                       ></img>
                     </div>
                     <div className="content-container">

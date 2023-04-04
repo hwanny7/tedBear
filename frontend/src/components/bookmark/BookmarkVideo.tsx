@@ -12,7 +12,7 @@ import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
 import { Button } from '@mui/material';
-
+import { postVideoBookmark, deleteVideoBookmark } from 'utils/api/learningApi';
 interface IBookmarkVideo {
   no: number;
   thumbnailUrl: string;
@@ -95,8 +95,17 @@ const BookmarkVideo = () => {
     navigate('/home');
   };
 
-  const handleMark = () => {
+  const handleMark = (Thumnail: IBookmarkVideo, idx: number) => {
     console.log('북마크를 켜고 끄고');
+    const copy = [...videoBookmark];
+    copy[idx].bookMarked = !copy[idx].bookMarked;
+    if (copy[idx].bookMarked) {
+      postVideoBookmark({ videoNo: Thumnail.no });
+    } else {
+      deleteVideoBookmark({ videoNo: Thumnail.no });
+    }
+    console.log(Thumnail.no, copy[idx].bookMarked);
+    setVideoBookmark(copy);
   };
 
   return (
@@ -159,7 +168,7 @@ const BookmarkVideo = () => {
                       alignItems: 'center',
                       backgroundColor: '#ffffff',
                     }}
-                    onClick={() => handleClick(Thumnail.watchId)}
+                    // onClick={() => handleClick(Thumnail.watchId)}
                   >
                     <CardActionArea
                       sx={{
@@ -178,13 +187,16 @@ const BookmarkVideo = () => {
                         }}
                       ></img> */}
                       <img
-                        className="book-mark"
                         src={Thumnail.bookMarked ? BookmarkFull : BookmarkEmpty}
-                        onClick={handleMark}
+                        className="book-mark"
+                        onClick={() => {
+                          handleMark(Thumnail, idx);
+                        }}
                         style={{
                           height: '50%',
                           position: 'absolute',
                           left: '20%',
+                          zIndex: 9999,
                         }}
                       ></img>
                       <CardMedia
@@ -200,6 +212,7 @@ const BookmarkVideo = () => {
                           height: '220px',
                           width: '380px',
                         }}
+                        onClick={() => handleClick(Thumnail.watchId)}
                       />
                       <CardContent
                         key={idx}
