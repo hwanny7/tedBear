@@ -13,18 +13,32 @@ const upDown = keyframes`
 `;
 
 const Wrapper = styled.div`
-  /* border: 2px solid red; */
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
-  flex-direction: row;
-  padding: 56px 120px;
+
   position: relative;
+
+  @media (max-width: 900px) {
+    padding: 56px 24px;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    padding: 56px 80px;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 56px 120px;
+  }
 `;
 
 const Box = styled.div`
+  word-break: keep-all;
   border-radius: 50px;
-  width: 500px;
+  width: 90%;
   height: 330px;
   box-shadow: 14px 14px 20px #9d9d9d42;
   cursor: pointer;
@@ -36,18 +50,53 @@ const Box = styled.div`
   padding: 32px 64px;
   justify-content: end;
 
+  @media (max-width: 400px) {
+    padding: 32px 32px;
+  }
+
+  @media (max-width: 900px) {
+    margin-bottom: 24px;
+  }
+
   p:nth-child(2) {
     font-weight: bold;
-    font-size: 32px;
+
     margin-bottom: 16px;
     color: ${props => props.theme.textColor1};
+
+    @media (max-width: 400px) {
+      font-size: 28px;
+    }
+
+    @media (min-width: 400px) {
+      font-size: 32px;
+    }
+
+    @media (min-width: 900px) {
+      font-size: 28px;
+    }
+
+    @media (min-width: 1200px) {
+      font-size: 32px;
+    }
   }
 
   p:nth-child(3) {
-    font-size: 18px;
     margin-bottom: 16px;
     /* color: #ffffffad; */
     color: ${props => props.theme.textColor2};
+
+    @media (max-width: 400px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 400px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1200px) {
+      font-size: 18px;
+    }
   }
 
   &:hover {
@@ -63,6 +112,11 @@ const PuzzleDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    height: 40%;
+  }
 `;
 
 const CrossDiv = styled.div`
@@ -72,20 +126,60 @@ const CrossDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    height: 50%;
+  }
 `;
 
 const PuzzleIconImg = styled.img`
-  width: 280px;
   position: absolute;
-  top: calc(50% - 200px);
-  left: calc(50% - 80px);
   animation: 1.4s infinite ease-in-out alternate ${upDown};
+
+  @media (max-width: 400px) {
+    width: 140px;
+    top: calc(50% - 130px);
+    left: calc(50% - 20px);
+  }
+
+  @media (min-width: 400px) {
+    width: 160px;
+    top: calc(50% - 130px);
+    left: calc(50%);
+  }
+
+  @media (min-width: 600px) {
+    width: 240px;
+    top: calc(50% - 150px);
+    left: calc(50%);
+  }
+
+  @media (min-width: 900px) {
+    width: 200px;
+    top: calc(50% - 180px);
+    left: calc(50% - 50px);
+  }
+
+  @media (min-width: 1200px) {
+    width: 280px;
+    top: calc(50% - 200px);
+    left: calc(50% - 80px);
+  }
 `;
 
 const CrosswordIconImg = styled(PuzzleIconImg)`
-  width: 300px;
-  top: calc(50% - 210px);
-  left: calc(50% - 70px);
+  @media (min-width: 900px) {
+    width: 220px;
+    top: calc(50% - 200px);
+    left: calc(50% - 50px);
+  }
+
+  @media (min-width: 1200px) {
+    width: 300px;
+    top: calc(50% - 210px);
+    left: calc(50% - 70px);
+  }
 `;
 
 const GameSelectPage = () => {
