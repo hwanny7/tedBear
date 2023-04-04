@@ -35,6 +35,8 @@ import Swal from 'sweetalert2';
 import { warn } from 'console';
 import Badge from 'components/common/Badge';
 
+// pdf
+
 interface ToggleStyledProps {
   toggle: boolean;
 }
@@ -60,29 +62,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 56px 120px;
   position: relative;
-`;
-
-const TitleBox = styled.div`
-  /* border: 1px solid blue; */
-
-  height: 8%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-
-  p {
-    /* position: absolute; */
-    font-weight: bold;
-    font-size: 24px;
-    margin-left: 16px;
-    color: ${props => props.theme.textColor1};
-    /* border: 1px solid red; */
-    height: 100%;
-    display: flex;
-    align-items: center;
-    /* left: 24px; */
-  }
 `;
 
 const ScoreChart = styled.div`
@@ -156,10 +135,38 @@ const ScoreChart = styled.div`
   }
 `;
 
+const TitleBox = styled.div`
+  /* border: 1px solid blue; */
+
+  height: 8%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+
+  p {
+    /* position: absolute; */
+    font-weight: bold;
+    font-size: 24px;
+    margin-left: 16px;
+    color: ${props => props.theme.textColor1};
+    /* border: 1px solid red; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* left: 24px; */
+  }
+
+  > div:hover ~ ${ScoreChart} {
+    opacity: 1;
+    z-index: 4;
+  }
+`;
+
 const ViedoLevelImg = styled.img<BadgeProps>`
-  position: absolute;
+  /* position: absolute; */
   cursor: pointer;
-  width: 100%;
+  width: 24px;
   /* margin-right: 16px; */
   filter: ${props => {
     if (props.score == 0) {
@@ -957,13 +964,6 @@ const LearningPage = () => {
       }
     }
   };
-
-  // 사전
-  // const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-  // const onDicModalOpen = () => {
-  //   setModalOpen(!modalOpen);
-  // };
 
   return (
     <Wrapper>

@@ -1,7 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import { device } from 'utils/mediaQuery';
 import { InView } from 'react-intersection-observer';
-import { Cookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { logout } from 'redux/user';
 
@@ -2239,7 +2238,6 @@ const LandingPageTest = (props: Props) => {
   };
 
   const dispatch = useDispatch();
-  const cookie = new Cookies();
 
   // 메인 페이지로 이동
   const navigate = useNavigate();

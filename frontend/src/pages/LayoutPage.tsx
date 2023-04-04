@@ -40,6 +40,11 @@ const OutletWrapper = styled.div<OpenProps>`
   width: 100%;
   height: 100%;
 
+  // 추가
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+
   @media (min-width: 900px) {
     left: ${OpenProps => (!OpenProps.open ? '78px' : '200px')};
     width: ${OpenProps =>

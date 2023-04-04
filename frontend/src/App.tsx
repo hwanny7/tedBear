@@ -26,6 +26,7 @@ import CrossWordCoverPage from './pages/CrossWordCoverPage';
 import GameSelectPage from 'pages/GameSelectPage';
 import RouterChangeTracker from 'RouteChangeTracker';
 import ErrorPage from 'pages/ErrorPage';
+import MyPageTest from 'pages/MyPageTest';
 
 function App() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -51,6 +52,7 @@ function App() {
             <Route path="/cross-word" element={<CrossWordPage />} />
             <Route path="/cross-word/cover" element={<CrossWordCoverPage />} />
             <Route path="/level" element={<LevelPage />} />
+            <Route path="/mypage" element={<MyPageTest />} />
           </Route>
           <Route path="/seung" element={<SeungPage />} />
           <Route path="/yuha" element={<YuhaPage />} />
