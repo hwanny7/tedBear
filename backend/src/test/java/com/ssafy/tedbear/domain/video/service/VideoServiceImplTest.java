@@ -2,28 +2,15 @@ package com.ssafy.tedbear.domain.video.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariables;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.tedbear.domain.member.dto.LevelInfoDto;
 import com.ssafy.tedbear.domain.member.entity.MemberLevel;
-import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
-import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
-import com.ssafy.tedbear.domain.video.entity.Video;
-import com.ssafy.tedbear.domain.video.entity.WatchingVideo;
+import com.ssafy.tedbear.domain.video.repository.VideoBookmarkRepository;
 import com.ssafy.tedbear.domain.video.repository.VideoRepository;
 import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
 
@@ -86,7 +73,7 @@ class VideoServiceImplTest {
 	@DisplayName("레벨 잘 물어오는지 테스트")
 	public void levelTest() {
 
-		int[] expList = {500, 1000, 1500, 2000, 3500, 4500, 7000};
+		int[] expList = {500, 1000, 1500, 2000, 3500, 4500, 6000};
 		int[] levelList = {1, 2, 2, 2, 3, 4};
 		for (int i = 0; i < 6; i++) {
 			LevelInfoDto levelInfoDto = new LevelInfoDto(MemberLevel.builder()
