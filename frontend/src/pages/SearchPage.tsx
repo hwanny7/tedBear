@@ -195,9 +195,11 @@ const SearchPage = () => {
   // List, 지금까지 page, 자식한테 내려줄 props
 
   const fetchData = async (content: string) => {
+    setSearchWord(content);
     const videoData = await searchVideoData(content, 0);
     const shortData = await searchSenData(content, 0);
     const shortData2 = await searchSenData(content, 1);
+    console.log(videoData, shortData, shortData2);
     if (shortData2.length) {
       setShortPage(1);
       setNext(true);
@@ -210,13 +212,13 @@ const SearchPage = () => {
 
     setVideo(videoData);
     setPage(0);
-    setSearchWord(content);
     setLoading('+ 8개 추가');
   };
 
   const requestVideo = async () => {
     if (loading === '+ 8개 추가') {
       setLoading('Loading...');
+      console.log(searchWord);
       const videoData = await searchVideoData(searchWord, page + 1);
       if (videoData.length) {
         setVideo(prev => prev.concat(videoData));
