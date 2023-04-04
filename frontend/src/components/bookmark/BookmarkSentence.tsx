@@ -119,7 +119,7 @@ const BookmarkSentence = () => {
   const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
     [],
   );
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView({ threshold: 0 });
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
 
@@ -149,7 +149,7 @@ const BookmarkSentence = () => {
   };
 
   const handleBookmark = () => {
-    navigate('/home');
+    // navigate('/home');
   };
 
   const handleMark = () => {
