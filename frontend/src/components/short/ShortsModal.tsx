@@ -191,7 +191,7 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
             onReady={onPlayerReady}
             onStateChange={onPlayerStateChange}
           />
-          {shorts?.no && isLogin && (
+          {shorts?.bookmarked && isLogin && (
             <img
               src={shorts?.bookmarked ? BookmarkFull : BookmarkEmpty}
               style={{
@@ -205,16 +205,6 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
               }}
             ></img>
           )}
-          {/* {shorts?.no && (
-            <button
-              className="btn"
-              onClick={() => {
-                handleClick(shorts?.watchId);
-              }}
-            >
-              학습하기
-            </button>
-          )} */}
           {shorts?.content && (
             <SentenceBox
               onClick={() => {
@@ -234,10 +224,3 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
 };
 
 export default ShortsModal;
-
-// https://codesandbox.io/s/react-youtube-demo-f6l29?file=/src/App.js:1047-1049 관련 영상 숨기는 방법
-// https://www.npmjs.com/package/react-youtube
-// https://codepen.io/hwanny7/pen/RwYBjWW?editors=1000 자동재생 방법
-
-//   const playerRef = useRef<any>();
-// ref={playerRef}
