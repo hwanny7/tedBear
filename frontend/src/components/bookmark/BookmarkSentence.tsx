@@ -144,7 +144,7 @@ const BookmarkSentence = () => {
   }, [inView, loading]);
 
   const handlePlay = (shorts: any) => {
-    console.log(shorts);
+    delete shorts.bookmaked;
     setShorts(shorts);
     setModalOpen(true);
   };
