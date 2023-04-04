@@ -18,7 +18,7 @@ interface IBookmarkSentence {
   no: number;
   content: string;
   translation: string;
-  bookMarked: boolean;
+  bookmarked: boolean;
   score: number;
   watchId: string;
   startTime: number;
@@ -162,13 +162,14 @@ const BookmarkSentence = () => {
   const handleMark = (sen: IBookmarkSentence, idx: number) => {
     console.log('북마크를 켜고 끄고');
     const copy = [...sentenceBookmark];
-    copy[idx].bookMarked = !copy[idx].bookMarked;
-    if (copy[idx].bookMarked) {
+    copy[idx].bookmarked = !copy[idx].bookmarked;
+    console.log(sen.bookmarked);
+    if (copy[idx].bookmarked) {
       postSentenceBookmark({ sentenceNo: sen.no });
     } else {
       deleteSentenceBookmark({ sentenceNo: sen.no });
     }
-    console.log(sen.no, copy[idx].bookMarked);
+    console.log(sen.no, copy[idx].bookmarked);
     setSentenceBookmark(copy);
   };
 
@@ -202,7 +203,7 @@ const BookmarkSentence = () => {
                 <div className="bookmark-container">
                   <img
                     className="book-mark"
-                    src={sen.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    src={sen.bookmarked ? BookmarkFull : BookmarkEmpty}
                     onClick={() => {
                       handleMark(sen, idx);
                     }}

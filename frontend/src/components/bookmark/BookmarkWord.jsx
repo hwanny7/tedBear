@@ -142,13 +142,13 @@ const BookmarkWord = () => {
   const handleMark = (item, idx) => {
     console.log('북마크를 켜고 끄고');
     const copy = [...wordBookmarkList];
-    copy[idx].bookMarked = !copy[idx].bookMarked;
-    if (copy[idx].bookMarked) {
-      postWordBookmark({ wordNo: item.no });
+    copy[idx].bookmarked = !copy[idx].bookmarked;
+    if (copy[idx].bookmarked) {
+      postWordBookmark({ wordNumber: item.wordNo });
     } else {
-      deleteWordBookmark({ wordNo: item.no });
+      deleteWordBookmark({ wordNumber: item.wordNo });
     }
-    console.log(item.no, copy[idx].bookMarked);
+    console.log(item.wordNo, copy[idx].bookmarked);
     setWordBookmarkList(copy);
   };
 
@@ -184,7 +184,7 @@ const BookmarkWord = () => {
                     <div className="bookmark-container">
                       <img
                         className="book-mark"
-                        src={item.bookMarked ? BookmarkFull : BookmarkEmpty}
+                        src={item.bookmarked ? BookmarkFull : BookmarkEmpty}
                         onClick={() => {
                           handleMark(item, idx);
                         }}

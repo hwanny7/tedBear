@@ -35,7 +35,7 @@ interface IBookmarkSentence {
       no: number;
       content: string;
       translation: string;
-      bookMarked: boolean;
+      bookmarked: boolean;
       score: number;
       watchId: string;
       startTime: number;
