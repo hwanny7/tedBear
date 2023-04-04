@@ -72,10 +72,11 @@ const BookmarkVideo = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const data: IBookmarkVideo[] = await getVideoBookmark(page);
+    const data: IBookmarkVideo[] = await getVideoBookmark(page + 1);
     if (data.length) {
-      setVideoBookmark(data);
+      setVideoBookmark(videoBookmark.concat(...data));
       console.log(data);
+      setLoading(false);
     }
   };
 

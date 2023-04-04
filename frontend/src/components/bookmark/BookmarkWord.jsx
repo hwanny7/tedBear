@@ -108,15 +108,16 @@ const BookmarkWord = () => {
     async function fetchData() {
       setLoading(true);
       setError(null);
-      await authApi
+      await authApi(page + 1)
         .get(`word/bookmark/list`)
         .then(response => {
-          console.log('then');
-          console.log(response.data);
           const listData = response.data.wordBookmarkList.map((item, index) => {
             return { ...item, bookmarked: true, id: index };
           });
-          setWordBookmarkList(listData);
+          if (listData.length) {
+            setWordBookmarkList(wordBookmarkList.concat(...listData));
+            setLoading(false);
+          }
         })
         .catch(error => {
           console.log(error.data);
@@ -124,7 +125,7 @@ const BookmarkWord = () => {
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     console.log('Loading');

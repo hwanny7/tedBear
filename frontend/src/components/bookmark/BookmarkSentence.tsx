@@ -115,7 +115,6 @@ interface Props {
 const BookmarkSentence = () => {
   const [shorts, setShorts] = useState(null);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
-  const navigate = useNavigate();
   const [sentenceBookmark, setSentenceBookmark] = useState<IBookmarkSentence[]>(
     [],
   );
@@ -125,19 +124,22 @@ const BookmarkSentence = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const data: IBookmarkSentence[] = await getSentenceBookmark(page);
+    const data: IBookmarkSentence[] = await getSentenceBookmark(page + 1);
     if (data.length) {
-      setSentenceBookmark(data);
+      // setSentenceBookmark(data);
+      setSentenceBookmark(sentenceBookmark.concat(...data));
       console.log(data);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
+    console.log('fetch');
     fetchData();
   }, [page]);
 
   useEffect(() => {
-    console.log('useEffect!');
+    console.log('inviewloading');
     if (inView && !loading) {
       setPage(prev => prev + 1);
     }

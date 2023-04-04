@@ -15,7 +15,7 @@ interface IBookmarkVideo {
 }
 export const getVideoBookmark = async (page: number) => {
   const params = {
-    size: 100,
+    size: 10,
     page,
   };
 
