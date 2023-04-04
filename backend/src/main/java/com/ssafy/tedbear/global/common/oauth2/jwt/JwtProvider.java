@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +30,7 @@ public class JwtProvider {
 
 	private final String SECRET_KEY;
 
-	  public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 60 * 30; // 30분
+	public static final Long ACCESS_TOKEN_VALIDATE_TIME = 1000L * 60 * 30; // 30분
 	public static final Long REFRESH_TOKEN_VALIDATE_TIME = 1000L * 60 * 60 * 24 * 7; // 7일
 	private final String AUTHORITIES_KEY = "role";
 
@@ -41,6 +43,11 @@ public class JwtProvider {
 		Date validity = new Date(now.getTime() + ACCESS_TOKEN_VALIDATE_TIME);
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
+		log.info("============================");
+		log.info("닉네임 받아오는지 확인: {}", authentication.getName());
+
+		Map<String, Object> payloads = new HashMap<>();
+		payloads.put("nickname", oAuth2User.getNickname());
 
 		String uid = oAuth2User.getUid();
 		String role = authentication.getAuthorities().stream()
@@ -50,6 +57,7 @@ public class JwtProvider {
 		return Jwts.builder()
 			.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
 			.setSubject(uid)
+			.setClaims(payloads)
 			.claim(AUTHORITIES_KEY, role)
 			.setIssuer("issuer")
 			.setIssuedAt(now)
