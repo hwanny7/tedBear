@@ -596,7 +596,6 @@ const LearningPage = () => {
   useEffect(() => {
     //뱃지 색상 설정
     if (videoDesc?.scoreInfo.score !== undefined) {
-      console.log('점수 : ', videoDesc?.scoreInfo.score);
       setScore(videoDesc?.scoreInfo.score);
     }
 

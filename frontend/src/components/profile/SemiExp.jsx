@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { authApi } from 'utils/api/customAxios';
 
 const SemiStyle = styled.div`
+  /* border: 1px solid red; */
+  width: 300px;
+
   .exp-paper {
     width: 35vw;
     height: 55vh;
@@ -12,10 +15,12 @@ const SemiStyle = styled.div`
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
   .exp-name {
+    /* border: 1px solid red; */
     text-align: center;
-    padding: 35px 0px 0px 0px;
-    font-size: 50px;
-    color: #6255a4;
+    /* padding: 40px 0px 0px 0px; */
+    font-size: 24px;
+    font-weight: 600;
+    color: ${props => props.theme.textColor2};
   }
   .exp-chart {
     display: flex;
@@ -25,7 +30,7 @@ const SemiStyle = styled.div`
 `;
 
 const options = {
-  colors: ['#8F84CE'],
+  colors: ['#ff825c'],
   chart: {
     type: 'radialBar',
     offsetY: -20,
@@ -38,7 +43,7 @@ const options = {
       startAngle: -90,
       endAngle: 90,
       track: {
-        background: '#e7e7e7',
+        background: '#e9e9e9',
         strokeWidth: '97%',
         margin: 5, // margin is in pixels
         dropShadow: {
@@ -52,13 +57,14 @@ const options = {
       },
       dataLabels: {
         name: {
-          show: true,
-          color: '#888',
+          show: false,
+          color: '#fe896e',
+          fontSize: '16px',
         },
         value: {
-          fontSize: '50px',
-          offsetY: -50,
-          color: '#6255A4',
+          fontSize: '48px',
+          offsetY: -10,
+          color: '#fe896e',
         },
       },
     },
@@ -112,18 +118,18 @@ export default function SemiExp() {
 
   return (
     <SemiStyle>
-      <div className="exp-paper">
-        <p className="exp-name">레벨.{level}</p>
-        <div className="exp-chart">
-          <Chart
-            options={options}
-            series={experience}
-            type="radialBar"
-            height={500}
-            width={500}
-          />
-        </div>
+      {/* <div className="exp-paper"> */}
+      <p className="exp-name">레벨 {level}</p>
+      <div className="exp-chart">
+        <Chart
+          options={options}
+          series={experience}
+          type="radialBar"
+          height={360}
+          width={360}
+        />
       </div>
+      {/* </div> */}
     </SemiStyle>
   );
 }

@@ -39,6 +39,7 @@ declare module 'styled-components' {
     speakBox: string;
     learningBoxColor2: string;
     bgColor2: string;
+    profileBoxColor: string;
 
     badgeRed: string;
     badgeOrange: string;

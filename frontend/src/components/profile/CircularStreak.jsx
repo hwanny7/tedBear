@@ -5,6 +5,20 @@ import styled from 'styled-components';
 import { authApi } from 'utils/api/customAxios';
 
 const StreakStyle = styled.div`
+  margin-top: 16px;
+  width: 100%;
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    cursor: pointer; // 커서 포인터 왜 안돼..
+  }
+  &::-webkit-scrollbar-thumb {
+    /* height: 15%; */
+    background-color: ${props => props.theme.mainLightColor};
+    border-radius: 10px;
+  }
+
   .streak-paper {
     width: 82vw;
     height: 38vh;
@@ -65,10 +79,10 @@ const CircularStreak = () => {
 
   return (
     <StreakStyle>
-      <div className="streak-paper">
-        <h2 className="streak-name">학습 기록</h2>
-        {/* 원 ~ 사각형  */}
-        {/* <div className="gauge">
+      {/* <div className="streak-paper"> */}
+      {/* <h2 className="streak-name">학습 기록</h2> */}
+      {/* 원 ~ 사각형  */}
+      {/* <div className="gauge">
           <h5>Custom the roundness!</h5>
           <input
             className="gauge-text"
@@ -81,45 +95,45 @@ const CircularStreak = () => {
             onChange={e => setRange(e.target.value)}
           />
         </div> */}
-        <HeatMap
-          // 히트맵 크기
-          width={1200}
-          height={180}
-          // 조각 크기
-          rectSize={20}
-          value={values}
-          legendCellSize={size} // legend 크기 ( show여부 )
-          startDate={new Date('2023/01/01')}
-          endDate={new Date('2023/12/31')}
-          rectProps={{
-            rx: range,
-          }}
-          panelColors={{
-            0: '#FFF6EC',
-            1: '#FFEDD9',
-            2: '#FFE4C6',
-            3: '#FFDBB3',
-            4: '#FED1A1',
-            5: '#FEC88E',
-            6: '#FEBF7B',
-            7: '#FEB668',
-            8: '#FEBF7B',
-            9: '#FEAD55',
-          }}
-          // // tooltip
-          rectRender={(props, data) => {
-            return (
-              <Tooltip
-                key={data.index}
-                placement="top"
-                content={`${data.count || 0} on ${data.date}`}
-              >
-                <rect {...props} />
-              </Tooltip>
-            );
-          }}
-        />
-      </div>
+      <HeatMap
+        // 히트맵 크기
+        width={1200}
+        height={180}
+        // 조각 크기
+        rectSize={20}
+        value={values}
+        legendCellSize={size} // legend 크기 ( show여부 )
+        startDate={new Date('2023/01/01')}
+        endDate={new Date('2023/12/31')}
+        rectProps={{
+          rx: range,
+        }}
+        panelColors={{
+          0: '#FFF6EC',
+          1: '#FFEDD9',
+          2: '#FFE4C6',
+          3: '#FFDBB3',
+          4: '#FED1A1',
+          5: '#FEC88E',
+          6: '#FEBF7B',
+          7: '#FEB668',
+          8: '#FEBF7B',
+          9: '#FEAD55',
+        }}
+        // // tooltip
+        rectRender={(props, data) => {
+          return (
+            <Tooltip
+              key={data.index}
+              placement="top"
+              content={`${data.count || 0} on ${data.date}`}
+            >
+              <rect {...props} />
+            </Tooltip>
+          );
+        }}
+      />
+      {/* </div> */}
     </StreakStyle>
   );
 };

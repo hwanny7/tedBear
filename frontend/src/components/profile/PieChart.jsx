@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { authApi } from 'utils/api/customAxios';
 
 const ChartStyle = styled.div`
+  /* width: 400px; */
+
   .chart-paper {
     width: 40vw;
     height: 55vh;
@@ -13,6 +15,10 @@ const ChartStyle = styled.div`
   }
   .chart-name {
     padding: 0px 0px 0px 20px;
+  }
+
+  .apexcharts-legend {
+    display: none;
   }
 `;
 
@@ -90,7 +96,7 @@ export default function PieChart() {
     },
     // 라벨 위치
     legend: {
-      position: 'right',
+      position: 'left',
     },
     // responsive custom
     responsive: [
@@ -111,15 +117,10 @@ export default function PieChart() {
 
   return (
     <ChartStyle>
-      <div className="chart-paper">
-        <h2 className="chart-name">학습 통계</h2>
-        <Chart
-          options={options}
-          series={series}
-          type="polarArea"
-          height={350}
-        />
-      </div>
+      {/* <div className="chart-paper"> */}
+      {/* <h2 className="chart-name">학습 통계</h2> */}
+      <Chart options={options} series={series} type="polarArea" height={350} />
+      {/* </div> */}
     </ChartStyle>
   );
 }
