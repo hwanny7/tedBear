@@ -101,37 +101,46 @@ const BookmarkWord = () => {
   const navigate = useNavigate();
   const [ref, inView] = useInView();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
   const [wordBookmarkList, setWordBookmarkList] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      setError(null);
-      await authApi(page + 1)
-        .get(`word/bookmark/list`)
-        .then(response => {
-          const listData = response.data.wordBookmarkList.map((item, index) => {
-            return { ...item, bookmarked: true, id: index };
-          });
-          if (listData.length) {
-            setWordBookmarkList(wordBookmarkList.concat(...listData));
-            setLoading(false);
-          }
-        })
-        .catch(error => {
-          console.log(error.data);
+  const fetchData = async () => {
+    setLoading(true);
+    await authApi
+      .get(`word/bookmark/list`, {
+        params: {
+          page: page,
+          size: 10,
+        },
+      })
+      .then(response => {
+        const listData = response.data.wordBookmarkList.map((item, index) => {
+          return { ...item, bookmarked: true, id: index };
         });
-      setLoading(false);
-    }
+        if (listData.length) {
+          setWordBookmarkList(wordBookmarkList.concat(...listData));
+          // setWordBookmarkList(prevList => [...prevList, ...listData]);
+          // setPage(prevPage => prevPage + 1);
+          console.log(listData);
+          setLoading(false);
+        }
+      })
+      .catch(error => {
+        console.log(error.data);
+      });
+  };
+
+  useEffect(() => {
+    console.log('fetch');
     fetchData();
   }, [page]);
 
   useEffect(() => {
-    console.log('Loading');
+    console.log('inviewloading');
+    console.log(inView, loading);
     if (inView && !loading) {
-      setPage(prev => prev + 1);
+      console.log('여기!');
+      setPage(prevPage => prevPage + 1);
     }
   }, [inView, loading]);
 
@@ -143,10 +152,13 @@ const BookmarkWord = () => {
     console.log('북마크를 켜고 끄고');
     const copy = [...wordBookmarkList];
     copy[idx].bookmarked = !copy[idx].bookmarked;
+    console.log(item.bookmarked);
     if (copy[idx].bookmarked) {
       postWordBookmark({ wordNumber: item.wordNo });
+      console.log(item.wordNo);
     } else {
       deleteWordBookmark({ wordNumber: item.wordNo });
+      console.log(item.wordNo);
     }
     console.log(item.wordNo, copy[idx].bookmarked);
     setWordBookmarkList(copy);
@@ -180,22 +192,23 @@ const BookmarkWord = () => {
             <div>
               {wordBookmarkList.length > 0 &&
                 wordBookmarkList.map((item, idx) => (
-                  <div className="row" key={item.id}>
+                  <div className="row" key={idx}>
                     <div className="bookmark-container">
                       <img
                         className="book-mark"
                         src={item.bookmarked ? BookmarkFull : BookmarkEmpty}
                         onClick={() => {
+                          console.log(item, idx);
                           handleMark(item, idx);
                         }}
                         style={{ zIndex: 9999 }}
                       ></img>
                     </div>
                     <div className="content-container">
-                      <p>{item.wordInfo.content}</p>
+                      <span>{item.wordInfo.content}</span>
                     </div>
                     <div className="mean-container">
-                      <p>{item.wordInfo.mean}</p>
+                      <span>{item.wordInfo.mean}</span>
                     </div>
                     <div className="sentence-container">
                       {' '}
