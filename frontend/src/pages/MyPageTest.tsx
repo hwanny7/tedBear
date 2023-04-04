@@ -30,24 +30,19 @@ const upDown = keyframes`
 const Profile = styled.div`
   /* border: 3px solid blue; */
   /* width: 100%; */
-  height: 100%;
-  display: flex;
 
+  display: flex;
   align-items: center;
   padding: 24px;
 
-  @media ${device.mobile} {
-  }
+  flex-direction: column;
 
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
-    flex-direction: column;
+  @media (min-width: 500px) {
   }
 
   @media (min-width: 900px) {
     flex-direction: row;
+    height: 100%;
   }
 `;
 
@@ -63,7 +58,7 @@ const SideBox = styled.div`
   );
 
   box-shadow: 6px 6px 20px #61616142;
-  margin-right: 24px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,24 +69,31 @@ const SideBox = styled.div`
     color: ${props => props.theme.textColor1};
     text-align: center;
     position: absolute;
+    z-index: 1;
   }
 
-  @media ${device.mobile} {
-  }
+  @media (min-width: 500px) {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 24px;
 
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
+    span {
+      font-size: 1rem;
+      top: 15%;
+      left: 20%;
+    }
   }
 
   @media (min-width: 900px) {
     width: 20%;
     height: 95%;
+    margin-right: 24px;
+    margin-bottom: 0px;
 
     span {
       font-size: 1rem;
       top: 10%;
+      left: auto;
     }
   }
 `;
@@ -101,39 +103,30 @@ const CloudImg = styled.img`
 
   animation: 1.4s infinite 0.3s ease-in-out alternate ${upDown};
 
-  @media ${device.mobile} {
-  }
-
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
+  @media (min-width: 500px) {
+    display: none;
   }
 
   @media (min-width: 900px) {
     width: 55%;
     top: 17rem;
     left: -10%;
+    display: block;
   }
 `;
 
 const CloudImg2 = styled(CloudImg)`
-  width: 30%;
-  top: 70%;
-  left: 80%;
-
   animation: 1.4s infinite 0.5s ease-in-out alternate ${upDown};
 
-  @media ${device.mobile} {
-  }
-
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
+  @media (min-width: 500px) {
+    display: none;
   }
 
   @media (min-width: 900px) {
+    display: block;
+    width: 30%;
+    top: 70%;
+    left: 80%;
   }
 `;
 
@@ -142,46 +135,24 @@ const ProfileTempImg = styled.img`
 
   animation: 1.4s infinite ease-in-out alternate ${upDown};
 
-  @media ${device.mobile} {
-  }
-
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
+  @media (min-width: 500px) {
+    /* display: none; */
+    width: 280px;
+    left: 50%;
+    bottom: -140px;
   }
 
   @media (min-width: 900px) {
     width: 25rem;
+    right: auto;
     bottom: -3rem;
-  }
-`;
-
-const ContentBox = styled.div`
-  background: white;
-  border-radius: 16px;
-  box-shadow: 6px 6px 20px #61616142;
-
-  @media ${device.mobile} {
-  }
-
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
-    width: 85%;
-    height: 80%;
-  }
-
-  @media (min-width: 900px) {
-    width: 70%;
-    height: 95%;
+    left: auto;
   }
 `;
 
 const EnterBtn = styled.button`
   position: absolute;
-
+  z-index: 1;
   color: white;
   background-color: ${props => props.theme.pointColor};
   cursor: pointer;
@@ -194,20 +165,36 @@ const EnterBtn = styled.button`
     /* box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); */
   }
 
-  @media ${device.mobile} {
-  }
-
-  @media ${device.tablet} {
-  }
-
-  @media ${device.laptop} {
+  @media (min-width: 500px) {
+    top: 50%;
+    left: 20%;
+    font-size: 1rem;
+    padding: 16px 24px;
+    border-radius: 50px;
   }
 
   @media (min-width: 900px) {
     top: 20%;
+    left: auto;
     font-size: 1rem;
     padding: 16px 24px;
     border-radius: 50px;
+  }
+`;
+
+const ContentBox = styled.div`
+  background: white;
+  border-radius: 16px;
+  box-shadow: 6px 6px 20px #61616142;
+
+  @media (min-width: 500px) {
+    width: 100%;
+    height: 800px;
+  }
+
+  @media (min-width: 900px) {
+    width: 70%;
+    height: 95%;
   }
 `;
 
