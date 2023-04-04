@@ -112,9 +112,11 @@ const LayoutPage = (props: Props) => {
       <OutletWrapper open={open} center={pathname}>
         <Outlet context={{ modalOpen, setModalOpen }} />
       </OutletWrapper>
-      {pathname !== '/cross-word' && (
-        <DictionaryImg src={Dictionary} onClick={onDicModalOpen} />
-      )}
+      {pathname !== '/cross-word' &&
+        pathname !== '/game/detail' &&
+        pathname !== '/game/complete' && (
+          <DictionaryImg src={Dictionary} onClick={onDicModalOpen} />
+        )}
 
       {dicModalOpen && <DictionaryModal setOpenModal={setDicModalOpen} />}
     </Wrapper>

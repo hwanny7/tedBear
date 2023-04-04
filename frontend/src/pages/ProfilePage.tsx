@@ -221,7 +221,7 @@ const ContentBox = styled.div`
     align-items: center;
     justify-content: center;
     /* border: 1px solid red; */
-    span:nth-child(1) {
+    .title {
       width: 100%;
       padding: 4px 16px;
       margin-bottom: 16px;
@@ -251,7 +251,7 @@ const ContentBox = styled.div`
       padding: 24px;
       width: 100%;
 
-      span:nth-child(1) {
+      .title {
         font-size: 16px;
         box-shadow: 4px 4px 4px #61616142;
       }
@@ -261,7 +261,7 @@ const ContentBox = styled.div`
       padding: 0px 24px 8px;
       width: 100%;
 
-      span:nth-child(1) {
+      .title {
         font-size: 16px;
         box-shadow: 4px 4px 4px #61616142;
       }
@@ -283,7 +283,7 @@ const ContentBox = styled.div`
       padding: 24px;
       width: 100%;
 
-      span:nth-child(1) {
+      .title {
         font-size: 16px;
         box-shadow: 4px 4px 4px #61616142;
       }
@@ -293,7 +293,7 @@ const ContentBox = styled.div`
       padding: 0px 24px 8px;
       width: 100%;
 
-      span:nth-child(1) {
+      .title {
         font-size: 16px;
         box-shadow: 4px 4px 4px #61616142;
       }
@@ -316,7 +316,7 @@ const ContentBox = styled.div`
       padding: 24px;
       width: 50%;
 
-      span:nth-child(1) {
+      .title {
         font-size: 24px;
         box-shadow: 4px 4px 4px #61616142;
       }
@@ -326,7 +326,7 @@ const ContentBox = styled.div`
       padding: 0px 24px 8px;
       width: 100%;
 
-      span:nth-child(1) {
+      .title {
         font-size: 24px;
         box-shadow: 4px 4px 4px #61616142;
       }
@@ -471,11 +471,11 @@ const ProfilePage = () => {
       <ContentBox>
         <div>
           <div className="expbox">
-            <span> 경험치 </span>
+            <span className="title"> 경험치 </span>
             <SemiExp></SemiExp>
           </div>
           <div className="expbox">
-            <span>
+            <span className="title">
               학습 통계
               <InfoImg src={Info} />
               <InfoCard>
@@ -489,7 +489,7 @@ const ProfilePage = () => {
         </div>
         <div>
           <div className="streakbox">
-            <span>스트릭</span>
+            <span className="title">스트릭</span>
             <CircularStreak></CircularStreak>
           </div>
         </div>

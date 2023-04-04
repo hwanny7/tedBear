@@ -10,6 +10,7 @@ import {
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import PagiNation from 'components/common/PageNation';
+import Swal from 'sweetalert2';
 
 interface Props {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,8 +22,7 @@ interface MenuProps {
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.mainColor};
-  width: 400px;
-  height: 450px;
+
   z-index: 6;
   position: fixed;
   bottom: 56px;
@@ -32,6 +32,17 @@ const Wrapper = styled.div`
 
   transform;
   transition: 1s;
+
+  
+  @media (max-width: 500px) {
+    width: 280px;
+  height: 450px;
+  }
+
+  @media (min-width: 500px) {
+    width: 400px;
+  height: 450px;
+  }
 `;
 
 const SearchBox = styled.div`
@@ -54,7 +65,8 @@ const ContentBox = styled.div`
 `;
 
 const SearchBar = styled.input`
-  background-color: ${props => props.theme.whiteColor};
+  background-color: ${props => props.theme.bgColor2};
+  color: ${props => props.theme.textColor1};
   width: 90%;
   height: 60%;
   border-radius: 50px;
@@ -72,7 +84,8 @@ const SearchBar = styled.input`
 `;
 
 const SearchResult = styled.div`
-  background-color: ${props => props.theme.whiteColor};
+  background-color: ${props => props.theme.bgColor2};
+
   width: 90%;
   height: 90%;
   border-radius: 24px;
@@ -97,6 +110,7 @@ const MeanBox = styled.div`
   height: 85%;
   padding: 16px;
   overflow-y: scroll;
+  color: ${props => props.theme.textColor1};
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -123,6 +137,7 @@ const SentenceBox = styled.div`
   width: 100%;
   height: 75%;
   padding: 16px;
+  display: flex;
 
   overflow-y: scroll;
 
@@ -136,8 +151,24 @@ const SentenceBox = styled.div`
     border-radius: 10px;
   }
 
-  p {
+  .number-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 16px;
+    background-color: ${props => props.theme.mainColor};
+    color: ${props => props.theme.whiteColor};
+    padding: 4px;
+  }
+
+  .sentence-box {
+    padding-left: 8px;
+    width: 90%;
+    margin-bottom: 16px;
+    color: ${props => props.theme.textColor1};
   }
 `;
 
@@ -215,13 +246,24 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
 
   const fetchData = async () => {
     const data = await getSearchWord(keyword, page, size);
-    console.log(data);
     setWordDesc(data);
   };
 
   const onSearchWord = (el: any) => {
+    if (el.keyCode == 13 && keyword == '') {
+      Swal.fire({
+        icon: 'error',
+        text: '검색어를 입력해주세요.',
+        confirmButtonText: '확인',
+      });
+      return;
+    }
     if (el._reactName != 'onKeyUp' && keyword == '') {
-      alert('검색어를 입력해주세요');
+      Swal.fire({
+        icon: 'error',
+        text: '검색어를 입력해주세요.',
+        confirmButtonText: '확인',
+      });
       return;
     }
 
@@ -306,13 +348,16 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
           placeholder="영어 단어를 입력하세요."
           onChange={el => onSetKeyword(el)}
           onKeyUp={onSearchWord}
+          autoFocus
         />
         <SearchImg src={Search} onClick={onSearchWord} />
       </SearchBox>
 
       <ContentBox>
         <SearchResult>
-          {wordDesc?.wordInfo !== null ? (
+          {wordDesc?.wordInfo == null ? (
+            <NoResult> 찾으시는 결과가 없습니다.</NoResult>
+          ) : (
             <>
               <Menu menu={menu}>
                 <div onClick={() => setMenu(1)}>의미</div>
@@ -330,7 +375,14 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
                 <>
                   <SentenceBox>
                     {wordDesc?.sentenceContentList?.map((el, index) => {
-                      return <p key={index}> - {el}</p>;
+                      return (
+                        <>
+                          <div className="number-box">{page}</div>
+                          <div key={index} className="sentence-box">
+                            {el}
+                          </div>
+                        </>
+                      );
                     })}
                   </SentenceBox>
                   <PagiNation
@@ -355,8 +407,6 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
                 </MeanBox>
               )}
             </>
-          ) : (
-            <NoResult> 찾으시는 결과가 없습니다.</NoResult>
           )}
         </SearchResult>
       </ContentBox>
