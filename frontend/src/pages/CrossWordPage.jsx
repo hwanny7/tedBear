@@ -5,6 +5,7 @@ import { getCrossWord } from 'utils/api/gameApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
+import Ellipse from 'assets/img/Ellipse.svg';
 import { device } from './../utils/mediaQuery';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -27,6 +28,12 @@ const Replay = styled.div`
     background-color: #fffacb;
     transition: all 0.3s;
     transform: translateY(3px);
+`;
+
+const Description = styled.div`
+  margin-left: 6%;
+  margin-top: 1%;
+  color: ${props => props.theme.textColor1};
 `;
 
 const Stop = styled.div`
@@ -93,7 +100,7 @@ const Wrapper = styled.div`
     display: grid;
     align-items: center;
     justify-items: center;
-    background-color: white;
+    background-color: ${props => props.theme.learningBoxColor2};
     border: 1px solid #444;
     text-decoration: none;
     font-size: calc(24px + 0.5vmin);
@@ -108,9 +115,6 @@ const Wrapper = styled.div`
       scale: 1.05;
       transition: 0.4s;
       z-index: 10;
-      /* background-color: ${props =>
-        props.backgroundColor ? '#b4adde' : '#e6e4f4'}; */
-    }
   }
 
   ins[data-clue]:before {
@@ -234,6 +238,18 @@ const ClueBox = styled.div`
       transition: 0.4s;
     }
   }
+`;
+
+const NumberBox = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 36%;
+  left: -5%;
+  width: 5%;
+  color: white;
+  background: ${props => props.theme.mainColor};
 `;
 
 const CrossWordPage = () => {
@@ -704,7 +720,15 @@ const CrossWordPage = () => {
     <Wrapper size={size}>
       <div>
         {finish ? undefined : (
-          <Box sx={{ m: 1, width: '20%', marginLeft: '6%' }} size="small">
+          <Box
+            sx={{
+              m: 1,
+              width: '20%',
+              marginLeft: '6%',
+              backgroundColor: 'white',
+            }}
+            size="small"
+          >
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Mode</InputLabel>
               <Select
@@ -757,10 +781,10 @@ const CrossWordPage = () => {
           })}
         </div>
         {!finish && (
-          <div style={{ marginLeft: '6%', marginTop: '1%' }}>
+          <Description>
             Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용
             가능합니다!
-          </div>
+          </Description>
         )}
       </div>
       {finish ? (
@@ -807,6 +831,7 @@ const CrossWordPage = () => {
                       handleShorts(clue);
                     }}
                   />
+                  <NumberBox>{idx + 1}</NumberBox>
                 </ClueBox>
               );
             })}
