@@ -16,11 +16,6 @@ import ShortsModal from 'components/short/ShortsModal';
 import { device } from 'utils/mediaQuery';
 import ShortsPageNation from 'components/short/ShortsPageNation';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import buttonLeft from 'assets/img/buttonLeft.svg';
-import buttonRight from 'assets/img/buttonRight.svg';
 import { useSelector } from 'react-redux';
 import Badge from 'components/common/Badge';
 
@@ -152,29 +147,6 @@ interface Props {
 }
 
 const SearchPage = () => {
-  // const SlickArrowLeft = ({ ...props }) => (
-  //   <img src={buttonLeft} alt="prevArrow" {...props} />
-  // );
-
-  // const SlickArrowRight = () => (
-  //   <img
-  //     src={buttonRight}
-  //     alt="nextArrow"
-  //     onClick={() => {
-  //       requestShorts(1);
-  //     }}
-  //   />
-  // );
-
-  // const settings = {
-  //   infinite: false,
-  //   speed: 500,
-  //   slidesToShow: 4,
-  //   slidesToScroll: 4,
-  //   prevArrow: <SlickArrowLeft />,
-  //   nextArrow: <SlickArrowRight />,
-  // };
-
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<string>('+ 8개 추가');
@@ -333,24 +305,6 @@ const SearchPage = () => {
           searchWord={searchWord}
         ></ShortsPageNation>
       </div>
-      {/* <Slider {...settings}>
-        {shortsData.map((item, idx) => {
-          return (
-            <img
-              key={idx}
-              className="main-img"
-              src={`https://i.ytimg.com/vi/${item.watchId}/hq${
-                (idx % 3) + 1
-              }.jpg`}
-              alt=""
-              // onClick={() => {
-              //   setOpenModal(true);
-              //   setShortsId(Thumnail);
-              // }}
-            ></img>
-          );
-        })}
-      </Slider> */}
     </Wrapper>
   );
 };

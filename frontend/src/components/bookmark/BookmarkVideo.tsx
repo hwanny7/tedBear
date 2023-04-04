@@ -22,6 +22,10 @@ interface IBookmarkVideo {
   bookMarked: boolean;
 }
 
+const StyledContent = styled(CardContent)`
+  background-color: ${props => props.theme.learningBoxColor2};
+`;
+
 const BookIn = styled.div`
   height: 100%;
   width: 100%;
@@ -207,7 +211,7 @@ const BookmarkVideo = () => {
                       }}
                       onClick={() => handleClick(Thumnail.watchId)}
                     />
-                    <CardContent>
+                    <StyledContent>
                       <Typography
                         gutterBottom
                         variant="h5"
@@ -217,7 +221,7 @@ const BookmarkVideo = () => {
                       >
                         {Thumnail.title}
                       </Typography>
-                    </CardContent>
+                    </StyledContent>
                   </Card>
                 </Grid>
               );

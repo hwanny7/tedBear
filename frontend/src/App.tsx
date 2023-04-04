@@ -16,9 +16,6 @@ import GlobalStyle from 'GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'theme';
 import { useState } from 'react';
-
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import StillLearningPage from 'pages/StillLearningPage';
 import SearchPage from 'pages/SearchPage';
 import CrossWordPage from './pages/CrossWordPage';
