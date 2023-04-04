@@ -5,13 +5,27 @@ import { getCrossWord } from 'utils/api/gameApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import shortsPlay from 'assets/img/shortsPlay.svg';
-import Ellipse from 'assets/img/Ellipse.svg';
 import { device } from './../utils/mediaQuery';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+
+const StyledForm = styled(FormControl)`
+  label {
+    color: ${props => props.theme.textColor1};
+  }
+  svg {
+    fill: ${props => props.theme.textColor1};
+  }
+  fieldset {
+    border-color: ${props => props.theme.textColor1};
+  }
+  #demo-simple-select {
+    color: ${props => props.theme.textColor1};
+  }
+`;
 
 const Replay = styled.div`
   width: 100%;
@@ -725,11 +739,10 @@ const CrossWordPage = () => {
               m: 1,
               width: '20%',
               marginLeft: '6%',
-              backgroundColor: 'white',
             }}
             size="small"
           >
-            <FormControl fullWidth>
+            <StyledForm fullWidth>
               <InputLabel id="demo-simple-select-label">Mode</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -742,7 +755,7 @@ const CrossWordPage = () => {
                 <MenuItem value={'Normal'}>Normal</MenuItem>
                 <MenuItem value={'Hard'}>Hard</MenuItem>
               </Select>
-            </FormControl>
+            </StyledForm>
           </Box>
         )}
         <div className="main">

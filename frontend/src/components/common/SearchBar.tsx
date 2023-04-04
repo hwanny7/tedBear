@@ -16,6 +16,7 @@ const SearchBar = ({ fetchData }: Props) => {
   const handleSearch = (e: any) => {
     e.preventDefault();
     const content = e.target[1].value;
+    e.target[1].value = '';
     if (fetchData) {
       fetchData(content);
     } else {

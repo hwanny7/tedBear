@@ -254,57 +254,67 @@ const SearchPage = () => {
       <StickySearchBar>
         <SearchBar fetchData={fetchData}></SearchBar>
       </StickySearchBar>
-
-      <VideoTitle>관련 영상</VideoTitle>
-      {videos.map((video, idx) => {
-        return (
-          <VideoWrapper key={idx}>
-            <img
-              src={video.thumbnailUrl}
-              alt=""
-              className="thumbnail"
-              onClick={() => {
-                handleClick(video.watchId);
-              }}
-            />
-            <ViedoLevelImg>
-              <Badge score={video.score} />
-            </ViedoLevelImg>
-            {/* <ViedoLevelImg src={VideoLevel} score={video.score} /> */}
-            {isLogin && (
-              <img
-                src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
-                className="book-mark"
-                onClick={() => {
-                  handleVideoBm(video, idx);
-                }}
-              ></img>
-            )}
-            <div
-              className="content"
-              onClick={() => {
-                handleClick(video.watchId);
-              }}
-            >
-              {video.title}
-            </div>
-          </VideoWrapper>
-        );
-      })}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
-      </div>
-      <VideoTitle>관련 문장</VideoTitle>
-      <div className="short-wrapper">
-        <ShortsPageNation
-          data={props}
-          upStreamPage={next}
-          requestShorts={requestShorts}
-          setOpenModal={setModalOpen}
-          setShortsId={setShorts}
-          searchWord={searchWord}
-        ></ShortsPageNation>
-      </div>
+      {videos.length !== 0 && (
+        <>
+          <VideoTitle>관련 영상</VideoTitle>
+          {videos.map((video, idx) => {
+            return (
+              <VideoWrapper key={idx}>
+                <img
+                  src={video.thumbnailUrl}
+                  alt=""
+                  className="thumbnail"
+                  onClick={() => {
+                    handleClick(video.watchId);
+                  }}
+                />
+                <ViedoLevelImg>
+                  <Badge score={video.score} />
+                </ViedoLevelImg>
+                {/* <ViedoLevelImg src={VideoLevel} score={video.score} /> */}
+                {isLogin && (
+                  <img
+                    src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
+                    className="book-mark"
+                    onClick={() => {
+                      handleVideoBm(video, idx);
+                    }}
+                  ></img>
+                )}
+                <div
+                  className="content"
+                  onClick={() => {
+                    handleClick(video.watchId);
+                  }}
+                >
+                  {video.title}
+                </div>
+              </VideoWrapper>
+            );
+          })}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <LoadingTitle onClick={requestVideo}>{loading}</LoadingTitle>
+          </div>
+        </>
+      )}
+      {props.length !== 0 && (
+        <>
+          <VideoTitle>관련 문장</VideoTitle>
+          <div className="short-wrapper">
+            <ShortsPageNation
+              data={props}
+              upStreamPage={next}
+              requestShorts={requestShorts}
+              setOpenModal={setModalOpen}
+              setShortsId={setShorts}
+              searchWord={searchWord}
+            ></ShortsPageNation>
+          </div>
+        </>
+      )}
+      {props.length == 0 && videos.length == 0 && (
+        <VideoTitle>관련 영상이 없습니다.</VideoTitle>
+      )}
     </Wrapper>
   );
 };
