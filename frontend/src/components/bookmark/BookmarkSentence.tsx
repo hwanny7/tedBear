@@ -149,7 +149,7 @@ const BookmarkSentence = () => {
   };
 
   const handleBookmark = () => {
-    // navigate('/home');
+    navigate('/home');
   };
 
   const handleMark = () => {
