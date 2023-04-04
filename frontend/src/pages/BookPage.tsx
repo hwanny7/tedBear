@@ -102,7 +102,7 @@ const BookPage = () => {
         <div className="paper">
           <p>{buttonStatus[0] ? <BookmarkWord></BookmarkWord> : ''}</p>
           <p>{buttonStatus[1] ? <BookmarkSentence></BookmarkSentence> : ''}</p>
-          <p>{buttonStatus[2] ? <BookmarkVideo></BookmarkVideo> : ''}</p>
+          {buttonStatus[2] ? <BookmarkVideo></BookmarkVideo> : ''}
         </div>
       </div>
     </Bookmark>
