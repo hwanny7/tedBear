@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -43,11 +41,6 @@ public class JwtProvider {
 		Date validity = new Date(now.getTime() + ACCESS_TOKEN_VALIDATE_TIME);
 
 		CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
-		log.info("============================");
-		log.info("닉네임 받아오는지 확인: {}", authentication.getName());
-
-		Map<String, Object> payloads = new HashMap<>();
-		payloads.put("nickname", oAuth2User.getNickname());
 
 		String uid = oAuth2User.getUid();
 		String role = authentication.getAuthorities().stream()
@@ -57,7 +50,6 @@ public class JwtProvider {
 		return Jwts.builder()
 			.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
 			.setSubject(uid)
-			.setClaims(payloads)
 			.claim(AUTHORITIES_KEY, role)
 			.setIssuer("issuer")
 			.setIssuedAt(now)
@@ -79,7 +71,6 @@ public class JwtProvider {
 
 	public Authentication getAuthentication(String accessToken) {
 		Claims claims = parseClaims(accessToken);
-
 		Collection<? extends GrantedAuthority> authorities =
 			Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
