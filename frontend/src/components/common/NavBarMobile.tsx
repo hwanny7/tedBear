@@ -100,7 +100,7 @@ const NavBarMobile = () => {
   };
 
   const onSignIn = () => {
-    window.location.href = 'http://j8b103.p.ssafy.io:8080/oauth/kakao';
+    window.location.href = 'https://ted-bear.com/api/oauth/kakao';
   };
   return (
     <Nav>

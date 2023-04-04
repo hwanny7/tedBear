@@ -25,6 +25,7 @@ import CrossWordPage from './pages/CrossWordPage';
 import CrossWordCoverPage from './pages/CrossWordCoverPage';
 import GameSelectPage from 'pages/GameSelectPage';
 import RouterChangeTracker from 'RouteChangeTracker';
+import ErrorPage from 'pages/ErrorPage';
 
 function App() {
   const [toggle, setToggle] = useState<boolean>(false);
@@ -54,6 +55,7 @@ function App() {
           <Route path="/seung" element={<SeungPage />} />
           <Route path="/yuha" element={<YuhaPage />} />
           <Route path="/ju" element={<JuPage />} />
+          <Route path="/*" element={<ErrorPage />} />
           <Route
             path="/"
             // element={<LandingPage toggle={toggle} setToggle={setToggle} />}

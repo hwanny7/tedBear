@@ -27,6 +27,7 @@ const Wrapper = styled.div`
 const VideoTitle = styled.span`
   display: block;
   margin-top: 3vh;
+  color: ${props => props.theme.textColor1};
 
   @media ${device.mobile} {
     font-size: 10px;
@@ -48,6 +49,8 @@ const VideoTitle = styled.span`
 const ShortsTitle = styled.span`
   display: block;
   margin-top: 3vh;
+  color: ${props => props.theme.textColor1};
+
   @media ${device.mobile} {
     font-size: 10px;
   }

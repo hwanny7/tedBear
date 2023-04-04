@@ -2283,9 +2283,6 @@ const LandingPageTest = (props: Props) => {
 
   return (
     <Wrapper>
-      {/* <FullPage duration={100}> */}
-      {/* {modalOpen && <LoginModal setOpenModal={setModalOpen} />} */}
-      {/* <Slide> */}
       <Visual toggle={props.toggle}>
         <CircleDiv2></CircleDiv2>
         <CircleDiv></CircleDiv>
@@ -2326,8 +2323,7 @@ const LandingPageTest = (props: Props) => {
           </ImgBox>
         </VisualContent>
       </Visual>
-      {/* </Slide> */}
-      {/* <Slide> */}
+
       <Content>
         <Box1 ref={firstBox} inView2={inView2} toggle={props.toggle}>
           <BackBox toggle={props.toggle}></BackBox>
@@ -2390,81 +2386,7 @@ const LandingPageTest = (props: Props) => {
             </DescListEl4>
           </DescList>
         </Box1>
-        {/* </Slide> */}
-        {/* <Slide> */}
-        {/* <Box3 toggle={props.toggle}>
-          <InView onChange={setInView3}></InView>
-          <ContentLeft>
-            <TextTitle2 inView3={inView3}>DETAIL</TextTitle2>
-            <TextSubTitle2 inView3={inView3}>
-              <p>
-                TEDBEAR는 다음과 같은
-                <br /> 서비스를 제공합니다.
-              </p>
-            </TextSubTitle2>
-            <ImgBox2>
-              <LandingCircleImg src={LandingCircle} inView3={inView3} />
-              <LandingMonitorImg src={LandingMonitor} inView3={inView3} />
-              <LandingBall1Img src={LandingBall1} inView3={inView3} />
-              <LandingBall2Img src={LandingBall2} inView3={inView3} />
-              <LandingBall3Img src={LandingBall3} inView3={inView3} />
-            </ImgBox2>
-          </ContentLeft>
-          <ContentRight inView3={inView3}>
-            <DetatilWrapper>
-              <DetailEl openBox={openBox} boxIndex={boxIndex}>
-                <div>1</div>
-                <div>난이도 기반 TED 영상 추천</div>
-                <div>
-                  <div onClick={() => onOpenBox(1)}>
-                    <LandingArrowImg src={LandingArrow} />
-                  </div>
-                </div>
-              </DetailEl>
-              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-                시연 영상2
-              </DetailElDesc>
-              <DetailEl openBox={openBox} boxIndex={boxIndex}>
-                <div>2</div>
-                <div>영어 스피킹 연습</div>
-                <div>
-                  <div onClick={() => onOpenBox(3)}>
-                    <LandingArrowImg src={LandingArrow} />
-                  </div>
-                </div>
-              </DetailEl>
-              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-                시연 영상4
-              </DetailElDesc>
-              <DetailEl openBox={openBox} boxIndex={boxIndex}>
-                <div>3</div>
-                <div>재밌는 게임으로 단어 실력 테스트</div>
-                <div>
-                  <div onClick={() => onOpenBox(5)}>
-                    <LandingArrowImg src={LandingArrow} />
-                  </div>
-                </div>
-              </DetailEl>
-              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-                시연 영상6
-              </DetailElDesc>
-              <DetailEl openBox={openBox} boxIndex={boxIndex}>
-                <div>4</div>
-                <div>사용자의 학습 상태 체크</div>
-                <div>
-                  <div onClick={() => onOpenBox(7)}>
-                    <LandingArrowImg src={LandingArrow} />
-                  </div>
-                </div>
-              </DetailEl>
-              <DetailElDesc openBox={openBox} boxIndex={boxIndex}>
-                시연 영상7
-              </DetailElDesc>
-            </DetatilWrapper>
-          </ContentRight>
-        </Box3> */}
-        {/* </Slide> */}
-        {/* <Slide> */}
+
         <Box3>
           <ButtonBox inView3={inView3} toggle={props.toggle}>
             <ButtonEl selectedEl={selectedEl} onClick={() => menuClick(1)}>
@@ -2565,8 +2487,6 @@ const LandingPageTest = (props: Props) => {
             <div></div>
           </div>
         </Box2>
-        {/* </Slide> */}
-        {/* </FullPage> */}
       </Content>
 
       {showButton && (
