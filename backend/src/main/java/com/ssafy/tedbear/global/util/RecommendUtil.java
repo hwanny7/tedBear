@@ -18,10 +18,10 @@ public class RecommendUtil {
 		int delta;
 		switch (difficulty) {
 			case "easy":
-				delta = -15000;
+				delta = -35000;
 				break;
 			case "hard":
-				delta = 15000;
+				delta = 35000;
 				break;
 			case "normal":
 			default:

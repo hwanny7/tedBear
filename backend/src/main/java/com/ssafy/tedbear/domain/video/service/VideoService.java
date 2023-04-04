@@ -25,7 +25,7 @@ public interface VideoService {
 
 	void saveCompleteRecord(String memberUid, WatchingVideoInfoDto request);
 
-	VideoInfoListDto getVideoBookmarkList(String memberUid);
+	VideoInfoListDto getVideoBookmarkList(String memberUid,Pageable pageable);
 
 	void saveVideoBookmark(String memberUid, long videoNo);
 

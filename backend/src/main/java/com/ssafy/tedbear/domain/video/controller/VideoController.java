@@ -86,8 +86,8 @@ public class VideoController {
 	}
 
 	@GetMapping("/bookmark/list")
-	public ResponseEntity<VideoInfoListDto> getVideoBookmarkList(@AuthenticationPrincipal CustomOAuth2User user) {
-		return ResponseEntity.ok(videoService.getVideoBookmarkList(user.getName()));
+	public ResponseEntity<VideoInfoListDto> getVideoBookmarkList(@AuthenticationPrincipal CustomOAuth2User user,Pageable pageable) {
+		return ResponseEntity.ok(videoService.getVideoBookmarkList(user.getName(),pageable));
 	}
 
 	@PostMapping("/bookmark")

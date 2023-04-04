@@ -181,9 +181,9 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public VideoInfoListDto getVideoBookmarkList(String memberUid) {
+	public VideoInfoListDto getVideoBookmarkList(String memberUid, Pageable pageable) {
 		Member member = findMemberService.findMemberOnlyMember(memberUid);
-		List<VideoBookmark> videoBookmarkList = videoBookmarkRepository.findVideoBookmarksByMember(member);
+		Slice<VideoBookmark> videoBookmarkList = videoBookmarkRepository.findVideoBookmarksByMember(member, pageable);
 		List<Video> videoList = videoBookmarkList.stream().map(x -> x.getVideo()).collect(Collectors.toList());
 		updateBookmarkVideo(member, videoList);
 		return new VideoInfoListDto(videoList);
