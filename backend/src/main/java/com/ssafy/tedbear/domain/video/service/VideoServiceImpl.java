@@ -148,14 +148,18 @@ public class VideoServiceImpl implements VideoService {
 			WatchingVideo existWatchingVideo = optionalWatchingVideo.get();
 			existWatchingVideo.setUpdatedDateNow();
 			existWatchingVideo.setVideoProgressTime(request.getVideoProgressTime());
+			log.info("이미 존재하는 영상시청 데이터에 추가 : {}",existWatchingVideo);
 		} else {
-			watchingVideoRepository.save(WatchingVideo.builder()
+			WatchingVideo noExistWatchingVideo = WatchingVideo.builder()
+				.videoStatus(false)
+				.videoProgressTime(request.getVideoProgressTime())
+				.updatedDate(LocalDateTime.now())
 				.video(video)
 				.member(member)
-				.updatedDate(LocalDateTime.now())
-				.videoProgressTime(request.getVideoProgressTime())
-				.videoStatus(false)
-				.build());
+				.build();
+			log.info("존재하지 않는 영상시청 데이터 추가 : {}",noExistWatchingVideo);
+			watchingVideoRepository.save(noExistWatchingVideo);
+			log.info("존재하지 않는 영상시청 데이터 추가 : {}",noExistWatchingVideo);
 		}
 
 	}

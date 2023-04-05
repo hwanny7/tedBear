@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -74,6 +73,8 @@ public class WatchingVideo {
 			", videoProgressTime=" + videoProgressTime +
 			", videoStatus=" + videoStatus +
 			", updatedDate=" + updatedDate +
+			", video=" + video.getTitle() +
+			", member=" + member.getNickname() +
 			'}';
 	}
 }
