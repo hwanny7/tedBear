@@ -147,6 +147,7 @@ const GameDetailPage = () => {
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
           // console.log(response.data);
+          console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -290,6 +291,55 @@ const GameDetailPage = () => {
   const handleHint = () => {
     setShorts(hintList);
     setModalOpen(true);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const userAnswer = e.target[0].value.toLowerCase();
+    if (userAnswer === answer) {
+      e.target[0].value = '';
+      fetchPost(); // 정답 시에, wordNo와 누적 시도 횟수 전송
+      setTryCount(1); // 정답이면, 포스트 보낸 후에 이제 tryCount를 1로 초기화해주기 ( 그 다음 문제에 대한 거 저장해야 하니까 not 누적)
+      setCorrectAnswerCount(correctAnswerCount + 1);
+      // console.log(`맞은개수${correctAnswerCount}`);
+      setInput(''); // Clear the input box
+      // alert('Correct');
+      setCorrect(true);
+      setTimeout(() => {
+        setCorrect(false);
+      }, 300);
+
+      if (correctAnswerCount === 1) {
+        // console.log('한개맞힘');
+        handleNext();
+        // 첫번째 조각 띄우기
+        setSelectedAlbum(2);
+      } else if (correctAnswerCount === 2) {
+        // console.log('두개맞힘');
+        handleNext();
+        // 두번째 조각도 띄우기
+        setSelectedAlbum(3);
+      } else if (correctAnswerCount === 3) {
+        // console.log('세개맞힘');
+        handleNext();
+        setSelectedAlbum(4);
+      } else if (correctAnswerCount === 4) {
+        // console.log('네개맞힘');
+        setSelectedAlbum(5);
+        // 전부 다 맞힐 때에 미션 완료! handleNext와 무관!
+        // navigate('/game/complete');
+      }
+    } else {
+      // alert('Incorrect');
+      setTimeout(() => {
+        setIncorrect(true);
+        setTimeout(() => {
+          setIncorrect(false);
+        }, 300);
+      }, 100);
+      setTryCount(prevCount => prevCount + 1); // 시행착오 횟수 올리기
+      setInput(''); // Clear the input box
+    }
   };
 
   return (
@@ -629,26 +679,28 @@ const GameDetailPage = () => {
             }}
           >
             <div>
-              <input
-                className="input"
-                type="text"
-                placeholder="Enter your Answer"
-                onChange={handleInput}
-              ></input>
-              <Button
+              <form onSubmit={handleSubmit}>
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Enter your Answer"
+                  onChange={handleInput}
+                ></input>
+              </form>
+              {/* <Button
                 className="check-button"
                 onClick={handleCheck}
                 style={{
                   position: 'absolute',
-                  top: '25%' /* vertically center the button */,
-                  right: '-20%' /* position the button to the right */,
+                  top: '25%' ,
+                  right: '-20%' ,
                   transform:
-                    'translateY(-50%)' /* adjust vertical position after centering */,
+                    'translateY(-50%)',
                 }}
                 sx={{ width: '3vw', height: '6vh', padding: 1, margin: 2 }}
               >
                 <p className="check-button-text">제출</p>
-              </Button>
+              </Button> */}
             </div>
           </Paper>
           <Button
