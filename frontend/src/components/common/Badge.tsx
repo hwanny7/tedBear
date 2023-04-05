@@ -64,27 +64,27 @@ const Badge = (props: Props) => {
 
   useEffect(() => {
     if (props.score == 0) {
-      setBadgeTxt('A');
+      setBadgeTxt('1');
     } else if (props.score == 1) {
-      setBadgeTxt('B');
+      setBadgeTxt('2');
     } else if (props.score == 2) {
-      setBadgeTxt('C');
+      setBadgeTxt('3');
     } else if (props.score == 3) {
-      setBadgeTxt('D');
+      setBadgeTxt('4');
     } else if (props.score == 4) {
-      setBadgeTxt('E');
+      setBadgeTxt('5');
     } else if (props.score == 5) {
-      setBadgeTxt('F');
+      setBadgeTxt('6');
     } else if (props.score == 6) {
-      setBadgeTxt('G');
+      setBadgeTxt('7');
     } else if (props.score == 7) {
-      setBadgeTxt('H');
+      setBadgeTxt('8');
     } else if (props.score == 8) {
-      setBadgeTxt('I');
+      setBadgeTxt('9');
     } else if (props.score == 9) {
-      setBadgeTxt('J');
+      setBadgeTxt('10');
     } else if (props.score == 10) {
-      setBadgeTxt('');
+      setBadgeTxt('X');
     }
   }, [props.score]);
 

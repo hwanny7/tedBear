@@ -57,31 +57,37 @@ interface SpeakerBoxProps {
 const Wrapper = styled.div`
   /* border: 2px solid red; */
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 56px 120px;
-  position: relative;
+  height: 100%;
+
+  @media (max-width: 600px) {
+    padding: 32px 24px;
+  }
+  @media (min-width: 600px) {
+    padding: 32px 80px;
+  }
+
+  @media (min-width: 900px) {
+    padding: 32px 104px;
+  }
 `;
 
 const ScoreChart = styled.div`
+  transition: 0.5s;
   background-color: #ffffffed;
   border-radius: 16px;
   box-shadow: 6px 6px 8px #00000042;
-  width: 500px;
   padding: 50px 24px;
-  height: 500px;
   position: absolute;
   top: 50%;
   left: 15px;
-  z-index: 5;
+  z-index: -1;
   opacity: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: -1;
-
   .apexcharts6wyl5juj {
     border: 1px solid red;
   }
@@ -90,9 +96,9 @@ const ScoreChart = styled.div`
     display: none;
   }
 
-  > div:nth-last-child(3) {
+  .video-level {
     width: 100%;
-    margin-top: 30px;
+    margin-top: 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -105,61 +111,63 @@ const ScoreChart = styled.div`
       font-weight: bold;
     }
   }
-  > div:nth-last-child(2) {
-    width: 100%;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 
-    span {
-      padding-left: 8px;
-      padding-right: 16px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-  }
-  > div:nth-last-child(1) {
+  .desc {
     width: 100%;
     margin-top: 20px;
-    /* text-align: center; */
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 8px;
-    /* word-break: keep-all; */
+    word-break: keep-all;
     font-size: 14px;
     line-height: 24px;
     color: ${props => props.theme.blackColorLight2};
   }
+
+  @media (max-width: 375px) {
+    width: 260px;
+    height: 600px;
+  }
+  @media (min-width: 375px) {
+    width: 300px;
+    height: 600px;
+  }
+  @media (min-width: 450px) {
+    width: 380px;
+    height: 600px;
+  }
+  @media (min-width: 600px) {
+    width: 500px;
+    height: 500px;
+  }
 `;
 
 const TitleBox = styled.div`
-  /* border: 1px solid blue; */
-
   height: 8%;
   display: flex;
   flex-direction: row;
   align-items: center;
   position: relative;
+  margin-bottom: 16px;
 
   p {
-    /* position: absolute; */
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
     margin-left: 16px;
     color: ${props => props.theme.textColor1};
-    /* border: 1px solid red; */
     height: 100%;
     display: flex;
     align-items: center;
-    /* left: 24px; */
   }
 
   > div:hover ~ ${ScoreChart} {
     opacity: 1;
     z-index: 4;
+  }
+
+  @media (max-width: 900px) {
   }
 `;
 
@@ -206,18 +214,26 @@ const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
   /* height: 92%; */
-  height: 100%;
+  /* height: 100v; */
 
-  /* @media (min-width: 900px) {
+  @media (max-width: 900px) {
     flex-direction: column;
-  } */
+  }
 `;
 
 const ContentLeft = styled.div`
   /* border: 1px solid green; */
-  width: 60%;
-  height: 100%;
-  margin-right: 16px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  @media (min-width: 900px) {
+    width: 60%;
+    height: 100%;
+    margin-right: 16px;
+  }
 `;
 
 const BookmarkImg = styled.img`
@@ -230,10 +246,18 @@ const BookmarkImg = styled.img`
 
 const YoutubeBox = styled.div`
   /* background-color: red; */
-  height: 55%;
-  margin-bottom: 8px;
+
+  margin-bottom: 2vh;
   position: relative;
   z-index: 3;
+
+  @media (max-width: 900px) {
+    height: 300px;
+  }
+
+  @media (min-width: 900px) {
+    height: 40vh;
+  }
 
   ${BookmarkImg} {
     position: absolute;
@@ -256,10 +280,17 @@ const YoutubeBox = styled.div`
 const SpeakBox = styled.div`
   background-color: ${props => props.theme.speakBox};
   border-radius: 16px;
-  height: 45%;
   padding: 40px 16px 16px;
   box-shadow: 6px 6px 20px #61616142;
   position: relative;
+
+  @media (max-width: 900px) {
+    height: 360px;
+  }
+
+  @media (min-width: 900px) {
+    height: 45vh;
+  }
 
   > div {
     background-color: ${props => props.theme.learningBoxColor2};
@@ -365,11 +396,20 @@ const LearningReplayImg = styled(LearningMicImg)`
 const ContentRight = styled.div`
   /* border: 1px solid purple; */
   background-color: ${props => props.theme.learningBoxColor};
-  width: 40%;
-  height: 100%;
+
   border-radius: 16px;
   /* box-shadow: 2px 3px 3px ${props => props.theme.shadowColor}; */
   box-shadow: 6px 6px 20px #61616142;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    height: 600px;
+  }
+
+  @media (min-width: 900px) {
+    width: 40%;
+    height: 87vh;
+  }
 `;
 
 const ContentRightTop = styled.div`
@@ -704,6 +744,13 @@ const LearningPage = () => {
   };
 
   useEffect(() => {
+    if (document.querySelectorAll<HTMLElement>('.script-element')[selected]) {
+      const el =
+        document.querySelectorAll<HTMLElement>('.script-element')[selected];
+
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     // 문장 북마크 여부 가져오기
     const getSentenceBookmark = async () => {
       const data = await getSentenceBookmarkState(senetenceId);
@@ -744,12 +791,16 @@ const LearningPage = () => {
   useEffect(() => {
     const watchTime = setInterval(() => {
       // setIntervalTime(old => old + 1);
+
+      let idx = selected;
+      if (videoTime < Math.floor(Number(youtubePlayer?.getCurrentTime()))) {
+        idx = 0;
+      }
+
       const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
       setVideoTime(time);
       // 실시간 하이라이팅
       let flag = false;
-      let idx = selected;
-      // const length = videoDesc?.sentenceInfoList.length;
       while (!flag) {
         if (videoDesc?.sentenceInfoList[idx].startTime != undefined) {
           if (
@@ -762,6 +813,9 @@ const LearningPage = () => {
           }
           idx++;
         }
+      }
+      if (videoDesc?.sentenceInfoList[idx].no != undefined) {
+        setSentenceId(videoDesc?.sentenceInfoList[idx].no);
       }
       setHighlight(true);
       setSelected(idx);
@@ -794,55 +848,70 @@ const LearningPage = () => {
   // 학습 완료
   const onComplete = () => {
     if (isLogin) {
-      if (window.confirm('학습 완료 하시겠습니까?')) {
-        // 학습 왼료 정보 보내기
-        const data = {
-          videoNo: videoNumber,
-          videoProgressTime: videoTime.toString(),
-        };
-        const onCompleteVideo = async () => {
-          await postCompletedVideo(data);
-        };
-        onCompleteVideo();
-
-        Swal.fire({
-          title: '<p> 영상의 난이도가 어떠셨나요? </p>',
-          icon: 'question',
-          showCloseButton: false,
-          showDenyButton: true,
-          showCancelButton: true,
-          focusConfirm: false,
-          confirmButtonText: '쉬워요',
-          cancelButtonText: '평범해요',
-          denyButtonText: '어려워요',
-        }).then(result => {
-          let data = {};
-          if (result.isConfirmed) {
-            // 쉬워요
-            data = {
-              difficulty: 'easy',
-            };
-          } else if (result.isDenied) {
-            // 어려워요
-            data = {
-              difficulty: 'hard',
-            };
-          } else {
-            // 평범해요
-            data = {
-              difficulty: 'normal',
-            };
-          }
-
-          // api 보내기
-          const postFeel = async () => {
-            await feelDifficulty(data);
+      Swal.fire({
+        title: '<p> 학습 완료 하시겠습니까? </p>',
+        icon: 'question',
+        showCloseButton: false,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+      }).then(result => {
+        if (result.isConfirmed) {
+          // 학습 왼료 정보 보내기
+          const data = {
+            videoNo: videoNumber,
+            videoProgressTime: videoTime.toString(),
           };
-          postFeel();
-        });
-      }
+
+          const onCompleteVideo = async () => {
+            await postCompletedVideo(data);
+          };
+          onCompleteVideo();
+
+          Swal.fire({
+            title: '<p> 영상의 난이도가 어떠셨나요? </p>',
+            icon: 'question',
+            showCloseButton: false,
+            showDenyButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: '쉬워요',
+            cancelButtonText: '평범해요',
+            denyButtonText: '어려워요',
+          }).then(result => {
+            let data = {};
+            if (result.isConfirmed) {
+              // 쉬워요
+              data = {
+                difficulty: 'easy',
+              };
+            } else if (result.isDenied) {
+              // 어려워요
+              data = {
+                difficulty: 'hard',
+              };
+            } else {
+              // 평범해요
+              data = {
+                difficulty: 'normal',
+              };
+            }
+
+            // api 보내기
+            const postFeel = async () => {
+              await feelDifficulty(data);
+            };
+            postFeel();
+          });
+        }
+      });
     } else {
-      alert('로그인 후 이용해주세요.');
+      Swal.fire({
+        title: '<p>로그인 후 이용해주세요.</p>',
+        icon: 'warning',
+        confirmButtonText: '확인',
+      });
     }
   };
 
@@ -853,6 +922,7 @@ const LearningPage = () => {
 
   // https://github.com/JamesBrill/react-speech-recognition/blob/HEAD/docs/API.md#SpeechRecognition
   const onStart = () => {
+    onReset();
     SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
     // setMicStatus(true);
     youtubePlayer.pauseVideo();
@@ -866,7 +936,7 @@ const LearningPage = () => {
   const onStop = () => {
     SpeechRecognition.stopListening();
     onMatching();
-    onReset();
+    // onReset();
     // setMicStatus(false);
   };
 
@@ -874,12 +944,18 @@ const LearningPage = () => {
     resetTranscript();
   };
 
-  // 정답 매칭
+  useEffect(() => {
+    return () => {
+      SpeechRecognition.stopListening();
+    };
+  }, []);
 
+  // 정답 매칭
   const [check1, setCheck1] = useState<boolean>(false);
   const [check2, setCheck2] = useState<boolean>(false);
   // 문자열 배열에 담기
   const onMatching = () => {
+    console.log('matching 시작');
     // 스크립트 특수문자 제거하기
     // [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
     const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/]/gim;
@@ -896,16 +972,23 @@ const LearningPage = () => {
       .toLowerCase()
       .split(' ');
 
+    console.log('answer: ', answer);
+    console.log('speaker: ', speaker);
+
     // 정답 매칭
     let flag = 1;
     let idx = 0;
     if (answer?.length && speaker.length) {
-      while (idx < answer.length && idx < speaker.length) {
-        if (answer[idx] != speaker[idx]) {
-          flag = 0;
-          break;
+      if (answer?.length != speaker.length) {
+        flag = 0;
+      } else {
+        while (idx < answer.length && idx < speaker.length) {
+          if (answer[idx] != speaker[idx]) {
+            flag = 0;
+            break;
+          }
+          idx++;
         }
-        idx++;
       }
     }
 
@@ -975,9 +1058,9 @@ const LearningPage = () => {
             options={chartOptions}
             series={series}
             type="donut"
-            width="100%"
+            width="300px"
           />
-          <div>
+          <div className="video-level">
             <ViedoLevelImg
               src={VideoLevel}
               score={score}
@@ -1014,6 +1097,8 @@ const LearningPage = () => {
               }}
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[3]}</span>
+          </div>
+          <div className="video-level">
             <ViedoLevelImg
               src={VideoLevel}
               score={score}
@@ -1032,8 +1117,6 @@ const LearningPage = () => {
               }}
             />
             <span> {videoDesc?.scoreInfo.sentenceScoreInfo[5]}</span>
-          </div>
-          <div>
             <ViedoLevelImg
               src={VideoLevel}
               score={score}
@@ -1052,6 +1135,8 @@ const LearningPage = () => {
               }}
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[7]}</span>
+          </div>
+          <div className="video-level">
             <ViedoLevelImg
               src={VideoLevel}
               score={score}
@@ -1080,8 +1165,8 @@ const LearningPage = () => {
             />
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[10]}</span>
           </div>
-          <div>
-            현재 영상의 레벨은 문장들의 score를 평균내서 선정한 것입니다.
+          <div className="desc">
+            현재 영상의 레벨은 문장들의 score 평균값입니다.
             <br />
             빨, 주, 노, 초, 파, 남, 보, 동, 은, 금 순으로 레벨이 높아집니다.
             <br />그 외 unranked 문장은 검정색으로 표시 됩니다
@@ -1093,24 +1178,28 @@ const LearningPage = () => {
         <ContentLeft>
           <YoutubeBox>
             <YouTube videoId={videoId} opts={opts} onReady={onPlayerReady} />
-            {!videoBookmark ? (
-              <BookmarkImg src={BookmarkEmpty} onClick={onBookmark} />
-            ) : (
-              <BookmarkImg src={BookmarkFull} onClick={onBookmark} />
-            )}
+            {isLogin ? (
+              !videoBookmark ? (
+                <BookmarkImg src={BookmarkEmpty} onClick={onBookmark} />
+              ) : (
+                <BookmarkImg src={BookmarkFull} onClick={onBookmark} />
+              )
+            ) : null}
           </YoutubeBox>
           <SpeakBox>
-            {!sentenceBookmark ? (
-              <BookmarkImg
-                src={BookmarkEmpty}
-                onClick={() => onSentenceBookmark(senetenceId)}
-              />
-            ) : (
-              <BookmarkImg
-                src={BookmarkFull}
-                onClick={() => onSentenceBookmark(senetenceId)}
-              />
-            )}
+            {isLogin ? (
+              !sentenceBookmark ? (
+                <BookmarkImg
+                  src={BookmarkEmpty}
+                  onClick={() => onSentenceBookmark(senetenceId)}
+                />
+              ) : (
+                <BookmarkImg
+                  src={BookmarkFull}
+                  onClick={() => onSentenceBookmark(senetenceId)}
+                />
+              )
+            ) : null}
             <div>
               <SentenceBox>
                 <p>{videoDesc?.sentenceInfoList[selected].content}</p>
@@ -1138,7 +1227,7 @@ const LearningPage = () => {
         <ContentRight>
           <ContentRightTop>
             <div>
-              <p>KOR</p>
+              <p>번역</p>
               <ToggleBtn toggle={toggle} onClick={clickedToggle}>
                 <Circle toggle={toggle}></Circle>
               </ToggleBtn>
@@ -1147,10 +1236,15 @@ const LearningPage = () => {
               </div>
             </div>
           </ContentRightTop>
-          <ContentRightMiddle>
+          <ContentRightMiddle className="scriptBox">
             {videoDesc?.sentenceInfoList.map((el, index) => {
               return (
-                <ScriptEl key={index} selected={selected} highlight={highlight}>
+                <ScriptEl
+                  className="script-element"
+                  key={index}
+                  selected={selected}
+                  highlight={highlight}
+                >
                   <English
                     onClick={() => onSentenceClick(index, el.startTime, el.no)}
                   >

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoSmall } from 'assets/img/logoSmall.svg';
 import { ReactComponent as Home } from 'assets/img/home.svg';
 import { ReactComponent as Arrow } from 'assets/img/arrow.svg';
@@ -361,22 +361,22 @@ const NavBar2 = (props: Props) => {
     window.location.href = 'https://ted-bear.com/api/oauth/kakao';
   };
 
+  const navigate = useNavigate();
+
   return (
     <Nav open={props.open}>
-      <Link to="/home">
-        <LogoBox>
-          <IconDiv open={props.open}>
-            <StyledLogoSmall />
-          </IconDiv>
+      <LogoBox>
+        <IconDiv open={props.open} onClick={() => navigate('/')}>
+          <StyledLogoSmall />
+        </IconDiv>
 
-          <IconName open={props.open}>
-            <span>TEDBEAR</span>
-          </IconName>
-          <OpenBtn onClick={openNavbar}>
-            {props.open ? <StyledArrowLeft /> : <StyledArrowRight />}
-          </OpenBtn>
-        </LogoBox>
-      </Link>
+        <IconName open={props.open} onClick={() => navigate('/')}>
+          <span>TEDBEAR</span>
+        </IconName>
+        <OpenBtn onClick={openNavbar}>
+          {props.open ? <StyledArrowLeft /> : <StyledArrowRight />}
+        </OpenBtn>
+      </LogoBox>
 
       <NavList>
         <Link to="/home">
