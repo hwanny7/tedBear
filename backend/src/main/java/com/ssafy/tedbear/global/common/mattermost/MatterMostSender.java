@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.global.common.FindMemberService;
+import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +32,7 @@ public class MatterMostSender {
 	private final RestTemplate restTemplate;
 	private final MatterMostProperties mmProperties;
 	private final FindMemberService findMemberService;
+	private final JwtProvider jwtProvider;
 
 	public void sendMessage(Exception excpetion, HttpServletRequest req, String params) {
 		if (!mmEnabled)
@@ -46,7 +49,11 @@ public class MatterMostSender {
 				.footer(mmProperties.getFooter())
 				.build();
 
-			attachment.addExceptionInfo(excpetion, req);
+			String accessToken = req.getHeader("authorization").split(" ")[1];
+			Member member = findMemberService.findMember(jwtProvider.parseClaims(accessToken).getSubject());
+			String nickName = member.getNickname();
+
+			attachment.addExceptionInfo(excpetion, req, nickName);
 			Attachments attachments = new Attachments(attachment);
 			String payload = new Gson().toJson(attachments);
 

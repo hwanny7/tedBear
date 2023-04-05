@@ -57,7 +57,7 @@ public class MatterMostMessageDto {
 
 		private String footer;
 
-		public Attachment addExceptionInfo(Exception e, HttpServletRequest req) {
+		public Attachment addExceptionInfo(Exception e, HttpServletRequest req, String nickName) {
 			StringBuilder sb = new StringBuilder();
 
 			Enumeration<String> keys = req.getParameterNames();
@@ -78,11 +78,10 @@ public class MatterMostMessageDto {
 			// Request URL, Method
 			String uri = req.getRequestURI();
 			String method = req.getMethod();
-			sb.append("### **Reqeust Info**")
-				.append(' ')
-				.append('(')
-				.append(method)
-				.append(')').append('\n').append('\n').append("- " + uri).append('\n').append('\n');
+			sb.append("### **Reqeust Info**").append('\n')
+				.append("- Method Type : ").append(method).append('\n')
+				.append("- Request URL : ").append(uri).append('\n')
+				.append("- ACCESS TOKEN : ").append(nickName).append('\n').append('\n');
 
 			// Error Message
 			sb.append("### **Error Message**")
