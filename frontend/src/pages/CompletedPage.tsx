@@ -2,7 +2,7 @@ import Card from 'components/video/VideoCard';
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { useInView } from 'react-intersection-observer';
-import { learningVideo } from 'utils/api/searchApi';
+import { completedVideo } from 'utils/api/searchApi';
 import { SearchedVideo } from './../utils/api/searchApi';
 import styled from 'styled-components';
 import { device } from 'utils/mediaQuery';
@@ -43,36 +43,22 @@ const BottomDiv = styled.div`
 
 const StillLearningPage = () => {
   const [video, setVideo] = useState<SearchedVideo[]>([]);
-  const [ref, inView] = useInView();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0);
 
   const fetchData = async () => {
-    setLoading(true);
-    const data = await learningVideo(page);
-    if (data.length) {
-      setVideo(prev => prev.concat(data));
-      setLoading(false);
-    }
+    const data = await completedVideo();
+    setVideo(data);
   };
 
   useEffect(() => {
     fetchData();
-  }, [page]);
-
-  useEffect(() => {
-    console.log('useEffect!');
-    if (inView && !loading) {
-      setPage(prev => prev + 1);
-    }
-  }, [inView, loading]);
+  }, []);
 
   return (
     <div>
       <VideoTitle>
-        {video.length ? '학습 중인 영상' : '학습 중인 영상이 없습니다.'}
+        {video.length ? '학습 완료 영상' : '학습 중인 영상이 없습니다.'}
       </VideoTitle>
-      <ContentDiv ref={ref}>
+      <ContentDiv>
         <Grid
           container
           justifyContent={'start'}
@@ -103,7 +89,6 @@ const StillLearningPage = () => {
           })}
         </Grid>
       </ContentDiv>
-      <BottomDiv ref={ref}></BottomDiv>
     </div>
   );
 };

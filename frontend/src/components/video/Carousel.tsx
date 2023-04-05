@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
-import VideoLevel from 'assets/img/videoLevel.svg';
 import carouselButton from 'assets/img/carouselButton.svg';
 import rightButton from 'assets/img/rightButton.svg';
 
@@ -12,43 +11,6 @@ import { HomeRecomm } from 'utils/api/recommApi';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 import { useSelector } from 'react-redux';
 import Badge from 'components/common/Badge';
-
-interface BadgeProps {
-  score: number;
-}
-
-const ViedoLevelImg = styled.img<BadgeProps>`
-  height: 12%;
-  width: 12%;
-  position: absolute;
-  top: 4%;
-  left: 2%;
-  filter: ${props => {
-    if (props.score == 0) {
-      return `${props.theme.badgeRed}`;
-    } else if (props.score == 1) {
-      return `${props.theme.badgeOrange}`;
-    } else if (props.score == 2) {
-      return `${props.theme.badgeYellow}`;
-    } else if (props.score == 3) {
-      return `${props.theme.badgeGreen}`;
-    } else if (props.score == 4) {
-      return `${props.theme.badgeBlue}`;
-    } else if (props.score == 5) {
-      return `${props.theme.badgeIndigo}`;
-    } else if (props.score == 6) {
-      return `${props.theme.badgePurple}`;
-    } else if (props.score == 7) {
-      return `${props.theme.badgeBronze}`;
-    } else if (props.score == 8) {
-      return `${props.theme.badgeSilver}`;
-    } else if (props.score == 9) {
-      return `${props.theme.badgGold}`;
-    } else {
-      return `${props.theme.badgeUnlank}`;
-    }
-  }};
-`;
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -231,7 +193,6 @@ const Carousel = ({ data, setVideoData }: Props) => {
                     onClick={() => handleClick(Thumnail.watchId)}
                     alt=""
                   />
-                  {/* <ViedoLevelImg src={VideoLevel} score={Thumnail.score} /> */}
                   <div className="badge-wrapper">
                     <Badge score={Thumnail.score} />
                   </div>

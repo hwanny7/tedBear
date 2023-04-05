@@ -58,3 +58,12 @@ export const learningVideo = async (page: number) => {
 
   return data.videoInfoList;
 };
+
+export const completedVideo = async () => {
+  const { data } = await authApi<VideoSet>({
+    method: 'get',
+    url: '/video/complete/list',
+  });
+
+  return data.videoInfoList;
+};

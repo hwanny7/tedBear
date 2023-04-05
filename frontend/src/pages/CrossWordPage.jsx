@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import cx from 'classnames';
-import styled, { css } from 'styled-components';
 import { getCrossWord } from 'utils/api/gameApi';
 import ShortsModal from 'components/short/ShortsModal';
 import { useNavigate, useOutletContext } from 'react-router-dom';
@@ -11,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import styled, { css } from 'styled-components';
 
 const StyledForm = styled(FormControl)`
   label {
@@ -129,6 +129,7 @@ const Wrapper = styled.div`
       scale: 1.05;
       transition: 0.4s;
       z-index: 10;
+    }
   }
 
   ins[data-clue]:before {
@@ -387,6 +388,7 @@ const CrossWordPage = () => {
 
   const fetchData = async () => {
     const data = await getCrossWord(size);
+    console.log(data);
     setWordList(
       data.array.map(item => {
         return {

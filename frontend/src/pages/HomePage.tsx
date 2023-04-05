@@ -71,14 +71,9 @@ const ShortsTitle = styled.span`
 const Button = styled.button<{ changeColor?: number }>`
   padding: 1% 8% 1%;
   cursor: pointer;
-  /* background: ${props =>
-    props.changeColor
-      ? 'linear-gradient(to right, #ffdbb3, #fec88e)'
-      : 'white'}; */
   background: ${props =>
     props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
-  /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); */
+
   box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
     background: ${props => props.theme.pointLightColor};
@@ -103,20 +98,14 @@ const Button = styled.button<{ changeColor?: number }>`
 const LeftButton = styled.button<{ changeColor?: number }>`
   cursor: pointer;
   border-radius: 8px 0 0 8px;
-  /* background: ${props =>
-    props.changeColor
-      ? 'linear-gradient(to right, #fff6ec, #ffdbb3)'
-      : 'white'}; */
+
   background: ${props =>
     props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
   padding: 1% 8% 1%;
-  /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); */
+
   box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
     background: ${props => props.theme.pointLightColor};
-    /* transition: all 0.3s;
-    transform: translateY(3px); */
   }
   @media ${device.mobile} {
     font-size: 10px;
@@ -146,13 +135,10 @@ const RightButton = styled.button<{ changeColor?: number }>`
   background: ${props =>
     props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
   padding: 1% 8% 1%;
-  /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); */
+
   box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
     background: ${props => props.theme.pointLightColor};
-    /* transition: all 0.3s;
-    transform: translateY(3px); */
   }
   @media ${device.mobile} {
     font-size: 10px;

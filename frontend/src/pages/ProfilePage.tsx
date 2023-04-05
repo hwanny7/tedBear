@@ -464,7 +464,7 @@ const ProfilePage = () => {
         <div className="learning" onClick={() => navigate('/still-learn')}>
           학습 중
         </div>
-        <div className="learned" onClick={() => navigate('/still-learn')}>
+        <div className="learned" onClick={() => navigate('/completed-learn')}>
           학습 완료
         </div>
       </TagBox2>
@@ -499,7 +499,7 @@ const ProfilePage = () => {
         <div className="learning" onClick={() => navigate('/still-learn')}>
           학습 중
         </div>
-        <div className="learned" onClick={() => navigate('/still-learn')}>
+        <div className="learned" onClick={() => navigate('/completed-learn')}>
           학습 완료
         </div>
       </TagBox>

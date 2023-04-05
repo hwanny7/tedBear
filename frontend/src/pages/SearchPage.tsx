@@ -9,7 +9,6 @@ import {
 } from 'utils/api/searchApi';
 import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
-import VideoLevel from 'assets/img/videoLevel.svg';
 import { useOutletContext } from 'react-router-dom';
 import { Shorts } from 'utils/api/recommApi';
 import ShortsModal from 'components/short/ShortsModal';
@@ -18,6 +17,7 @@ import ShortsPageNation from 'components/short/ShortsPageNation';
 import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 import { useSelector } from 'react-redux';
 import Badge from 'components/common/Badge';
+import Spinner from 'components/common/Spinner';
 
 const ViedoLevelImg = styled.div`
   height: 15%;
@@ -244,6 +244,7 @@ const SearchPage = () => {
 
   return (
     <Wrapper>
+      {/* {loading && <Spinner></Spinner>} */}
       {modalOpen && (
         <ShortsModal
           setShortsData={setShortsData}
