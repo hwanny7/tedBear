@@ -14,6 +14,15 @@ import { deleteVideoBookmark, postVideoBookmark } from 'utils/api/learningApi';
 
 const StyledCard = styled(Card)`
   background-color: ${props => props.theme.learningBoxColor2};
+  height: 100%;
+  width: 100%;
+  position: relative;
+`;
+
+const StyledCardContent = styled(CardContent)`
+  background-color: ${props => props.theme.learningBoxColor};
+  color: ${props => props.theme.textColor1};
+  height: 100%;
 `;
 
 const ViedoLevelImg = styled.div`
@@ -21,6 +30,10 @@ const ViedoLevelImg = styled.div`
   position: absolute;
   top: 4%;
   left: 4%;
+`;
+
+const StyledCardActionArea = styled(CardActionArea)`
+  height: 100%;
 `;
 
 const VideoCard = ({
@@ -51,15 +64,14 @@ const VideoCard = ({
     });
   };
 
+  // sx={{
+  //   height: '100%',
+  //   width: '100%',
+  //   position: 'relative',
+  // }}
   return (
-    <StyledCard
-      sx={{
-        height: '100%',
-        width: '100%',
-        position: 'relative',
-      }}
-    >
-      <CardActionArea>
+    <StyledCard>
+      <StyledCardActionArea>
         <ViedoLevelImg>
           <Badge score={card.score} />
         </ViedoLevelImg>
@@ -84,7 +96,7 @@ const VideoCard = ({
             handleClick(card.watchId);
           }}
         />
-        <CardContent>
+        <StyledCardContent>
           <Typography
             gutterBottom
             variant="h5"
@@ -93,8 +105,8 @@ const VideoCard = ({
           >
             {card.title}
           </Typography>
-        </CardContent>
-      </CardActionArea>
+        </StyledCardContent>
+      </StyledCardActionArea>
     </StyledCard>
   );
 };

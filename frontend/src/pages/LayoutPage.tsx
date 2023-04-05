@@ -106,7 +106,7 @@ const LayoutPage = (props: Props) => {
             toggle={props.toggle}
             setToggle={props.setToggle}
           />
-          <NavBarMobile />
+          <NavBarMobile toggle={props.toggle} setToggle={props.setToggle} />
         </>
       )}
       <OutletWrapper open={open} center={pathname}>

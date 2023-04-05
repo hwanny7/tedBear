@@ -10,12 +10,15 @@ import { ReactComponent as Mypage } from 'assets/img/mypage.svg';
 import { ReactComponent as Signout } from 'assets/img/signout.svg';
 import { ReactComponent as Signin } from 'assets/img/signin.svg';
 import { ReactComponent as Bookmark } from 'assets/img/bookmark.svg';
+import { ReactComponent as Info2 } from 'assets/img/info2.svg';
 import { SetStateAction, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'redux/user';
 // toggle svg
 import Sun from 'assets/img/sun.svg';
 import Moon from 'assets/img/moon.svg';
+
+import VideoLevel from 'assets/img/videoLevel.svg';
 
 interface Props {
   open: boolean;
@@ -40,22 +43,8 @@ const ToggleBox = styled.div`
   width: 100%;
   position: relative;
   justify-content: first;
-  padding: 0 22px;
-  margin: 16px 0 0;
-`;
-
-const ToggleBtn = styled.div`
-  background-image: -webkit-linear-gradient(
-    #b3b3b3 0%,
-    #ececec 80%,
-    #ececec 100%
-  );
-  border-radius: 50px;
-  position: relative;
-  width: 56px;
-  height: 16px;
-  display: flex;
-  align-items: center;
+  /* padding: 0 22px; */
+  /* margin: 16px 0 0; */
 `;
 
 const Circle = styled.div<ToggleStyledProps>`
@@ -63,9 +52,9 @@ const Circle = styled.div<ToggleStyledProps>`
     !ToggleStyledProps.toggle
       ? 'linear-gradient(270deg, #4cb0b9 0%, #47bcc7 30%, #65e3ee 80%)'
       : 'linear-gradient(90deg, #000000 0%, #3f0e63 90%, #331056 100%)'};
-  width: 32px;
-  height: 32px;
-  z-index: 999;
+  width: 24px;
+  height: 24px;
+  z-index: 10;
   /* position: absolute; */
   border-radius: 50%;
   cursor: pointer;
@@ -141,13 +130,23 @@ const IconDiv = styled.div<OpenStyledProps>`
 `;
 
 const IconName = styled.div<OpenStyledProps>`
+  position: relative;
   padding-left: 4px;
   text-align: left;
   color: ${props => props.theme.whiteColor};
   font-weight: 500;
-  font-size: 20px;
+  font-size: 14px;
   margin-left: 16px;
-  display: ${OpenStyledProps => (!OpenStyledProps.open ? 'none' : 'block')};
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  white-space: nowrap;
+
+  /* border: 1px solid red; */
+  /* display: ${OpenStyledProps =>
+    !OpenStyledProps.open ? 'none' : 'flex'}; */
+  opacity: ${OpenStyledProps => (!OpenStyledProps.open ? '0' : '1')};
+  visibility: ${OpenStyledProps =>
+    !OpenStyledProps.open ? 'hidden' : 'visible'};
   transition: all 0.3s ease;
 `;
 
@@ -181,6 +180,99 @@ const ListBoxBottom = styled(ListBox)<OpenStyledProps>`
   border-radius: 0;
   transition: all 0.5s ease;
   padding: 8px 22px;
+`;
+
+const LevelInfo = styled.div<OpenStyledProps>`
+  box-shadow: 6px 6px 8px #00000042;
+  border-radius: 16px;
+  padding: 24px;
+  position: fixed;
+  background-color: #ffffffe8;
+  width: 160px;
+  left: ${OpenStyledProps => (!OpenStyledProps.open ? '60px;' : '160px;')};
+  bottom: 64px;
+
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  z-index: -1;
+
+  transition: 0.5s;
+
+  .content {
+    display: flex;
+    /* border: 1px solid red; */
+    margin-bottom: 8px;
+
+    &:nth-child(1) .badgeImg {
+      filter: ${props => props.theme.badgeRed};
+    }
+    &:nth-child(2) .badgeImg {
+      filter: ${props => props.theme.badgeOrange};
+    }
+    &:nth-child(3) .badgeImg {
+      filter: ${props => props.theme.badgeYellow};
+    }
+    &:nth-child(4) .badgeImg {
+      filter: ${props => props.theme.badgeGreen};
+    }
+    &:nth-child(5) .badgeImg {
+      filter: ${props => props.theme.badgeBlue};
+    }
+    &:nth-child(6) .badgeImg {
+      filter: ${props => props.theme.badgeIndigo};
+    }
+    &:nth-child(7) .badgeImg {
+      filter: ${props => props.theme.badgePurple};
+    }
+    &:nth-child(8) .badgeImg {
+      filter: ${props => props.theme.badgeBronze};
+    }
+    &:nth-child(9) .badgeImg {
+      filter: ${props => props.theme.badgeSilver};
+    }
+    &:nth-child(10) .badgeImg {
+      filter: ${props => props.theme.badgGold};
+    }
+  }
+
+  .badgeImg {
+    /* border: 1px solid red; */
+    width: 24px;
+    margin-right: 16px;
+  }
+
+  .badgeName {
+    /* border: 1px solid red; */
+  }
+`;
+
+const ListBoxBottom2 = styled(ListBoxBottom)<OpenStyledProps>`
+  background-color: transparent;
+  position: fixed;
+  width: ${OpenStyledProps => (!OpenStyledProps.open ? '78px' : '200px')};
+  left: 0px;
+  bottom: 47px;
+  border-radius: 0;
+  transition: all 0.5s ease;
+  padding: 8px 22px;
+  &:hover {
+    background-color: ${props => props.theme.mainColor};
+  }
+
+  &:hover ~ ${LevelInfo} {
+    z-index: 5;
+    opacity: 1;
+  }
+`;
+
+const ListBoxBottom3 = styled(ListBoxBottom2)<OpenStyledProps>`
+  bottom: 94px;
+
+  &:hover ~ ${LevelInfo} {
+    z-index: 0;
+    opacity: 0;
+  }
 `;
 
 // ICON STYLE
@@ -227,6 +319,15 @@ const StyledSignin = styled(Signin)`
   width: 24px;
 `;
 
+const StyledInfo2 = styled(Info2)`
+  width: 24px;
+
+  &:hover ~ ${LevelInfo} {
+    z-index: 5;
+    opacity: 1;
+  }
+`;
+
 const NavBar2 = (props: Props) => {
   // 다크모드, 라이트모드 설정
   const clickedToggle = () => {
@@ -262,28 +363,20 @@ const NavBar2 = (props: Props) => {
 
   return (
     <Nav open={props.open}>
-      <ToggleBox>
-        {/* <ToggleBtn> */}
-        <Circle onClick={clickedToggle} toggle={props.toggle}>
-          {props.toggle ? <MoonImg src={Moon} /> : <SunImg src={Sun} />}
-        </Circle>
-        {/* </ToggleBtn> */}
-      </ToggleBox>
-      <LogoBox>
-        <Link to="/home">
+      <Link to="/home">
+        <LogoBox>
           <IconDiv open={props.open}>
             <StyledLogoSmall />
           </IconDiv>
-        </Link>
-        <Link to="/home">
+
           <IconName open={props.open}>
             <span>TEDBEAR</span>
           </IconName>
-        </Link>
-        <OpenBtn onClick={openNavbar}>
-          {props.open ? <StyledArrowLeft /> : <StyledArrowRight />}
-        </OpenBtn>
-      </LogoBox>
+          <OpenBtn onClick={openNavbar}>
+            {props.open ? <StyledArrowLeft /> : <StyledArrowRight />}
+          </OpenBtn>
+        </LogoBox>
+      </Link>
 
       <NavList>
         <Link to="/home">
@@ -292,7 +385,7 @@ const NavBar2 = (props: Props) => {
               <StyledHome />
             </IconDiv>
             <IconName open={props.open}>
-              <span>HOME</span>
+              <span>홈</span>
             </IconName>
           </ListBox>
         </Link>
@@ -302,11 +395,10 @@ const NavBar2 = (props: Props) => {
               <StyledNavGame />
             </IconDiv>
             <IconName open={props.open}>
-              <span>Game</span>
+              <span>게임</span>
             </IconName>
           </ListBox>
         </Link>
-
         {isLogin ? (
           <>
             <Link to="/bookmark">
@@ -315,7 +407,7 @@ const NavBar2 = (props: Props) => {
                   <StyledBookmark />
                 </IconDiv>
                 <IconName open={props.open}>
-                  <span>BOOKMARK</span>
+                  <span>북마크</span>
                 </IconName>
               </ListBox>
             </Link>
@@ -325,7 +417,7 @@ const NavBar2 = (props: Props) => {
                   <StyledMypage />
                 </IconDiv>
                 <IconName open={props.open}>
-                  <span>MYPAGE</span>
+                  <span>프로필</span>
                 </IconName>
               </ListBox>
             </Link>
@@ -334,7 +426,7 @@ const NavBar2 = (props: Props) => {
                 <StyledSignout />
               </IconDiv>
               <IconName open={props.open}>
-                <span>SIGNOUT</span>
+                <span>로그아웃</span>
               </IconName>
             </ListBoxBottom>
           </>
@@ -344,10 +436,76 @@ const NavBar2 = (props: Props) => {
               <StyledSignin />
             </IconDiv>
             <IconName open={props.open}>
-              <span>SIGNIN</span>
+              <span>로그인</span>
             </IconName>
           </ListBoxBottom>
         )}
+        <ListBoxBottom3 open={props.open}>
+          <IconDiv open={props.open}>
+            <ToggleBox>
+              <Circle onClick={clickedToggle} toggle={props.toggle}>
+                {props.toggle ? <MoonImg src={Moon} /> : <SunImg src={Sun} />}
+              </Circle>
+            </ToggleBox>
+          </IconDiv>
+          <IconName open={props.open} onClick={clickedToggle}>
+            <span>{!props.toggle ? '라이트' : '다크'}</span>
+          </IconName>
+        </ListBoxBottom3>
+        <ListBoxBottom2 open={props.open}>
+          <IconDiv open={props.open}>
+            <StyledInfo2 />
+          </IconDiv>
+          <IconName open={props.open}>
+            <span>레벨 정보</span>
+          </IconName>
+        </ListBoxBottom2>
+        <LevelInfo open={props.open}>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 1</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 2</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 3</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 4</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 5</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 6</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 7</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 8</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 9</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">레벨 10</div>
+          </div>
+          <div className="content">
+            <img src={VideoLevel} className="badgeImg" />
+            <div className="badgeName">언랭크</div>
+          </div>
+        </LevelInfo>
       </NavList>
     </Nav>
   );

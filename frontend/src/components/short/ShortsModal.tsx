@@ -75,12 +75,12 @@ const SentenceBox = styled.div`
   border-radius: 12px;
   color: white;
   width: 100%;
-  height: 20%;
+  height: 25%;
   left: 0%;
-  padding: 2%;
+  padding: 8px;
   bottom: 0%;
   background-color: #333;
-  overflow-y: hidden;
+  overflow-y: scroll;
   cursor: pointer;
   &:hover .text {
     text-decoration: underline;
@@ -94,7 +94,19 @@ const SentenceBox = styled.div`
     transform: translateY(3px);
   }
 
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 30%;
+    cursor: pointer; // 커서 포인터 왜 안돼..
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 15%;
+    background-color: ${props => props.theme.mainLightColor};
+    border-radius: 10px;
+  }
+
   .text {
+    width: 95%;
     @media ${device.mobile} {
       font-size: 5px;
     }
@@ -111,9 +123,17 @@ const SentenceBox = styled.div`
       font-size: 20px;
     }
   }
+
+  .shortcut-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 5%;
+    height: 50%;
+  }
   .shortcut {
-    width: 3%;
-    height: 3%;
+    width: 50%;
     fill: white;
     margin-left: 1%;
   }
@@ -211,10 +231,11 @@ const ShortsModal = ({ shorts, setOpenModal, setShortsData }: Props) => {
                 handleClick(shorts?.watchId);
               }}
             >
-              <p className="text">
-                {shorts?.content}
+              <p className="text">{shorts?.content}</p>
+              <div className="shortcut-wrapper">
+                {' '}
                 <Shortcut className="shortcut"></Shortcut>
-              </p>
+              </div>
             </SentenceBox>
           )}
         </Wrapper>

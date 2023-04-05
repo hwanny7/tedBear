@@ -17,7 +17,7 @@ const StyledForm = styled(FormControl)`
     color: ${props => props.theme.textColor1};
   }
   svg {
-    fill: ${props => props.theme.textColor1};
+    fill: ${props => props.theme.mainColor};
   }
   fieldset {
     border-color: ${props => props.theme.textColor1};
@@ -28,76 +28,222 @@ const StyledForm = styled(FormControl)`
 `;
 
 const Replay = styled.div`
-  width: 100%;
-  height: 10%;
+  padding: 16px 56px;
   border-radius: 16px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
   cursor: pointer;
-  background-color: ${props => props.theme.whiteColor};
+  margin-top: 24px;
+  background-color: #63da9c;
   &:hover {
-    background-color: #fffacb;
+    background-color: #45976c;
+    color: white;
     transition: all 0.3s;
     transform: translateY(3px);
 `;
 
 const Description = styled.div`
-  margin-left: 6%;
-  margin-top: 1%;
+  /* margin-left: 6%; */
+  /* margin-top: 1%; */
   color: ${props => props.theme.textColor1};
+
+  @media (max-width: 900px) {
+    font-size: 14px;
+  }
+  @media (min-width: 900px) {
+    font-size: 16px;
+  }
 `;
 
 const Stop = styled.div`
-  width: 100%;
-  height: 10%;
-  margin-top: 10%;
+  margin-top: 16px;
+  padding: 16px 56px;
   border-radius: 16px;
   cursor: pointer;
-  background-color: ${props => props.theme.whiteColor};
+  background-color: #ff895b;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   &:hover {
-    background-color: #f9cf00;
+    background-color: #e6622d;
+    color: white;
     transition: all 0.3s;
     transform: translateY(3px);
   }
 `;
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
+const RealWrapper = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  @media (min-width: 900px) {
+    height: 100vh;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  background-color: ${props => props.theme.bgColor2};
+
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 6px 6px 20px #61616142;
+
+  width: 100%;
+  min-height: 95vh;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    margin: 16px;
+  }
+  @media (min-width: 900px) {
+    margin: 24px 48px;
+    /* height: 95vh; */
+    flex-direction: row;
+  }
+
   justify-content: space-evenly;
   align-items: center;
   .main {
-    margin-left: 6%;
-    margin-right: 6%;
+    margin: 16px;
+    /* margin-left: 6%;
+    margin-right: 6%; */
     grid-row: 2;
     grid-column: 1/3;
     display: grid;
-    ${props => {
-      if (props.size === 8) {
-        return css`
-          grid-template-rows: repeat(8, 9vmin);
-          grid-template-columns: repeat(8, 9vmin);
-        `;
-      } else if (props.size === 12) {
-        return css`
-          grid-template-rows: repeat(12, 6vmin);
-          grid-template-columns: repeat(12, 6vmin);
-        `;
-      } else if (props.size === 16) {
-        return css`
-          grid-template-rows: repeat(16, 5vmin);
-          grid-template-columns: repeat(16, 5vmin);
-        `;
-      }
-    }}
+
+    @media (max-width: 400px) {
+      ${props => {
+        if (props.size === 8) {
+          return css`
+            grid-template-rows: repeat(8, 30px);
+            grid-template-columns: repeat(8, 30px);
+          `;
+        } else if (props.size === 12) {
+          return css`
+            grid-template-rows: repeat(12, 20px);
+            grid-template-columns: repeat(12, 20px);
+          `;
+        } else if (props.size === 16) {
+          return css`
+            grid-template-rows: repeat(16, 16px);
+            grid-template-columns: repeat(16, 16px);
+          `;
+        }
+      }}
+    }
+
+    @media (min-width: 400px) {
+      ${props => {
+        if (props.size === 8) {
+          return css`
+            grid-template-rows: repeat(8, 40px);
+            grid-template-columns: repeat(8, 40px);
+          `;
+        } else if (props.size === 12) {
+          return css`
+            grid-template-rows: repeat(12, 28px);
+            grid-template-columns: repeat(12, 28px);
+          `;
+        } else if (props.size === 16) {
+          return css`
+            grid-template-rows: repeat(16, 20px);
+            grid-template-columns: repeat(16, 20px);
+          `;
+        }
+      }}
+    }
+
+    @media (min-width: 600px) {
+      ${props => {
+        if (props.size === 8) {
+          return css`
+            grid-template-rows: repeat(8, 42px);
+            grid-template-columns: repeat(8, 42px);
+          `;
+        } else if (props.size === 12) {
+          return css`
+            grid-template-rows: repeat(12, 32px);
+            grid-template-columns: repeat(12, 32px);
+          `;
+        } else if (props.size === 16) {
+          return css`
+            grid-template-rows: repeat(16, 30px);
+            grid-template-columns: repeat(16, 30px);
+          `;
+        }
+      }}
+    }
+
+    @media (min-width: 900px) {
+      ${props => {
+        if (props.size === 8) {
+          return css`
+            grid-template-rows: repeat(8, 42px);
+            grid-template-columns: repeat(8, 42px);
+          `;
+        } else if (props.size === 12) {
+          return css`
+            grid-template-rows: repeat(12, 32px);
+            grid-template-columns: repeat(12, 32px);
+          `;
+        } else if (props.size === 16) {
+          return css`
+            grid-template-rows: repeat(16, 22px);
+            grid-template-columns: repeat(16, 22px);
+          `;
+        }
+      }}
+    }
+
+    @media (min-width: 1024px) {
+      ${props => {
+        if (props.size === 8) {
+          return css`
+            grid-template-rows: repeat(8, 50px);
+            grid-template-columns: repeat(8, 50px);
+          `;
+        } else if (props.size === 12) {
+          return css`
+            grid-template-rows: repeat(12, 32px);
+            grid-template-columns: repeat(12, 32px);
+          `;
+        } else if (props.size === 16) {
+          return css`
+            grid-template-rows: repeat(16, 26px);
+            grid-template-columns: repeat(16, 26px);
+          `;
+        }
+      }}
+    }
+
+    @media (min-width: 1440px) {
+      ${props => {
+        if (props.size === 8) {
+          return css`
+            grid-template-rows: repeat(8, 9vmin);
+            grid-template-columns: repeat(8, 9vmin);
+          `;
+        } else if (props.size === 12) {
+          return css`
+            grid-template-rows: repeat(12, 6vmin);
+            grid-template-columns: repeat(12, 6vmin);
+          `;
+        } else if (props.size === 16) {
+          return css`
+            grid-template-rows: repeat(16, 4.3vmin);
+            grid-template-columns: repeat(16, 4.3vmin);
+          `;
+        }
+      }}
+    }
+
     grid-gap: 2px;
   }
   ins,
@@ -117,7 +263,27 @@ const Wrapper = styled.div`
     background-color: ${props => props.theme.learningBoxColor2};
     border: 1px solid #444;
     text-decoration: none;
-    font-size: calc(24px + 0.5vmin);
+
+    @media (max-width: 400px) {
+      font-size: calc(10px + 0.5vmin);
+    }
+
+    @media (min-width: 400px) {
+      font-size: calc(12px + 0.5vmin);
+    }
+
+    @media (min-width: 600px) {
+      font-size: calc(12px + 0.5vmin);
+    }
+    @media (min-width: 900px) {
+      font-size: calc(12px + 0.5vmin);
+    }
+    @media (min-width: 1024px) {
+      font-size: calc(18px + 0.5vmin);
+    }
+    @media (min-width: 1440px) {
+      font-size: calc(20px + 0.5vmin);
+    }
     padding: 0;
     margin: 0;
     text-transform: uppercase;
@@ -146,7 +312,7 @@ const Wrapper = styled.div`
   }
 
   ins.editting {
-    background-color: #b4adde;
+    background-color: #beb7ea;
   }
 
   ins.cursor {
@@ -169,16 +335,18 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  margin-left: 6%;
-  margin-right: 6%;
+  margin-bottom: 16px;
   display: flex;
   border-radius: 16px;
-  background-color: ${props => props.theme.learningBoxColor2};
+  background-color: ${props => props.theme.pointLigntGrdColor8};
   flex-direction: column;
   align-items: center;
-  height: 80vh;
-  width: 80%;
-  padding: 2%;
+  justify-content: flex-start;
+  /* height: 80vh;
+  width: 80%; */
+  width: 100%;
+  height: 75vh;
+  padding: 8px;
   overflow-y: scroll;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   &::-webkit-scrollbar {
@@ -192,6 +360,7 @@ const Content = styled.div`
   }
 `;
 const SubmitButton = styled.div`
+  color: #1a1a1a;
   width: 40%;
   height: 3%;
   margin-top: 2%;
@@ -199,21 +368,23 @@ const SubmitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2%;
-  background: ${props => props.theme.learningBoxColor2};
+  padding: 16px 24px;
+  color: white;
+  background-color: ${props => props.theme.pointColor};
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   cursor: pointer;
   &:hover {
-    scale: 1.08;
-    transition: 0.4s;
-    background-color: #857bb8;
+    background-color: #e86e35;
+    transition: all 0.3s;
+    transform: translateY(3px);
+    /* box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); */
   }
 `;
 
 const ClueBox = styled.div`
   width: 80%;
-  margin-top: 2%;
+  margin-top: 16px;
   padding: 3%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -223,19 +394,19 @@ const ClueBox = styled.div`
   position: relative;
 
   @media ${device.mobile} {
-    font-size: 7px;
+    font-size: 14px;
   }
 
   @media ${device.tablet} {
-    font-size: 10px;
+    font-size: 16px;
   }
 
   @media ${device.laptop} {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   @media ${device.desktop} {
-    font-size: 20px;
+    font-size: 18px;
   }
   &:hover {
     scale: 1.08;
@@ -262,9 +433,75 @@ const NumberBox = styled.div`
   align-items: center;
   top: 36%;
   left: -5%;
-  width: 5%;
   color: white;
   background: ${props => props.theme.mainColor};
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+`;
+
+// 왼쪽 박스
+const LeftBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: ${props => props.theme.learningBoxColor}; */
+
+  @media (max-width: 900px) {
+    /* height: 70%; */
+    width: 100%;
+    margin-bottom: 32px;
+  }
+  @media (min-width: 900px) {
+    height: 100%;
+    width: 60%;
+  }
+
+  .box-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 0px 56px;
+  }
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+
+  @media (max-width: 900px) {
+    /* height: 30%; */
+    width: 100%;
+  }
+  @media (min-width: 900px) {
+    height: 100%;
+    width: 40%;
+  }
+`;
+
+// 질문 박스
+const Question = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
+const ResultBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  h1 {
+    color: ${props => props.theme.textColor1};
+  }
 `;
 
 const CrossWordPage = () => {
@@ -733,130 +970,141 @@ const CrossWordPage = () => {
   };
 
   return (
-    <Wrapper size={size}>
-      <div>
-        {finish ? undefined : (
-          <Box
-            sx={{
-              m: 1,
-              width: '20%',
-              marginLeft: '6%',
-            }}
-            size="small"
-          >
-            <StyledForm fullWidth>
-              <InputLabel id="demo-simple-select-label">Mode</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={modeValue()}
-                label="Mode"
-                onChange={handleChange}
+    <RealWrapper>
+      <Wrapper size={size}>
+        <LeftBox>
+          <div className="box-wrapper">
+            {finish ? undefined : (
+              <Box
+                sx={{
+                  m: 1,
+                  width: '20%',
+                  marginLeft: '6%',
+                }}
+                size="small"
               >
-                <MenuItem value={'Easy'}>Easy</MenuItem>
-                <MenuItem value={'Normal'}>Normal</MenuItem>
-                <MenuItem value={'Hard'}>Hard</MenuItem>
-              </Select>
-            </StyledForm>
-          </Box>
-        )}
-        <div className="main">
-          {wordList.map((word, idx) => {
-            if (word.clue) {
-              return (
-                <ins
-                  key={idx}
-                  data-clue={word.clue}
-                  onClick={finish ? undefined : () => editClue(word, idx)}
-                  className={cx({
-                    cursor: word.cursor,
-                    editting: word.edit,
-                    highlight: word.hightlight,
-                  })}
-                >
-                  {word.answer}
-                </ins>
-              );
-            } else if (word.box) {
-              return (
-                <ins
-                  key={idx}
-                  className={cx({
-                    cursor: word.cursor,
-                    editting: word.edit,
-                    highlight: word.hightlight,
-                  })}
-                >
-                  {word.answer}
-                </ins>
-              );
-            } else {
-              return <del key={idx}></del>;
-            }
-          })}
-        </div>
-        {!finish && (
-          <Description>
-            Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용
-            가능합니다!
-          </Description>
-        )}
-      </div>
-      {finish ? (
-        <div
-          style={{
+                <StyledForm fullWidth>
+                  <InputLabel id="demo-simple-select-label">Mode</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={modeValue()}
+                    label="Mode"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={'Easy'}>Easy</MenuItem>
+                    <MenuItem value={'Normal'}>Normal</MenuItem>
+                    <MenuItem value={'Hard'}>Hard</MenuItem>
+                  </Select>
+                </StyledForm>
+              </Box>
+            )}
+          </div>
+          <div className="main">
+            {wordList.map((word, idx) => {
+              if (word.clue) {
+                return (
+                  <ins
+                    key={idx}
+                    data-clue={word.clue}
+                    onClick={finish ? undefined : () => editClue(word, idx)}
+                    className={cx({
+                      cursor: word.cursor,
+                      editting: word.edit,
+                      highlight: word.hightlight,
+                    })}
+                  >
+                    {word.answer}
+                  </ins>
+                );
+              } else if (word.box) {
+                return (
+                  <ins
+                    key={idx}
+                    className={cx({
+                      cursor: word.cursor,
+                      editting: word.edit,
+                      highlight: word.hightlight,
+                    })}
+                  >
+                    {word.answer}
+                  </ins>
+                );
+              } else {
+                return <del key={idx}></del>;
+              }
+            })}
+          </div>
+          {!finish && (
+            <Description>
+              Tab / Tab + Shift / 방향키 / 스페이스바 (쇼츠 상영) / 사용
+              가능합니다!
+            </Description>
+          )}
+        </LeftBox>
+        <RightBox>
+          {finish ? (
+            <ResultBox
+            /* style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             width: '20%',
             height: '100%',
-          }}
-        >
-          <h1>맞은 갯수: {correct}</h1>
-          <Replay onClick={() => rePlay()}>다시하기</Replay>
-          <Stop onClick={() => goHome()}>그만하기</Stop>
-        </div>
-      ) : (
-        <div
-          style={{
+          }} */
+            >
+              <h1>
+                맞은 갯수: {correct} / {clueList.length}
+              </h1>
+              <Replay onClick={() => rePlay()}>다시하기</Replay>
+              <Stop onClick={() => goHome()}>그만하기</Stop>
+            </ResultBox>
+          ) : (
+            <Question
+            /* style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             height: '100%',
-          }}
-        >
-          <Content>
-            {clueList.map((clue, idx) => {
-              return (
-                <ClueBox
-                  backgroundColor={clue.editting}
-                  key={idx}
-                  onClick={() => clickClue(clue)}
-                  onMouseOver={() => toggleClue(clue, true)}
-                  onMouseOut={() => toggleClue(clue, false)}
-                >
-                  {clue.dic}
-                  <img
-                    src={shortsPlay}
-                    alt=""
-                    className="shorts-button"
-                    onClick={() => {
-                      handleShorts(clue);
-                    }}
-                  />
-                  <NumberBox>{idx + 1}</NumberBox>
-                </ClueBox>
-              );
-            })}
-          </Content>
-          <SubmitButton onClick={() => handleAnswer()}>제출하기</SubmitButton>
-        </div>
-      )}
-
-      {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-    </Wrapper>
+          }} */
+            >
+              <Content>
+                {clueList.map((clue, idx) => {
+                  return (
+                    <ClueBox
+                      backgroundColor={clue.editting}
+                      key={idx}
+                      onClick={() => clickClue(clue)}
+                      onMouseOver={() => toggleClue(clue, true)}
+                      onMouseOut={() => toggleClue(clue, false)}
+                    >
+                      {clue.dic}
+                      <img
+                        src={shortsPlay}
+                        alt=""
+                        className="shorts-button"
+                        onClick={() => {
+                          handleShorts(clue);
+                        }}
+                      />
+                      <NumberBox>{idx + 1}</NumberBox>
+                    </ClueBox>
+                  );
+                })}
+              </Content>
+              <SubmitButton onClick={() => handleAnswer()}>
+                제출하기
+              </SubmitButton>
+            </Question>
+          )}
+        </RightBox>
+        {modalOpen && (
+          <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />
+        )}
+      </Wrapper>
+    </RealWrapper>
   );
 };
 

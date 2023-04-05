@@ -162,6 +162,8 @@ const SentenceBox = styled.div`
     background-color: ${props => props.theme.mainColor};
     color: ${props => props.theme.whiteColor};
     padding: 4px;
+
+    font-size: 0.5rem;
   }
 
   .sentence-box {

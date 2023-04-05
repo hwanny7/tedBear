@@ -311,11 +311,9 @@ const MicBox = styled.div<SpeakerBoxProps>`
   background-color: ${props => {
     if (props.result == 0) {
       // 틀
-      console.log('틀림');
       return `${props.theme.learningBoxIncorrectColor}`;
     } else if (props.result == 1) {
       // 맞
-      console.log('맞음');
       return `${props.theme.learningBoxCorrect}`;
     } else {
       // 기본
@@ -592,7 +590,7 @@ const LearningPage = () => {
       '#000000',
     ],
   };
-  const [series, setSeries] = useState<number[]>();
+  const [series, setSeries] = useState<number[]>([]);
   useEffect(() => {
     //뱃지 색상 설정
     if (videoDesc?.scoreInfo.score !== undefined) {
@@ -744,57 +742,55 @@ const LearningPage = () => {
   const [videoTime, setVideoTime] = useState(0);
   // 1초마다 영상 실행 시간 가져오기
   useEffect(() => {
-    let watchTime: NodeJS.Timer;
-    if (isLogin) {
-      watchTime = setInterval(() => {
-        // 현재 시청 시간 state 저장
-        const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
-        console.log('watch');
-        setVideoTime(time);
-        // 실시간 하이라이팅
-        let flag = false;
-        let idx = selected;
-        while (!flag) {
-          if (videoDesc?.sentenceInfoList[idx].startTime != undefined) {
-            if (
-              videoDesc?.sentenceInfoList[idx].startTime &&
-              videoDesc?.sentenceInfoList[idx].startTime <= time &&
-              time <= videoDesc?.sentenceInfoList[idx + 1].startTime
-            ) {
-              flag = true;
-              break;
-            }
-
-            idx++;
+    const watchTime = setInterval(() => {
+      // setIntervalTime(old => old + 1);
+      const time = Math.floor(Number(youtubePlayer?.getCurrentTime()));
+      setVideoTime(time);
+      // 실시간 하이라이팅
+      let flag = false;
+      let idx = selected;
+      // const length = videoDesc?.sentenceInfoList.length;
+      while (!flag) {
+        if (videoDesc?.sentenceInfoList[idx].startTime != undefined) {
+          if (
+            videoDesc?.sentenceInfoList[idx].startTime &&
+            videoDesc?.sentenceInfoList[idx].startTime <= time &&
+            time <= videoDesc?.sentenceInfoList[idx + 1].startTime
+          ) {
+            flag = true;
+            break;
           }
+          idx++;
         }
-
-        setHighlight(true);
-        setSelected(idx);
-      }, 1000);
-    }
+      }
+      setHighlight(true);
+      setSelected(idx);
+    }, 1000);
 
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
-      console.log('언마운트');
-      if (isLogin) {
+
+      clearInterval(watchTime);
+    };
+  });
+
+  useEffect(() => {
+    return () => {
+      if (isLogin && videoNumber != 0) {
         const data = {
           videoNo: videoNumber,
           videoProgressTime: videoTime.toString(),
         };
-
         const onRecordWatching = async () => {
           await postCurrentVideo(data);
         };
         onRecordWatching();
-
-        clearInterval(watchTime);
       }
-
-      // 마이크 끠
-      // SpeechRecognition.stopListening();
+      // 마이크 끄기
+      SpeechRecognition.stopListening();
     };
-  });
+  }, [videoNumber, videoTime]);
+
   // 학습 완료
   const onComplete = () => {
     if (isLogin) {
@@ -886,7 +882,7 @@ const LearningPage = () => {
   const onMatching = () => {
     // 스크립트 특수문자 제거하기
     // [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
-    const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/[]]/gim;
+    const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/]/gim;
     // const str = 'AdmiN, **{}()! 1234.안녕[]<>\\/?';
     // const temp2 = str.replace(reg, '');
     const answer = videoDesc?.sentenceInfoList[selected].content
