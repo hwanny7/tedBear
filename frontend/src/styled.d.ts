@@ -4,6 +4,7 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     mainColor: string;
     mainLightColor: string;
+    mainDarkColor: string;
     pointColor: string;
     pointLightColor: string;
     // pointLigntColor 그라데이션
@@ -22,7 +23,7 @@ declare module 'styled-components' {
     shadowColor: string;
     kakaoColor: string;
     naverColor: string;
-    landingWavseGrdColor: string;
+    landingWaveGrdColor: string;
     landingWaveColor: string;
     landingWaveLigntColor: string;
     landingCircleColor: string;
@@ -31,5 +32,25 @@ declare module 'styled-components' {
     learningBoxCorrect: string;
     blackColorLight1: string;
     blackColorLight2: string;
+    textColor1: string;
+    textColor2: string;
+    learningBoxColor: string;
+    highlightColor: string;
+    speakBox: string;
+    learningBoxColor2: string;
+    bgColor2: string;
+    profileBoxColor: string;
+
+    badgeRed: string;
+    badgeOrange: string;
+    badgeYellow: string;
+    badgeGreen: string;
+    badgeBlue: string;
+    badgeIndigo: string;
+    badgePurple: string;
+    badgeBronze: string;
+    badgeSilver: string;
+    badgGold: string;
+    badgeUnlank: string;
   }
 }

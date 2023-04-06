@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🐻 TEDBEAR - TED 영상 추천 서비스
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a6a623a7-7854-4422-9d4c-dfaad9126e02/Untitled.png)
 
@@ -168,3 +169,6 @@ tedbear
     | 윤승환 |  | SpringBoot / React |
     | 장유하 |  | React + Recoil |
     | 정혜주 |  | Vue / React |
+=======
+### TEDBEAR.
+>>>>>>> ecf388529807d9f9542d835b39057dcc5796c5f2
