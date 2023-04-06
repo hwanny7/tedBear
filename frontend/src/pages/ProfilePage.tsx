@@ -4,7 +4,7 @@ import PieChart from 'components/profile/PieChart'; // 학습 통계 (난이도�
 import styled, { keyframes } from 'styled-components';
 import ProfileTemp from 'assets/img/profileTemp.svg';
 import Cloud from 'assets/img/landingCloud.svg';
-import Info from 'assets/img/info.svg';
+import Info from 'assets/img/info3.svg';
 import { device } from 'utils/mediaQuery';
 import { useNavigate } from 'react-router-dom';
 

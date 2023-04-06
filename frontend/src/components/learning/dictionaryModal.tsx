@@ -23,7 +23,7 @@ interface MenuProps {
 const Wrapper = styled.div`
   background-color: ${props => props.theme.mainColor};
 
-  z-index: 6;
+  z-index: 999999;
   position: fixed;
   bottom: 56px;
   right: 56px;
