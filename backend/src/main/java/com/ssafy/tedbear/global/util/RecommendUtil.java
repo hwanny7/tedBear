@@ -3,7 +3,7 @@ package com.ssafy.tedbear.global.util;
 import java.util.Random;
 
 public class RecommendUtil {
-	final static int RANGE = 7890;
+	final static int RANGE = 10000;
 	// 정규분포 이용해서, +- RANGE 범위의 추천 스코어 리턴
 	public static int getRecommendScore(int myScore) {
 		Random random = new Random();

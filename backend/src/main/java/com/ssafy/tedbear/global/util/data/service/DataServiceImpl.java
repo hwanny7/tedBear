@@ -205,17 +205,21 @@ public class DataServiceImpl implements DataService {
 	public void initVideoScore() {
 		List<Video> videoList = videoRepository.findAll();
 		for (Video video : videoList) {
-			List<Sentence> sentenceList = video.getSentenceList();
-			int cnt = 0;
-			int sumScore = 0;
-			for (Sentence sentence : sentenceList) {
+			int[] freq = new int[11];
+			for (Sentence sentence : video.getSentenceList()) {
 				int score = sentence.getScore();
-				if (score != 0) {
-					sumScore += score;
-					cnt += 1;
+				int idx = score == 0 ? 10 : (score - 1) / 10000;
+				freq[idx] += 1;
+			}
+			int videoScore = 10;
+			int max_freq = freq[10];
+			for (int i = 0; i < 10; i++) {
+				if (max_freq <= freq[i]) {
+					max_freq = freq[i];
+					videoScore = i;
 				}
 			}
-			video.setScore(sumScore / Math.max(1, cnt));
+			video.setScore(videoScore == 10 ? 0 : videoScore * 10000);
 		}
 	}
 

@@ -14,7 +14,9 @@ import com.ssafy.tedbear.domain.video.entity.Video;
 public interface VideoRepository extends JpaRepository<Video, Long> {
 	Video findByWatchId(String watchId);
 
-	List<Video> findByScoreBetween(int startScore, int endScore);
+	@Query("select v from Video v where v.score between :startScore1 and :endScore1 or v.score between :startScore2 and :endScore2 or v.score between :startScore3 and :endScore3")
+	List<Video> findByScoreBetween(int startScore1, int endScore1, int startScore2, int endScore2, int startScore3,
+		int endScore3);
 
 	@Query("select v from Video v where v.title like %:query%")
 	Slice<Video> findSliceByTitle(String query, Pageable pageable);

@@ -1,8 +1,10 @@
 package com.ssafy.tedbear.domain.video.service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,7 @@ public class VideoServiceImpl implements VideoService {
 	final WatchingVideoRepository watchingVideoRepository;
 	final MemberService memberService;
 	final FindMemberService findMemberService;
+	final Random random = new Random();
 	final int resultMaxCnt = 12;
 
 	@Override
@@ -45,17 +48,23 @@ public class VideoServiceImpl implements VideoService {
 	public VideoInfoListDto getRecommendList(String memberUid, int delta) {
 		Member member = findMemberService.findMember(memberUid);
 		int myScore = member.getMemberScore().getScore();
-		int recommendScoreFlag = RecommendUtil.getRecommendScore(myScore + delta);
+		int recommendScoreFlag1 = RecommendUtil.getRecommendScore(myScore + delta);
+		int recommendScoreFlag2 = RecommendUtil.getRecommendScore(myScore + delta);
+		int recommendScoreFlag3 = RecommendUtil.getRecommendScore(myScore + delta);
 		int deltaScore = 1500;
-		log.info("[VideoRecommendList] : {}", recommendScoreFlag);
 		List<Video> recommendVideoList = null;
 		do {
-			recommendVideoList = (videoRepository.findByScoreBetween(
-				Math.max(1, recommendScoreFlag - deltaScore),
-				recommendScoreFlag + deltaScore));
+			int s1 = Math.max(1, recommendScoreFlag1 - deltaScore);
+			int e1 = recommendScoreFlag1 + deltaScore;
+			int s2 = Math.max(1, recommendScoreFlag2 - deltaScore);
+			int e2 = recommendScoreFlag2 + deltaScore;
+			int s3 = Math.max(1, recommendScoreFlag3 - deltaScore);
+			int e3 = recommendScoreFlag3 + deltaScore;
+
+			recommendVideoList = videoRepository.findByScoreBetween(s1, e1, s2, e2, s3, e3);
 			deltaScore += 10000;
 		} while (recommendVideoList.size() < resultMaxCnt);
-
+		recommendVideoList.stream().forEach(x-> System.out.println(x.getScore()));
 		Set<Long> bookmarkedVideoNoSet =
 			videoBookmarkRepository
 				.findVideoBookmarksByMemberAndVideoIn(member, recommendVideoList)
@@ -66,7 +75,7 @@ public class VideoServiceImpl implements VideoService {
 		return new VideoInfoListDto(
 			recommendVideoList
 				.stream()
-				// .sorted(Comparator.comparingInt(a -> Math.abs(a.getScore() - myScore)))
+				.sorted(Comparator.comparingInt(a -> random.nextInt()))
 				.limit(resultMaxCnt)
 				.peek(x -> x.setBookmarked(bookmarkedVideoNoSet.contains(x.getNo())))
 				.collect(Collectors.toList())
@@ -148,7 +157,7 @@ public class VideoServiceImpl implements VideoService {
 			WatchingVideo existWatchingVideo = optionalWatchingVideo.get();
 			existWatchingVideo.setUpdatedDateNow();
 			existWatchingVideo.setVideoProgressTime(request.getVideoProgressTime());
-			log.info("이미 존재하는 영상시청 데이터에 추가 : {}",existWatchingVideo);
+			log.info("이미 존재하는 영상시청 데이터에 추가 : {}", existWatchingVideo);
 		} else {
 			WatchingVideo noExistWatchingVideo = WatchingVideo.builder()
 				.videoStatus(false)
@@ -157,9 +166,9 @@ public class VideoServiceImpl implements VideoService {
 				.video(video)
 				.member(member)
 				.build();
-			log.info("존재하지 않는 영상시청 데이터 추가 : {}",noExistWatchingVideo);
+			log.info("존재하지 않는 영상시청 데이터 추가 : {}", noExistWatchingVideo);
 			watchingVideoRepository.save(noExistWatchingVideo);
-			log.info("존재하지 않는 영상시청 데이터 추가 : {}",noExistWatchingVideo);
+			log.info("존재하지 않는 영상시청 데이터 추가 : {}", noExistWatchingVideo);
 		}
 
 	}
