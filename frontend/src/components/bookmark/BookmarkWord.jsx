@@ -152,15 +152,17 @@ const BookmarkWord = () => {
     // console.log('북마크를 켜고 끄고');
     const copy = [...wordBookmarkList];
     copy[idx].bookmarked = !copy[idx].bookmarked;
-    // console.log(item.bookmarked);
+    console.log(item.bookmarked);
     if (copy[idx].bookmarked) {
-      postWordBookmark({ wordNumber: item.wordNo });
-      // console.log(item.wordNo);
+      postWordBookmark({ wordNo: item.wordInfo.wordNo });
+      // console.log(item.wordInfo.wordNo);
+      // console.log(item);
     } else {
-      deleteWordBookmark({ wordNumber: item.wordNo });
-      // console.log(item.wordNo);
+      deleteWordBookmark({ wordNo: item.wordInfo.wordNo });
+      // console.log(item.wordInfo.wordNo);
+      // console.log(item);
     }
-    // console.log(item.wordNo, copy[idx].bookmarked);
+    // console.log(item.wordInfo.wordNo, copy[idx].bookmarked);
     setWordBookmarkList(copy);
   };
 
