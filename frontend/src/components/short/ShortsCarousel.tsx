@@ -11,39 +11,6 @@ interface BadgeProps {
   score?: number;
 }
 
-const ViedoLevelImg = styled.img<BadgeProps>`
-  height: 15%;
-  width: 15%;
-  position: absolute;
-  top: 4%;
-  left: 4%;
-  filter: ${props => {
-    if (props.score == 0) {
-      return `${props.theme.badgeRed}`;
-    } else if (props.score == 1) {
-      return `${props.theme.badgeOrange}`;
-    } else if (props.score == 2) {
-      return `${props.theme.badgeYellow}`;
-    } else if (props.score == 3) {
-      return `${props.theme.badgeGreen}`;
-    } else if (props.score == 4) {
-      return `${props.theme.badgeBlue}`;
-    } else if (props.score == 5) {
-      return `${props.theme.badgeIndigo}`;
-    } else if (props.score == 6) {
-      return `${props.theme.badgePurple}`;
-    } else if (props.score == 7) {
-      return `${props.theme.badgeBronze}`;
-    } else if (props.score == 8) {
-      return `${props.theme.badgeSilver}`;
-    } else if (props.score == 9) {
-      return `${props.theme.badgGold}`;
-    } else {
-      return `${props.theme.badgeUnlank}`;
-    }
-  }};
-`;
-
 const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
@@ -54,12 +21,19 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
   display: flex;
   height: 40vh;
   transition: ${props => props.transition};
-  transform: translateX(-${props => props.transform * 20}%);
-  @media (max-width: 768px) {
+
+  @media (max-width: 425px) {
+    transform: translateX(-${props => props.transform * 33.3}%);
+  }
+
+  @media (min-width: 425px) {
     transform: translateX(-${props => props.transform * 25}%);
   }
+
+  @media (min-width: 768px) {
+    transform: translateX(-${props => props.transform * 20}%);
+  }
   .wrapper {
-    width: 18%;
     position: relative;
     flex-shrink: 0;
     flex-grow: 1;
@@ -73,9 +47,17 @@ const ContentBox = styled.div<{ transition: string; transform: number }>`
       scale: 1.04;
       transition: 0.4s;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 425px) {
+      width: 31.3%;
+    }
+
+    @media (min-width: 425px) {
       width: 23%;
     }
+    @media (min-width: 768px) {
+      width: 18%;
+    }
+
     .main-img {
       border-radius: 16px;
       width: 100%;
@@ -96,7 +78,6 @@ const RootWrapper = styled.div`
   width: 100%;
   .right-btn {
     position: absolute;
-    right: 5%;
     top: -12%;
     height: 5vh;
     cursor: pointer;
@@ -104,17 +85,29 @@ const RootWrapper = styled.div`
       scale: 1.1;
       transition: 0.4s;
     }
+    @media (max-width: 600px) {
+      right: 48px;
+      width: 24px;
+    }
+    @media (min-width: 600px) {
+      right: 56px;
+    }
   }
   .left-btn {
     position: absolute;
-    right: 1%;
-
     top: -12%;
     height: 5vh;
     cursor: pointer;
     &:hover {
       scale: 1.1;
       transition: 0.4s;
+    }
+    @media (max-width: 600px) {
+      right: 8px;
+      width: 24px;
+    }
+    @media (min-width: 600px) {
+      right: 8px;
     }
   }
 `;

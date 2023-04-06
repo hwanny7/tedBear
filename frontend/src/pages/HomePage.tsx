@@ -22,6 +22,54 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .top-wrapper {
+    display: flex;
+
+    @media (max-width: 700px) {
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 700px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .searchbar-box {
+    display: flex;
+    @media (max-width: 700px) {
+      margin-bottom: 16px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 700px) {
+      align-items: end;
+      width: 70%;
+    }
+  }
+
+  .btn-box {
+    display: flex;
+
+    @media (max-width: 700px) {
+      margin-bottom: 8px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 700px) {
+      justify-content: end;
+      align-items: end;
+      width: 30%;
+    }
+  }
 `;
 
 const VideoTitle = styled.span`
@@ -68,15 +116,43 @@ const ShortsTitle = styled.span`
   }
 `;
 
-const Button = styled.button<{ changeColor?: number }>`
-  padding: 1% 8% 1%;
-  cursor: pointer;
-  background: ${props =>
-    props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
+const BtnWrapper = styled.div`
+  background-color: ${props => props.theme.bgColor2};
+  margin-right: 10px;
 
-  box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  padding: 4px 8px;
+  width: 226px;
+  height: 40px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.19);
+
+  display: flex;
+`;
+
+const Button = styled.button<{ changeColor?: number }>`
+  width: 70px;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  /* font-weight: bold; */
+
+  ${props => {
+    if (props.changeColor) {
+      return ` 
+      background:  ${props.theme.pointLigntGrdColor8};
+      color: ${props.theme.pointColor};`;
+    } else {
+      return ` 
+      background: ${props.theme.bgColor2};
+      color: ${props.theme.textColor2};
+      `;
+    }
+  }}
+
   &:hover {
-    background: ${props => props.theme.pointLightColor};
+    background: ${props => props.theme.pointLigntGrdColor8};
+    color: ${props => props.theme.pointColor};
   }
   @media ${device.mobile} {
     font-size: 10px;
@@ -91,22 +167,35 @@ const Button = styled.button<{ changeColor?: number }>`
   }
 
   @media ${device.desktop} {
-    font-size: 20px;
+    font-size: 16px;
   }
 `;
 
 const LeftButton = styled.button<{ changeColor?: number }>`
+  width: 70px;
+  height: 100%;
   cursor: pointer;
-  border-radius: 8px 0 0 8px;
+  border-radius: 4px;
+  /* font-weight: bold; */
 
-  background: ${props =>
-    props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
-  padding: 1% 8% 1%;
+  ${props => {
+    if (props.changeColor) {
+      return ` 
+      background:  ${props.theme.pointLigntGrdColor8};
+      color: ${props.theme.pointColor};`;
+    } else {
+      return ` 
+      background: ${props.theme.bgColor2};
+      color: ${props.theme.textColor2};
+      `;
+    }
+  }}
 
-  box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
-    background: ${props => props.theme.pointLightColor};
+    background: ${props => props.theme.pointLigntGrdColor8};
+    color: ${props => props.theme.pointColor};
   }
+
   @media ${device.mobile} {
     font-size: 10px;
   }
@@ -120,25 +209,33 @@ const LeftButton = styled.button<{ changeColor?: number }>`
   }
 
   @media ${device.desktop} {
-    font-size: 20px;
+    font-size: 16px;
   }
 `;
 
 const RightButton = styled.button<{ changeColor?: number }>`
+  width: 70px;
+  height: 100%;
   cursor: pointer;
+  border-radius: 4px;
+  /* font-weight: bold; */
 
-  border-radius: 0px 8px 8px 0px;
-  /* background: ${props =>
-    props.changeColor
-      ? 'linear-gradient(to right, #fec88e, #fead55)'
-      : 'white'}; */
-  background: ${props =>
-    props.changeColor ? `${props.theme.pointLightColor}` : 'white'};
-  padding: 1% 8% 1%;
+  ${props => {
+    if (props.changeColor) {
+      return ` 
+      background:  ${props.theme.pointLigntGrdColor8};
+      color: ${props.theme.pointColor};`;
+    } else {
+      return ` 
+      background: ${props.theme.bgColor2};
+      color: ${props.theme.textColor2};
+      `;
+    }
+  }}
 
-  box-shadow: 0.347vw 0.347vw 0.694vw rgba(0, 0, 0, 0.16);
   &:hover {
-    background: ${props => props.theme.pointLightColor};
+    background: ${props => props.theme.pointLigntGrdColor8};
+    color: ${props => props.theme.pointColor};
   }
   @media ${device.mobile} {
     font-size: 10px;
@@ -149,11 +246,11 @@ const RightButton = styled.button<{ changeColor?: number }>`
   }
 
   @media ${device.laptop} {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   @media ${device.desktop} {
-    font-size: 20px;
+    font-size: 16px;
   }
 `;
 
@@ -253,42 +350,34 @@ const HomePage = () => {
             setShortsData={setShortsData}
           />
         )}
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'end',
-              width: '70%',
-            }}
-          >
+        <div className="top-wrapper">
+          <div className="searchbar-box">
             <SearchBar></SearchBar>
-            <LearningButton onClick={() => navigate('/still-learn')}>
+            {/* <LearningButton onClick={() => navigate('/still-learn')}>
               Learning
-            </LearningButton>
+            </LearningButton> */}
           </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'end',
-              alignItems: 'end',
-              width: '30%',
-            }}
-          >
-            <LeftButton
-              changeColor={button[0]}
-              onClick={() => changeDifficulty(0)}
-            >
-              초급
-            </LeftButton>
-            <Button changeColor={button[1]} onClick={() => changeDifficulty(1)}>
-              중급
-            </Button>
-            <RightButton
-              changeColor={button[2]}
-              onClick={() => changeDifficulty(2)}
-            >
-              고급
-            </RightButton>
+          <div className="btn-box">
+            <BtnWrapper>
+              <LeftButton
+                changeColor={button[0]}
+                onClick={() => changeDifficulty(0)}
+              >
+                초급
+              </LeftButton>
+              <Button
+                changeColor={button[1]}
+                onClick={() => changeDifficulty(1)}
+              >
+                중급
+              </Button>
+              <RightButton
+                changeColor={button[2]}
+                onClick={() => changeDifficulty(2)}
+              >
+                고급
+              </RightButton>
+            </BtnWrapper>
           </div>
         </div>
         <VideoTitle>추천 영상</VideoTitle>

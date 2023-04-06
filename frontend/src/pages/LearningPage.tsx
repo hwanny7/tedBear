@@ -903,6 +903,9 @@ const LearningPage = () => {
               await feelDifficulty(data);
             };
             postFeel();
+
+            // 홈으로 이동
+            window.location.href = '/';
           });
         }
       });

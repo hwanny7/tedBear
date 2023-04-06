@@ -99,7 +99,7 @@ const RootWrapper = styled.div`
   position: relative;
   .right-btn {
     position: absolute;
-    right: 5%;
+
     top: -15%;
     height: 5vh;
     cursor: pointer;
@@ -107,16 +107,29 @@ const RootWrapper = styled.div`
       scale: 1.1;
       transition: 0.4s;
     }
+    @media (max-width: 600px) {
+      right: 48px;
+      width: 24px;
+    }
+    @media (min-width: 600px) {
+      right: 56px;
+    }
   }
   .left-btn {
     position: absolute;
-    right: 1%;
     top: -15%;
     height: 5vh;
     cursor: pointer;
     &:hover {
       scale: 1.1;
       transition: 0.4s;
+    }
+    @media (max-width: 600px) {
+      right: 8px;
+      width: 24px;
+    }
+    @media (min-width: 600px) {
+      right: 8px;
     }
   }
 `;
