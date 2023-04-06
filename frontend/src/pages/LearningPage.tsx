@@ -1190,10 +1190,10 @@ const LearningPage = () => {
             ) : null}
           </YoutubeBox>
           <SpeakBox>
-            <BookmarkImg
+            {/* <BookmarkImg
               src={BookmarkEmpty}
               onClick={() => onSentenceBookmark(senetenceId)}
-            />
+            /> */}
             {isLogin ? (
               !sentenceBookmark ? (
                 <BookmarkImg
