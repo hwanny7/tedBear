@@ -80,7 +80,7 @@ const BookmarkVideo = () => {
     const data: IBookmarkVideo[] = await getVideoBookmark(page + 1);
     if (data.length) {
       setVideoBookmark(videoBookmark.concat(...data));
-      console.log(data);
+      // console.log(data);
       setLoading(false);
     }
   };
@@ -90,7 +90,7 @@ const BookmarkVideo = () => {
   }, [page]);
 
   useEffect(() => {
-    console.log('useEffect!');
+    // console.log('useEffect!');
     if (inView && !loading) {
       setPage(prev => prev + 1);
     }
@@ -101,16 +101,16 @@ const BookmarkVideo = () => {
   };
 
   const handleMark = (Thumnail: IBookmarkVideo, idx: number) => {
-    console.log('북마크를 켜고 끄고');
+    // console.log('북마크를 켜고 끄고');
     const copy = [...videoBookmark];
     copy[idx].bookMarked = !copy[idx].bookMarked;
-    console.log(Thumnail.bookMarked);
+    // console.log(Thumnail.bookMarked);
     if (copy[idx].bookMarked) {
       postVideoBookmark({ videoNo: Thumnail.no });
     } else {
       deleteVideoBookmark({ videoNo: Thumnail.no });
     }
-    console.log(Thumnail.no, copy[idx].bookMarked);
+    // console.log(Thumnail.no, copy[idx].bookMarked);
     setVideoBookmark(copy);
   };
 

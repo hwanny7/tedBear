@@ -15,10 +15,10 @@ const snackSlice = createSlice({
   reducers: {
     /** open, message */
     handleSuccessState: (state, action) => {
-      console.log(
-        'handleSuccessState reducer called with payload:',
-        action.payload,
-      );
+      // console.log(
+      //   'handleSuccessState reducer called with payload:',
+      //   action.payload,
+      // );
       state.open = action.payload.open;
       state.message = action.payload.message;
       state.severity = action.payload.severity;

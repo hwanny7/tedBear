@@ -24,7 +24,7 @@ export const getVideoBookmark = async (page: number) => {
     url: '/video/bookmark/list',
     params: params,
   });
-  console.log(data, 'data입니다!');
+  // console.log(data, 'data입니다!');
   return data.videoInfoList;
 };
 

@@ -133,18 +133,18 @@ const BookmarkSentence = () => {
     if (data.length) {
       // setSentenceBookmark(data);
       setSentenceBookmark(sentenceBookmark.concat(...data));
-      console.log(data);
+      // console.log(data);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    console.log('fetch');
+    // console.log('fetch');
     fetchData();
   }, [page]);
 
   useEffect(() => {
-    console.log('inviewloading');
+    // console.log('inviewloading');
     if (inView && !loading) {
       setPage(prev => prev + 1);
     }
@@ -160,16 +160,16 @@ const BookmarkSentence = () => {
   };
 
   const handleMark = (sen: IBookmarkSentence, idx: number) => {
-    console.log('북마크를 켜고 끄고');
+    // console.log('북마크를 켜고 끄고');
     const copy = [...sentenceBookmark];
     copy[idx].bookmarked = !copy[idx].bookmarked;
-    console.log(sen.bookmarked);
+    // console.log(sen.bookmarked);
     if (copy[idx].bookmarked) {
       postSentenceBookmark({ sentenceNo: sen.no });
     } else {
       deleteSentenceBookmark({ sentenceNo: sen.no });
     }
-    console.log(sen.no, copy[idx].bookmarked);
+    // console.log(sen.no, copy[idx].bookmarked);
     setSentenceBookmark(copy);
   };
 

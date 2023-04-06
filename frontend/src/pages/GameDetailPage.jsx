@@ -303,7 +303,7 @@ const GameDetailPage = () => {
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
           // console.log(response.data);
-          console.log(response.data);
+          // console.log(response.data);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -320,7 +320,7 @@ const GameDetailPage = () => {
 
   // 다음 문제
   const handleNext = () => {
-    console.log('to the next problem');
+    // console.log('to the next problem');
     async function fetchData() {
       await authApi
         .get(`game/word`)

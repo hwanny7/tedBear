@@ -121,25 +121,25 @@ const BookmarkWord = () => {
           setWordBookmarkList(wordBookmarkList.concat(...listData));
           // setWordBookmarkList(prevList => [...prevList, ...listData]);
           // setPage(prevPage => prevPage + 1);
-          console.log(listData);
+          // console.log(listData);
           setLoading(false);
         }
       })
       .catch(error => {
-        console.log(error.data);
+        // console.log(error.data);
       });
   };
 
   useEffect(() => {
-    console.log('fetch');
+    // console.log('fetch');
     fetchData();
   }, [page]);
 
   useEffect(() => {
-    console.log('inviewloading');
-    console.log(inView, loading);
+    // console.log('inviewloading');
+    // console.log(inView, loading);
     if (inView && !loading) {
-      console.log('여기!');
+      // console.log('여기!');
       setPage(prevPage => prevPage + 1);
     }
   }, [inView, loading]);
@@ -149,18 +149,18 @@ const BookmarkWord = () => {
   };
 
   const handleMark = (item, idx) => {
-    console.log('북마크를 켜고 끄고');
+    // console.log('북마크를 켜고 끄고');
     const copy = [...wordBookmarkList];
     copy[idx].bookmarked = !copy[idx].bookmarked;
-    console.log(item.bookmarked);
+    // console.log(item.bookmarked);
     if (copy[idx].bookmarked) {
       postWordBookmark({ wordNumber: item.wordNo });
-      console.log(item.wordNo);
+      // console.log(item.wordNo);
     } else {
       deleteWordBookmark({ wordNumber: item.wordNo });
-      console.log(item.wordNo);
+      // console.log(item.wordNo);
     }
-    console.log(item.wordNo, copy[idx].bookmarked);
+    // console.log(item.wordNo, copy[idx].bookmarked);
     setWordBookmarkList(copy);
   };
 
@@ -198,7 +198,7 @@ const BookmarkWord = () => {
                         className="book-mark"
                         src={item.bookmarked ? BookmarkFull : BookmarkEmpty}
                         onClick={() => {
-                          console.log(item, idx);
+                          // console.log(item, idx);
                           handleMark(item, idx);
                         }}
                         style={{ zIndex: 9999 }}

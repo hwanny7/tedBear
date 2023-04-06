@@ -159,7 +159,7 @@ const LevelPage = () => {
           setWordList(wordList);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     fetchData();
@@ -191,7 +191,7 @@ const LevelPage = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    console.log(senList, wordList);
+    // console.log(senList, wordList);
     // Sum of Scores of Sentences
     const senSum = senList.reduce((sum1, card) => {
       if (card.flipped === true) {
@@ -210,7 +210,7 @@ const LevelPage = () => {
     }, 0);
     // total Sum
     const totalSum = senSum + wordSum;
-    console.log(totalSum);
+    // console.log(totalSum);
     // POST
     try {
       const response = await authApi({
@@ -220,8 +220,8 @@ const LevelPage = () => {
           testResult: totalSum,
         },
       });
-      console.log(response);
-      console.log('POST 완료!');
+      // console.log(response);
+      // console.log('POST 완료!');
       navigate('/home');
     } catch (error) {
       console.error(error);

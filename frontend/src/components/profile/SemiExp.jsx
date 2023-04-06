@@ -103,13 +103,13 @@ export default function SemiExp() {
         .then(response => {
           setLevel(response.data.level);
           const exp = response.data.percent;
-          console.log(response.data.percent);
+          // console.log(response.data.percent);
           setExperience(prevList => [...prevList, exp]);
-          console.log(experience);
+          // console.log(experience);
           // console.log(series);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     setLoaded(true);

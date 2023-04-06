@@ -41,7 +41,7 @@ const ImgBox = styled.div`
 const GamePage = () => {
   const navigate = useNavigate();
   const handleStart = () => {
-    console.log('시작 버튼을 클릭');
+    // console.log('시작 버튼을 클릭');
     navigate('/game/detail');
   };
   return (

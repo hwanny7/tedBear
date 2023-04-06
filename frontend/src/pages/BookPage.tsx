@@ -70,7 +70,7 @@ const BookPage = () => {
   ]);
 
   const handleButtons = (idx: number) => {
-    console.log(idx);
+    // console.log(idx);
     const temp: Array<boolean> = [false, false, false];
     temp[idx] = true;
     setButtonStatus(temp);

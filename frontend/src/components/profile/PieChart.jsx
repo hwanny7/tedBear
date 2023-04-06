@@ -32,10 +32,10 @@ export default function PieChart() {
         .get(`/member/pie`)
         .then(response => {
           setValues(response.data.pieList);
-          console.log(response.data.pieList);
+          // console.log(response.data.pieList);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     setLoaded(true);

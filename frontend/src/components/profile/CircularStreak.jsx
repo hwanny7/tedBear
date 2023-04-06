@@ -54,10 +54,10 @@ const CircularStreak = () => {
         .get(`/member/streak`)
         .then(response => {
           setValues(response.data.streakList);
-          console.log(response.data.streakList);
+          // console.log(response.data.streakList);
         })
         .catch(error => {
-          console.log(error.data);
+          // console.log(error.data);
         });
     }
     setLoaded(true);
