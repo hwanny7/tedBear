@@ -9,21 +9,32 @@ import { useNavigate } from 'react-router-dom';
 import { postWordBookmark, deleteWordBookmark } from 'utils/api/learningApi';
 
 const BookIn = styled.div`
-  max-height: 80vh;
-  padding: 30px;
-  right: 0%;
-  overflow: auto;
+  background-color: ${props => props.theme.learningBoxColor};
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 450px) {
+    padding: 10px;
+  }
+
+  @media (min-width: 450px) {
+    padding: 20px;
+  }
+
+  @media (min-width: 700px) {
+    padding: 30px;
+  }
+
+  /* max-height: 80vh; */
+
+  /* right: 0%; */
+  /* overflow: auto; */
   /* paper's scroll */
-  &::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 15%;
-    background-color: ${props => props.theme.mainLightColor};
-    border-radius: 20px;
-  }
-  scroll-behavior: auto;
+
   //
 
   .book-mark:hover {
@@ -31,69 +42,222 @@ const BookIn = styled.div`
     cursor: pointer;
   }
   .row {
+    position: relative;
+    width: 100%;
+    /* height: 100%; */
+    background-color: ${props => props.theme.learningBoxColor2};
     display: flex;
-    flex-direction: row;
+
     margin-bottom: 20px;
+    border-radius: 16px;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.203);
+    padding: 24px;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    @media (min-width: 600px) {
+      flex-direction: row;
+    }
   }
   .bookmark-container {
-    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 24px;
+    /* width: 5%; */
+    /* height: 40px; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: left;
-    margin-right: 10px;
-    margin-bottom: 20px;
+    /* margin-right: 10px; */
+    /* margin-bottom: 20px; */
   }
   .content-container {
-    max-width: 100%;
-    height: 80%;
+    /* width: 20%; */
+    /* max-width: 100%; */
+    /* height: 100%; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    margin-right: 10px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease-in-out;
-    padding: 10px;
+    align-items: start;
+    /* margin-right: 10px; */
+    /* border-radius: 4px; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
+    /* transition: box-shadow 0.3s ease-in-out; */
+    padding: 24px 16px 10px;
+    font-size: 24px;
+
+    span {
+      font-weight: bold;
+      color: #1a1a1a;
+    }
   }
+
+  .mean-senetence-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    padding-left: 16px;
+    display: flex;
+    div {
+      cursor: pointer;
+      width: 72px;
+      text-align: center;
+      padding: 8px 16px;
+      margin-bottom: 8px;
+      margin-right: 16px;
+      border-radius: 50px;
+    }
+
+    div:nth-child(1) {
+      background-color: ${props =>
+        props.toggle == 1 ? `${props.theme.pointLigntGrdColor3}` : ' #ebebeb;'};
+      &:hover {
+        background-color: ${props => props.theme.pointLigntGrdColor3};
+      }
+    }
+
+    div:nth-child(2) {
+      background-color: ${props =>
+        props.toggle == 2 ? `${props.theme.pointLigntGrdColor3}` : ' #ebebeb;'};
+      &:hover {
+        background-color: ${props => props.theme.pointLigntGrdColor3};
+      }
+    }
+  }
+
   .mean-container {
     max-width: 100%;
     height: 80%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    /* align-items: center; */
     border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease-in-out;
-    padding: 10px;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out; */
+
+    @media (max-width: 450px) {
+      span {
+        font-size: 14px;
+        line-height: 32px;
+      }
+    }
+
+    @media (min-width: 450px) {
+      span {
+        font-size: 16px;
+        line-height: 32px;
+        padding: 16px 24px;
+      }
+    }
   }
+
   .sentence-container {
+    color: #1a1a1a;
     max-width: 100%;
     height: 80%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    /* align-items: center; */
     margin-left: 10px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease-in-out;
-    padding: 10px;
+    /* border-radius: 4px; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out; */
+
+    @media (max-width: 450px) {
+      /* span { */
+      font-size: 14px;
+      line-height: 32px;
+      /* } */
+    }
+
+    @media (min-width: 450px) {
+      /* span { */
+      font-size: 16px;
+      line-height: 24px;
+      padding: 16px 24px;
+      /* } */
+    }
   }
   .empty-caution {
-    font-size: 50px;
-    color: ${props => props.theme.mainLightColor};
+    text-align: center;
+    color: ${props => props.theme.textColor2};
+
+    @media (max-width: 450px) {
+      font-size: 20px;
+    }
+
+    @media (min-width: 450px) {
+      font-size: 28px;
+    }
+
+    @media (min-width: 700px) {
+      font-size: 40px;
+    }
   }
-  .study-button {
-    background: ${props => props.theme.pointLightColor};
+  .study-btn {
+    cursor: pointer;
+    margin-top: 24px;
+    color: white;
+    border-radius: 50px;
+    background-color: ${props => props.theme.pointColor};
+    box-shadow: 2px 3px 6px #999999;
+
+    &:hover {
+      background-color: #e86e35;
+      transition: all 0.3s;
+      transform: translateY(3px);
+    }
+
+    @media (max-width: 450px) {
+      padding: 16px 32px;
+      font-size: 1rem;
+    }
+
+    @media (min-width: 450px) {
+      padding: 24px 48px;
+      font-size: 1.2rem;
+    }
+
+    @media (min-width: 700px) {
+      padding: 24px 48px;
+      font-size: 1.5rem;
+    }
   }
+
+  .words {
+    padding: 24px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 8px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 15%;
+      background-color: ${props => props.theme.mainLightColor};
+      border-radius: 20px;
+    }
+    scroll-behavior: auto;
+  }
+
   .button-set {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+
+  .word {
   }
 `;
 
@@ -166,13 +330,19 @@ const BookmarkWord = () => {
     setWordBookmarkList(copy);
   };
 
+  // 메뉴 토글
+  const [toggle, setToggle] = useState(1);
+
   return (
-    <BookIn>
+    <BookIn toggle={toggle}>
       <div className="words">
         {wordBookmarkList.length === 0 ? (
           <div className="button-set">
-            <p className="empty-caution">북마크가 비어있어요!</p>
-            <Button
+            <p className="empty-caution">단어 북마크가 비어있어요!</p>
+            <button className="study-btn" onClick={handleBookmark}>
+              학습하러 가기
+            </button>
+            {/* <Button
               className="study-button"
               onClick={handleBookmark}
               variant="contained"
@@ -187,44 +357,54 @@ const BookmarkWord = () => {
               }}
             >
               학습하러가기
-            </Button>
+            </Button> */}
           </div>
         ) : (
           <div className="word">
-            <div>
-              {wordBookmarkList.length > 0 &&
-                wordBookmarkList.map((item, idx) => (
-                  <div className="row" key={idx}>
-                    <div className="bookmark-container">
-                      <img
-                        className="book-mark"
-                        src={item.bookmarked ? BookmarkFull : BookmarkEmpty}
-                        onClick={() => {
-                          // console.log(item, idx);
-                          handleMark(item, idx);
-                        }}
-                        style={{ zIndex: 9999 }}
-                      ></img>
+            {/* <div> */}
+            {wordBookmarkList.length > 0 &&
+              wordBookmarkList.map((item, idx) => (
+                <div className="row" key={idx}>
+                  <div className="bookmark-container">
+                    <img
+                      className="book-mark"
+                      src={item.bookmarked ? BookmarkFull : BookmarkEmpty}
+                      onClick={() => {
+                        // console.log(item, idx);
+                        handleMark(item, idx);
+                      }}
+                      style={{ zIndex: 9999 }}
+                    ></img>
+                  </div>
+                  <div className="content-container">
+                    <span>{item.wordInfo.content}</span>
+                  </div>
+                  <div className="mean-senetence-wrapper">
+                    <div className="title">
+                      <div onClick={() => setToggle(1)}>의미</div>
+                      <div onClick={() => setToggle(2)}>예문</div>
                     </div>
-                    <div className="content-container">
-                      <span>{item.wordInfo.content}</span>
-                    </div>
-                    <div className="mean-container">
-                      <span>{item.wordInfo.mean}</span>
-                    </div>
-                    <div className="sentence-container">
-                      {' '}
-                      <ul>
-                        {item.sentenceContentList.map((sentence, index) => (
-                          <li key={index}>
-                            {index + 1} . {sentence}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="change-box">
+                      {toggle == 1 ? (
+                        <div className="mean-container">
+                          <span>{item.wordInfo.mean}</span>
+                        </div>
+                      ) : (
+                        <div className="sentence-container">
+                          <ul>
+                            {item.sentenceContentList.map((sentence, index) => (
+                              <li key={index}>
+                                {index + 1} . {sentence}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
-                ))}
-            </div>
+                </div>
+              ))}
+            {/* </div> */}
           </div>
         )}
         <div ref={ref} style={{ height: '10vh' }}></div>

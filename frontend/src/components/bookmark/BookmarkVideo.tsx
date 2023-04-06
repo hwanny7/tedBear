@@ -27,10 +27,26 @@ const StyledContent = styled(CardContent)`
 `;
 
 const BookIn = styled.div`
-  height: 100%;
+  background-color: ${props => props.theme.learningBoxColor};
   width: 100%;
-  padding: 10px;
-  right: 0%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 450px) {
+    padding: 10px;
+  }
+
+  @media (min-width: 450px) {
+    padding: 20px;
+  }
+
+  @media (min-width: 700px) {
+    padding: 30px;
+  }
+  /* right: 0%; */
   overflow: auto;
   /* paper's scroll */
   &::-webkit-scrollbar {
@@ -45,18 +61,70 @@ const BookIn = styled.div`
   scroll-behavior: auto;
   //
   .videoes {
-    position: relative;
-    height: 100%;
+    padding: 24px;
     width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 8px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 15%;
+      background-color: ${props => props.theme.mainLightColor};
+      border-radius: 20px;
+    }
+    scroll-behavior: auto;
+  }
   }
   .empty-caution {
-    font-size: 50px;
-    color: ${props => props.theme.mainLightColor};
+    text-align: center;
+    color: ${props => props.theme.textColor2};
+
+    @media (max-width: 450px) {
+      font-size: 20px;
+    }
+
+    @media (min-width: 450px) {
+      font-size: 28px;
+    }
+
+    @media (min-width: 700px) {
+      font-size: 40px;
+    }
   }
-  .study-button {
-    background: ${props => props.theme.pointLightColor};
+  .study-btn {
+    margin-top: 24px;
+    color: white;
+    border-radius: 50px;
+    background-color: ${props => props.theme.pointColor};
+    box-shadow: 2px 3px 6px #999999;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e86e35;
+      transition: all 0.3s;
+      transform: translateY(3px);
+    }
+
+    @media (max-width: 450px) {
+      padding: 16px 32px;
+      font-size: 1rem;
+    }
+
+    @media (min-width: 450px) {
+      padding: 24px 48px;
+      font-size: 1.2rem;
+    }
+
+    @media (min-width: 700px) {
+      padding: 24px 48px;
+      font-size: 1.5rem;
+    }
   }
   .button-set {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,8 +187,11 @@ const BookmarkVideo = () => {
       <div className="videoes">
         {videoBookmark.length === 0 ? (
           <div className="button-set">
-            <p className="empty-caution">북마크가 비어있어요!</p>
-            <Button
+            <p className="empty-caution">영상 북마크가 비어있어요!</p>
+            <button className="study-btn" onClick={handleBookmark}>
+              학습하러 가기
+            </button>
+            {/* <Button
               className="study-button"
               onClick={handleBookmark}
               variant="contained"
@@ -135,7 +206,7 @@ const BookmarkVideo = () => {
               }}
             >
               학습하러가기
-            </Button>
+            </Button> */}
           </div>
         ) : (
           <Grid

@@ -905,7 +905,7 @@ const LearningPage = () => {
             postFeel();
 
             // 홈으로 이동
-            window.location.href = '/';
+            window.location.href = '/home';
           });
         }
       });
@@ -1169,7 +1169,7 @@ const LearningPage = () => {
             <span>{videoDesc?.scoreInfo.sentenceScoreInfo[10]}</span>
           </div>
           <div className="desc">
-            현재 영상의 레벨은 문장들의 score 평균값입니다.
+            현재 영상의 레벨은 문장들중 가장 높은 난이도의 레벨을 표시합니다.
             <br />
             빨, 주, 노, 초, 파, 남, 보, 동, 은, 금 순으로 레벨이 높아집니다.
             <br />그 외 unranked 문장은 검정색으로 표시 됩니다

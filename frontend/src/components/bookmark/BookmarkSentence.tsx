@@ -26,9 +26,27 @@ interface IBookmarkSentence {
 }
 
 const BookIn = styled.div`
-  height: 80vh;
-  padding: 30px;
-  right: 0%;
+  background-color: ${props => props.theme.learningBoxColor};
+  background-color: ${props => props.theme.learningBoxColor};
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 450px) {
+    padding: 10px;
+  }
+
+  @media (min-width: 450px) {
+    padding: 20px;
+  }
+
+  @media (min-width: 700px) {
+    padding: 30px;
+  }
+  /* right: 0%; */
   overflow: auto;
   /* paper's scroll */
   &::-webkit-scrollbar {
@@ -51,26 +69,78 @@ const BookIn = styled.div`
     cursor: pointer;
   }
   .row {
+    position: relative;
+    width: 100%;
+    /* height: 100%; */
+    background-color: ${props => props.theme.learningBoxColor2};
     display: flex;
-    flex-direction: row;
+
     margin-bottom: 20px;
+    border-radius: 16px;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.203);
+    padding: 24px;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    @media (min-width: 600px) {
+      flex-direction: row;
+    }
   }
   .bookmark-container {
-    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 24px;
+    /* width: 5%; */
+    /* height: 40px; */
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: left;
-    margin-right: 10px;
-    margin-bottom: 20px;
+    /* margin-right: 10px; */
+    /* margin-bottom: 20px; */
   }
   .play-shorts-container {
-    height: 40px;
+    /* height: 40px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; */
+    /* width: 20%; */
+    /* max-width: 100%; */
+    /* height: 100%; */
+    display: flex;
+
+    /* margin-right: 10px; */
+    /* border-radius: 4px; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
+    /* transition: box-shadow 0.3s ease-in-out; */
+    padding: 0px 24px;
+
+    @media (max-width: 500px) {
+      flex-direction: row;
+      justify-content: end;
+      align-items: end;
+
+      img {
+        width: 32px;
+      }
+    }
+
+    @media (min-width: 500px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: start;
+    }
   }
+
+  .content-translation-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
   .content-container {
     max-width: 100%;
     height: 80%;
@@ -79,10 +149,23 @@ const BookIn = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-right: 10px;
-    border-radius: 4px;
+    /* border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out; */
     padding: 10px;
+    font-weight: bold;
+    color: #1a1a1a;
+    @media (max-width: 500px) {
+      p {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 500px) {
+      p {
+        font-size: 16px;
+      }
+    }
   }
   .translation-container {
     max-width: 100%;
@@ -91,23 +174,92 @@ const BookIn = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    border-radius: 4px;
+    /* border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out; */
     padding: 10px;
+    color: #1a1a1a;
+    @media (max-width: 500px) {
+      p {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 500px) {
+      p {
+        font-size: 16px;
+      }
+    }
   }
   .empty-caution {
-    font-size: 50px;
-    color: ${props => props.theme.mainLightColor};
+    text-align: center;
+    color: ${props => props.theme.textColor2};
+
+    @media (max-width: 450px) {
+      font-size: 20px;
+    }
+
+    @media (min-width: 450px) {
+      font-size: 28px;
+    }
+
+    @media (min-width: 700px) {
+      font-size: 40px;
+    }
   }
-  .study-button {
-    background: ${props => props.theme.pointLightColor};
+  .study-btn {
+    margin-top: 24px;
+    color: white;
+    border-radius: 50px;
+    background-color: ${props => props.theme.pointColor};
+    box-shadow: 2px 3px 6px #999999;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e86e35;
+      transition: all 0.3s;
+      transform: translateY(3px);
+    }
+
+    @media (max-width: 450px) {
+      padding: 16px 32px;
+      font-size: 1rem;
+    }
+
+    @media (min-width: 450px) {
+      padding: 24px 48px;
+      font-size: 1.2rem;
+    }
+
+    @media (min-width: 700px) {
+      padding: 24px 48px;
+      font-size: 1.5rem;
+    }
   }
   .button-set {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+  }
+
+  .sentences {
+    padding: 24px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 8px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 15%;
+      background-color: ${props => props.theme.mainLightColor};
+      border-radius: 20px;
+    }
+    scroll-behavior: auto;
   }
 `;
 
@@ -178,8 +330,11 @@ const BookmarkSentence = () => {
       <div className="sentences">
         {sentenceBookmark.length === 0 ? (
           <div className="button-set">
-            <p className="empty-caution">북마크가 비어있어요!</p>
-            <Button
+            <p className="empty-caution">문장 북마크가 비어있어요!</p>
+            <button className="study-btn" onClick={handleBookmark}>
+              학습하러 가기
+            </button>
+            {/* <Button
               className="study-button"
               onClick={handleBookmark}
               variant="contained"
@@ -194,7 +349,7 @@ const BookmarkSentence = () => {
               }}
             >
               학습하러가기
-            </Button>
+            </Button> */}
           </div>
         ) : (
           <div className="sentence">
@@ -217,13 +372,15 @@ const BookmarkSentence = () => {
                     src={sen.no ? Play : Play}
                   ></img>
                 </div>
-                <div className="content-container">
-                  <p>{sen.content}</p>
-                  <br></br>
-                </div>
-                <div className="translation-container">
-                  <p>{sen.translation}</p>
-                  <br></br>
+                <div className="content-translation-wrapper">
+                  <div className="content-container">
+                    <p>{sen.content}</p>
+                    {/* <br></br> */}
+                  </div>
+                  <div className="translation-container">
+                    <p>{sen.translation}</p>
+                    {/* <br></br> */}
+                  </div>
                 </div>
               </div>
             ))}
