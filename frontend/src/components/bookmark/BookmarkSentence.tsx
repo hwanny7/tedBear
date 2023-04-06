@@ -326,15 +326,16 @@ const BookmarkSentence = () => {
   };
 
   return (
-    <BookIn>
-      <div className="sentences">
-        {sentenceBookmark.length === 0 ? (
-          <div className="button-set">
-            <p className="empty-caution">문장 북마크가 비어있어요!</p>
-            <button className="study-btn" onClick={handleBookmark}>
-              학습하러 가기
-            </button>
-            {/* <Button
+    <>
+      <BookIn>
+        <div className="sentences">
+          {sentenceBookmark.length === 0 ? (
+            <div className="button-set">
+              <p className="empty-caution">문장 북마크가 비어있어요!</p>
+              <button className="study-btn" onClick={handleBookmark}>
+                학습하러 가기
+              </button>
+              {/* <Button
               className="study-button"
               onClick={handleBookmark}
               variant="contained"
@@ -350,46 +351,47 @@ const BookmarkSentence = () => {
             >
               학습하러가기
             </Button> */}
-          </div>
-        ) : (
-          <div className="sentence">
-            {sentenceBookmark.map((sen, idx) => (
-              <div className="row" key={sen.no}>
-                <div className="bookmark-container">
-                  <img
-                    className="book-mark"
-                    src={sen.bookmarked ? BookmarkFull : BookmarkEmpty}
-                    onClick={() => {
-                      handleMark(sen, idx);
-                    }}
-                    style={{ zIndex: 999 }} // 쇼츠보다는 아래로
-                  ></img>
-                </div>
-                <div className="play-shorts-container">
-                  <img
-                    className="play-shorts"
-                    onClick={() => handlePlay(sen)}
-                    src={sen.no ? Play : Play}
-                  ></img>
-                </div>
-                <div className="content-translation-wrapper">
-                  <div className="content-container">
-                    <p>{sen.content}</p>
-                    {/* <br></br> */}
+            </div>
+          ) : (
+            <div className="sentence">
+              {sentenceBookmark.map((sen, idx) => (
+                <div className="row" key={sen.no}>
+                  <div className="bookmark-container">
+                    <img
+                      className="book-mark"
+                      src={sen.bookmarked ? BookmarkFull : BookmarkEmpty}
+                      onClick={() => {
+                        handleMark(sen, idx);
+                      }}
+                      style={{ zIndex: 9999 }}
+                    ></img>
                   </div>
-                  <div className="translation-container">
-                    <p>{sen.translation}</p>
-                    {/* <br></br> */}
+                  <div className="play-shorts-container">
+                    <img
+                      className="play-shorts"
+                      onClick={() => handlePlay(sen)}
+                      src={sen.no ? Play : Play}
+                    ></img>
+                  </div>
+                  <div className="content-translation-wrapper">
+                    <div className="content-container">
+                      <p>{sen.content}</p>
+                      {/* <br></br> */}
+                    </div>
+                    <div className="translation-container">
+                      <p>{sen.translation}</p>
+                      {/* <br></br> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-        <div ref={ref} style={{ height: '10vh' }}></div>
-      </div>
+              ))}
+            </div>
+          )}
+          <div ref={ref} style={{ height: '10vh' }}></div>
+        </div>
+      </BookIn>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
-    </BookIn>
+    </>
   );
 };
 
