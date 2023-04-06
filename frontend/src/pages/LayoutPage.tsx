@@ -58,7 +58,7 @@ const DarkBackground = styled.div`
   height: 100%;
 
   position: fixed;
-  z-index: 500;
+  z-index: 9998;
 `;
 
 // 사전
