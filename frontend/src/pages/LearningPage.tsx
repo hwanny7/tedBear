@@ -1190,10 +1190,6 @@ const LearningPage = () => {
             ) : null}
           </YoutubeBox>
           <SpeakBox>
-            {/* <BookmarkImg
-              src={BookmarkEmpty}
-              onClick={() => onSentenceBookmark(senetenceId)}
-            /> */}
             {isLogin ? (
               !sentenceBookmark ? (
                 <BookmarkImg
@@ -1238,9 +1234,9 @@ const LearningPage = () => {
               <ToggleBtn toggle={toggle} onClick={clickedToggle}>
                 <Circle toggle={toggle}></Circle>
               </ToggleBtn>
-              <div>
+              {/* <div>
                 <DotImg src={Dot} />
-              </div>
+              </div> */}
             </div>
           </ContentRightTop>
           <ContentRightMiddle className="scriptBox">
