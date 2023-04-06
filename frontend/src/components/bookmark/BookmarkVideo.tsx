@@ -263,7 +263,7 @@ const BookmarkVideo = () => {
                         height: '15%',
                         position: 'absolute',
                         right: '5%',
-                        zIndex: 9999,
+                        zIndex: 99,
                         cursor: 'pointer',
                       }}
                     ></img>

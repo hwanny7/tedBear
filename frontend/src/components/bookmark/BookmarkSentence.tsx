@@ -363,7 +363,7 @@ const BookmarkSentence = () => {
                       onClick={() => {
                         handleMark(sen, idx);
                       }}
-                      style={{ zIndex: 99 }}
+                      style={{ zIndex: 50 }}
                     ></img>
                   </div>
                   <div className="play-shorts-container">
