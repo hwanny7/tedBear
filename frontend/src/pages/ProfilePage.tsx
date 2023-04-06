@@ -439,6 +439,8 @@ const InfoImg = styled.img`
   cursor: pointer;
   position: absolute;
   right: 16px;
+  filter: invert(45%) sepia(0%) saturate(1672%) hue-rotate(169deg)
+    brightness(94%) contrast(87%);
 
   &:hover ~ ${InfoCard} {
     z-index: 5;

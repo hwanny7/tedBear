@@ -3,11 +3,9 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import LearningMic from 'assets/img/learningMic.svg';
 import LearningStop from 'assets/img/learningStop.svg';
-import LearningPause from 'assets/img/learningPause.svg';
 import LearningReplay from 'assets/img/learningReplay.svg';
-import Dot from 'assets/img/dot.svg';
+import Info from 'assets/img/info3.svg';
 import VideoLevel from 'assets/img/videoLevel.svg';
-import Dictionary from 'assets/img/dictionary.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 import {
@@ -29,10 +27,8 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { useParams } from 'react-router-dom';
 import Chart from 'react-apexcharts';
-import DictionaryModal from 'components/learning/dictionaryModal';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { warn } from 'console';
 import Badge from 'components/common/Badge';
 
 // pdf
@@ -81,13 +77,14 @@ const ScoreChart = styled.div`
   padding: 50px 24px;
   position: absolute;
   top: 50%;
-  left: 15px;
+  right: 15px;
   z-index: -1;
   opacity: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   .apexcharts6wyl5juj {
     border: 1px solid red;
   }
@@ -162,10 +159,10 @@ const TitleBox = styled.div`
     align-items: center;
   }
 
-  > div:hover ~ ${ScoreChart} {
+  /* > div:hover ~ ${ScoreChart} {
     opacity: 1;
     z-index: 4;
-  }
+  } */
 
   @media (max-width: 900px) {
   }
@@ -430,18 +427,11 @@ const ContentRightTop = styled.div`
       font-size: 14px;
     }
 
-    > div:nth-child(3) {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
+    .info-box {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #dadada84;
-      }
+      position: relative;
     }
   }
 `;
@@ -464,7 +454,7 @@ const Circle = styled.div<ToggleStyledProps>`
   background: ${props => props.theme.whiteColor};
   width: 20px;
   height: 20px;
-  z-index: 999;
+  z-index: 10;
   position: absolute;
   border-radius: 50%;
   cursor: pointer;
@@ -480,9 +470,14 @@ const Circle = styled.div<ToggleStyledProps>`
     `}
 `;
 
-const DotImg = styled.img`
-  width: 4px;
+const InfoImg = styled.img`
+  width: 24px;
   cursor: pointer;
+
+  &:hover ~ ${ScoreChart} {
+    opacity: 1;
+    z-index: 999;
+  }
 `;
 
 const ContentRightMiddle = styled.ul`
@@ -744,12 +739,12 @@ const LearningPage = () => {
   };
 
   useEffect(() => {
-    if (document.querySelectorAll<HTMLElement>('.script-element')[selected]) {
-      const el =
-        document.querySelectorAll<HTMLElement>('.script-element')[selected];
+    // if (document.querySelectorAll<HTMLElement>('.script-element')[selected]) {
+    //   const el =
+    //     document.querySelectorAll<HTMLElement>('.script-element')[selected];
 
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    //   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // }
 
     // 문장 북마크 여부 가져오기
     const getSentenceBookmark = async () => {
@@ -793,7 +788,7 @@ const LearningPage = () => {
       // setIntervalTime(old => old + 1);
 
       let idx = selected;
-      if (videoTime < Math.floor(Number(youtubePlayer?.getCurrentTime()))) {
+      if (videoTime > Math.floor(Number(youtubePlayer?.getCurrentTime()))) {
         idx = 0;
       }
 
@@ -801,10 +796,13 @@ const LearningPage = () => {
       setVideoTime(time);
       // 실시간 하이라이팅
       let flag = false;
-      while (!flag) {
+      let length = 0;
+      if (videoDesc?.sentenceInfoList.length != undefined) {
+        length = videoDesc?.sentenceInfoList.length;
+      }
+      while (!flag || idx < length) {
         if (videoDesc?.sentenceInfoList[idx].startTime != undefined) {
           if (
-            videoDesc?.sentenceInfoList[idx].startTime &&
             videoDesc?.sentenceInfoList[idx].startTime <= time &&
             time <= videoDesc?.sentenceInfoList[idx + 1].startTime
           ) {
@@ -818,12 +816,18 @@ const LearningPage = () => {
         setSentenceId(videoDesc?.sentenceInfoList[idx].no);
       }
       setHighlight(true);
+      // 스크롤 이동
+      if (document.querySelectorAll<HTMLElement>('.script-element')[idx]) {
+        const el =
+          document.querySelectorAll<HTMLElement>('.script-element')[idx];
+
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
       setSelected(idx);
     }, 1000);
-
     return () => {
       // 페이지 벗어날 때 시청 중인 영상 기록
-
       clearInterval(watchTime);
     };
   });
@@ -958,7 +962,6 @@ const LearningPage = () => {
   const [check2, setCheck2] = useState<boolean>(false);
   // 문자열 배열에 담기
   const onMatching = () => {
-    console.log('matching 시작');
     // 스크립트 특수문자 제거하기
     // [\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]
     const reg = /[`~!@#$%^&*()_|+\-=?;:'",.\\{}<>/]/gim;
@@ -974,9 +977,6 @@ const LearningPage = () => {
       .replace(reg, '')
       .toLowerCase()
       .split(' ');
-
-    console.log('answer: ', answer);
-    console.log('speaker: ', speaker);
 
     // 정답 매칭
     let flag = 1;
@@ -1056,125 +1056,7 @@ const LearningPage = () => {
         <div>
           <Badge score={score} />
         </div>
-        <ScoreChart>
-          <Chart
-            options={chartOptions}
-            series={series}
-            type="donut"
-            width="300px"
-          />
-          <div className="video-level">
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[0]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  ' invert(61%) sepia(77%) saturate(821%) hue-rotate(331deg) brightness(101%) contrast(102%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[1]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(93%) sepia(99%) saturate(1462%) hue-rotate(8deg) brightness(104%) contrast(103%)',
-              }}
-            />
-            <span> {videoDesc?.scoreInfo.sentenceScoreInfo[2]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(74%) sepia(44%) saturate(1457%) hue-rotate(73deg) brightness(95%) contrast(124%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[3]}</span>
-          </div>
-          <div className="video-level">
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(53%) sepia(83%) saturate(1300%) hue-rotate(176deg) brightness(104%) contrast(101%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[4]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(18%) sepia(96%) saturate(6580%) hue-rotate(258deg) brightness(102%) contrast(102%)',
-              }}
-            />
-            <span> {videoDesc?.scoreInfo.sentenceScoreInfo[5]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(32%) sepia(74%) saturate(6084%) hue-rotate(269deg) brightness(106%) contrast(102%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[6]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[7]}</span>
-          </div>
-          <div className="video-level">
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[8]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[9]}</span>
-            <ViedoLevelImg
-              src={VideoLevel}
-              score={score}
-              style={{
-                filter:
-                  'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
-              }}
-            />
-            <span>{videoDesc?.scoreInfo.sentenceScoreInfo[10]}</span>
-          </div>
-          <div className="desc">
-            현재 영상의 레벨은 문장들중 가장 높은 난이도의 레벨을 표시합니다.
-            <br />
-            빨, 주, 노, 초, 파, 남, 보, 동, 은, 금 순으로 레벨이 높아집니다.
-            <br />그 외 unranked 문장은 검정색으로 표시 됩니다
-          </div>
-        </ScoreChart>
+
         <p>{videoDesc?.title}</p>
       </TitleBox>
       <ContentBox>
@@ -1234,9 +1116,130 @@ const LearningPage = () => {
               <ToggleBtn toggle={toggle} onClick={clickedToggle}>
                 <Circle toggle={toggle}></Circle>
               </ToggleBtn>
-              {/* <div>
-                <DotImg src={Dot} />
-              </div> */}
+              <div className="info-box">
+                <InfoImg src={Info} />
+                <ScoreChart>
+                  <Chart
+                    options={chartOptions}
+                    series={series}
+                    type="donut"
+                    width="300px"
+                  />
+                  <div className="video-level">
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(46%) sepia(41%) saturate(6932%) hue-rotate(338deg) brightness(112%) contrast(100%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[0]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          ' invert(61%) sepia(77%) saturate(821%) hue-rotate(331deg) brightness(101%) contrast(102%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[1]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(93%) sepia(99%) saturate(1462%) hue-rotate(8deg) brightness(104%) contrast(103%)',
+                      }}
+                    />
+                    <span> {videoDesc?.scoreInfo.sentenceScoreInfo[2]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(74%) sepia(44%) saturate(1457%) hue-rotate(73deg) brightness(95%) contrast(124%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[3]}</span>
+                  </div>
+                  <div className="video-level">
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(53%) sepia(83%) saturate(1300%) hue-rotate(176deg) brightness(104%) contrast(101%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[4]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(18%) sepia(96%) saturate(6580%) hue-rotate(258deg) brightness(102%) contrast(102%)',
+                      }}
+                    />
+                    <span> {videoDesc?.scoreInfo.sentenceScoreInfo[5]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(32%) sepia(74%) saturate(6084%) hue-rotate(269deg) brightness(106%) contrast(102%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[6]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(76%) sepia(11%) saturate(861%) hue-rotate(348deg) brightness(92%) contrast(89%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[7]}</span>
+                  </div>
+                  <div className="video-level">
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(100%) sepia(1%) saturate(1139%) hue-rotate(69deg) brightness(90%) contrast(90%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[8]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(67%) sepia(8%) saturate(5821%) hue-rotate(9deg) brightness(117%) contrast(115%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[9]}</span>
+                    <ViedoLevelImg
+                      src={VideoLevel}
+                      score={score}
+                      style={{
+                        filter:
+                          'invert(0%) sepia(0%) saturate(1%) hue-rotate(152deg) brightness(101%) contrast(102%)',
+                      }}
+                    />
+                    <span>{videoDesc?.scoreInfo.sentenceScoreInfo[10]}</span>
+                  </div>
+                  <div className="desc">
+                    현재 영상의 레벨은 문장들중 가장 높은 난이도의 레벨을
+                    표시합니다.
+                    <br />
+                    빨, 주, 노, 초, 파, 남, 보, 동, 은, 금 순으로 레벨이
+                    높아집니다.
+                    <br />그 외 unranked 문장은 검정색으로 표시 됩니다
+                  </div>
+                </ScoreChart>
+              </div>
             </div>
           </ContentRightTop>
           <ContentRightMiddle className="scriptBox">

@@ -34,18 +34,12 @@ import LandingCheck from 'assets/img/landingCheck.svg';
 
 // Box3 svg
 import LandingMovingBg from 'assets/img/landingMovingBg.svg';
-import LandingArrow from 'assets/img/landingArrow.svg';
-import LandingMonitor from 'assets/img/landingMonitor.svg';
-import LandingBall1 from 'assets/img/landingBall1.svg';
-import LandingBall2 from 'assets/img/landingBall2.svg';
-import LandingBall3 from 'assets/img/landingBall3.svg';
-import LandingCircle from 'assets/img/landingCircle.svg';
-import LandingImgTemp1 from 'assets/img/landingImgTemp1.svg';
+import Landing1 from 'assets/img/landing1.png';
+import Landing2 from 'assets/img/landing2.png';
+import Landing3 from 'assets/img/landing3.png';
+import Landing4 from 'assets/img/landing4.png';
 
 // Box2 svg
-import LandingMan1 from 'assets/img/landingMan1.svg';
-import LandingMan2 from 'assets/img/landingMan2.svg';
-import Bubble from 'assets/img/bubble.svg';
 import BigLogo from 'assets/img/bigLogo.svg';
 import { useNavigate } from 'react-router-dom';
 
@@ -2365,7 +2359,7 @@ const LandingPageTest = (props: Props) => {
               <div>
                 <ElTitle>GAME</ElTitle>
                 <ElDesc>
-                  재밌는 퍼즐 게임과 <br />
+                  재밌는 게임으로 <br />
                   공부한 내용을 <br />
                   복습해보세요.
                 </ElDesc>
@@ -2416,7 +2410,7 @@ const LandingPageTest = (props: Props) => {
                   </p>
                 </div>
                 <div>
-                  <SiteImg src={LandingImgTemp1} />
+                  <SiteImg src={Landing1} />
                 </div>
               </SiteImgEl>
               <SiteImgEl>
@@ -2432,7 +2426,7 @@ const LandingPageTest = (props: Props) => {
                   </p>
                 </div>
                 <div>
-                  <SiteImg src={LandingImgTemp1} />
+                  <SiteImg src={Landing2} />
                 </div>
               </SiteImgEl>
               <SiteImgEl>
@@ -2444,7 +2438,7 @@ const LandingPageTest = (props: Props) => {
                   </p>
                 </div>
                 <div>
-                  <SiteImg src={LandingImgTemp1} />
+                  <SiteImg src={Landing3} />
                 </div>
               </SiteImgEl>
               <SiteImgEl>
@@ -2460,7 +2454,7 @@ const LandingPageTest = (props: Props) => {
                   </p>
                 </div>
                 <div>
-                  <SiteImg src={LandingImgTemp1} />
+                  <SiteImg src={Landing4} />
                 </div>
               </SiteImgEl>
             </SiteImgUl>
