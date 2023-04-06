@@ -56,8 +56,9 @@ const DarkBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
+
   position: fixed;
-  z-index: 50;
+  z-index: 500;
 `;
 
 // 사전

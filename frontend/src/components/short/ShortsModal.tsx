@@ -46,7 +46,7 @@ const Wrapper = styled.div`
     color: white;
     border-radius: 16px;
     bottom: 0%;
-    z-index: 150;
+    z-index: 999;
     &:hover {
       background-color: #e67f51;
       transition: all 0.3s;
@@ -62,7 +62,7 @@ const YoutubeBox = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 100;
+  z-index: 9999;
   display: flex;
   align-items: center;
 `;
