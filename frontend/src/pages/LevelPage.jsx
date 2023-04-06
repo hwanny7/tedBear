@@ -306,6 +306,7 @@ const LevelPage = () => {
               theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
           }}
           style={{
+            zIndex: 9999,
             padding: 20,
             margin: '25px 0px 0px 20px',
             position: 'absolute',
