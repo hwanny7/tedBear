@@ -739,12 +739,12 @@ const LearningPage = () => {
   };
 
   useEffect(() => {
-    // if (document.querySelectorAll<HTMLElement>('.script-element')[selected]) {
-    //   const el =
-    //     document.querySelectorAll<HTMLElement>('.script-element')[selected];
+    if (document.querySelectorAll<HTMLElement>('.script-element')[selected]) {
+      const el =
+        document.querySelectorAll<HTMLElement>('.script-element')[selected];
 
-    //   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    // }
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
     // 문장 북마크 여부 가져오기
     const getSentenceBookmark = async () => {
@@ -752,7 +752,7 @@ const LearningPage = () => {
       setSentenceBookmark(data.bookmarked);
     };
     getSentenceBookmark();
-  }, [senetenceId]);
+  }, [senetenceId, selected]);
 
   //문장 북마크
   const onSentenceBookmark = (id: number) => {
@@ -816,13 +816,6 @@ const LearningPage = () => {
         setSentenceId(videoDesc?.sentenceInfoList[idx].no);
       }
       setHighlight(true);
-      // 스크롤 이동
-      if (document.querySelectorAll<HTMLElement>('.script-element')[idx]) {
-        const el =
-          document.querySelectorAll<HTMLElement>('.script-element')[idx];
-
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
 
       setSelected(idx);
     }, 1000);
