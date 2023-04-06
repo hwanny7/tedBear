@@ -83,18 +83,21 @@ const BookPage = () => {
           <button
             className={buttonStatus[0] ? 'clicked-button' : 'unclicked-button'}
             onClick={() => handleButtons(0)}
+            style={{ zIndex: 9999 }}
           >
             단어
           </button>
           <button
             className={buttonStatus[1] ? 'clicked-button' : 'unclicked-button'}
             onClick={() => handleButtons(1)}
+            style={{ zIndex: 9999 }}
           >
             문장
           </button>
           <button
             className={buttonStatus[2] ? 'clicked-button' : 'unclicked-button'}
             onClick={() => handleButtons(2)}
+            style={{ zIndex: 9999 }}
           >
             영상
           </button>
