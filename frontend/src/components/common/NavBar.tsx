@@ -188,16 +188,50 @@ const LevelInfo = styled.div<OpenStyledProps>`
   padding: 24px;
   position: fixed;
   background-color: #ffffffe8;
-  width: 160px;
+  /* width: 400px; */
   left: ${OpenStyledProps => (!OpenStyledProps.open ? '60px;' : '160px;')};
   bottom: 64px;
 
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  z-index: -1;
+  /* display: flex; */
+  flex-direction: row;
+  /* opacity: 0; */
+  /* z-index: -1; */
+  visibility: hidden;
+  display: none;
 
   transition: 0.5s;
+
+  .content-wrapper2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-left: 16px;
+
+    .standard-title {
+      font-weight: bold;
+      padding-top: 8px;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .standard-box {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #1a1a1a;
+
+      .standard-name {
+      }
+
+      .standard-content {
+      }
+    }
+  }
+  .content-wrapper1 {
+    display: flex;
+    flex-direction: column;
+  }
 
   .content {
     display: flex;
@@ -261,8 +295,12 @@ const ListBoxBottom2 = styled(ListBoxBottom)<OpenStyledProps>`
   }
 
   &:hover ~ ${LevelInfo} {
+    visibility: visible;
+    display: flex;
+    /* opacity: 1; */
+    /* position: fixed;
     z-index: 5;
-    opacity: 1;
+    opacity: 1; */
   }
 `;
 
@@ -323,7 +361,7 @@ const StyledInfo2 = styled(Info2)`
   width: 24px;
 
   &:hover ~ ${LevelInfo} {
-    z-index: 5;
+    z-index: 200;
     opacity: 1;
   }
 `;
@@ -461,49 +499,84 @@ const NavBar2 = (props: Props) => {
           </IconName>
         </ListBoxBottom2>
         <LevelInfo open={props.open}>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 1</div>
+          <div className="content-wrapper1">
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 1</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 2</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 3</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 4</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 5</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 6</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 7</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 8</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 9</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">레벨 10</div>
+            </div>
+            <div className="content">
+              <img src={VideoLevel} className="badgeImg" />
+              <div className="badgeName">언랭크</div>
+            </div>
           </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 2</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 3</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 4</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 5</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 6</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 7</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 8</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 9</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">레벨 10</div>
-          </div>
-          <div className="content">
-            <img src={VideoLevel} className="badgeImg" />
-            <div className="badgeName">언랭크</div>
+          <div className="content-wrapper2">
+            <div className="standard-title"> ※ 문장 난이도 산정 기준</div>
+            <div className="standard-box">
+              <div className="standard-name">[1] Flesh-Kincaid Grade-Level</div>
+              <div className="standard-content">
+                범위 : 0 ~ 12
+                <br />
+                계산식 : 0.39 × (문장 평균 길이) +
+                <br />
+                11.8 × (문장에 포함된 단어 수) - 15.59
+              </div>
+            </div>
+            <div className="standard-box">
+              <div className="standard-name">[2] Gunning-Fog Index</div>
+              <div className="standard-content">
+                범위 : 0 ~ 20
+                <br />
+                계산 방법: 0.4 × ( (평균 문장 길이) + 100 × (문장 내 복합어의
+                비율) )
+                <br />
+                복합어 =`&gt;` 3음절 이상의 단어
+              </div>
+            </div>
+            <div className="standard-box">
+              <div className="standard-name">[3] Flesh-Reading-Ease </div>
+              <div className="standard-content">
+                범위 : 0 ~ 100
+                <br />
+                계산식 : 206.835 - 1.015 × (평균 문장 길이)
+                <br />- 84.6 × (평균 단어 수)
+              </div>
+            </div>
           </div>
         </LevelInfo>
       </NavList>
