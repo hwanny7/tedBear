@@ -1,6 +1,7 @@
 package com.ssafy.tedbear.domain.word.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,11 +29,11 @@ public class WordBookmark extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long no;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "word_no")
 	private Word word;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_no")
 	private Member member;
 }
