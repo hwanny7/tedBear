@@ -105,7 +105,7 @@ const Bookmark = styled.div`
     height: 10vh;
   }
   .paper {
-    z-index: 1;
+    z-index: 500;
     position: relative;
     max-height: 800px;
     border-radius: 20px;
