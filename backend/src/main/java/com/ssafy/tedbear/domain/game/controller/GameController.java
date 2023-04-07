@@ -15,7 +15,7 @@ import com.ssafy.tedbear.domain.game.dto.CrossWordDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameResultDto;
 import com.ssafy.tedbear.domain.game.service.GameService;
-import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;

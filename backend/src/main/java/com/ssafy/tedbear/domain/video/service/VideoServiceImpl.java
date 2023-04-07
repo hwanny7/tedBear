@@ -64,7 +64,6 @@ public class VideoServiceImpl implements VideoService {
 			recommendVideoList = videoRepository.findByScoreBetween(s1, e1, s2, e2, s3, e3);
 			deltaScore += 10000;
 		} while (recommendVideoList.size() < resultMaxCnt);
-		recommendVideoList.stream().forEach(x-> System.out.println(x.getScore()));
 		Set<Long> bookmarkedVideoNoSet =
 			videoBookmarkRepository
 				.findVideoBookmarksByMemberAndVideoIn(member, recommendVideoList)

@@ -1,4 +1,4 @@
-package com.ssafy.tedbear.global.common.oauth2;
+package com.ssafy.tedbear.global.common.oauth2.handler;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -16,7 +16,10 @@ import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.entity.MemberLevel;
 import com.ssafy.tedbear.domain.member.entity.MemberScore;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
+import com.ssafy.tedbear.global.common.oauth2.repository.MemberLevelRepository;
+import com.ssafy.tedbear.global.common.oauth2.repository.MemberScoreRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +48,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
 			.httpOnly(true)
 			.secure(true)
-			//			.sameSite("none")
 			.maxAge(JwtProvider.REFRESH_TOKEN_VALIDATE_TIME)
 			.path("/")
 			.build();

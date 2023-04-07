@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class WordServiceImpl {
+public class WordServiceImpl implements WordService {
 	private final WordRepository wordRepository;
 	private final WordSentenceRepository wordSentenceRepository;
 	private final WordBookmarkRepository wordBookmarkRepository;
@@ -113,5 +113,4 @@ public class WordServiceImpl {
 		}
 		return new WordBookmarkDto.WordBookmarkListResponse(wordBookmarkLists);
 	}
-
 }
