@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.tedbear.domain.member.entity.Member;
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
-import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
 
 import lombok.RequiredArgsConstructor;

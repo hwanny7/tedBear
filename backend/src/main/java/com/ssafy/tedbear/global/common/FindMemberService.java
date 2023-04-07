@@ -15,7 +15,6 @@ public class FindMemberService {
 	public Member findMember(String memberUid) {
 		return memberRepository.findByUid(memberUid)
 			.orElse(memberRepository.findById(1L).get());
-		// .orElseThrow(() -> new NoSuchElementException("해당 UID에 해당하는 회원이 존재하지 않습니다."));
 	}
 
 	public Member findMemberOnlyMember(String memberUid) {

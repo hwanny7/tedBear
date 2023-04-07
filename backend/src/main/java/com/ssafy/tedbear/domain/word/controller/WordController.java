@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ssafy.tedbear.domain.word.dto.WordBookmarkDto;
 import com.ssafy.tedbear.domain.word.dto.WordDto;
 import com.ssafy.tedbear.domain.word.service.WordServiceImpl;
-import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

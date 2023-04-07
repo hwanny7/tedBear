@@ -32,10 +32,14 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ssafy.tedbear.domain.member.repository.MemberRepository;
-import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAccessDeniedHandler;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.handler.JwtAccessDeniedHandler;
+import com.ssafy.tedbear.global.common.oauth2.handler.OAuth2LoginSuccessHandler;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAuthenticationEntryPoint;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtAuthenticationFilter;
 import com.ssafy.tedbear.global.common.oauth2.jwt.JwtProvider;
+import com.ssafy.tedbear.global.common.oauth2.repository.MemberLevelRepository;
+import com.ssafy.tedbear.global.common.oauth2.repository.MemberScoreRepository;
 import com.ssafy.tedbear.global.common.oauth2.service.CustomOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -74,9 +78,6 @@ public class SecurityConfig {
 			.antMatchers(HttpMethod.GET) // GET요청은 열어두고
 			.permitAll()
 			.anyRequest().authenticated() // 그 외 요청은 권한확인
-			.and()
-			.logout()
-			.logoutSuccessUrl("/")
 			.and()
 			.oauth2Login()
 			.authorizationEndpoint()
@@ -148,7 +149,7 @@ public class SecurityConfig {
 		protected Authentication createAuthentication(HttpServletRequest request) {
 			List<? extends GrantedAuthority> authorities = Collections
 				.unmodifiableList(Arrays.asList(new SimpleGrantedAuthority("ANONYMOUS_USER")));
-			CustomOAuth2User principal = new CustomOAuth2User("253243", authorities);
+			CustomOAuth2User principal = new CustomOAuth2User("253243", authorities); // 비회원 UID
 			return new AnonymousAuthenticationToken("ANONYMOUS", principal, authorities);
 		}
 	}

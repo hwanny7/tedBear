@@ -21,10 +21,10 @@ import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceBookmarkStatusDto;
 import com.ssafy.tedbear.domain.sentence.dto.SentenceDetailDto;
 import com.ssafy.tedbear.domain.sentence.dto.SpeakingDto;
-import com.ssafy.tedbear.domain.sentence.service.SentenceBookmarkService;
-import com.ssafy.tedbear.domain.sentence.service.SentenceService;
+import com.ssafy.tedbear.domain.sentence.service.SentenceBookmarkServiceImpl;
+import com.ssafy.tedbear.domain.sentence.service.SentenceServiceImpl;
 import com.ssafy.tedbear.global.common.SearchDto;
-import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/sentence")
 public class SentenceController {
 	private final MemberShortsLogService memberShortsLogService;
-	private final SentenceService sentenceService;
-	private final SentenceBookmarkService sentenceBookmarkService;
+	private final SentenceServiceImpl sentenceService;
+	private final SentenceBookmarkServiceImpl sentenceBookmarkService;
 
 	@PostMapping("/speaking")
 	public ResponseEntity<?> completeSpeaking(@RequestBody SpeakingDto.Request speakingDto,

@@ -31,7 +31,7 @@ import com.ssafy.tedbear.domain.video.repository.WatchingVideoRepository;
 import com.ssafy.tedbear.domain.word.entity.Word;
 import com.ssafy.tedbear.domain.word.repository.WordRepository;
 import com.ssafy.tedbear.global.common.FindMemberService;
-import com.ssafy.tedbear.global.common.oauth2.MemberLevelRepository;
+import com.ssafy.tedbear.global.common.oauth2.repository.MemberLevelRepository;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 import com.ssafy.tedbear.global.util.TimeParseUtil;
 

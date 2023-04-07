@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ssafy.tedbear.global.common.oauth2.CookieUtils;
 import com.ssafy.tedbear.global.common.oauth2.service.AuthService;
+import com.ssafy.tedbear.global.common.oauth2.util.CookieUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class AuthController {
 		oldAccessToken = oldAccessToken.substring(7);
 		log.info("oldAccessToken: {}", oldAccessToken);
 
-		if(oldAccessToken == null){
+		if (oldAccessToken.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없음");
 		}
 

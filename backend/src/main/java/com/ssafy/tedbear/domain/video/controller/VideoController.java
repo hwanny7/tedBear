@@ -20,7 +20,7 @@ import com.ssafy.tedbear.domain.video.dto.VideoInfoListDto;
 import com.ssafy.tedbear.domain.video.dto.WatchingVideoInfoDto;
 import com.ssafy.tedbear.domain.video.service.VideoService;
 import com.ssafy.tedbear.global.common.SearchDto;
-import com.ssafy.tedbear.global.common.oauth2.CustomOAuth2User;
+import com.ssafy.tedbear.global.common.oauth2.dto.CustomOAuth2User;
 import com.ssafy.tedbear.global.util.RecommendUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -86,8 +86,9 @@ public class VideoController {
 	}
 
 	@GetMapping("/bookmark/list")
-	public ResponseEntity<VideoInfoListDto> getVideoBookmarkList(@AuthenticationPrincipal CustomOAuth2User user,Pageable pageable) {
-		return ResponseEntity.ok(videoService.getVideoBookmarkList(user.getName(),pageable));
+	public ResponseEntity<VideoInfoListDto> getVideoBookmarkList(@AuthenticationPrincipal CustomOAuth2User user,
+		Pageable pageable) {
+		return ResponseEntity.ok(videoService.getVideoBookmarkList(user.getName(), pageable));
 	}
 
 	@PostMapping("/bookmark")
