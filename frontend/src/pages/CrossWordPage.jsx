@@ -624,7 +624,6 @@ const CrossWordPage = () => {
 
   const fetchData = async () => {
     const data = await getCrossWord(size);
-    console.log(data);
     setWordList(
       data.array.map(item => {
         return {

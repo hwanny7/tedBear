@@ -150,7 +150,7 @@ const SearchPage = () => {
   const { content } = useParams();
   const [searchWord, setSearchWord] = useState<string>('');
   const [loading, setLoading] = useState<string>('+ 8개 추가');
-  const [shortsLoading, setShortsLoading] = useState<boolean>(false);
+  const [completeFetch, setCompleteFetch] = useState<boolean>(false);
   const [videos, setVideo] = useState<SearchedVideo[]>([]);
   const [page, setPage] = useState<number>(0);
   const { modalOpen, setModalOpen } = useOutletContext<Props>();
@@ -168,23 +168,26 @@ const SearchPage = () => {
 
   const fetchData = async (content: string) => {
     setSearchWord(content);
+    setCompleteFetch(true);
     const videoData = await searchVideoData(content, 0);
+    setVideo(videoData);
     const shortData = await searchSenData(content, 0);
+    setProps(shortData);
     const shortData2 = await searchSenData(content, 1);
-    console.log(videoData, shortData, shortData2);
+
     if (shortData2.length) {
       setShortPage(1);
       setNext(true);
     } else {
       setShortPage(0);
     }
-    setProps(shortData);
+
     const combinedData = shortData.concat(shortData2);
     setShortsData(combinedData);
 
-    setVideo(videoData);
     setPage(0);
     setLoading('+ 8개 추가');
+    setCompleteFetch(false);
   };
 
   const requestVideo = async () => {
@@ -244,7 +247,7 @@ const SearchPage = () => {
 
   return (
     <Wrapper>
-      {/* {loading && <Spinner></Spinner>} */}
+      {completeFetch && <Spinner></Spinner>}
       {modalOpen && (
         <ShortsModal
           setShortsData={setShortsData}
@@ -272,7 +275,6 @@ const SearchPage = () => {
                 <ViedoLevelImg>
                   <Badge score={video.score} />
                 </ViedoLevelImg>
-                {/* <ViedoLevelImg src={VideoLevel} score={video.score} /> */}
                 {isLogin && (
                   <img
                     src={video.bookMarked ? BookmarkFull : BookmarkEmpty}
