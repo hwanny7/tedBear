@@ -337,7 +337,7 @@ const BookmarkWord = () => {
   const onChangeMenu = idx => {
     if (toggle == 1) setToggle(2);
     else setToggle(1);
-
+    console.log('idx : ', idx);
     setSelected(idx);
   };
 
