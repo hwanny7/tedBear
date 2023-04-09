@@ -11,6 +11,7 @@ import BookmarkFull from 'assets/img/bookmarkFull.svg';
 import BookmarkEmpty from 'assets/img/bookmarkEmpty.svg';
 import PagiNation from 'components/common/PageNation';
 import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 interface Props {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -235,6 +236,9 @@ const NoResult = styled.div`
 `;
 
 const DictionaryModal = ({ setOpenModal }: Props) => {
+  // 회원 정보 가져오기 ==================================================
+  const { isLogin } = useSelector((state: any) => state.auth);
+
   const [keyword, setKeyword] = useState<string>('');
   const [wordDesc, setWordDesc] = useState<SearchedWord | null>(null);
   // 페이지네이션에 필요한 애들
@@ -365,7 +369,7 @@ const DictionaryModal = ({ setOpenModal }: Props) => {
                 <div onClick={() => setMenu(1)}>의미</div>
                 <div onClick={() => setMenu(2)}>예문</div>
 
-                {menu != 2 ? (
+                {menu != 2 && isLogin ? (
                   !bookmark ? (
                     <BookmarkImg src={BookmarkEmpty} onClick={onBookmark} />
                   ) : (
