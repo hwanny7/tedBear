@@ -27,6 +27,8 @@ const RouteChangeTracker = () => {
       ReactGA.set({ page: location.pathname });
       ReactGA.send('pageview');
     }
+
+    console.log('pathname : ', location.pathname);
   }, [initialized, location]);
 
   // 개발용

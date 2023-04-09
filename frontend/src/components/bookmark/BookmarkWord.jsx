@@ -332,6 +332,14 @@ const BookmarkWord = () => {
 
   // 메뉴 토글
   const [toggle, setToggle] = useState(1);
+  const [selected, setSelected] = useState(0);
+
+  const onChangeMenu = idx => {
+    if (toggle == 1) setToggle(2);
+    else setToggle(1);
+
+    setSelected(idx);
+  };
 
   return (
     <BookIn toggle={toggle}>
@@ -381,11 +389,11 @@ const BookmarkWord = () => {
                   </div>
                   <div className="mean-senetence-wrapper">
                     <div className="title">
-                      <div onClick={() => setToggle(1)}>의미</div>
-                      <div onClick={() => setToggle(2)}>예문</div>
+                      <div onClick={() => onChangeMenu(idx)}>의미</div>
+                      <div onClick={() => onChangeMenu(idx)}>예문</div>
                     </div>
                     <div className="change-box">
-                      {toggle == 1 ? (
+                      {toggle == 1 && idx == selected ? (
                         <div className="mean-container">
                           <span>{item.wordInfo.mean}</span>
                         </div>
