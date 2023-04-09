@@ -42,11 +42,10 @@ const Replay = styled.div`
     color: white;
     transition: all 0.3s;
     transform: translateY(3px);
+  }
 `;
 
 const Description = styled.div`
-  /* margin-left: 6%; */
-  /* margin-top: 1%; */
   color: ${props => props.theme.textColor1};
 
   @media (max-width: 900px) {
@@ -104,7 +103,6 @@ const Wrapper = styled.div`
   }
   @media (min-width: 900px) {
     margin: 24px 48px;
-    /* height: 95vh; */
     flex-direction: row;
   }
 
@@ -112,8 +110,6 @@ const Wrapper = styled.div`
   align-items: center;
   .main {
     margin: 16px;
-    /* margin-left: 6%;
-    margin-right: 6%; */
     grid-row: 2;
     grid-column: 1/3;
     display: grid;
@@ -342,8 +338,6 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  /* height: 80vh;
-  width: 80%; */
   width: 100%;
   height: 75vh;
   padding: 8px;
@@ -378,7 +372,6 @@ const SubmitButton = styled.div`
     background-color: #e86e35;
     transition: all 0.3s;
     transform: translateY(3px);
-    /* box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2); */
   }
 `;
 
@@ -447,10 +440,8 @@ const LeftBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: ${props => props.theme.learningBoxColor}; */
 
   @media (max-width: 900px) {
-    /* height: 70%; */
     width: 100%;
     margin-bottom: 32px;
   }
@@ -470,10 +461,8 @@ const LeftBox = styled.div`
 const RightBox = styled.div`
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
 
   @media (max-width: 900px) {
-    /* height: 30%; */
     width: 100%;
   }
   @media (min-width: 900px) {
@@ -523,13 +512,18 @@ const CrossWordPage = () => {
       const clues = clueList.filter(item => {
         return item.clue === clueNum;
       });
-      if (clues.length === 1) {
-        return clues[0];
-      } else if (state.current.clue === clues[0].clue) {
-        return state.current.dir === 'ACROSS' ? clues[1] : clues[0];
-      } else {
-        return clues[0];
-      }
+
+      return clues[0];
+
+      // if (clues.length === 1) {
+      //   return clues[0];
+      // } else if (state.current.clue === clues[0].clue) {
+      //   return state.current.dir === 'ACROSS' ? clues[1] : clues[0];
+      // } else {
+      //   return clues[0];
+      // }
+
+      // 하나의 지점에서 ACROSS, DOWN 힌트 두 개를 가지고 있을 때 사용
     },
     [clueList],
   );
@@ -556,6 +550,11 @@ const CrossWordPage = () => {
       // 이전에 켜져 있는 edit과 cursor 지우기
 
       const { clue } = item;
+      const el = document.querySelectorAll(`.scroll-${clue - 1}`);
+      el[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // 해당 힌트로 스크롤 이동시키기
+
       const { length, dir } = findClue(clue, tab);
 
       // 수직으로 갈지 수평으로 갈지 불러오기
@@ -926,19 +925,6 @@ const CrossWordPage = () => {
     setWordList(copy);
     setFinish(true);
     setCorrect(correct);
-
-    // state.current = { ...state.current, correct };
-    // const answer = 0
-    // clueList.forEach(item => {
-    //   for (let i = 0; i < item.length; i++)
-    // })
-
-    // Swal.fire({
-    //   title: '개발 중입니다.',
-    //   text: '빠른 시일 내에 정답을 보여 드리겠습니당..ㅜ',
-    //   imageWidth: 400,
-    //   imageHeight: 200,
-    // });
   };
 
   const handleChange = event => {
@@ -1044,16 +1030,7 @@ const CrossWordPage = () => {
         </LeftBox>
         <RightBox>
           {finish ? (
-            <ResultBox
-            /* style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '20%',
-            height: '100%',
-          }} */
-            >
+            <ResultBox>
               <h1>
                 맞은 갯수: {correct} / {clueList.length}
               </h1>
@@ -1061,21 +1038,14 @@ const CrossWordPage = () => {
               <Stop onClick={() => goHome()}>그만하기</Stop>
             </ResultBox>
           ) : (
-            <Question
-            /* style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-          }} */
-            >
+            <Question>
               <Content>
                 {clueList.map((clue, idx) => {
                   return (
                     <ClueBox
                       backgroundColor={clue.editting}
                       key={idx}
+                      className={`scroll-${idx}`}
                       onClick={() => clickClue(clue)}
                       onMouseOver={() => toggleClue(clue, true)}
                       onMouseOut={() => toggleClue(clue, false)}
