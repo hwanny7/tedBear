@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { authApi } from 'utils/api/customAxios';
 import { Paper } from '@mui/material';
 import { useDispatch } from 'react-redux';
@@ -877,34 +876,6 @@ const GameDetailPage = () => {
           >
             <p className="hint-button-text">힌트</p>
           </Button>
-          <IconButton
-            className="next-button"
-            onClick={handleNext}
-            sx={{
-              boxShadow: 3,
-              width: '3rem',
-              height: '3rem',
-              bgcolor: theme =>
-                theme.palette.mode === 'dark' ? '#101010' : '#fff',
-              color: theme =>
-                theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-            }}
-            style={{
-              position: 'absolute',
-              margin: '20px 0px 0px 20px',
-              top: '40%' /* vertically center the button */,
-              right: '-5%' /* position the button to the right */,
-              transform:
-                'translateY(-50%)' /* adjust vertical position after centering */,
-              border: '1px solid #FFFFFF',
-              background: '#FFFFFF',
-            }}
-            variant="outlined"
-          >
-            <p className="next-button-inside">
-              <ArrowForwardIosIcon />
-            </p>
-          </IconButton>
         </StyledPaper>
       </QuestionBox>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}
