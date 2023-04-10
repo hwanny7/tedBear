@@ -12,4 +12,5 @@ public interface GameService {
 
 	CrossWordDto getCrossWord(int boardSize);
 
+	WordGameDto getQuestionDemo(Integer num);
 }
