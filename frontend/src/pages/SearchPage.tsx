@@ -166,6 +166,38 @@ const SearchPage = () => {
 
   // List, 지금까지 page, 자식한테 내려줄 props
 
+  // const fetchVideo = async (content: string) => {
+  //   const videoData = await searchVideoData(content, 0);
+  //   setVideo(videoData);
+  // };
+
+  // const fetchShort = async (content: string) => {
+  //   const shortData = await searchSenData(content, 0);
+  //   setProps(shortData);
+  //   const shortData2 = await searchSenData(content, 1);
+
+  //   if (shortData2.length) {
+  //     setShortPage(1);
+  //     setNext(true);
+  //   } else {
+  //     setShortPage(0);
+  //   }
+
+  //   const combinedData = shortData.concat(shortData2);
+  //   setShortsData(combinedData);
+  // };
+
+  // const fetchData = async (content: string) => {
+  //   setSearchWord(content);
+  //   setCompleteFetch(true);
+  //   fetchVideo(content);
+  //   fetchShort(content);
+
+  //   setPage(0);
+  //   setLoading('+ 8개 추가');
+  //   setCompleteFetch(false);
+  // };
+
   const fetchData = async (content: string) => {
     setSearchWord(content);
     setCompleteFetch(true);
