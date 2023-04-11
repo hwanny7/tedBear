@@ -507,16 +507,16 @@ const GameDetailPage = () => {
       <Poster>
         {selectedAlbum === 1 && (
           <StyledAlbum
-          // style={{
-          //   height: '90vh',
-          //   width: '50vw',
-          //   padding: 30,
-          //   margin: '10px 10px 10px 10px',
-          //   position: 'absolute',
-          //   alignItems: 'left',
-          //   justifyContent: 'felx-start',
-          //   transform: 'translate(0%, 0%)',
-          // }}
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
           ></StyledAlbum>
         )}
         {selectedAlbum === 2 && (
