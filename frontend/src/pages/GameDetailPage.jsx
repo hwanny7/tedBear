@@ -270,6 +270,7 @@ const GameDetailPage = () => {
   const [incorrect, setIncorrect] = useState(false);
   const [shorts, setShorts] = useState(null);
   const { modalOpen, setModalOpen } = useOutletContext();
+  const [num, setNum] = useState(0);
 
   const handleRetry = () => {
     setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
@@ -294,11 +295,13 @@ const GameDetailPage = () => {
     setIncorrect(false);
   };
 
+  // /game/word/demo?num=0
+
   // 첫 문제
   useEffect(() => {
     async function fetchData() {
       await authApi
-        .get(`game/word`)
+        .get(`/game/word/demo?num=${num}`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data.answer);
@@ -309,6 +312,7 @@ const GameDetailPage = () => {
           setAnswer(answer);
           setWordNumber(wordNo);
           setHintList(hint);
+          setNum(prevNum => (prevNum + 1) % 5);
         })
         .catch(error => {
           // console.log(error.data);
@@ -322,7 +326,7 @@ const GameDetailPage = () => {
     // console.log('to the next problem');
     async function fetchData() {
       await authApi
-        .get(`game/word`)
+        .get(`/game/word/demo?num=${num}`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data.answer);
@@ -332,6 +336,7 @@ const GameDetailPage = () => {
           setAnswer(answer);
           setWordNumber(wordNo);
           setHintList(hint);
+          setNum(prevNum => (prevNum + 1) % 5);
         })
         .catch(error => {
           // console.log(error.data);
@@ -351,10 +356,10 @@ const GameDetailPage = () => {
       },
     })
       .then(response => {
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch(error => {
-        // console.log(error.data);
+        console.log(error.data);
       });
   }
 
