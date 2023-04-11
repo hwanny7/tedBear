@@ -329,7 +329,7 @@ const GameDetailPage = () => {
         .get(`/game/word/demo?num=${num}`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data.answer);
+          // console.log(response.data.answer);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
@@ -356,10 +356,10 @@ const GameDetailPage = () => {
       },
     })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
-        console.log(error.data);
+        // console.log(error.data);
       });
   }
 
