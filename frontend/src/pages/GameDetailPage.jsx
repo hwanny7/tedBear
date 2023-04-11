@@ -584,6 +584,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '50%',
+              top: '30%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -597,7 +598,7 @@ const GameDetailPage = () => {
             src={Paw2}
             alt=""
             style={{
-              left: '20%',
+              left: '30%',
               top: '50%',
               opacity: 1,
               position: 'absolute',
@@ -612,7 +613,7 @@ const GameDetailPage = () => {
             src={Paw3}
             alt=""
             style={{
-              left: '80%',
+              left: '70%',
               top: '50%',
               opacity: 1,
               position: 'absolute',
@@ -628,7 +629,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '50%',
-              top: '80%',
+              top: '70%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -642,7 +643,8 @@ const GameDetailPage = () => {
             src={Paw1}
             alt=""
             style={{
-              left: '10%',
+              left: '30%',
+              top: '30&',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -656,7 +658,8 @@ const GameDetailPage = () => {
             src={Paw2}
             alt=""
             style={{
-              left: '90%',
+              left: '70%',
+              top: '30%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -670,8 +673,8 @@ const GameDetailPage = () => {
             src={Paw3}
             alt=""
             style={{
-              left: '10%',
-              top: '90%',
+              left: '30%',
+              top: '70%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -685,8 +688,8 @@ const GameDetailPage = () => {
             src={Paw4}
             alt=""
             style={{
-              left: '90%',
-              top: '90%',
+              left: '70%',
+              top: '70%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
