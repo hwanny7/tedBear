@@ -334,10 +334,8 @@ const BookmarkWord = () => {
   const [toggle, setToggle] = useState(1);
   const [selected, setSelected] = useState(0);
 
-  const onChangeMenu = idx => {
-    if (toggle == 1) setToggle(2);
-    else setToggle(1);
-    console.log('idx : ', idx);
+  const onSelectMeun = (tog, idx) => {
+    setToggle(tog);
     setSelected(idx);
   };
 
@@ -389,11 +387,34 @@ const BookmarkWord = () => {
                   </div>
                   <div className="mean-senetence-wrapper">
                     <div className="title">
-                      <div onClick={() => onChangeMenu(idx)}>의미</div>
-                      <div onClick={() => onChangeMenu(idx)}>예문</div>
+                      <div onClick={() => onSelectMeun(1, idx)}>의미</div>
+                      <div onClick={() => onSelectMeun(2, idx)}>예문</div>
                     </div>
                     <div className="change-box">
-                      {toggle == 1 && idx == selected ? (
+                      {idx == selected ? (
+                        toggle == 1 ? (
+                          <div className="mean-container">
+                            <span>{item.wordInfo.mean}</span>
+                          </div>
+                        ) : (
+                          <div className="sentence-container">
+                            <ul>
+                              {item.sentenceContentList.map(
+                                (sentence, index) => (
+                                  <li key={index}>
+                                    {index + 1} . {sentence}
+                                  </li>
+                                ),
+                              )}
+                            </ul>
+                          </div>
+                        )
+                      ) : (
+                        <div className="mean-container">
+                          <span>{item.wordInfo.mean}</span>
+                        </div>
+                      )}
+                      {/* {toggle == 1 ? (
                         <div className="mean-container">
                           <span>{item.wordInfo.mean}</span>
                         </div>
@@ -407,7 +428,7 @@ const BookmarkWord = () => {
                             ))}
                           </ul>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

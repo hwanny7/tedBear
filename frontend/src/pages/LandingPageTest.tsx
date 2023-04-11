@@ -4,6 +4,9 @@ import { InView } from 'react-intersection-observer';
 import { useDispatch } from 'react-redux';
 import { logout } from 'redux/user';
 
+// 번역
+// import { useTranslation } from 'react-i18next';
+
 // full page
 // import { FullPage, Slide } from 'react-full-page';
 
