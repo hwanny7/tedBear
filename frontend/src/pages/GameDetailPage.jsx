@@ -507,72 +507,72 @@ const GameDetailPage = () => {
       <Poster>
         {selectedAlbum === 1 && (
           <StyledAlbum
-            style={{
-              height: '90vh',
-              width: '50vw',
-              padding: 30,
-              margin: '10px 10px 10px 10px',
-              position: 'absolute',
-              alignItems: 'left',
-              justifyContent: 'felx-start',
-              transform: 'translate(0%, 0%)',
-            }}
+          // style={{
+          //   height: '90vh',
+          //   width: '50vw',
+          //   padding: 30,
+          //   margin: '10px 10px 10px 10px',
+          //   position: 'absolute',
+          //   alignItems: 'left',
+          //   justifyContent: 'felx-start',
+          //   transform: 'translate(0%, 0%)',
+          // }}
           ></StyledAlbum>
         )}
         {selectedAlbum === 2 && (
           <AlbumA
-            style={{
-              height: '90vh',
-              width: '50vw',
-              padding: 30,
-              margin: '10px 10px 10px 10px',
-              position: 'absolute',
-              alignItems: 'left',
-              justifyContent: 'felx-start',
-              transform: 'translate(0%, 0%)',
-            }}
+          // style={{
+          //   height: '90vh',
+          //   width: '50vw',
+          //   padding: 30,
+          //   margin: '10px 10px 10px 10px',
+          //   position: 'absolute',
+          //   alignItems: 'left',
+          //   justifyContent: 'felx-start',
+          //   transform: 'translate(0%, 0%)',
+          // }}
           ></AlbumA>
         )}
         {selectedAlbum === 3 && (
           <AlbumB
-            style={{
-              height: '90vh',
-              width: '50vw',
-              padding: 30,
-              margin: '10px 10px 10px 10px',
-              position: 'absolute',
-              alignItems: 'left',
-              justifyContent: 'felx-start',
-              transform: 'translate(0%, 0%)',
-            }}
+          // style={{
+          //   height: '90vh',
+          //   width: '50vw',
+          //   padding: 30,
+          //   margin: '10px 10px 10px 10px',
+          //   position: 'absolute',
+          //   alignItems: 'left',
+          //   justifyContent: 'felx-start',
+          //   transform: 'translate(0%, 0%)',
+          // }}
           ></AlbumB>
         )}
         {selectedAlbum === 4 && (
           <AlbumC
-            style={{
-              height: '90vh',
-              width: '50vw',
-              padding: 30,
-              margin: '10px 10px 10px 10px',
-              position: 'absolute',
-              alignItems: 'left',
-              justifyContent: 'felx-start',
-              transform: 'translate(0%, 0%)',
-            }}
+          // style={{
+          //   height: '90vh',
+          //   width: '50vw',
+          //   padding: 30,
+          //   margin: '10px 10px 10px 10px',
+          //   position: 'absolute',
+          //   alignItems: 'left',
+          //   justifyContent: 'felx-start',
+          //   transform: 'translate(0%, 0%)',
+          // }}
           ></AlbumC>
         )}
         {selectedAlbum === 5 && (
           <AlbumD
-            style={{
-              height: '90vh',
-              width: '50vw',
-              padding: 30,
-              margin: '10px 10px 10px 10px',
-              position: 'absolute',
-              alignItems: 'left',
-              justifyContent: 'felx-start',
-              transform: 'translate(0%, 0%)',
-            }}
+          // style={{
+          //   height: '90vh',
+          //   width: '50vw',
+          //   padding: 30,
+          //   margin: '10px 10px 10px 10px',
+          //   position: 'absolute',
+          //   alignItems: 'left',
+          //   justifyContent: 'felx-start',
+          //   transform: 'translate(0%, 0%)',
+          // }}
           ></AlbumD>
         )}
       </Poster>
