@@ -644,7 +644,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '30%',
-              top: '30&',
+              top: '30%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
