@@ -583,8 +583,8 @@ const GameDetailPage = () => {
             src={Paw1}
             alt=""
             style={{
-              left: '50%',
-              top: '30%',
+              left: '40%',
+              top: '15%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -598,8 +598,8 @@ const GameDetailPage = () => {
             src={Paw2}
             alt=""
             style={{
-              left: '30%',
-              top: '50%',
+              left: '20%',
+              top: '40%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -614,7 +614,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '70%',
-              top: '50%',
+              top: '30%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -643,8 +643,8 @@ const GameDetailPage = () => {
             src={Paw1}
             alt=""
             style={{
-              left: '30%',
-              top: '30%',
+              left: '10%',
+              top: '15%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -658,8 +658,8 @@ const GameDetailPage = () => {
             src={Paw2}
             alt=""
             style={{
-              left: '70%',
-              top: '30%',
+              left: '80%',
+              top: '15%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -673,7 +673,7 @@ const GameDetailPage = () => {
             src={Paw3}
             alt=""
             style={{
-              left: '30%',
+              left: '10%',
               top: '70%',
               opacity: 1,
               position: 'absolute',
