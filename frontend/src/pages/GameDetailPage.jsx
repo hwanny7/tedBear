@@ -848,7 +848,7 @@ const GameDetailPage = () => {
                 <input
                   className="input"
                   type="text"
-                  placeholder="Enter your Answer"
+                  placeholder="빈칸을 채워주세요!"
                   onChange={handleInput}
                 ></input>
               </form>
