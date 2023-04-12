@@ -854,7 +854,7 @@ const GameDetailPage = () => {
               </form>
               {/* <Button
                 className="check-button"
-                onClick={handleCheck}
+                onClick={handleCheck}s
                 style={{
                   position: 'absolute',
                   top: '25%' ,
