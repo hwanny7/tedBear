@@ -22,4 +22,6 @@ public interface WordSentenceRepository extends JpaRepository<WordSentence, Long
 	List<WordSentence> findTop3ByWord(Word word, Pageable pageable);
 
 	Optional<WordSentence> findTop1ByWord(Word word);
+
+	Optional<WordSentence> findByWordNoAndSentenceNo(Long wordNo, Long sentenceNo);
 }

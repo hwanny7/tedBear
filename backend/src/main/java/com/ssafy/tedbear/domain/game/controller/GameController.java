@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.tedbear.domain.game.dto.CrossWordDto;
 import com.ssafy.tedbear.domain.game.dto.WordGameDto;
@@ -32,6 +33,12 @@ public class GameController {
 	@GetMapping("/word")
 	public ResponseEntity<WordGameDto> getWordGame(@AuthenticationPrincipal CustomOAuth2User user) {
 		WordGameDto question = gameService.getQuestion(user.getName());
+		return new ResponseEntity<>(question, HttpStatus.OK);
+	}
+
+	@GetMapping("/word/demo")
+	public ResponseEntity<WordGameDto> getWordGameDemo(@AuthenticationPrincipal CustomOAuth2User user, @RequestParam Integer num) {
+		WordGameDto question = gameService.getQuestionDemo(num);
 		return new ResponseEntity<>(question, HttpStatus.OK);
 	}
 

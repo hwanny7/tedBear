@@ -9,33 +9,33 @@ public class CalcScoreUtil {
 	}
 
 	public static double processScore(double val, String scoreName) {
-			if (scoreName.equals("gf")) {
-				if (val < 0)
-					val = 0.0;
-				if (val > 20) {
-					val = 15 + Math.random() * 5;
-				}
-			} else if (scoreName.equals("fr")) {
-				if (val < 0) {
-					val = 30 - Math.random() * 30;
-				}
-				if (val > 100) {
-					val = 70 + Math.random() * 30;
-				}
-			} else if (scoreName.equals("fk")) {
-				if (val < 0) {
-					val = 3 - Math.random() * 3;
-				}
-				if (val > 12) {
-					val = 9 + Math.random() * 3;
-				}
+		if (scoreName.equals("gf")) {
+			if (val < 0)
+				val = 0.0;
+			if (val > 20) {
+				val = 15 + Math.random() * 5;
 			}
+		} else if (scoreName.equals("fr")) {
+			if (val < 0) {
+				val = 30 - Math.random() * 30;
+			}
+			if (val > 100) {
+				val = 70 + Math.random() * 30;
+			}
+		} else if (scoreName.equals("fk")) {
+			if (val < 0) {
+				val = 3 - Math.random() * 3;
+			}
+			if (val > 12) {
+				val = 9 + Math.random() * 3;
+			}
+		}
 		return convertFormat(val);
 	}
 
 	public static double getGunningFog(String content) {
-		String[] sentences = content.split("[.?!]");
 
+		String[] sentences = content.split("[.?!]");
 		int numSentences = Math.max(1, sentences.length);
 		int numWords = 0;
 		int numComplexWords = 0;
@@ -43,12 +43,10 @@ public class CalcScoreUtil {
 		for (String sentence : sentences) {
 			String[] words = sentence.split("\\s+");
 			numWords += Math.max(1, words.length);
-
 			for (String word : words) {
 				int syllables = countSyllables(word);
-				if (syllables >= 3) {
+				if (syllables >= 3)
 					numComplexWords++;
-				}
 			}
 		}
 

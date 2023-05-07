@@ -4,13 +4,12 @@ import java.util.Random;
 
 public class RecommendUtil {
 	final static int RANGE = 10000;
+	final static Random random = new Random();
+
 	// 정규분포 이용해서, +- RANGE 범위의 추천 스코어 리턴
 	public static int getRecommendScore(int myScore) {
-		Random random = new Random();
 		int rand = (int)(random.nextGaussian() * RANGE / 2.58);
-		rand = Math.max(rand, -RANGE);
-		rand = Math.min(rand, RANGE);
-		int recommendScore = myScore + rand;
+		int recommendScore = myScore + Math.min(Math.max(rand, -RANGE), RANGE);
 		return Math.min(Math.max(recommendScore, 1), 99999);
 	}
 

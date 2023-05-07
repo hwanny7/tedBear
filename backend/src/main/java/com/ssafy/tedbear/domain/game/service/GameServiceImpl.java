@@ -59,6 +59,14 @@ public class GameServiceImpl implements GameService {
 		return new WordGameDto(randomWord, sentence.get(0));
 	}
 
+	public WordGameDto getQuestionDemo(Integer num) {
+		List<Long> wordNoList = Arrays.asList(6536L, 6582L, 6572L, 8219L, 6736L);
+		List<Long> sentenceNoList = Arrays.asList(4656L, 158738L, 22128L, 40154L, 8781L);
+
+		WordSentence WordSentence = wordSentenceRepository.findByWordNoAndSentenceNo(wordNoList.get(num), sentenceNoList.get(num)).get();
+		return new WordGameDto(WordSentence.getWord(), WordSentence.getSentence());
+	}
+
 	@Override
 	public void completeWordGame(String memberUid, WordGameResultDto wordGameResultDto) {
 		Member member = findMemberService.findMember(memberUid);
