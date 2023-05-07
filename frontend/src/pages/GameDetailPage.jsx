@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { authApi } from 'utils/api/customAxios';
 import { Paper } from '@mui/material';
 import { useDispatch } from 'react-redux';
@@ -271,6 +270,7 @@ const GameDetailPage = () => {
   const [incorrect, setIncorrect] = useState(false);
   const [shorts, setShorts] = useState(null);
   const { modalOpen, setModalOpen } = useOutletContext();
+  const [num, setNum] = useState(0);
 
   const handleRetry = () => {
     setCorrectAnswerCount(1); // 맞은 개수 누적 초기화
@@ -295,11 +295,13 @@ const GameDetailPage = () => {
     setIncorrect(false);
   };
 
+  // /game/word/demo?num=0
+
   // 첫 문제
   useEffect(() => {
     async function fetchData() {
       await authApi
-        .get(`game/word`)
+        .get(`/game/word/demo?num=${num}`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
           console.log(response.data.answer);
@@ -310,6 +312,7 @@ const GameDetailPage = () => {
           setAnswer(answer);
           setWordNumber(wordNo);
           setHintList(hint);
+          setNum(prevNum => (prevNum + 1) % 5);
         })
         .catch(error => {
           // console.log(error.data);
@@ -323,16 +326,17 @@ const GameDetailPage = () => {
     // console.log('to the next problem');
     async function fetchData() {
       await authApi
-        .get(`game/word`)
+        .get(`/game/word/demo?num=${num}`)
         .then(response => {
           // console.log(`누적정답횟수${correctAnswerCount}`);
-          console.log(response.data.answer);
+          // console.log(response.data.answer);
           const { sentence, answer, wordNo, hint, translation } = response.data;
           setTranslation(translation);
           setSentence(sentence);
           setAnswer(answer);
           setWordNumber(wordNo);
           setHintList(hint);
+          setNum(prevNum => (prevNum + 1) % 5);
         })
         .catch(error => {
           // console.log(error.data);
@@ -503,16 +507,16 @@ const GameDetailPage = () => {
       <Poster>
         {selectedAlbum === 1 && (
           <StyledAlbum
-          // style={{
-          //   height: '90vh',
-          //   width: '50vw',
-          //   padding: 30,
-          //   margin: '10px 10px 10px 10px',
-          //   position: 'absolute',
-          //   alignItems: 'left',
-          //   justifyContent: 'felx-start',
-          //   transform: 'translate(0%, 0%)',
-          // }}
+            style={{
+              height: '90vh',
+              width: '50vw',
+              padding: 30,
+              margin: '10px 10px 10px 10px',
+              position: 'absolute',
+              alignItems: 'left',
+              justifyContent: 'felx-start',
+              transform: 'translate(0%, 0%)',
+            }}
           ></StyledAlbum>
         )}
         {selectedAlbum === 2 && (
@@ -579,7 +583,8 @@ const GameDetailPage = () => {
             src={Paw1}
             alt=""
             style={{
-              left: '50%',
+              left: '40%',
+              top: '15%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -594,7 +599,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '20%',
-              top: '50%',
+              top: '40%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -608,8 +613,8 @@ const GameDetailPage = () => {
             src={Paw3}
             alt=""
             style={{
-              left: '80%',
-              top: '50%',
+              left: '70%',
+              top: '30%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -624,7 +629,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '50%',
-              top: '80%',
+              top: '70%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -639,6 +644,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '10%',
+              top: '15%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -652,7 +658,8 @@ const GameDetailPage = () => {
             src={Paw2}
             alt=""
             style={{
-              left: '90%',
+              left: '80%',
+              top: '15%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -667,7 +674,7 @@ const GameDetailPage = () => {
             alt=""
             style={{
               left: '10%',
-              top: '90%',
+              top: '70%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -681,8 +688,8 @@ const GameDetailPage = () => {
             src={Paw4}
             alt=""
             style={{
-              left: '90%',
-              top: '90%',
+              left: '70%',
+              top: '70%',
               opacity: 1,
               position: 'absolute',
               zIndex: 9999,
@@ -841,13 +848,13 @@ const GameDetailPage = () => {
                 <input
                   className="input"
                   type="text"
-                  placeholder="Enter your Answer"
+                  placeholder="빈칸을 채워주세요!"
                   onChange={handleInput}
                 ></input>
               </form>
               {/* <Button
                 className="check-button"
-                onClick={handleCheck}
+                onClick={handleCheck}s
                 style={{
                   position: 'absolute',
                   top: '25%' ,
@@ -877,34 +884,6 @@ const GameDetailPage = () => {
           >
             <p className="hint-button-text">힌트</p>
           </Button>
-          <IconButton
-            className="next-button"
-            onClick={handleNext}
-            sx={{
-              boxShadow: 3,
-              width: '3rem',
-              height: '3rem',
-              bgcolor: theme =>
-                theme.palette.mode === 'dark' ? '#101010' : '#fff',
-              color: theme =>
-                theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-            }}
-            style={{
-              position: 'absolute',
-              margin: '20px 0px 0px 20px',
-              top: '40%' /* vertically center the button */,
-              right: '-5%' /* position the button to the right */,
-              transform:
-                'translateY(-50%)' /* adjust vertical position after centering */,
-              border: '1px solid #FFFFFF',
-              background: '#FFFFFF',
-            }}
-            variant="outlined"
-          >
-            <p className="next-button-inside">
-              <ArrowForwardIosIcon />
-            </p>
-          </IconButton>
         </StyledPaper>
       </QuestionBox>
       {modalOpen && <ShortsModal shorts={shorts} setOpenModal={setModalOpen} />}

@@ -24,8 +24,16 @@ const RouteChangeTracker = () => {
   // location 변경 감지시 pageview 이벤트 전송
   useEffect(() => {
     if (initialized) {
-      ReactGA.set({ page: location.pathname });
-      ReactGA.send('pageview');
+      if (location.pathname.includes('/learning')) {
+        ReactGA.set({ page: '/learning' });
+        ReactGA.send('pageview');
+      } else if (location.pathname.includes('/search')) {
+        ReactGA.set({ page: '/search' });
+        ReactGA.send('pageview');
+      } else {
+        ReactGA.set({ page: location.pathname });
+        ReactGA.send('pageview');
+      }
     }
   }, [initialized, location]);
 
@@ -35,8 +43,18 @@ const RouteChangeTracker = () => {
       ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     }
 
-    ReactGA.set({ page: location.pathname });
-    ReactGA.send('pageview');
+    if (initialized) {
+      if (location.pathname.includes('/learning')) {
+        ReactGA.set({ page: '/learning' });
+        ReactGA.send('pageview');
+      } else if (location.pathname.includes('/search')) {
+        ReactGA.set({ page: '/search' });
+        ReactGA.send('pageview');
+      } else {
+        ReactGA.set({ page: location.pathname });
+        ReactGA.send('pageview');
+      }
+    }
   }, [location]);
 };
 

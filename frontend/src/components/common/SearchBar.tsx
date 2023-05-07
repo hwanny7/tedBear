@@ -5,9 +5,7 @@ import IconButton from '@mui/material/IconButton';
 
 import SearchIcon from '@mui/icons-material/Search';
 
-import { Form, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { formControlClasses } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   fetchData?: (content: string) => Promise<void>;
@@ -25,23 +23,6 @@ const SearchBar = ({ fetchData }: Props) => {
       navigate(`/search/${content}`);
     }
   };
-
-  // const StyledPaper = styled(Paper)`
-  //   padding: 4px;
-  //   display: flex;
-  //   align-items: center;
-  //   margin-top: 3vh;
-  //   height: 40px;
-  //   border-radius: 50px;
-
-  //   @media (max-width: 600px) {
-  //     width: 100%;
-  //   }
-
-  //   @media (min-width: 600px) {
-  //     width: 70%;
-  //   }
-  // `;
 
   const handleClick = (e: any) => {
     console.log(e.target);

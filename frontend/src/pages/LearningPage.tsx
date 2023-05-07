@@ -358,7 +358,7 @@ const MicBox = styled.div<SpeakerBoxProps>`
   padding-top: 10px;
   color: #1a1a1a;
 
-  p {
+  .speach-txt {
     padding: 0px 32px;
     font-size: 16px;
     width: 100%;
@@ -373,6 +373,18 @@ const MicBox = styled.div<SpeakerBoxProps>`
       background-color: ${props => props.theme.mainLightColor};
       border-radius: 10px;
     }
+  }
+
+  .default-txt {
+    padding: 0px 32px;
+    font-size: 14px;
+    width: 100%;
+    height: 80%;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6e6e6e;
   }
 
   div {
@@ -1083,7 +1095,13 @@ const LearningPage = () => {
                 <p>{videoDesc?.sentenceInfoList[selected].content}</p>
               </SentenceBox>
               <MicBox result={result}>
-                <p>{transcript}</p>
+                {!listening && transcript == '' ? (
+                  <p className="default-txt">
+                    마이크를 누르시고, 영어 문장을 따라 말해보세요.
+                  </p>
+                ) : (
+                  <p className="speach-txt">{transcript}</p>
+                )}
                 <div>
                   {listening ? (
                     <>

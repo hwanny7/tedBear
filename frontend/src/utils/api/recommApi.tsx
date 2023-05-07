@@ -32,7 +32,7 @@ export const getVideoRecomm = async (difficulty: string) => {
     method: 'get',
     url: `/video/recommend/list/${difficulty}`,
   });
-  console.log(data);
+
   return data.videoInfoList;
 };
 
