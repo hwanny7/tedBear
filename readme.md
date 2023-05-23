@@ -199,9 +199,9 @@ tedbear
 | 박일규 | repeater1384 | JAVA / SpringBoot |
 | 박서영 | SEOYOUNG-cloud | JAVA / SpringBoot |
 | 정연진 | yeonjan | JAVA / SpringBoot |
-| 윤승환 |  | SpringBoot / React |
-| 장유하 |  | React + Recoil |
-| 정혜주 | hyejoojung719 | Vue / React |
+| 윤승환 | Hwanny7 | React |
+| 장유하 |  | React |
+| 정혜주 | hyejoojung719 | React |
 
 ## 🐻 프로젝트 산출물
 
